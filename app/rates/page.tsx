@@ -1,5 +1,6 @@
 ﻿'use client';
 import { useEffect, useState } from 'react';
+import { Download, Check, Loader2 } from 'lucide-react';
 import PageShell from '@/components/shared/PageShell';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
@@ -94,6 +95,9 @@ export default function RatesPage() {
   const [rates, setRates] = useState<CityRate[]>(DEFAULT_RATES);
   const [isLive, setIsLive] = useState(false);
 
+  // Real-estate report download state: idle → downloading → done.
+  const [reportState, setReportState] = useState<'idle' | 'downloading' | 'done'>('idle');
+
   // Interactive metal-price calculator state.
   const [metal, setMetal] = useState<MetalKey>('24k');
   const [grams, setGrams] = useState(12); // default to 1 Tola
@@ -113,6 +117,40 @@ export default function RatesPage() {
 
   const calcTotal = grams * METAL_PER_GRAM[metal];
   const gramsDisplay = language === 'mr' ? toDevanagariDigits(String(grams)) : String(grams);
+
+  // Aggregate the real-estate matrix into a CSV file and trigger a download,
+  // with a brief amber loading → success state on the button.
+  const handleDownloadReport = () => {
+    if (reportState === 'downloading') return;
+    setReportState('downloading');
+
+    const header = ['City', 'Open Plot (Per Sq.Ft.)', 'Home Rent (2 BHK)', 'Office Rent (Per Sq.Ft.)', 'Commercial Rent (Shop Front)'];
+    const rows = realEstateRates.map((r) => [
+      r.city.en,
+      r.plotPerSqft,
+      r.homeRent2bhk,
+      r.officePerSqft,
+      r.shopPerSqft,
+    ]);
+    const csv = [header, ...rows].map((line) => line.join(',')).join('\n');
+    const content = `BudgetKatta — Real Estate & Rent Tracker (Maharashtra)\nAll figures in INR. Indicative benchmark rates.\n\n${csv}\n`;
+
+    // Small delay so the loading state is perceptible, then download + success.
+    setTimeout(() => {
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'budgetkatta-real-estate-rates.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
+      setReportState('done');
+      setTimeout(() => setReportState('idle'), 2500);
+    }, 600);
+  };
 
   // Attempt a live spot-price fetch; silently keep realistic defaults on any failure.
   useEffect(() => {
@@ -390,11 +428,41 @@ export default function RatesPage() {
         {/* Real Estate & Rent Tracker */}
         <section>
           <div className="rounded-2xl bg-slate-900 border border-slate-800 p-6 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
-            <div className="mb-4 flex items-center gap-2.5">
-              <span className="text-xl">🏙️</span>
-              <h2 className="font-display text-xl font-bold text-slate-200 font-deva">
-                {language === 'mr' ? 'रिअल इस्टेट आणि भाडे कट्टा' : 'Real Estate & Rent Tracker'}
-              </h2>
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <span className="text-xl">🏙️</span>
+                <h2 className="font-display text-xl font-bold text-slate-200 font-deva">
+                  {language === 'mr' ? 'रिअल इस्टेट आणि भाडे कट्टा' : 'Real Estate & Rent Tracker'}
+                </h2>
+              </div>
+              <button
+                onClick={handleDownloadReport}
+                disabled={reportState === 'downloading'}
+                className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-bold transition-all font-deva ${
+                  reportState === 'done'
+                    ? 'border-emerald-400/40 bg-emerald-400/10 text-emerald-300'
+                    : 'border-amber-400/40 bg-amber-400/10 text-amber-300 hover:bg-amber-400/20 hover:shadow-[0_0_22px_rgba(251,191,36,0.25)]'
+                } disabled:opacity-70`}
+              >
+                {reportState === 'downloading' ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : reportState === 'done' ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  <Download className="h-4 w-4" />
+                )}
+                {reportState === 'downloading'
+                  ? language === 'mr'
+                    ? 'तयार होत आहे…'
+                    : 'Preparing…'
+                  : reportState === 'done'
+                    ? language === 'mr'
+                      ? 'डाउनलोड झाले!'
+                      : 'Downloaded!'
+                    : language === 'mr'
+                      ? 'रिपोर्ट डाउनलोड करा'
+                      : 'Download Report'}
+              </button>
             </div>
 
             <div className="overflow-x-auto rounded-xl border border-slate-800">
@@ -430,10 +498,13 @@ export default function RatesPage() {
               </table>
             </div>
 
-            <p className="mt-4 text-xs leading-relaxed text-slate-400 font-deva">
-              {language === 'mr'
-                ? 'टीप: रिअल इस्टेट दर हे सूचक बेंचमार्क असून विशिष्ट परिसर/लोकॅलिटी निर्देशांकानुसार बदलू शकतात.'
-                : 'Note: Real estate rates are indicative benchmarks and are subject to specific locality indices.'}
+            <p className="mt-3 flex items-center gap-2 text-xs leading-relaxed text-slate-400 font-deva">
+              <span className="shrink-0 text-amber-400">ℹ️</span>
+              <span>
+                {language === 'mr'
+                  ? 'टीप: हे प्रमाणित सरासरी दर (Standard Benchmark Rates) आहेत. वेगवेगळ्या परिसरांनुसार (Area) आणि ठिकाणांनुसार (Location) प्रत्यक्ष बाजारभावात लक्षणीय बदल होऊ शकतो.'
+                  : 'Note: These are standard benchmark rates. Actual property prices and rents may vary significantly based on specific areas, micro-markets, and exact locations.'}
+              </span>
             </p>
           </div>
         </section>

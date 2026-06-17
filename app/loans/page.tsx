@@ -39,7 +39,7 @@ export default function LoansPage() {
   const rate = rows.length ? `${Math.min(...rows.map((r) => r.roiMin))}% – ${Math.max(...rows.map((r) => r.roiMax))}%` : '—';
   const fee = rows[0]?.processingFee ?? '—';
   const tenure = rows.length
-    ? `${Math.round(Math.max(...rows.map((r) => r.maxTenureMonths)) / 12)} ${language === 'mr' ? 'वर्षे' : 'वर्ष'}`
+    ? `${Math.round(Math.max(...rows.map((r) => r.maxTenureMonths)) / 12)} ${language === 'mr' ? 'वर्षे' : 'years'}`
     : '—';
   const documents = getDocuments(detail.product, profile);
   const loanLabel = t(detail.labelKey);

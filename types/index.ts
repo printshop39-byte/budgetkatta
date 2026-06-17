@@ -2,11 +2,12 @@
 
 export type Language = 'mr' | 'hi';
 
-export type LeadModule = 'FD' | 'LOAN' | 'SIP' | 'INSURANCE' | 'GENERAL';
+export type LeadModule = 'FD' | 'LOAN' | 'SIP' | 'INSURANCE' | 'GENERAL' | 'CONTACT';
 
 export interface LeadPayload {
   userName?: string;
   phone?: string;
+  email?: string;
   city?: string;
   selectedLanguage: Language;
   interestedModule: LeadModule;

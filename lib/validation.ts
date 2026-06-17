@@ -4,9 +4,10 @@ import { z } from 'zod';
 export const leadSchema = z.object({
   userName: z.string().max(120).optional(),
   phone: z.string().max(20).optional(),
+  email: z.string().max(160).optional(),
   city: z.string().max(120).optional(),
   selectedLanguage: z.enum(['mr', 'hi']),
-  interestedModule: z.enum(['FD', 'LOAN', 'SIP', 'INSURANCE', 'GENERAL']),
+  interestedModule: z.enum(['FD', 'LOAN', 'SIP', 'INSURANCE', 'GENERAL', 'CONTACT']),
   selectedProduct: z.string().max(300).optional(),
   userQuery: z.string().max(2000).optional(),
   sourcePage: z.string().min(1).max(120),

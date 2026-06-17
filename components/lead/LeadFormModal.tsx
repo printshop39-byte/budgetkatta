@@ -18,6 +18,7 @@ const moduleLabelKey: Record<LeadModule, string> = {
   SIP: 'sip.title',
   INSURANCE: 'ins.title',
   GENERAL: 'nav.home',
+  CONTACT: 'nav.contact',
 };
 
 export default function LeadFormModal() {

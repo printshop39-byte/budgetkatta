@@ -95,6 +95,7 @@ export async function POST(request: Request) {
     ...d,
     userName: d.userName ? sanitizeText(d.userName, 120) : undefined,
     phone: d.phone ? sanitizeText(d.phone, 20) : undefined,
+    email: d.email ? sanitizeText(d.email, 160) : undefined,
     city: d.city ? sanitizeText(d.city, 120) : undefined,
     selectedProduct: d.selectedProduct ? sanitizeText(d.selectedProduct, 300) : undefined,
     userQuery: d.userQuery ? sanitizeText(d.userQuery, 2000) : undefined,

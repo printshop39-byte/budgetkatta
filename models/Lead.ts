@@ -5,9 +5,10 @@ const leadSchema = new mongoose.Schema(
   {
     userName: { type: String },
     phone: { type: String },
+    email: { type: String },
     city: { type: String },
     selectedLanguage: { type: String, enum: ['mr', 'hi'], required: true },
-    interestedModule: { type: String, enum: ['FD', 'LOAN', 'SIP', 'INSURANCE', 'GENERAL'] },
+    interestedModule: { type: String, enum: ['FD', 'LOAN', 'SIP', 'INSURANCE', 'GENERAL', 'CONTACT'] },
     selectedProduct: { type: String },
     userQuery: { type: String },
     sourcePage: { type: String, required: true },

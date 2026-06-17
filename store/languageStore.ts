@@ -15,8 +15,8 @@ export const useLanguageStore = create<LanguageStore>()(
       language: 'mr',
       setLanguage: (language) => set({ language }),
       toggleLanguage: () =>
-        set((state) => ({ language: state.language === 'mr' ? 'hi' : 'mr' })),
+        set((state) => ({ language: state.language === 'mr' ? 'en' : 'mr' })),
     }),
-    { name: 'bk-language' }
+    { name: 'bk-language-v2' }
   )
 );

@@ -1,5 +1,5 @@
 // lib/documentChecklists.ts
-// Central, localized (mr/hi) document-checklist data. Composed from reusable
+// Central, localized (mr/en) document-checklist data. Composed from reusable
 // document "atoms" by product + applicant profile. Used by /documents and the
 // per-product document sections (FD, Loans, SIP, Insurance).
 
@@ -30,69 +30,69 @@ export type ProductType =
 export type ProfileType = 'SALARIED' | 'BUSINESS' | 'STUDENT' | 'SENIOR' | 'NRI';
 
 export const productOptions: { value: ProductType; label: Bi }[] = [
-  { value: 'FD', label: { mr: 'मुदत ठेव (FD)', hi: 'सावधि जमा (FD)' } },
-  { value: 'HOME_LOAN', label: { mr: 'गृहकर्ज', hi: 'होम लोन' } },
-  { value: 'PERSONAL_LOAN', label: { mr: 'वैयक्तिक कर्ज', hi: 'पर्सनल लोन' } },
-  { value: 'BUSINESS_LOAN', label: { mr: 'व्यवसाय कर्ज', hi: 'बिजनेस लोन' } },
-  { value: 'VEHICLE_LOAN', label: { mr: 'वाहन कर्ज', hi: 'वाहन लोन' } },
-  { value: 'EDUCATION_LOAN', label: { mr: 'शैक्षणिक कर्ज', hi: 'एजुकेशन लोन' } },
-  { value: 'GOLD_LOAN', label: { mr: 'गोल्ड लोन', hi: 'गोल्ड लोन' } },
-  { value: 'HEALTH_INSURANCE', label: { mr: 'आरोग्य विमा', hi: 'स्वास्थ्य बीमा' } },
-  { value: 'TERM_INSURANCE', label: { mr: 'टर्म विमा', hi: 'टर्म बीमा' } },
-  { value: 'SIP', label: { mr: 'SIP / म्युच्युअल फंड', hi: 'SIP / म्यूचुअल फंड' } },
+  { value: 'FD', label: { mr: 'मुदत ठेव (FD)', en: 'Fixed Deposit (FD)' } },
+  { value: 'HOME_LOAN', label: { mr: 'गृहकर्ज', en: 'Home Loan' } },
+  { value: 'PERSONAL_LOAN', label: { mr: 'वैयक्तिक कर्ज', en: 'Personal Loan' } },
+  { value: 'BUSINESS_LOAN', label: { mr: 'व्यवसाय कर्ज', en: 'Business Loan' } },
+  { value: 'VEHICLE_LOAN', label: { mr: 'वाहन कर्ज', en: 'Vehicle Loan' } },
+  { value: 'EDUCATION_LOAN', label: { mr: 'शैक्षणिक कर्ज', en: 'Education Loan' } },
+  { value: 'GOLD_LOAN', label: { mr: 'गोल्ड लोन', en: 'Gold Loan' } },
+  { value: 'HEALTH_INSURANCE', label: { mr: 'आरोग्य विमा', en: 'Health Insurance' } },
+  { value: 'TERM_INSURANCE', label: { mr: 'टर्म विमा', en: 'Term Insurance' } },
+  { value: 'SIP', label: { mr: 'SIP / म्युच्युअल फंड', en: 'SIP / Mutual Fund' } },
 ];
 
 export const profileOptions: { value: ProfileType; label: Bi }[] = [
-  { value: 'SALARIED', label: { mr: 'नोकरीदार', hi: 'नौकरीपेशा' } },
-  { value: 'BUSINESS', label: { mr: 'व्यवसायिक', hi: 'व्यवसायी' } },
-  { value: 'STUDENT', label: { mr: 'विद्यार्थी', hi: 'विद्यार्थी' } },
-  { value: 'SENIOR', label: { mr: 'ज्येष्ठ नागरिक', hi: 'वरिष्ठ नागरिक' } },
-  { value: 'NRI', label: { mr: 'NRI', hi: 'NRI' } },
+  { value: 'SALARIED', label: { mr: 'नोकरीदार', en: 'Salaried' } },
+  { value: 'BUSINESS', label: { mr: 'व्यवसायिक', en: 'Business Owner' } },
+  { value: 'STUDENT', label: { mr: 'विद्यार्थी', en: 'Student' } },
+  { value: 'SENIOR', label: { mr: 'ज्येष्ठ नागरिक', en: 'Senior Citizen' } },
+  { value: 'NRI', label: { mr: 'NRI', en: 'NRI' } },
 ];
 
 export const categoryLabel: Record<DocCategory, Bi> = {
-  KYC: { mr: 'ओळख (KYC)', hi: 'पहचान (KYC)' },
-  INCOME: { mr: 'उत्पन्न पुरावा', hi: 'आय प्रमाण' },
-  PRODUCT: { mr: 'उत्पादनासाठी', hi: 'उत्पाद के लिए' },
-  OTHER: { mr: 'इतर', hi: 'अन्य' },
+  KYC: { mr: 'ओळख (KYC)', en: 'Identity (KYC)' },
+  INCOME: { mr: 'उत्पन्न पुरावा', en: 'Income Proof' },
+  PRODUCT: { mr: 'उत्पादनासाठी', en: 'Product-specific' },
+  OTHER: { mr: 'इतर', en: 'Other' },
 };
 
 // ── Document atoms ──────────────────────────────────────────────────────────
 const D = {
-  aadhaar: { name: { mr: 'आधार कार्ड', hi: 'आधार कार्ड' }, explanation: { mr: 'ओळख आणि पत्ता पडताळणीसाठी.', hi: 'पहचान और पते की पुष्टि के लिए।' }, category: 'KYC', requirement: 'required' },
-  pan: { name: { mr: 'पॅन कार्ड', hi: 'पैन कार्ड' }, explanation: { mr: 'कर आणि आर्थिक ओळखीसाठी.', hi: 'कर और वित्तीय पहचान के लिए।' }, category: 'KYC', requirement: 'required' },
-  photo: { name: { mr: 'पासपोर्ट आकाराचा फोटो', hi: 'पासपोर्ट साइज फोटो' }, explanation: { mr: 'अर्जासोबत ओळखीसाठी.', hi: 'आवेदन के साथ पहचान के लिए।' }, category: 'KYC', requirement: 'required' },
-  address: { name: { mr: 'पत्ता पुरावा', hi: 'पते का प्रमाण' }, explanation: { mr: 'वीज बिल, भाडेकरार किंवा पासबुक चालते.', hi: 'बिजली बिल, किरायानामा या पासबुक चलेगा।' }, category: 'KYC', requirement: 'sometimes' },
+  aadhaar: { name: { mr: 'आधार कार्ड', en: 'Aadhaar Card' }, explanation: { mr: 'ओळख आणि पत्ता पडताळणीसाठी.', en: 'For identity and address verification.' }, category: 'KYC', requirement: 'required' },
+  pan: { name: { mr: 'पॅन कार्ड', en: 'PAN Card' }, explanation: { mr: 'कर आणि आर्थिक ओळखीसाठी.', en: 'For tax and financial identification.' }, category: 'KYC', requirement: 'required' },
+  photo: { name: { mr: 'पासपोर्ट आकाराचा फोटो', en: 'Passport-size Photo' }, explanation: { mr: 'अर्जासोबत ओळखीसाठी.', en: 'For identification with the application.' }, category: 'KYC', requirement: 'required' },
+  address: { name: { mr: 'पत्ता पुरावा', en: 'Address Proof' }, explanation: { mr: 'वीज बिल, भाडेकरार किंवा पासबुक चालते.', en: 'Electricity bill, rent agreement or passbook is accepted.' }, category: 'KYC', requirement: 'sometimes' },
 
-  salarySlip: { name: { mr: 'पगार स्लिप (३ महिने)', hi: 'सैलरी स्लिप (3 महीने)' }, explanation: { mr: 'उत्पन्न व परतफेड क्षमता तपासण्यासाठी.', hi: 'आय और चुकौती क्षमता जांचने के लिए।' }, category: 'INCOME', requirement: 'required' },
-  bankStatement: { name: { mr: 'बँक स्टेटमेंट (६ महिने)', hi: 'बैंक स्टेटमेंट (6 महीने)' }, explanation: { mr: 'व्यवहार व उत्पन्नाचा अंदाज घेण्यासाठी.', hi: 'लेन-देन और आय का अनुमान लगाने के लिए।' }, category: 'INCOME', requirement: 'required' },
-  form16: { name: { mr: 'फॉर्म 16', hi: 'फॉर्म 16' }, explanation: { mr: 'पगारदारांचे उत्पन्न प्रमाण.', hi: 'वेतनभोगी की आय का प्रमाण।' }, category: 'INCOME', requirement: 'sometimes' },
-  itr: { name: { mr: 'ITR (२ वर्षे)', hi: 'ITR (2 वर्ष)' }, explanation: { mr: 'व्यावसायिक/स्वयंरोजगार उत्पन्न प्रमाण.', hi: 'व्यावसायिक/स्वरोजगार आय का प्रमाण।' }, category: 'INCOME', requirement: 'required' },
-  gst: { name: { mr: 'GST नोंदणी', hi: 'GST पंजीकरण' }, explanation: { mr: 'व्यवसाय असल्यास लागू.', hi: 'व्यवसाय होने पर लागू।' }, category: 'INCOME', requirement: 'sometimes' },
-  currentAccount: { name: { mr: 'चालू खाते स्टेटमेंट', hi: 'चालू खाता स्टेटमेंट' }, explanation: { mr: 'व्यवसायाचे व्यवहार दाखवण्यासाठी.', hi: 'व्यवसाय के लेन-देन दिखाने के लिए।' }, category: 'INCOME', requirement: 'required' },
-  coApplicant: { name: { mr: 'सह-अर्जदार उत्पन्न पुरावा', hi: 'सह-आवेदक आय प्रमाण' }, explanation: { mr: 'विद्यार्थी किंवा कमी उत्पन्न असल्यास.', hi: 'विद्यार्थी या कम आय होने पर।' }, category: 'INCOME', requirement: 'required' },
-  pension: { name: { mr: 'पेन्शन पुरावा / बँक स्टेटमेंट', hi: 'पेंशन प्रमाण / बैंक स्टेटमेंट' }, explanation: { mr: 'ज्येष्ठ नागरिकांचे उत्पन्न दाखवण्यासाठी.', hi: 'वरिष्ठ नागरिक की आय दिखाने के लिए।' }, category: 'INCOME', requirement: 'required' },
-  passportVisa: { name: { mr: 'पासपोर्ट व व्हिसा', hi: 'पासपोर्ट व वीज़ा' }, explanation: { mr: 'NRI ओळख व स्थितीसाठी.', hi: 'NRI पहचान व स्थिति के लिए।' }, category: 'INCOME', requirement: 'required' },
-  nreNro: { name: { mr: 'NRE/NRO खाते स्टेटमेंट', hi: 'NRE/NRO खाता स्टेटमेंट' }, explanation: { mr: 'NRI व्यवहार पुरावा.', hi: 'NRI लेन-देन प्रमाण।' }, category: 'INCOME', requirement: 'required' },
-  overseasIncome: { name: { mr: 'परदेशी उत्पन्न पुरावा', hi: 'विदेशी आय प्रमाण' }, explanation: { mr: 'परदेशातील पगार/उत्पन्न असल्यास.', hi: 'विदेश में वेतन/आय होने पर।' }, category: 'INCOME', requirement: 'sometimes' },
+  salarySlip: { name: { mr: 'पगार स्लिप (३ महिने)', en: 'Salary Slip (3 months)' }, explanation: { mr: 'उत्पन्न व परतफेड क्षमता तपासण्यासाठी.', en: 'To check income and repayment capacity.' }, category: 'INCOME', requirement: 'required' },
+  bankStatement: { name: { mr: 'बँक स्टेटमेंट (६ महिने)', en: 'Bank Statement (6 months)' }, explanation: { mr: 'व्यवहार व उत्पन्नाचा अंदाज घेण्यासाठी.', en: 'To assess transactions and income.' }, category: 'INCOME', requirement: 'required' },
+  form16: { name: { mr: 'फॉर्म 16', en: 'Form 16' }, explanation: { mr: 'पगारदारांचे उत्पन्न प्रमाण.', en: 'Income proof for salaried individuals.' }, category: 'INCOME', requirement: 'sometimes' },
+  itr: { name: { mr: 'ITR (२ वर्षे)', en: 'ITR (2 years)' }, explanation: { mr: 'व्यावसायिक/स्वयंरोजगार उत्पन्न प्रमाण.', en: 'Income proof for business owners and self-employed.' }, category: 'INCOME', requirement: 'required' },
+  gst: { name: { mr: 'GST नोंदणी', en: 'GST Registration' }, explanation: { mr: 'व्यवसाय असल्यास लागू.', en: 'Applicable if you run a business.' }, category: 'INCOME', requirement: 'sometimes' },
+  currentAccount: { name: { mr: 'चालू खाते स्टेटमेंट', en: 'Current Account Statement' }, explanation: { mr: 'व्यवसायाचे व्यवहार दाखवण्यासाठी.', en: 'To show business transactions.' }, category: 'INCOME', requirement: 'required' },
+  coApplicant: { name: { mr: 'सह-अर्जदार उत्पन्न पुरावा', en: 'Co-applicant Income Proof' }, explanation: { mr: 'विद्यार्थी किंवा कमी उत्पन्न असल्यास.', en: 'Required for students or applicants with low income.' }, category: 'INCOME', requirement: 'required' },
+  pension: { name: { mr: 'पेन्शन पुरावा / बँक स्टेटमेंट', en: 'Pension Proof / Bank Statement' }, explanation: { mr: 'ज्येष्ठ नागरिकांचे उत्पन्न दाखवण्यासाठी.', en: 'To show income for senior citizens.' }, category: 'INCOME', requirement: 'required' },
+  passportVisa: { name: { mr: 'पासपोर्ट व व्हिसा', en: 'Passport and Visa' }, explanation: { mr: 'NRI ओळख व स्थितीसाठी.', en: 'For NRI identity and status.' }, category: 'INCOME', requirement: 'required' },
+  nreNro: { name: { mr: 'NRE/NRO खाते स्टेटमेंट', en: 'NRE/NRO Account Statement' }, explanation: { mr: 'NRI व्यवहार पुरावा.', en: 'Proof of NRI transactions.' }, category: 'INCOME', requirement: 'required' },
+  overseasIncome: { name: { mr: 'परदेशी उत्पन्न पुरावा', en: 'Overseas Income Proof' }, explanation: { mr: 'परदेशातील पगार/उत्पन्न असल्यास.', en: 'If you have salary or income from abroad.' }, category: 'INCOME', requirement: 'sometimes' },
 
-  bankAccount: { name: { mr: 'बँक खाते', hi: 'बैंक खाता' }, explanation: { mr: 'रक्कम जमा व परताव्यासाठी.', hi: 'राशि जमा और वापसी के लिए।' }, category: 'PRODUCT', requirement: 'required' },
-  seniorProof: { name: { mr: 'ज्येष्ठ नागरिक पुरावा', hi: 'वरिष्ठ नागरिक प्रमाण' }, explanation: { mr: 'जास्त व्याजदर मिळवण्यासाठी.', hi: 'अधिक ब्याज दर पाने के लिए।' }, category: 'PRODUCT', requirement: 'sometimes' },
-  nominee: { name: { mr: 'वारसदार (nominee) माहिती', hi: 'नॉमिनी जानकारी' }, explanation: { mr: 'लाभार्थी निश्चित करण्यासाठी.', hi: 'लाभार्थी तय करने के लिए।' }, category: 'PRODUCT', requirement: 'required' },
-  kycStatus: { name: { mr: 'KYC स्थिती', hi: 'KYC स्थिति' }, explanation: { mr: 'गुंतवणूक सुरू करण्यासाठी अनिवार्य.', hi: 'निवेश शुरू करने के लिए अनिवार्य।' }, category: 'PRODUCT', requirement: 'required' },
-  vehicleQuote: { name: { mr: 'वाहन कोटेशन', hi: 'वाहन कोटेशन' }, explanation: { mr: 'कर्ज रक्कम ठरवण्यासाठी.', hi: 'लोन राशि तय करने के लिए।' }, category: 'PRODUCT', requirement: 'required' },
-  rcUsed: { name: { mr: 'RC (वापरलेले वाहन असल्यास)', hi: 'RC (पुराना वाहन होने पर)' }, explanation: { mr: 'वाहन मालकी पडताळणीसाठी.', hi: 'वाहन स्वामित्व सत्यापन के लिए।' }, category: 'PRODUCT', requirement: 'sometimes' },
-  insuranceCopy: { name: { mr: 'विमा प्रत (लागू असल्यास)', hi: 'बीमा कॉपी (लागू होने पर)' }, explanation: { mr: 'वाहन विमा पडताळणीसाठी.', hi: 'वाहन बीमा सत्यापन के लिए।' }, category: 'PRODUCT', requirement: 'sometimes' },
-  admission: { name: { mr: 'प्रवेश पत्र', hi: 'एडमिशन लेटर' }, explanation: { mr: 'अभ्यासक्रम प्रवेश पुष्टीसाठी.', hi: 'कोर्स में प्रवेश की पुष्टि के लिए।' }, category: 'PRODUCT', requirement: 'required' },
-  feeStructure: { name: { mr: 'शुल्क रचना', hi: 'फीस संरचना' }, explanation: { mr: 'कर्ज रक्कम ठरवण्यासाठी.', hi: 'लोन राशि तय करने के लिए।' }, category: 'PRODUCT', requirement: 'required' },
-  academic: { name: { mr: 'शैक्षणिक कागदपत्रे', hi: 'शैक्षणिक दस्तावेज़' }, explanation: { mr: 'मागील गुणपत्रिका/प्रमाणपत्रे.', hi: 'पिछली मार्कशीट/प्रमाणपत्र।' }, category: 'PRODUCT', requirement: 'required' },
-  businessProof: { name: { mr: 'व्यवसाय पुरावा', hi: 'व्यवसाय प्रमाण' }, explanation: { mr: 'नोंदणी/परवाना/उद्यम प्रमाण.', hi: 'पंजीकरण/लाइसेंस/उद्यम प्रमाण।' }, category: 'PRODUCT', requirement: 'required' },
-  property: { name: { mr: 'मालमत्ता कागदपत्रे', hi: 'संपत्ति दस्तावेज़' }, explanation: { mr: 'गृहकर्जासाठी तारण म्हणून.', hi: 'होम लोन के लिए गिरवी के रूप में।' }, category: 'PRODUCT', requirement: 'required' },
-  goldDeclaration: { name: { mr: 'सोने मालकी घोषणा (आवश्यक असल्यास)', hi: 'सोना स्वामित्व घोषणा (आवश्यक होने पर)' }, explanation: { mr: 'काही ठिकाणी मालकी जाहीर करावी लागते.', hi: 'कुछ जगह स्वामित्व घोषित करना होता है।' }, category: 'PRODUCT', requirement: 'sometimes' },
-  branchCheck: { name: { mr: 'शाखा स्तरावर सोने तपासणी', hi: 'शाखा स्तर पर सोना जांच' }, explanation: { mr: 'सोन्याचे मूल्य शाखेत तपासले जाते.', hi: 'सोने का मूल्य शाखा में जांचा जाता है।' }, category: 'OTHER', requirement: 'sometimes' },
-  ageProof: { name: { mr: 'वय पुरावा', hi: 'आयु प्रमाण' }, explanation: { mr: 'प्रीमियम व पात्रतेसाठी.', hi: 'प्रीमियम व पात्रता के लिए।' }, category: 'PRODUCT', requirement: 'required' },
-  medicalHistory: { name: { mr: 'वैद्यकीय इतिहास', hi: 'मेडिकल हिस्ट्री' }, explanation: { mr: 'वयानुसार तपासणी लागू शकते.', hi: 'उम्र के अनुसार जांच लागू हो सकती है।' }, category: 'PRODUCT', requirement: 'sometimes' },
-  existingPolicy: { name: { mr: 'सध्याची पॉलिसी माहिती (असल्यास)', hi: 'मौजूदा पॉलिसी जानकारी (हो तो)' }, explanation: { mr: 'एकूण कव्हर ठरवण्यासाठी.', hi: 'कुल कवर तय करने के लिए।' }, category: 'OTHER', requirement: 'sometimes' },
+  bankAccount: { name: { mr: 'बँक खाते', en: 'Bank Account' }, explanation: { mr: 'रक्कम जमा व परताव्यासाठी.', en: 'For deposits and payouts.' }, category: 'PRODUCT', requirement: 'required' },
+  seniorProof: { name: { mr: 'ज्येष्ठ नागरिक पुरावा', en: 'Senior Citizen Proof' }, explanation: { mr: 'जास्त व्याजदर मिळवण्यासाठी.', en: 'To get the higher interest rate.' }, category: 'PRODUCT', requirement: 'sometimes' },
+  nominee: { name: { mr: 'वारसदार (nominee) माहिती', en: 'Nominee Details' }, explanation: { mr: 'लाभार्थी निश्चित करण्यासाठी.', en: 'To designate a beneficiary.' }, category: 'PRODUCT', requirement: 'required' },
+  kycStatus: { name: { mr: 'KYC स्थिती', en: 'KYC Status' }, explanation: { mr: 'गुंतवणूक सुरू करण्यासाठी अनिवार्य.', en: 'Mandatory to start investing.' }, category: 'PRODUCT', requirement: 'required' },
+  vehicleQuote: { name: { mr: 'वाहन कोटेशन', en: 'Vehicle Quotation' }, explanation: { mr: 'कर्ज रक्कम ठरवण्यासाठी.', en: 'To determine the loan amount.' }, category: 'PRODUCT', requirement: 'required' },
+  rcUsed: { name: { mr: 'RC (वापरलेले वाहन असल्यास)', en: 'RC (for used vehicles)' }, explanation: { mr: 'वाहन मालकी पडताळणीसाठी.', en: 'To verify vehicle ownership.' }, category: 'PRODUCT', requirement: 'sometimes' },
+  insuranceCopy: { name: { mr: 'विमा प्रत (लागू असल्यास)', en: 'Insurance Copy (if applicable)' }, explanation: { mr: 'वाहन विमा पडताळणीसाठी.', en: 'To verify vehicle insurance.' }, category: 'PRODUCT', requirement: 'sometimes' },
+  admission: { name: { mr: 'प्रवेश पत्र', en: 'Admission Letter' }, explanation: { mr: 'अभ्यासक्रम प्रवेश पुष्टीसाठी.', en: 'To confirm enrolment in the course.' }, category: 'PRODUCT', requirement: 'required' },
+  feeStructure: { name: { mr: 'शुल्क रचना', en: 'Fee Structure' }, explanation: { mr: 'कर्ज रक्कम ठरवण्यासाठी.', en: 'To determine the loan amount.' }, category: 'PRODUCT', requirement: 'required' },
+  academic: { name: { mr: 'शैक्षणिक कागदपत्रे', en: 'Academic Documents' }, explanation: { mr: 'मागील गुणपत्रिका/प्रमाणपत्रे.', en: 'Previous mark sheets and certificates.' }, category: 'PRODUCT', requirement: 'required' },
+  businessProof: { name: { mr: 'व्यवसाय पुरावा', en: 'Business Proof' }, explanation: { mr: 'नोंदणी/परवाना/उद्यम प्रमाण.', en: 'Registration, licence or Udyam certificate.' }, category: 'PRODUCT', requirement: 'required' },
+  property: { name: { mr: 'मालमत्ता कागदपत्रे', en: 'Property Documents' }, explanation: { mr: 'गृहकर्जासाठी तारण म्हणून.', en: 'As collateral for the home loan.' }, category: 'PRODUCT', requirement: 'required' },
+  goldDeclaration: { name: { mr: 'सोने मालकी घोषणा (आवश्यक असल्यास)', en: 'Gold Ownership Declaration (if needed)' }, explanation: { mr: 'काही ठिकाणी मालकी जाहीर करावी लागते.', en: 'Some lenders require an ownership declaration.' }, category: 'PRODUCT', requirement: 'sometimes' },
+  branchCheck: { name: { mr: 'शाखा स्तरावर सोने तपासणी', en: 'Gold Appraisal at Branch' }, explanation: { mr: 'सोन्याचे मूल्य शाखेत तपासले जाते.', en: "The gold's value is appraised at the branch." }, category: 'OTHER', requirement: 'sometimes' },
+  ageProof: { name: { mr: 'वय पुरावा', en: 'Age Proof' }, explanation: { mr: 'प्रीमियम व पात्रतेसाठी.', en: 'For premium calculation and eligibility.' }, category: 'PRODUCT', requirement: 'required' },
+  medicalHistory: { name: { mr: 'वैद्यकीय इतिहास', en: 'Medical History' }, explanation: { mr: 'वयानुसार तपासणी लागू शकते.', en: 'A medical check-up may apply based on age.' }, category: 'PRODUCT', requirement: 'sometimes' },
+  existingPolicy: { name: { mr: 'सध्याची पॉलिसी माहिती (असल्यास)', en: 'Existing Policy Details (if any)' }, explanation: { mr: 'एकूण कव्हर ठरवण्यासाठी.', en: 'To determine total cover.' }, category: 'OTHER', requirement: 'sometimes' },
 } satisfies Record<string, DocItem>;
 
 function income(profile: ProfileType): DocItem[] {

@@ -1,4 +1,4 @@
-// lib/eduContent.ts — localized (mr/hi) educational content for /rates,
+// lib/eduContent.ts — localized (mr/en) educational content for /rates,
 // /credit-score and /cards. Kept central so components stay copy-free.
 import type { Bi } from '@/types';
 
@@ -12,30 +12,30 @@ export interface InfoCard {
 export const marketCards: InfoCard[] = [
   {
     icon: '🥇',
-    title: { mr: 'सोने दर', hi: 'सोना दर' },
+    title: { mr: 'सोने दर', en: 'Gold Rate' },
     lines: [
       {
         mr: 'सोने-चांदीचे दर शहरानुसार बदलू शकतात. अंतिम दरासाठी अधिकृत स्रोत किंवा स्थानिक विक्रेत्याकडे तपासा.',
-        hi: 'सोना-चांदी के दर शहर के अनुसार बदल सकते हैं। अंतिम दर के लिए आधिकारिक स्रोत या स्थानीय विक्रेता से जांच करें।',
+        en: 'Gold and silver rates can vary city to city. Check an official source or your local dealer for the final rate.',
       },
     ],
   },
   {
     icon: '🥈',
-    title: { mr: 'चांदी दर', hi: 'चांदी दर' },
+    title: { mr: 'चांदी दर', en: 'Silver Rate' },
     lines: [
       {
         mr: 'सोने-चांदीचे दर शहरानुसार बदलू शकतात. अंतिम दरासाठी अधिकृत स्रोत किंवा स्थानिक विक्रेत्याकडे तपासा.',
-        hi: 'सोना-चांदी के दर शहर के अनुसार बदल सकते हैं। अंतिम दर के लिए आधिकारिक स्रोत या स्थानीय विक्रेता से जांच करें।',
+        en: 'Gold and silver rates can vary city to city. Check an official source or your local dealer for the final rate.',
       },
     ],
   },
   {
     icon: '🏦',
-    title: { mr: 'रेपो दर', hi: 'रेपो दर' },
+    title: { mr: 'रेपो दर', en: 'Repo Rate' },
     lines: [
-      { mr: 'RBI चा रेपो दर कर्जाच्या व्याजदरांवर परिणाम करतो.', hi: 'RBI का रेपो दर लोन की ब्याज दरों को प्रभावित करता है।' },
-      { mr: 'अधिकृत आकड्यांसाठी RBI संकेतस्थळ पाहा.', hi: 'आधिकारिक आंकड़ों के लिए RBI वेबसाइट देखें।' },
+      { mr: 'RBI चा रेपो दर कर्जाच्या व्याजदरांवर परिणाम करतो.', en: "The RBI's repo rate influences loan interest rates." },
+      { mr: 'अधिकृत आकड्यांसाठी RBI संकेतस्थळ पाहा.', en: 'Refer to the RBI website for official figures.' },
     ],
   },
 ];
@@ -43,31 +43,31 @@ export const marketCards: InfoCard[] = [
 // ── /credit-score ────────────────────────────────────────────────────────────
 export const creditScore = {
   whatIs: {
-    title: { mr: 'क्रेडिट स्कोअर म्हणजे काय?', hi: 'क्रेडिट स्कोर क्या है?' } as Bi,
+    title: { mr: 'क्रेडिट स्कोअर म्हणजे काय?', en: 'What is a credit score?' } as Bi,
     body: {
       mr: 'क्रेडिट स्कोअर हा ३०० ते ९०० दरम्यानचा आकडा आहे जो तुमची कर्ज परतफेडीची सवय दर्शवतो. जास्त स्कोअर म्हणजे चांगली विश्वासार्हता.',
-      hi: 'क्रेडिट स्कोर 300 से 900 के बीच का आंकड़ा है जो आपकी लोन चुकौती की आदत दिखाता है। ज़्यादा स्कोर यानी बेहतर विश्वसनीयता।',
+      en: 'A credit score is a number between 300 and 900 that reflects your loan repayment habits. A higher score means better creditworthiness.',
     } as Bi,
   },
   whyMatters: {
-    title: { mr: 'याचे महत्त्व का?', hi: 'यह क्यों मायने रखता है?' } as Bi,
+    title: { mr: 'याचे महत्त्व का?', en: 'Why does it matter?' } as Bi,
     body: {
       mr: 'चांगला स्कोअर असल्यास कर्ज लवकर मंजूर होते आणि व्याजदर कमी मिळतो. कमी स्कोअरमुळे अर्ज नाकारला जाऊ शकतो.',
-      hi: 'अच्छा स्कोर होने पर लोन जल्दी मंज़ूर होता है और ब्याज दर कम मिलती है। कम स्कोर से आवेदन अस्वीकृत हो सकता है।',
+      en: 'A good score means faster loan approvals and lower interest rates. A low score can lead to your application being rejected.',
     } as Bi,
   },
   improve: {
-    title: { mr: 'स्कोअर कसा सुधारावा?', hi: 'स्कोर कैसे सुधारें?' } as Bi,
+    title: { mr: 'स्कोअर कसा सुधारावा?', en: 'How can you improve your score?' } as Bi,
     points: [
-      { mr: 'EMI व क्रेडिट कार्ड बिल वेळेवर भरा.', hi: 'EMI व क्रेडिट कार्ड बिल समय पर भरें।' },
-      { mr: 'क्रेडिट मर्यादेचा ३०% पेक्षा कमी वापर करा.', hi: 'क्रेडिट लिमिट का 30% से कम उपयोग करें।' },
-      { mr: 'एकाच वेळी अनेक कर्ज अर्ज टाळा.', hi: 'एक साथ कई लोन आवेदन से बचें।' },
-      { mr: 'जुनी चांगली खाती चालू ठेवा.', hi: 'पुराने अच्छे खाते चालू रखें।' },
+      { mr: 'EMI व क्रेडिट कार्ड बिल वेळेवर भरा.', en: 'Pay your EMIs and credit card bills on time.' },
+      { mr: 'क्रेडिट मर्यादेचा ३०% पेक्षा कमी वापर करा.', en: 'Use less than 30% of your credit limit.' },
+      { mr: 'एकाच वेळी अनेक कर्ज अर्ज टाळा.', en: 'Avoid applying for multiple loans at the same time.' },
+      { mr: 'जुनी चांगली खाती चालू ठेवा.', en: 'Keep older, well-maintained accounts active.' },
     ] as Bi[],
   },
   note: {
     mr: 'टीप: आम्ही तुमचा CIBIL स्कोअर तपासत नाही. हे केवळ शैक्षणिक मार्गदर्शन आहे.',
-    hi: 'नोट: हम आपका CIBIL स्कोर नहीं जांचते। यह केवल शैक्षणिक मार्गदर्शन है।',
+    en: 'Note: We do not check your CIBIL score. This is purely educational guidance.',
   } as Bi,
 };
 
@@ -86,91 +86,91 @@ export const insuranceTypes: InsuranceType[] = [
   {
     id: 'term',
     icon: '🛡️',
-    label: { mr: 'टर्म विमा', hi: 'टर्म बीमा' },
+    label: { mr: 'टर्म विमा', en: 'Term Insurance' },
     whatIs: {
       mr: 'ठरलेल्या मुदतीसाठी मोठे जीवन कव्हर, कमी प्रीमियममध्ये.',
-      hi: 'तय अवधि के लिए बड़ा जीवन कवर, कम प्रीमियम में।',
+      en: 'Large life cover for a fixed term, at a low premium.',
     },
-    who: { mr: 'कुटुंबाचा आधार असणाऱ्या कमावत्या व्यक्तींसाठी.', hi: 'परिवार का सहारा बनने वाले कमाने वालों के लिए।' },
+    who: { mr: 'कुटुंबाचा आधार असणाऱ्या कमावत्या व्यक्तींसाठी.', en: 'For earning members who are the financial support of their family.' },
     benefits: [
-      { mr: 'कमी प्रीमियममध्ये मोठे कव्हर', hi: 'कम प्रीमियम में बड़ा कवर' },
-      { mr: 'कुटुंबाला आर्थिक सुरक्षा', hi: 'परिवार को आर्थिक सुरक्षा' },
+      { mr: 'कमी प्रीमियममध्ये मोठे कव्हर', en: 'Large cover at a low premium' },
+      { mr: 'कुटुंबाला आर्थिक सुरक्षा', en: 'Financial security for your family' },
     ],
     check: [
-      { mr: 'क्लेम सेटलमेंट रेशो तपासा', hi: 'क्लेम सेटलमेंट रेशियो जांचें' },
-      { mr: 'कव्हर रक्कम पुरेशी आहे का?', hi: 'कवर राशि पर्याप्त है क्या?' },
+      { mr: 'क्लेम सेटलमेंट रेशो तपासा', en: 'Check the claim settlement ratio' },
+      { mr: 'कव्हर रक्कम पुरेशी आहे का?', en: 'Is the cover amount enough?' },
     ],
   },
   {
     id: 'health',
     icon: '🏥',
-    label: { mr: 'आरोग्य / मेडिक्लेम', hi: 'स्वास्थ्य / मेडिक्लेम' },
+    label: { mr: 'आरोग्य / मेडिक्लेम', en: 'Health / Mediclaim' },
     whatIs: {
       mr: 'रुग्णालयाचा खर्च भरून काढणारा विमा.',
-      hi: 'अस्पताल का खर्च कवर करने वाला बीमा।',
+      en: 'Insurance that covers hospital expenses.',
     },
-    who: { mr: 'प्रत्येक व्यक्ती व कुटुंबासाठी आवश्यक.', hi: 'हर व्यक्ति व परिवार के लिए ज़रूरी।' },
+    who: { mr: 'प्रत्येक व्यक्ती व कुटुंबासाठी आवश्यक.', en: 'Essential for every individual and family.' },
     benefits: [
-      { mr: 'कॅशलेस उपचार सुविधा', hi: 'कैशलेस इलाज सुविधा' },
-      { mr: 'कर सवलत (80D)', hi: 'कर छूट (80D)' },
+      { mr: 'कॅशलेस उपचार सुविधा', en: 'Cashless treatment facility' },
+      { mr: 'कर सवलत (80D)', en: 'Tax benefit under Section 80D' },
     ],
     check: [
-      { mr: 'रूम रेंट मर्यादा व को-पे', hi: 'रूम रेंट लिमिट व को-पे' },
-      { mr: 'वेटिंग पीरियड व नेटवर्क हॉस्पिटल', hi: 'वेटिंग पीरियड व नेटवर्क हॉस्पिटल' },
+      { mr: 'रूम रेंट मर्यादा व को-पे', en: 'Room rent limit and co-pay' },
+      { mr: 'वेटिंग पीरियड व नेटवर्क हॉस्पिटल', en: 'Waiting period and network hospitals' },
     ],
   },
   {
     id: 'moneyback',
     icon: '💵',
-    label: { mr: 'मनी बॅक', hi: 'मनी बैक' },
+    label: { mr: 'मनी बॅक', en: 'Money Back' },
     whatIs: {
       mr: 'ठराविक काळाने परतावा देणारी विमा योजना.',
-      hi: 'तय समय पर रिटर्न देने वाली बीमा योजना।',
+      en: 'An insurance plan that pays out returns at fixed intervals.',
     },
-    who: { mr: 'विमा व नियमित परतावा दोन्ही हवे असणाऱ्यांसाठी.', hi: 'बीमा व नियमित रिटर्न दोनों चाहने वालों के लिए।' },
+    who: { mr: 'विमा व नियमित परतावा दोन्ही हवे असणाऱ्यांसाठी.', en: 'For those who want both insurance and regular payouts.' },
     benefits: [
-      { mr: 'मुदतीत टप्प्याटप्प्याने परतावा', hi: 'अवधि में चरणबद्ध रिटर्न' },
-      { mr: 'जीवन कव्हरसह बचत', hi: 'जीवन कवर के साथ बचत' },
+      { mr: 'मुदतीत टप्प्याटप्प्याने परतावा', en: 'Staggered payouts during the policy term' },
+      { mr: 'जीवन कव्हरसह बचत', en: 'Savings combined with life cover' },
     ],
     check: [
-      { mr: 'परताव्याचा दर कमी असू शकतो', hi: 'रिटर्न दर कम हो सकता है' },
-      { mr: 'टर्म + SIP पर्यायाशी तुलना करा', hi: 'टर्म + SIP विकल्प से तुलना करें' },
+      { mr: 'परताव्याचा दर कमी असू शकतो', en: 'The rate of return can be lower' },
+      { mr: 'टर्म + SIP पर्यायाशी तुलना करा', en: 'Compare against a Term + SIP alternative' },
     ],
   },
   {
     id: 'child',
     icon: '🧒',
-    label: { mr: 'चाइल्ड प्लॅन', hi: 'चाइल्ड प्लान' },
+    label: { mr: 'चाइल्ड प्लॅन', en: 'Child Plan' },
     whatIs: {
       mr: 'मुलांच्या शिक्षण व भविष्यासाठी बचत + विमा.',
-      hi: 'बच्चों की शिक्षा व भविष्य के लिए बचत + बीमा।',
+      en: "Savings plus insurance for your child's education and future.",
     },
-    who: { mr: 'मुलांच्या भविष्याचे नियोजन करणाऱ्या पालकांसाठी.', hi: 'बच्चों के भविष्य की योजना बनाने वाले माता-पिता के लिए।' },
+    who: { mr: 'मुलांच्या भविष्याचे नियोजन करणाऱ्या पालकांसाठी.', en: "For parents planning their child's future." },
     benefits: [
-      { mr: 'शिक्षणासाठी निधी उभारणी', hi: 'शिक्षा के लिए फंड निर्माण' },
-      { mr: 'पालकाच्या अनुपस्थितीतही सुरक्षा', hi: 'माता-पिता की अनुपस्थिति में भी सुरक्षा' },
+      { mr: 'शिक्षणासाठी निधी उभारणी', en: 'Builds a fund for education' },
+      { mr: 'पालकाच्या अनुपस्थितीतही सुरक्षा', en: 'Protection even in the absence of the parent' },
     ],
     check: [
-      { mr: 'लॉक-इन कालावधी तपासा', hi: 'लॉक-इन अवधि जांचें' },
-      { mr: 'शुल्क व परतावा समजून घ्या', hi: 'शुल्क व रिटर्न समझें' },
+      { mr: 'लॉक-इन कालावधी तपासा', en: 'Check the lock-in period' },
+      { mr: 'शुल्क व परतावा समजून घ्या', en: 'Understand the charges and returns' },
     ],
   },
   {
     id: 'cyber',
     icon: '🔐',
-    label: { mr: 'सायबर विमा', hi: 'साइबर बीमा' },
+    label: { mr: 'सायबर विमा', en: 'Cyber Insurance' },
     whatIs: {
       mr: 'ऑनलाइन फसवणूक व सायबर नुकसानापासून संरक्षण.',
-      hi: 'ऑनलाइन धोखाधड़ी व साइबर नुकसान से सुरक्षा।',
+      en: 'Protection against online fraud and cyber losses.',
     },
-    who: { mr: 'ऑनलाइन व्यवहार करणाऱ्या प्रत्येकासाठी उपयुक्त.', hi: 'ऑनलाइन लेन-देन करने वाले हर किसी के लिए उपयोगी।' },
+    who: { mr: 'ऑनलाइन व्यवहार करणाऱ्या प्रत्येकासाठी उपयुक्त.', en: 'Useful for everyone who transacts online.' },
     benefits: [
-      { mr: 'ऑनलाइन फसवणूक नुकसान भरपाई', hi: 'ऑनलाइन धोखाधड़ी नुकसान भरपाई' },
-      { mr: 'डेटा चोरी व ओळख चोरी कव्हर', hi: 'डेटा चोरी व पहचान चोरी कवर' },
+      { mr: 'ऑनलाइन फसवणूक नुकसान भरपाई', en: 'Compensation for online fraud losses' },
+      { mr: 'डेटा चोरी व ओळख चोरी कव्हर', en: 'Cover for data theft and identity theft' },
     ],
     check: [
-      { mr: 'कोणते धोके कव्हर होतात?', hi: 'कौन से जोखिम कवर होते हैं?' },
-      { mr: 'क्लेमसाठी लागणारे पुरावे', hi: 'क्लेम के लिए ज़रूरी प्रमाण' },
+      { mr: 'कोणते धोके कव्हर होतात?', en: 'Which risks are covered?' },
+      { mr: 'क्लेमसाठी लागणारे पुरावे', en: 'Evidence required for a claim' },
     ],
   },
 ];
@@ -178,45 +178,45 @@ export const insuranceTypes: InsuranceType[] = [
 // ── /cards ─────────────────────────────────────────────────────────────────
 export const cardsContent = {
   credit: {
-    title: { mr: 'Credit card म्हणजे काय?', hi: 'Credit card क्या है?' } as Bi,
+    title: { mr: 'Credit card म्हणजे काय?', en: 'What is a Credit Card?' } as Bi,
     body: {
       mr: 'क्रेडिट कार्ड म्हणजे बँकेकडून उधार घेऊन आधी खर्च करणे आणि नंतर ठरलेल्या तारखेला परतफेड करणे.',
-      hi: 'क्रेडिट कार्ड यानी बैंक से उधार लेकर पहले खर्च करना और बाद में तय तारीख पर चुकाना।',
+      en: 'A credit card lets you borrow from the bank to spend now and repay by a fixed due date.',
     } as Bi,
   },
   debit: {
-    title: { mr: 'Debit card म्हणजे काय?', hi: 'Debit card क्या है?' } as Bi,
+    title: { mr: 'Debit card म्हणजे काय?', en: 'What is a Debit Card?' } as Bi,
     body: {
       mr: 'डेबिट कार्ड तुमच्या स्वतःच्या बँक खात्यातून पैसे थेट वजा करते. उधार नसते.',
-      hi: 'डेबिट कार्ड आपके अपने बैंक खाते से पैसे सीधे काटता है। उधार नहीं होता।',
+      en: 'A debit card directly deducts money from your own bank account. There is no borrowing involved.',
     } as Bi,
   },
   whoFor: {
-    title: { mr: 'कोणासाठी कोणता कार्ड?', hi: 'किसके लिए कौन सा कार्ड?' } as Bi,
+    title: { mr: 'कोणासाठी कोणता कार्ड?', en: 'Which card is for whom?' } as Bi,
     points: [
-      { mr: 'शिस्तबद्ध खर्च व रिवॉर्ड हवे असल्यास — क्रेडिट कार्ड.', hi: 'अनुशासित खर्च व रिवॉर्ड चाहिए — क्रेडिट कार्ड।' },
-      { mr: 'फक्त स्वतःचे पैसे वापरायचे असल्यास — डेबिट कार्ड.', hi: 'सिर्फ अपने पैसे इस्तेमाल करने हों — डेबिट कार्ड।' },
+      { mr: 'शिस्तबद्ध खर्च व रिवॉर्ड हवे असल्यास — क्रेडिट कार्ड.', en: 'If you want disciplined spending and rewards — Credit Card.' },
+      { mr: 'फक्त स्वतःचे पैसे वापरायचे असल्यास — डेबिट कार्ड.', en: 'If you only want to use your own money — Debit Card.' },
     ] as Bi[],
   },
   docs: {
-    title: { mr: 'आवश्यक कागदपत्रे', hi: 'ज़रूरी दस्तावेज़' } as Bi,
+    title: { mr: 'आवश्यक कागदपत्रे', en: 'Required Documents' } as Bi,
     points: [
-      { mr: 'पॅन, आधार व पत्ता पुरावा', hi: 'पैन, आधार व पते का प्रमाण' },
-      { mr: 'उत्पन्न पुरावा (क्रेडिट कार्डसाठी)', hi: 'आय प्रमाण (क्रेडिट कार्ड के लिए)' },
+      { mr: 'पॅन, आधार व पत्ता पुरावा', en: 'PAN, Aadhaar and address proof' },
+      { mr: 'उत्पन्न पुरावा (क्रेडिट कार्डसाठी)', en: 'Income proof (for credit cards)' },
     ] as Bi[],
   },
   fees: {
-    title: { mr: 'कोणते शुल्क तपासावे', hi: 'कौन से शुल्क जांचें' } as Bi,
+    title: { mr: 'कोणते शुल्क तपासावे', en: 'Which fees to check' } as Bi,
     points: [
-      { mr: 'वार्षिक शुल्क व जॉइनिंग फी', hi: 'वार्षिक शुल्क व जॉइनिंग फीस' },
-      { mr: 'उशिरा भरल्यास दंड व व्याज', hi: 'देर से भरने पर जुर्माना व ब्याज' },
+      { mr: 'वार्षिक शुल्क व जॉइनिंग फी', en: 'Annual fee and joining fee' },
+      { mr: 'उशिरा भरल्यास दंड व व्याज', en: 'Late payment penalty and interest' },
     ] as Bi[],
   },
   rewards: {
-    title: { mr: 'रिवॉर्ड पॉइंट्स', hi: 'रिवॉर्ड पॉइंट्स' } as Bi,
+    title: { mr: 'रिवॉर्ड पॉइंट्स', en: 'Reward Points' } as Bi,
     body: {
       mr: 'खर्चावर मिळणारे पॉइंट्स कॅशबॅक, सवलत किंवा गिफ्टमध्ये वापरता येतात. अटी तपासा.',
-      hi: 'खर्च पर मिलने वाले पॉइंट्स कैशबैक, छूट या गिफ्ट में इस्तेमाल हो सकते हैं। शर्तें जांचें।',
+      en: 'Points earned on spends can be redeemed as cashback, discounts or gifts. Always check the terms.',
     } as Bi,
   },
 };

@@ -4,8 +4,85 @@ import { motion } from "framer-motion";
 import { TrendingUp, ArrowRight, Check, Activity } from "lucide-react";
 import { formatCurrency } from "@/lib/format";
 import { scrollToSection } from "@/lib/scroll";
+import { useLanguageStore } from "@/store/languageStore";
+
+type HeroCopy = {
+  badge: string;
+  titleStart: string;
+  titleAccent: string;
+  titleEnd: string;
+  description: string;
+  bullets: string[];
+  ctaPrimary: string;
+  ctaSecondary: string;
+  socialCount: string;
+  socialSub: string;
+  livePortfolio: string;
+  yearlyDelta: string;
+  wealthLabel: string;
+  wealthSub: string;
+  fiveYearBadge: string;
+  invested: string;
+  returns: string;
+};
+
+const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
+  mr: {
+    badge: "✨ महाराष्ट्राचे लाडके आर्थिक व्यासपीठ",
+    titleStart: "तुमच्या पैशांसाठी",
+    titleAccent: "सोपी, पारदर्शक आणि स्मार्ट",
+    titleEnd: "माहिती!",
+    description:
+      "बजेटकट्टा सोबत मिळवा मुदत ठेव (FD), म्युच्युअल फंड (SIP), कर्ज (EMI) आणि विम्याचे अचूक मार्गदर्शन. आर्थिकदृष्ट्या सक्षम बना, मराठीत अगदी सोप्या भाषेत!",
+    bullets: [
+      "१००% विनामूल्य व कोणतीही छुप्या फी नाही",
+      "फक्त एका क्लिकवर अचूक आकडेमोड",
+      "५०/३०/२० बजेटिंगचा सोपा सल्लागार",
+      "वैयक्तिक आर्थिक ध्येयांचे अचूक नियोजन",
+    ],
+    ctaPrimary: "आत्ताच मोजा",
+    ctaSecondary: "आरोग्य स्कोअर तपासा",
+    socialCount: "५०,०००+ मराठी बांधव",
+    socialSub: "बजेटकट्टाचा दरमहा वापर करत आहेत",
+    livePortfolio: "Live Portfolio",
+    yearlyDelta: "+२४.८% वार्षिक",
+    wealthLabel: "एकूण अंदाजे संपत्ती (१० वर्षानंतर)",
+    wealthSub: "दरमहा ₹१०,००० च्या बचतीची ताकद",
+    fiveYearBadge: "५ वर्ष: ₹७.८ लाख",
+    invested: "गुंतवलेली रक्कम",
+    returns: "मिळालेला परतावा",
+  },
+  en: {
+    badge: "India's Trusted Financial Hub",
+    titleStart: "Your Money's True Friend -",
+    titleAccent: "Simple & Smart",
+    titleEnd: "Financial Decisions!",
+    description:
+      "Get clear, transparent guidance on FDs, SIPs, Loans, and Insurance with BudgetKatta. Empower yourself financially!",
+    bullets: [
+      "100% Free & Unbiased",
+      "One-click accurate calculations",
+      "Easy 50/30/20 Budgeting",
+      "Precise financial goal planning",
+    ],
+    ctaPrimary: "Calculate Now",
+    ctaSecondary: "Check Health Score",
+    socialCount: "50,000+ Active Users",
+    socialSub: "Use BudgetKatta every month",
+    livePortfolio: "Live Portfolio",
+    yearlyDelta: "+24.8% Yearly",
+    wealthLabel: "Projected Net Worth (after 10 years)",
+    wealthSub: "The power of saving ₹10,000 per month",
+    fiveYearBadge: "5Y: ₹7.8L",
+    invested: "Invested Amount",
+    returns: "Total Returns",
+  },
+};
 
 export default function HeroSection() {
+  const language = useLanguageStore((s) => s.language);
+  const t = HERO_COPY[language] ?? HERO_COPY.mr;
+
   return (
     <section id="home" className="pt-8 pb-20 px-6 max-w-7xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -20,36 +97,31 @@ export default function HeroSection() {
           <div className="inline-flex items-center space-x-2 px-4 py-1.5 bg-slate-900/70 backdrop-blur-md border border-amber-400/20 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
             <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
             <span className="text-xs font-semibold text-amber-300 tracking-wide">
-              ✨ महाराष्ट्राचे लाडके आर्थिक व्यासपीठ
+              {t.badge}
             </span>
           </div>
 
-          {/* Beautiful Headline in Marathi with gradient */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-100 tracking-tight leading-[1.25]">
-            तुमच्या पैशांसाठी{" "}
-            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 pb-2">
-              सोपी, पारदर्शक आणि स्मार्ट
+          {/* Headline — Devanagari-safe: tracking-normal + roomy leading */}
+          <h1 className="text-4xl/[1.4] md:text-5xl/[1.4] lg:text-6xl/[1.4] font-extrabold text-slate-100 tracking-normal">
+            {t.titleStart}{" "}
+            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 pb-2 leading-[1.4]">
+              {t.titleAccent}
             </span>{" "}
-            माहिती!
+            {t.titleEnd}
           </h1>
 
-          <p className="text-lg md:text-xl text-slate-400 leading-relaxed font-normal max-w-2xl">
-            बजेटकट्टा सोबत मिळवा मुदत ठेव (FD), म्युच्युअल फंड (SIP), कर्ज (EMI) आणि विम्याचे अचूक मार्गदर्शन. आर्थिकदृष्ट्या सक्षम बना, मराठीत अगदी सोप्या भाषेत!
+          <p className="text-lg/[1.7] md:text-xl/[1.7] text-slate-400 font-normal max-w-2xl tracking-normal">
+            {t.description}
           </p>
 
           {/* Features Bullet Points with Glass Styling */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
-            {[
-              "१००% विनामूल्य व कोणतीही छुप्या फी नाही",
-              "फक्त एका क्लिकवर अचूक आकडेमोड",
-              "५०/३०/२० बजेटिंगचा सोपा सल्लागार",
-              "वैयक्तिक आर्थिक ध्येयांचे अचूक नियोजन",
-            ].map((bullet, idx) => (
+            {t.bullets.map((bullet, idx) => (
               <div key={idx} className="flex items-center space-x-3 text-slate-300 bg-slate-900/40 backdrop-blur-sm px-4 py-2.5 rounded-2xl border border-slate-800">
-                <div className="h-5 w-5 rounded-full bg-amber-500/10 flex items-center justify-center border border-amber-400/30">
+                <div className="h-5 w-5 rounded-full bg-amber-500/10 flex items-center justify-center border border-amber-400/30 shrink-0">
                   <Check className="h-3 w-3 text-amber-400" />
                 </div>
-                <span className="text-sm font-medium">{bullet}</span>
+                <span className="text-sm font-medium leading-[1.5] tracking-normal">{bullet}</span>
               </div>
             ))}
           </div>
@@ -62,7 +134,7 @@ export default function HeroSection() {
               whileTap={{ scale: 0.97 }}
               className="group px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 font-bold text-base shadow-lg shadow-amber-500/30 hover:shadow-[0_0_30px_rgba(251,191,36,0.55)] transition-all duration-300 flex items-center justify-center space-x-2"
             >
-              <span>आत्ताच मोजा</span>
+              <span>{t.ctaPrimary}</span>
               <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5" />
             </motion.button>
 
@@ -73,7 +145,7 @@ export default function HeroSection() {
               className="group px-8 py-4 rounded-full bg-slate-900/70 backdrop-blur-md border border-slate-800 text-slate-300 font-semibold text-base hover:bg-slate-900 hover:border-amber-400/50 hover:text-amber-300 hover:shadow-[0_0_22px_rgba(251,191,36,0.25)] transition-all duration-300 flex items-center justify-center space-x-2"
             >
               <Activity className="h-5 w-5 text-amber-400 transition-all duration-300 group-hover:drop-shadow-[0_0_6px_rgba(251,191,36,0.7)]" />
-              <span>आरोग्य स्कोअर तपासा</span>
+              <span>{t.ctaSecondary}</span>
             </motion.button>
           </div>
 
@@ -90,8 +162,8 @@ export default function HeroSection() {
               ))}
             </div>
             <div className="text-sm">
-              <p className="font-bold text-slate-200">५०,०००+ मराठी बांधव</p>
-              <p className="text-slate-400 text-xs">बजेटकट्टाचा दरमहा वापर करत आहेत</p>
+              <p className="font-bold text-slate-200 leading-[1.5]">{t.socialCount}</p>
+              <p className="text-slate-400 text-xs leading-[1.5]">{t.socialSub}</p>
             </div>
           </div>
         </motion.div>
@@ -118,19 +190,19 @@ export default function HeroSection() {
             <div className="flex justify-between items-center mb-6">
               <div className="flex items-center space-x-2">
                 <div className="h-2 w-2 rounded-full bg-amber-400 animate-ping" />
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Live Portfolio</span>
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.livePortfolio}</span>
               </div>
               <div className="px-2.5 py-1 bg-amber-500/10 rounded-full text-[10px] font-bold text-amber-300 flex items-center space-x-1 border border-amber-400/30">
                 <TrendingUp className="h-3 w-3" />
-                <span>+२४.८% वार्षिक</span>
+                <span>{t.yearlyDelta}</span>
               </div>
             </div>
 
             {/* Balance & SVG Chart Area */}
             <div className="space-y-1 mb-8">
-              <span className="text-xs text-slate-400 font-medium">एकूण अंदाजे संपत्ती (१० वर्षानंतर)</span>
-              <div className="text-3xl font-extrabold text-slate-50 tracking-tight">{formatCurrency(1840938)}</div>
-              <p className="text-xs text-slate-400 font-medium">दरमहा ₹१०,००० च्या बचतीची ताकद</p>
+              <span className="text-xs text-slate-400 font-medium leading-[1.5]">{t.wealthLabel}</span>
+              <div className="text-3xl font-extrabold text-slate-50 tracking-normal leading-[1.4]">{formatCurrency(1840938)}</div>
+              <p className="text-xs text-slate-400 font-medium leading-[1.5]">{t.wealthSub}</p>
             </div>
 
             {/* Dynamic SVG Sparkline Graph */}
@@ -167,18 +239,18 @@ export default function HeroSection() {
 
               {/* Micro badge inside graph */}
               <div className="absolute top-1/3 left-[62%] -translate-x-1/2 bg-slate-950/90 text-amber-300 text-[10px] font-semibold px-2 py-0.5 rounded-lg shadow-md flex items-center space-x-1 border border-amber-400/30">
-                <span>५ वर्ष: ₹७.८ लाख</span>
+                <span>{t.fiveYearBadge}</span>
               </div>
             </div>
 
             {/* Bottom Quick Breakdown */}
             <div className="grid grid-cols-2 gap-4 border-t border-slate-800 pt-5">
               <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase block">गुंतवलेली रक्कम</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase block leading-[1.5]">{t.invested}</span>
                 <span className="text-sm font-bold text-slate-300">{formatCurrency(1200000)}</span>
               </div>
               <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase block">मिळालेला परतावा</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase block leading-[1.5]">{t.returns}</span>
                 <span className="text-sm font-bold text-amber-400 flex items-center space-x-0.5">
                   <span>{formatCurrency(640938)}</span>
                 </span>

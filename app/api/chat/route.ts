@@ -35,7 +35,7 @@ export async function POST(request: Request) {
   }
 
   const message = sanitizeText(parsed.data.message, 2000);
-  const language = parsed.data.language === 'hi' ? 'hi' : 'mr';
+  const language = parsed.data.language === 'en' ? 'en' : 'mr';
 
   try {
     const reply = await generateChatReply(message, language);

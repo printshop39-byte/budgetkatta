@@ -96,7 +96,7 @@ export default function FinancialHealthQuiz() {
             <span className="text-xs font-bold text-amber-300 bg-amber-500/10 px-3.5 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">
               आरोग्य तपासणी
             </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+            <h2 className="text-3xl/[1.4] md:text-4xl/[1.4] font-extrabold tracking-normal">
               तुमचे आर्थिक आरोग्य (Financial Health) मोजा!
             </h2>
             <p className="text-slate-300 leading-relaxed text-sm md:text-base">

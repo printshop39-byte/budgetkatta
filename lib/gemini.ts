@@ -10,7 +10,7 @@ import type { Language } from '@/types';
 // ── Disclaimers (appended to financial guidance) ────────────────────────────
 const DISCLAIMER: Record<Language, string> = {
   mr: 'टीप: ही माहिती केवळ शैक्षणिक आहे. निर्णयापूर्वी प्रमाणित आर्थिक सल्लागाराचा सल्ला घ्या.',
-  hi: 'नोट: यह जानकारी केवल शैक्षणिक है। निर्णय से पहले प्रमाणित वित्तीय सलाहकार से सलाह लें।',
+  en: 'Note: This information is for educational purposes only. Please consult a certified financial advisor before making any decisions.',
 };
 
 // ── Prompt engineering ──────────────────────────────────────────────────────
@@ -18,7 +18,7 @@ const DISCLAIMER: Record<Language, string> = {
 // domain to the four finance areas, fixes the reply language, caps length, and
 // forces the disclaimer. Keep it tight: longer instructions = more drift.
 function buildSystemInstruction(language: Language): string {
-  const langName = language === 'mr' ? 'Marathi (मराठी)' : 'Hindi (हिंदी)';
+  const langName = language === 'mr' ? 'Marathi (मराठी)' : 'English';
   return [
     `You are "BudgetKatta Guide", a friendly financial information assistant for users in India.`,
     `ALWAYS reply in ${langName}. Keep answers short (2-4 sentences), simple, and jargon-free.`,
@@ -39,32 +39,32 @@ function ruleBasedReply(message: string, language: Language): string {
   const A = {
     fd: {
       mr: 'मुदत ठेव (FD) ही सुरक्षित गुंतवणूक आहे. बँकेनुसार व्याजदर बदलतात आणि ज्येष्ठ नागरिकांना अधिक दर मिळतो. आमच्या FD पानावर तुलना करा आणि कॅल्क्युलेटर वापरा.',
-      hi: 'सावधि जमा (FD) एक सुरक्षित निवेश है। ब्याज दरें बैंक के अनुसार बदलती हैं और वरिष्ठ नागरिकों को अधिक दर मिलती है। हमारे FD पेज पर तुलना करें और कैलकुलेटर उपयोग करें।',
+      en: 'A Fixed Deposit (FD) is a safe investment. Interest rates vary by bank, and senior citizens get a higher rate. Compare options on our FD page and use the calculator.',
     },
     loan: {
       mr: 'कर्जाचा EMI रक्कम, व्याजदर आणि कालावधीवर अवलंबून असतो. आमचे EMI कॅल्क्युलेटर वापरून मासिक हप्ता पाहा आणि बँकांची तुलना करा.',
-      hi: 'लोन का EMI राशि, ब्याज दर और अवधि पर निर्भर करता है। हमारे EMI कैलकुलेटर से मासिक किस्त देखें और बैंकों की तुलना करें।',
+      en: 'Your loan EMI depends on the amount, interest rate, and tenure. Use our EMI calculator to see the monthly installment and compare banks.',
     },
     sip: {
       mr: 'SIP द्वारे दर महिन्याला थोडी रक्कम गुंतवून दीर्घकाळात संपत्ती निर्माण होते. जोखीम फंडानुसार बदलते. आमचे SIP कॅल्क्युलेटर वापरून परतावा अंदाजा.',
-      hi: 'SIP के ज़रिए हर महीने थोड़ी राशि निवेश कर लंबे समय में संपत्ति बनती है। जोखिम फंड के अनुसार बदलता है। हमारे SIP कैलकुलेटर से रिटर्न का अनुमान लगाएं।',
+      en: 'A SIP lets you invest a small amount each month to build wealth over the long term. Risk varies by fund. Use our SIP calculator to estimate returns.',
     },
     insurance: {
       mr: 'विमा तुमच्या आरोग्य, जीवन किंवा वाहनासाठी आर्थिक संरक्षण देतो. प्रीमियम वय व संरक्षणावर अवलंबून असतो. आमचा प्रीमियम अंदाज वापरा.',
-      hi: 'बीमा आपके स्वास्थ्य, जीवन या वाहन के लिए वित्तीय सुरक्षा देता है। प्रीमियम उम्र और कवर पर निर्भर करता है। हमारा प्रीमियम अनुमान उपयोग करें।',
+      en: 'Insurance provides financial protection for your health, life, or vehicle. The premium depends on your age and coverage. Use our premium estimator.',
     },
     off: {
       mr: 'माफ करा, मी फक्त FD, कर्ज, SIP आणि विमा याबद्दल मदत करू शकतो. कृपया यापैकी एखादा प्रश्न विचारा.',
-      hi: 'क्षमा करें, मैं केवल FD, लोन, SIP और बीमा के बारे में मदद कर सकता हूं। कृपया इनमें से कोई प्रश्न पूछें।',
+      en: 'Sorry, I can only help with FDs, Loans, SIPs, and Insurance. Please ask a question on one of these topics.',
     },
   };
 
   let body: string;
   let onTopic = true;
-  if (has('fd', 'fixed', 'deposit', 'ठेव', 'जमा', 'मुदत', 'सावधि')) body = A.fd[language];
-  else if (has('loan', 'emi', 'कर्ज', 'लोन', 'ऋण', 'हप्ता', 'किस्त')) body = A.loan[language];
-  else if (has('sip', 'mutual', 'fund', 'म्युच्युअल', 'म्यूचुअल', 'फंड', 'गुंतवणूक', 'निवेश')) body = A.sip[language];
-  else if (has('insurance', 'policy', 'विमा', 'बीमा', 'पॉलिसी', 'प्रीमियम')) body = A.insurance[language];
+  if (has('fd', 'fixed', 'deposit', 'ठेव', 'जमा', 'मुदत')) body = A.fd[language];
+  else if (has('loan', 'emi', 'कर्ज', 'ऋण', 'हप्ता')) body = A.loan[language];
+  else if (has('sip', 'mutual', 'fund', 'म्युच्युअल', 'गुंतवणूक')) body = A.sip[language];
+  else if (has('insurance', 'policy', 'विमा', 'पॉलिसी', 'प्रीमियम')) body = A.insurance[language];
   else { body = A.off[language]; onTopic = false; }
 
   // Disclaimer only when actual guidance was given.

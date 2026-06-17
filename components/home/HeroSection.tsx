@@ -27,7 +27,7 @@ export default function HeroSection() {
             {t('hero.badge')}
           </span>
 
-          <h1 className="mt-6 whitespace-pre-line font-display text-4xl font-extrabold leading-[1.15] tracking-tight text-transparent md:text-6xl bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-500">
+          <h1 className="mt-6 whitespace-pre-line font-display text-4xl/[1.4] md:text-6xl/[1.4] font-extrabold tracking-normal text-transparent pb-2 bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-500">
             {t('hero.title')}
           </h1>
 

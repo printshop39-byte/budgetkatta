@@ -1,9 +1,9 @@
 // types/index.ts — shared TypeScript interfaces
 
-export type Language = 'mr' | 'hi';
+export type Language = 'mr' | 'en';
 
 /** Bilingual string — localized content kept centrally in lib/ data modules. */
-export type Bi = { mr: string; hi: string };
+export type Bi = { mr: string; en: string };
 
 export type LeadModule = 'FD' | 'LOAN' | 'SIP' | 'INSURANCE' | 'GENERAL' | 'CONTACT';
 

@@ -45,7 +45,7 @@ export default function SmartAdvisory() {
           <span className="text-xs font-bold text-amber-300 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">
             स्मार्ट सल्लागार
           </span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-100 tracking-tight">
+          <h2 className="text-3xl/[1.4] md:text-4xl/[1.4] font-extrabold text-slate-100 tracking-normal">
             तुमच्या प्रश्नांचे निरसन, एका क्षणात!
           </h2>
           <p className="text-slate-400 leading-relaxed text-base">

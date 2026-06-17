@@ -30,7 +30,7 @@ export default function FAQ() {
     <section className="py-20 px-6 max-w-4xl mx-auto border-t border-slate-800">
       <div className="text-center mb-12">
         <span className="text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">प्रश्नोत्तरे</span>
-        <h2 className="text-3xl font-extrabold text-slate-100 mt-4 tracking-tight">वारंवार विचारले जाणारे प्रश्न (FAQs)</h2>
+        <h2 className="text-3xl font-extrabold text-slate-100 mt-4 tracking-normal leading-[1.4]">वारंवार विचारले जाणारे प्रश्न (FAQs)</h2>
       </div>
 
       {/* Accordion Cards */}

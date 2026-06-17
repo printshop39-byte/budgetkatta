@@ -63,17 +63,17 @@ export default function Navbar() {
             {t('nav.cta_short')}
           </button>
           <div className="flex overflow-hidden rounded-lg border border-slate-800">
-            {(['mr', 'hi'] as const).map((lng) => (
+            {(['mr', 'en'] as const).map((lng) => (
               <button
                 key={lng}
                 onClick={() => setLanguage(lng)}
                 aria-pressed={language === lng}
-                aria-label={lng === 'mr' ? 'मराठी भाषा' : 'हिंदी भाषा'}
+                aria-label={lng === 'mr' ? 'मराठी भाषा' : 'English language'}
                 className={`px-3 py-1.5 text-xs font-semibold transition-colors ${
                   language === lng ? 'bg-amber-400 text-slate-950' : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
-                {lng === 'mr' ? 'मराठी' : 'हिंदी'}
+                {lng === 'mr' ? 'मराठी' : 'English'}
               </button>
             ))}
           </div>

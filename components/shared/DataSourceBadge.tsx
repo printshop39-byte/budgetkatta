@@ -16,7 +16,7 @@ export default function DataSourceBadge({
 
   const live = source === 'mongodb';
   const time = updatedAt
-    ? updatedAt.toLocaleTimeString(language === 'mr' ? 'mr-IN' : 'hi-IN', {
+    ? updatedAt.toLocaleTimeString(language === 'mr' ? 'mr-IN' : 'en-IN', {
         hour: '2-digit',
         minute: '2-digit',
       })

@@ -1,4 +1,4 @@
-// lib/loanDetails.ts — localized (mr/hi) guidance per loan type for /loans.
+// lib/loanDetails.ts — localized (mr/en) guidance per loan type for /loans.
 import type { Bi } from '@/types';
 import type { ProductType } from '@/lib/documentChecklists';
 
@@ -21,13 +21,13 @@ export const loanDetails: Record<LoanType, LoanDetail> = {
     labelKey: 'loan.home',
     product: 'HOME_LOAN',
     eligibility: [
-      { mr: 'स्थिर उत्पन्न व चांगला क्रेडिट स्कोअर', hi: 'स्थिर आय व अच्छा क्रेडिट स्कोर' },
-      { mr: 'वय साधारण २१–६५ वर्षे', hi: 'उम्र लगभग 21–65 वर्ष' },
+      { mr: 'स्थिर उत्पन्न व चांगला क्रेडिट स्कोअर', en: 'Stable income and a good credit score' },
+      { mr: 'वय साधारण २१–६५ वर्षे', en: 'Age roughly 21–65 years' },
     ],
-    who: { mr: 'घर खरेदी किंवा बांधकामासाठी दीर्घ मुदतीचे कर्ज हवे असणाऱ्यांसाठी.', hi: 'घर खरीदने या बनाने के लिए लंबी अवधि का लोन चाहने वालों के लिए।' },
+    who: { mr: 'घर खरेदी किंवा बांधकामासाठी दीर्घ मुदतीचे कर्ज हवे असणाऱ्यांसाठी.', en: 'For those who need a long-tenure loan to buy or build a home.' },
     mistakes: [
-      { mr: 'फक्त EMI पाहणे, एकूण व्याज दुर्लक्षित करणे.', hi: 'सिर्फ EMI देखना, कुल ब्याज को अनदेखा करना।' },
-      { mr: 'प्रोसेसिंग शुल्क व छुपे खर्च न तपासणे.', hi: 'प्रोसेसिंग शुल्क व छुपे खर्च न जांचना।' },
+      { mr: 'फक्त EMI पाहणे, एकूण व्याज दुर्लक्षित करणे.', en: 'Looking only at the EMI and ignoring the total interest.' },
+      { mr: 'प्रोसेसिंग शुल्क व छुपे खर्च न तपासणे.', en: 'Not checking processing fees and hidden charges.' },
     ],
   },
   personal: {
@@ -36,13 +36,13 @@ export const loanDetails: Record<LoanType, LoanDetail> = {
     labelKey: 'loan.personal',
     product: 'PERSONAL_LOAN',
     eligibility: [
-      { mr: 'नियमित उत्पन्न (नोकरी/व्यवसाय)', hi: 'नियमित आय (नौकरी/व्यवसाय)' },
-      { mr: 'चांगला क्रेडिट स्कोअर असल्यास कमी दर', hi: 'अच्छा क्रेडिट स्कोर होने पर कम दर' },
+      { mr: 'नियमित उत्पन्न (नोकरी/व्यवसाय)', en: 'Regular income (salaried or business)' },
+      { mr: 'चांगला क्रेडिट स्कोअर असल्यास कमी दर', en: 'Lower rate if you have a good credit score' },
     ],
-    who: { mr: 'तातडीच्या गरजेसाठी विनातारण कर्ज हवे असणाऱ्यांसाठी.', hi: 'तुरंत ज़रूरत के लिए बिना गिरवी लोन चाहने वालों के लिए।' },
+    who: { mr: 'तातडीच्या गरजेसाठी विनातारण कर्ज हवे असणाऱ्यांसाठी.', en: 'For those who need a quick, collateral-free loan for urgent needs.' },
     mistakes: [
-      { mr: 'गरजेपेक्षा जास्त रक्कम घेणे.', hi: 'ज़रूरत से ज़्यादा राशि लेना।' },
-      { mr: 'उच्च व्याजदराची तुलना न करणे.', hi: 'ऊंची ब्याज दर की तुलना न करना।' },
+      { mr: 'गरजेपेक्षा जास्त रक्कम घेणे.', en: 'Borrowing more than you actually need.' },
+      { mr: 'उच्च व्याजदराची तुलना न करणे.', en: 'Not comparing high interest rates across lenders.' },
     ],
   },
   business: {
@@ -51,13 +51,13 @@ export const loanDetails: Record<LoanType, LoanDetail> = {
     labelKey: 'loan.business',
     product: 'BUSINESS_LOAN',
     eligibility: [
-      { mr: 'व्यवसाय नोंदणी व किमान उलाढाल', hi: 'व्यवसाय पंजीकरण व न्यूनतम टर्नओवर' },
-      { mr: 'ITR व GST (लागू असल्यास)', hi: 'ITR व GST (लागू होने पर)' },
+      { mr: 'व्यवसाय नोंदणी व किमान उलाढाल', en: 'Business registration and minimum turnover' },
+      { mr: 'ITR व GST (लागू असल्यास)', en: 'ITR and GST (if applicable)' },
     ],
-    who: { mr: 'व्यवसाय वाढवण्यासाठी किंवा खेळत्या भांडवलासाठी.', hi: 'व्यवसाय बढ़ाने या कार्यशील पूंजी के लिए।' },
+    who: { mr: 'व्यवसाय वाढवण्यासाठी किंवा खेळत्या भांडवलासाठी.', en: 'For growing your business or for working capital needs.' },
     mistakes: [
-      { mr: 'रोख प्रवाह न पाहता कर्ज घेणे.', hi: 'कैश-फ्लो देखे बिना लोन लेना।' },
-      { mr: 'कागदपत्रे अपूर्ण ठेवणे.', hi: 'दस्तावेज़ अधूरे रखना।' },
+      { mr: 'रोख प्रवाह न पाहता कर्ज घेणे.', en: 'Taking a loan without reviewing your cash flow.' },
+      { mr: 'कागदपत्रे अपूर्ण ठेवणे.', en: 'Leaving documents incomplete.' },
     ],
   },
   vehicle: {
@@ -66,13 +66,13 @@ export const loanDetails: Record<LoanType, LoanDetail> = {
     labelKey: 'loan.vehicle',
     product: 'VEHICLE_LOAN',
     eligibility: [
-      { mr: 'स्थिर उत्पन्न व वाहन कोटेशन', hi: 'स्थिर आय व वाहन कोटेशन' },
-      { mr: 'डाउन पेमेंट क्षमता', hi: 'डाउन पेमेंट क्षमता' },
+      { mr: 'स्थिर उत्पन्न व वाहन कोटेशन', en: 'Stable income and a vehicle quotation' },
+      { mr: 'डाउन पेमेंट क्षमता', en: 'Ability to make a down payment' },
     ],
-    who: { mr: 'नवीन किंवा वापरलेले वाहन घेणाऱ्यांसाठी.', hi: 'नया या पुराना वाहन खरीदने वालों के लिए।' },
+    who: { mr: 'नवीन किंवा वापरलेले वाहन घेणाऱ्यांसाठी.', en: 'For those buying a new or used vehicle.' },
     mistakes: [
-      { mr: 'ऑन-रोड किमतीचे संपूर्ण कर्ज गृहीत धरणे.', hi: 'ऑन-रोड कीमत का पूरा लोन मान लेना।' },
-      { mr: 'विमा व देखभाल खर्च विसरणे.', hi: 'बीमा व रखरखाव खर्च भूल जाना।' },
+      { mr: 'ऑन-रोड किमतीचे संपूर्ण कर्ज गृहीत धरणे.', en: 'Assuming the full on-road price will be financed.' },
+      { mr: 'विमा व देखभाल खर्च विसरणे.', en: 'Forgetting insurance and maintenance costs.' },
     ],
   },
   education: {
@@ -81,13 +81,13 @@ export const loanDetails: Record<LoanType, LoanDetail> = {
     labelKey: 'loan.education',
     product: 'EDUCATION_LOAN',
     eligibility: [
-      { mr: 'मान्यताप्राप्त संस्थेत प्रवेश', hi: 'मान्यता प्राप्त संस्थान में प्रवेश' },
-      { mr: 'सह-अर्जदार (पालक) उत्पन्न', hi: 'सह-आवेदक (अभिभावक) आय' },
+      { mr: 'मान्यताप्राप्त संस्थेत प्रवेश', en: 'Admission to a recognised institution' },
+      { mr: 'सह-अर्जदार (पालक) उत्पन्न', en: 'Co-applicant (parent) income' },
     ],
-    who: { mr: 'उच्च शिक्षणासाठी निधी हवा असणाऱ्या विद्यार्थ्यांसाठी.', hi: 'उच्च शिक्षा के लिए फंड चाहने वाले विद्यार्थियों के लिए।' },
+    who: { mr: 'उच्च शिक्षणासाठी निधी हवा असणाऱ्या विद्यार्थ्यांसाठी.', en: 'For students who need funding for higher education.' },
     mistakes: [
-      { mr: 'मोरॅटोरियम कालावधी न समजणे.', hi: 'मोरेटोरियम अवधि न समझना।' },
-      { mr: 'कर सवलत (80E) दुर्लक्षित करणे.', hi: 'कर छूट (80E) को अनदेखा करना।' },
+      { mr: 'मोरॅटोरियम कालावधी न समजणे.', en: 'Not understanding the moratorium period.' },
+      { mr: 'कर सवलत (80E) दुर्लक्षित करणे.', en: 'Ignoring the tax benefit available under 80E.' },
     ],
   },
   gold: {
@@ -96,13 +96,13 @@ export const loanDetails: Record<LoanType, LoanDetail> = {
     labelKey: 'loan.gold',
     product: 'GOLD_LOAN',
     eligibility: [
-      { mr: 'स्वतःचे सोने (दागिने/नाणी)', hi: 'अपना सोना (आभूषण/सिक्के)' },
-      { mr: 'किमान KYC कागदपत्रे', hi: 'न्यूनतम KYC दस्तावेज़' },
+      { mr: 'स्वतःचे सोने (दागिने/नाणी)', en: 'Your own gold (jewellery or coins)' },
+      { mr: 'किमान KYC कागदपत्रे', en: 'Basic KYC documents' },
     ],
-    who: { mr: 'सोने तारण ठेवून जलद, विनातपासणी कर्ज हवे असणाऱ्यांसाठी.', hi: 'सोना गिरवी रख जल्दी, बिना ज़्यादा जांच लोन चाहने वालों के लिए।' },
+    who: { mr: 'सोने तारण ठेवून जलद, विनातपासणी कर्ज हवे असणाऱ्यांसाठी.', en: 'For those who want a quick loan against gold with minimal checks.' },
     mistakes: [
-      { mr: 'जास्त व्याजदर व कमी मुदत दुर्लक्षित करणे.', hi: 'ऊंची ब्याज दर व कम अवधि को अनदेखा करना।' },
-      { mr: 'परतफेड न झाल्यास सोने जप्तीचा धोका.', hi: 'चुकौती न होने पर सोना ज़ब्ती का जोखिम।' },
+      { mr: 'जास्त व्याजदर व कमी मुदत दुर्लक्षित करणे.', en: 'Ignoring the higher interest rate and shorter tenure.' },
+      { mr: 'परतफेड न झाल्यास सोने जप्तीचा धोका.', en: 'Risk of gold being seized if repayment is missed.' },
     ],
   },
 };

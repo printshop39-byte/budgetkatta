@@ -50,7 +50,7 @@ export default function BentoGrid() {
   return (
     <section className="py-16 px-6 max-w-7xl mx-auto border-t border-slate-800">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <h2 className="text-3xl font-extrabold text-slate-100 tracking-tight">आमची प्रमुख डिजिटल साधने</h2>
+        <h2 className="text-3xl font-extrabold text-slate-100 tracking-normal leading-[1.4]">आमची प्रमुख डिजिटल साधने</h2>
         <p className="text-slate-400 mt-3 text-base">
           तुमच्या विविध आर्थिक गरजांचे विश्लेषण करण्यासाठी खालीलपैकी कोणत्याही कट्ट्यावर क्लिक करा.
         </p>
@@ -81,7 +81,7 @@ export default function BentoGrid() {
               </div>
 
               {/* Content */}
-              <h3 className="text-xl font-bold text-slate-100 mb-2.5 tracking-tight">{card.title}</h3>
+              <h3 className="text-xl font-bold text-slate-100 mb-2.5 tracking-normal leading-[1.4]">{card.title}</h3>
               <p className="text-sm text-slate-400 leading-relaxed">{card.desc}</p>
             </div>
 

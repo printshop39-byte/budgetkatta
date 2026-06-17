@@ -1139,7 +1139,7 @@ export default function CalculatorsHub() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-14">
           <span className="text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">कॅल्क्युलेटर कट्टा</span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-100 mt-4 tracking-tight">
+          <h2 className="text-3xl/[1.4] md:text-4xl/[1.4] font-extrabold text-slate-100 mt-4 tracking-normal">
             पैशांची योग्य आकडेमोड, एकाच जागी
           </h2>
           <p className="text-slate-400 mt-3 text-base">

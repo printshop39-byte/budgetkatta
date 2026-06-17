@@ -6,7 +6,7 @@ export const leadSchema = z.object({
   phone: z.string().max(20).optional(),
   email: z.string().max(160).optional(),
   city: z.string().max(120).optional(),
-  selectedLanguage: z.enum(['mr', 'hi']),
+  selectedLanguage: z.enum(['mr', 'en']),
   interestedModule: z.enum(['FD', 'LOAN', 'SIP', 'INSURANCE', 'GENERAL', 'CONTACT']),
   selectedProduct: z.string().max(300).optional(),
   userQuery: z.string().max(2000).optional(),
@@ -16,7 +16,7 @@ export const leadSchema = z.object({
 
 export const chatSchema = z.object({
   message: z.string().min(1).max(2000),
-  language: z.enum(['mr', 'hi']).optional(),
+  language: z.enum(['mr', 'en']).optional(),
 });
 
 export type LeadInput = z.infer<typeof leadSchema>;

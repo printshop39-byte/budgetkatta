@@ -43,7 +43,7 @@ export default function EducationHub() {
     <section id="literacy" className="py-20 px-6 max-w-7xl mx-auto border-t border-slate-800">
       <div className="text-center max-w-3xl mx-auto mb-14">
         <span className="text-xs font-bold text-amber-300 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">आर्थिक साक्षरता</span>
-        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-100 mt-4 tracking-tight">चला पैशांची भाषा शिकूया!</h2>
+        <h2 className="text-3xl/[1.4] md:text-4xl/[1.4] font-extrabold text-slate-100 mt-4 tracking-normal">चला पैशांची भाषा शिकूया!</h2>
         <p className="text-slate-400 mt-3 text-base">
           आर्थिक यश मिळवण्यासाठी योग्य आर्थिक संकल्पना समजून घेणे अत्यंत महत्त्वाचे आहे.
         </p>
@@ -60,7 +60,7 @@ export default function EducationHub() {
           >
             <div>
               <div className="inline-flex p-3 bg-slate-900 rounded-2xl shadow-sm border border-slate-800 mb-5">{item.icon}</div>
-              <h3 className="text-lg font-bold text-slate-100 mb-3 tracking-tight leading-snug">{item.title}</h3>
+              <h3 className="text-lg font-bold text-slate-100 mb-3 tracking-normal leading-[1.4]">{item.title}</h3>
               <p className="text-xs md:text-sm text-slate-400 leading-relaxed font-medium">{item.desc}</p>
             </div>
 

@@ -54,8 +54,14 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Language switcher + mobile toggle */}
+        {/* Language switcher + CTA + mobile toggle */}
         <div className="flex items-center gap-2">
+          <button
+            onClick={() => openLead({ module: 'GENERAL', sourcePage: 'NAVBAR_CTA' })}
+            className="hidden rounded-xl bg-bk-gold px-4 py-2 text-sm font-bold text-bk-dark transition-colors hover:bg-bk-gold-light font-deva lg:block"
+          >
+            {t('nav.cta_short')}
+          </button>
           <div className="flex overflow-hidden rounded-lg border border-white/10">
             {(['mr', 'hi'] as const).map((lng) => (
               <button

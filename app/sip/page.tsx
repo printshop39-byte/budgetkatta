@@ -4,6 +4,7 @@ import { useRemoteData } from '@/lib/useRemoteData';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { useCompareStore } from '@/store/compareStore';
+import { useLeadFormStore } from '@/store/leadFormStore';
 import SIPCalculator from '@/components/calculators/SIPCalculator';
 import BadgeChip from '@/components/shared/BadgeChip';
 import DataSourceBadge from '@/components/shared/DataSourceBadge';
@@ -19,14 +20,35 @@ export default function SIPPage() {
   const { language } = useLanguageStore();
   const t = getTranslation(language);
   const { addItem, items } = useCompareStore();
+  const openLead = useLeadFormStore((s) => s.open);
   const { data: funds, loading, source, updatedAt } = useRemoteData<SIPFund>('/api/sip', sipFunds);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <header className="mb-8 text-center">
+      <header className="mb-6 text-center">
         <h1 className="font-display text-3xl font-extrabold text-white md:text-4xl">{t('sip.title')}</h1>
         <p className="mt-2 text-white/55 font-deva">{t('sip.subtitle')}</p>
+        <p className="mx-auto mt-3 max-w-2xl rounded-2xl border border-bk-gold/15 bg-bk-gold/5 px-4 py-2.5 text-sm text-white/75 font-deva">
+          💡 {t('sip.intro')}
+        </p>
       </header>
+
+      {/* Risk type cards */}
+      <div className="mb-8">
+        <h2 className="mb-3 font-display text-lg font-bold text-white font-deva">{t('sip.risk_title')}</h2>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {[
+            { key: 'sip.risk_equity', tone: 'border-red-500/30 bg-red-500/5 text-red-300', icon: '🚀' },
+            { key: 'sip.risk_hybrid', tone: 'border-amber-400/30 bg-amber-400/5 text-amber-200', icon: '⚖️' },
+            { key: 'sip.risk_debt', tone: 'border-emerald-500/30 bg-emerald-500/5 text-emerald-300', icon: '🛟' },
+          ].map((r) => (
+            <div key={r.key} className={`rounded-2xl border p-4 text-center ${r.tone}`}>
+              <span className="text-2xl">{r.icon}</span>
+              <p className="mt-1 text-sm font-semibold font-deva">{t(r.key)}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
@@ -100,6 +122,15 @@ export default function SIPPage() {
         <h2 className="mb-4 font-display text-xl font-bold text-white font-deva">{t('doc.section_title')}</h2>
         <DocumentChecklist documents={sipDocuments} />
       </section>
+
+      <div className="mt-10 text-center">
+        <button
+          onClick={() => openLead({ module: 'SIP', sourcePage: 'SIP_PAGE' })}
+          className="rounded-2xl bg-bk-gold px-8 py-3.5 font-bold text-bk-dark shadow-lg shadow-bk-gold/20 transition-colors hover:bg-bk-gold-light font-deva"
+        >
+          {t('sip.guidance_cta')}
+        </button>
+      </div>
     </div>
   );
 }

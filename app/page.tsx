@@ -3,6 +3,8 @@ import HeroSection from '@/components/home/HeroSection';
 import StatsSection from '@/components/home/StatsSection';
 import QuickSelector from '@/components/home/QuickSelector';
 import ModuleCards from '@/components/home/ModuleCards';
+import CalculatorCards from '@/components/home/CalculatorCards';
+import HowItWorks from '@/components/home/HowItWorks';
 import ExplainerSection from '@/components/home/ExplainerSection';
 import SmartGuideSection from '@/components/home/SmartGuideSection';
 
@@ -21,6 +23,8 @@ export default function HomePage() {
       <StatsSection />
       <QuickSelector />
       <ModuleCards />
+      <CalculatorCards />
+      <HowItWorks />
       <ExplainerSection />
       <SmartGuideSection />
     </>

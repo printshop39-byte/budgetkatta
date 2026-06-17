@@ -33,6 +33,8 @@ const companyLinks = [
   { href: '/disclaimer', key: 'nav.disclaimer' },
 ];
 
+const trustItems = ['trust.secure', 'trust.transparent', 'trust.ai', 'trust.educational', 'trust.no_hidden'];
+
 export default function Footer() {
   const { language } = useLanguageStore();
   const t = getTranslation(language);
@@ -41,7 +43,7 @@ export default function Footer() {
     <footer>
       <TrustSection />
       <div className="border-t border-white/5 bg-bk-dark px-4 py-12">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2">
@@ -75,6 +77,14 @@ export default function Footer() {
               <FooterLink key={l.key} href={l.href}>
                 {t(l.key)}
               </FooterLink>
+            ))}
+          </FooterColumn>
+
+          <FooterColumn title={t('footer.col_trust')}>
+            {trustItems.map((k) => (
+              <li key={k} className="text-sm text-white/55 font-deva">
+                {t(k)}
+              </li>
             ))}
           </FooterColumn>
         </div>

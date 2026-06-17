@@ -47,14 +47,14 @@ export default function HeroSection() {
           className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
         >
           <Link
-            href="/fds"
-            className="rounded-xl bg-bk-gold px-6 py-3 font-bold text-bk-dark transition-colors hover:bg-bk-gold-light font-deva"
+            href="/rates"
+            className="rounded-2xl bg-bk-gold px-7 py-3.5 font-bold text-bk-dark shadow-lg shadow-bk-gold/20 transition-colors hover:bg-bk-gold-light font-deva"
           >
             {t('hero.cta_primary')}
           </Link>
           <Link
-            href="/loans"
-            className="rounded-xl border border-white/15 px-6 py-3 font-semibold text-white/80 transition-colors hover:border-bk-gold/40 hover:text-bk-gold font-deva"
+            href="/documents"
+            className="rounded-2xl border border-white/15 px-7 py-3.5 font-semibold text-white/80 transition-colors hover:border-bk-gold/40 hover:text-bk-gold font-deva"
           >
             {t('hero.cta_secondary')}
           </Link>

@@ -1,10 +1,12 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 import { fdRates } from '@/lib/data';
 import { useRemoteData } from '@/lib/useRemoteData';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { useCompareStore } from '@/store/compareStore';
+import { useLeadFormStore } from '@/store/leadFormStore';
 import FDCalculator from '@/components/calculators/FDCalculator';
 import BadgeChip from '@/components/shared/BadgeChip';
 import DataSourceBadge from '@/components/shared/DataSourceBadge';
@@ -15,12 +17,15 @@ import { fdDocuments } from '@/lib/documentChecklists';
 import type { FDRate } from '@/types';
 
 type Filter = 'all' | 'govt' | 'private';
+type Tenure = 'all' | '12' | '36' | '60';
 
 export default function FDPage() {
   const { language } = useLanguageStore();
   const t = getTranslation(language);
   const { addItem, items } = useCompareStore();
+  const openLead = useLeadFormStore((s) => s.open);
   const [filter, setFilter] = useState<Filter>('all');
+  const [tenure, setTenure] = useState<Tenure>('all');
   const { data: banks, loading, source, updatedAt } = useRemoteData<FDRate>('/api/fd', fdRates);
 
   const filtered = banks.filter((b) => filter === 'all' || b.bankType === filter);
@@ -30,12 +35,30 @@ export default function FDPage() {
     { value: 'govt', key: 'fd.filter_govt' },
     { value: 'private', key: 'fd.filter_private' },
   ];
+  const tenures: { value: Tenure; label: string }[] = [
+    { value: 'all', label: t('fd.tenure_all') },
+    { value: '12', label: '1Y' },
+    { value: '36', label: '3Y' },
+    { value: '60', label: '5Y' },
+  ];
+
+  // Pick the rate row for the chosen tenure, else the best regular rate.
+  function pickRate(bank: FDRate) {
+    if (tenure !== 'all') {
+      const match = bank.rates.find((r) => r.tenureMonths === Number(tenure));
+      if (match) return match;
+    }
+    return bank.rates.reduce((a, b) => (b.regularRate > a.regularRate ? b : a));
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-8 text-center">
-        <h1 className="font-display text-3xl font-extrabold text-white md:text-4xl">{t('fd.title')}</h1>
+        <h1 className="font-display text-3xl font-extrabold text-white md:text-4xl">{t('fd.hero_title')}</h1>
         <p className="mt-2 text-white/55 font-deva">{t('fd.subtitle')}</p>
+        <span className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-300 font-deva">
+          🔒 {t('fd.trust_signal')}
+        </span>
       </header>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -59,63 +82,81 @@ export default function FDPage() {
             <DataSourceBadge source={source} updatedAt={updatedAt} />
           </div>
 
-          {loading ? (
-            <TableSkeleton cols={5} />
-          ) : (
-          <div className="overflow-x-auto glass-card p-0">
-            <table className="w-full min-w-[560px] text-sm">
-              <thead>
-                <tr className="border-b border-white/10 text-left text-white/50">
-                  <th className="p-3 font-medium">{t('fd.col_bank')}</th>
-                  <th className="p-3 font-medium">{t('fd.col_tenure')}</th>
-                  <th className="p-3 font-medium">{t('fd.col_regular')}</th>
-                  <th className="p-3 font-medium">{t('fd.col_senior')}</th>
-                  <th className="p-3" />
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((bank) => {
-                  const best = bank.rates.reduce((a, b) => (b.regularRate > a.regularRate ? b : a));
-                  const inCompare = items.some((i) => i.id === bank.id);
-                  return (
-                    <tr key={bank.id} className="border-b border-white/5">
-                      <td className="p-3 font-deva text-white">
-                        {bank.bankName}
-                        <div className="mt-1">
-                          <BadgeChip tone={bank.bankType === 'govt' ? 'info' : 'neutral'}>
-                            {bank.bankType === 'govt' ? t('fd.filter_govt') : t('fd.filter_private')}
-                          </BadgeChip>
-                        </div>
-                      </td>
-                      <td className="p-3 text-white/70">{best.tenureLabel}</td>
-                      <td className="p-3 font-bold text-bk-gold">{best.regularRate}%</td>
-                      <td className="p-3 font-bold text-bk-success">{best.seniorRate}%</td>
-                      <td className="p-3 text-right">
-                        <button
-                          disabled={inCompare}
-                          onClick={() =>
-                            addItem('FD', {
-                              id: bank.id,
-                              name: bank.bankName,
-                              data: [
-                                bank.bankName,
-                                best.tenureLabel,
-                                `${best.regularRate}%`,
-                                `${best.seniorRate}%`,
-                              ],
-                            })
-                          }
-                          className="rounded-lg border border-white/10 px-3 py-1 text-xs text-white/70 transition-colors hover:border-bk-gold/40 hover:text-bk-gold disabled:opacity-40 font-deva"
-                        >
-                          {inCompare ? '✓' : t('btn.compare')}
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+          {/* Tenure chips */}
+          <div className="mb-4 flex flex-wrap gap-2">
+            {tenures.map((tn) => (
+              <button
+                key={tn.value}
+                onClick={() => setTenure(tn.value)}
+                className={`rounded-full border px-3 py-1 text-xs font-deva transition-all ${
+                  tenure === tn.value
+                    ? 'border-bk-gold bg-bk-gold/15 text-bk-gold'
+                    : 'border-white/10 text-white/55 hover:border-white/20'
+                }`}
+              >
+                {tn.label}
+              </button>
+            ))}
           </div>
+
+          {loading ? (
+            <TableSkeleton cols={6} />
+          ) : (
+            <div className="overflow-x-auto glass-card rounded-3xl p-0">
+              <table className="w-full min-w-[640px] text-sm">
+                <thead>
+                  <tr className="border-b border-white/10 text-left text-white/50">
+                    <th className="p-4 font-medium">{t('fd.col_bank')}</th>
+                    <th className="p-4 font-medium">{t('fd.col_tenure')}</th>
+                    <th className="p-4 font-medium">{t('fd.col_regular')}</th>
+                    <th className="p-4 font-medium">{t('fd.col_senior')}</th>
+                    <th className="p-4 font-medium">{t('fd.col_docs')}</th>
+                    <th className="p-4 font-medium">{t('fd.col_action')}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((bank) => {
+                    const row = pickRate(bank);
+                    const inCompare = items.some((i) => i.id === bank.id);
+                    return (
+                      <tr key={bank.id} className="border-b border-white/5">
+                        <td className="p-4 font-deva text-white">
+                          {bank.bankName}
+                          <div className="mt-1">
+                            <BadgeChip tone={bank.bankType === 'govt' ? 'info' : 'neutral'}>
+                              {bank.bankType === 'govt' ? t('fd.filter_govt') : t('fd.filter_private')}
+                            </BadgeChip>
+                          </div>
+                        </td>
+                        <td className="p-4 text-white/70">{row.tenureLabel}</td>
+                        <td className="p-4 font-bold text-bk-gold">{row.regularRate}%</td>
+                        <td className="p-4 font-bold text-bk-success">{row.seniorRate}%</td>
+                        <td className="p-4">
+                          <Link href="/documents" className="text-xs text-bk-gold/80 hover:text-bk-gold" aria-label={t('fd.col_docs')}>
+                            📄 {t('btn.learn_more')}
+                          </Link>
+                        </td>
+                        <td className="p-4">
+                          <button
+                            disabled={inCompare}
+                            onClick={() =>
+                              addItem('FD', {
+                                id: bank.id,
+                                name: bank.bankName,
+                                data: [bank.bankName, row.tenureLabel, `${row.regularRate}%`, `${row.seniorRate}%`],
+                              })
+                            }
+                            className="rounded-lg border border-white/10 px-3 py-1 text-xs text-white/70 transition-colors hover:border-bk-gold/40 hover:text-bk-gold disabled:opacity-40 font-deva"
+                          >
+                            {inCompare ? '✓' : t('btn.compare')}
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
 
@@ -129,6 +170,15 @@ export default function FDPage() {
         <h2 className="mb-4 font-display text-xl font-bold text-white font-deva">{t('doc.section_title')}</h2>
         <DocumentChecklist documents={fdDocuments} />
       </section>
+
+      <div className="mt-10 text-center">
+        <button
+          onClick={() => openLead({ module: 'FD', sourcePage: 'FD_PAGE' })}
+          className="rounded-2xl bg-bk-gold px-8 py-3.5 font-bold text-bk-dark shadow-lg shadow-bk-gold/20 transition-colors hover:bg-bk-gold-light font-deva"
+        >
+          {t('fd.guidance_cta')}
+        </button>
+      </div>
     </div>
   );
 }

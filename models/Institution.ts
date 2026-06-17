@@ -21,7 +21,8 @@ const institutionSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// Common access pattern: filter by district then pincode/city.
+// Common access patterns: filter by district then city (branch lookup) or pincode.
+institutionSchema.index({ district: 1, city: 1 });
 institutionSchema.index({ district: 1, pincode: 1 });
 
 export const Institution =

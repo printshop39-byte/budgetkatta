@@ -1,37 +1,38 @@
-// app/api/locations/route.ts — hierarchical location lookup for the directory.
+// app/api/locations/route.ts — hierarchical location lookup for the directory,
+// served live from the MongoDB `Institution` collection.
 //
-// Levels (driven by query params, so the frontend only fetches what it needs):
-//   GET /api/locations                          → all districts
-//   GET /api/locations?district=<id>            → talukas of that district
-//   GET /api/locations?district=<id>&taluka=<id>→ villages (with pincode + branches)
-//
-// The data access lives in lib/locations.ts; swapping that layer for MongoDB
-// Atlas later requires no changes here.
+//   GET /api/locations                          → distinct districts (string[])
+//   GET /api/locations?district=<d>             → distinct cities in that district
+//   GET /api/locations?district=<d>&city=<c>    → branch records for district+city
+//   GET /api/locations?q=<spoken transcript>    → fuzzy { matched, district?, city? }
 import { NextResponse } from 'next/server';
-import { getDistricts, getTalukas, getVillages, searchLocations } from '@/lib/locations';
+import { getDistricts, getCities, getBranches, searchLocations } from '@/lib/locations';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const district = searchParams.get('district');
-  const taluka = searchParams.get('taluka');
+  const city = searchParams.get('city');
   const q = searchParams.get('q');
 
-  // Voice / fuzzy search: GET /api/locations?q=<spoken transcript>
-  if (q !== null) {
-    const match = await searchLocations(q);
-    return NextResponse.json({ ok: true, level: 'search', match });
+  try {
+    if (q !== null) {
+      const match = await searchLocations(q);
+      return NextResponse.json({ ok: true, level: 'search', match });
+    }
+    if (district && city) {
+      const data = await getBranches(district, city);
+      return NextResponse.json({ ok: true, level: 'branches', count: data.length, data });
+    }
+    if (district) {
+      const data = await getCities(district);
+      return NextResponse.json({ ok: true, level: 'cities', count: data.length, data });
+    }
+    const data = await getDistricts();
+    return NextResponse.json({ ok: true, level: 'districts', count: data.length, data });
+  } catch (err) {
+    console.error('[BudgetKatta] /api/locations error:', err);
+    return NextResponse.json({ ok: false, error: 'lookup_failed', data: [] }, { status: 500 });
   }
-
-  if (district && taluka) {
-    const data = await getVillages(district, taluka);
-    return NextResponse.json({ ok: true, level: 'villages', count: data.length, data });
-  }
-  if (district) {
-    const data = await getTalukas(district);
-    return NextResponse.json({ ok: true, level: 'talukas', count: data.length, data });
-  }
-  const data = await getDistricts();
-  return NextResponse.json({ ok: true, level: 'districts', count: data.length, data });
 }

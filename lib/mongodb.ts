@@ -31,7 +31,14 @@ export async function connectDB(): Promise<typeof mongoose> {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(uri, { bufferCommands: false });
+    // Connection pooling tuned for serverless: a small reused pool per warm
+    // instance, fail fast if Atlas is unreachable.
+    cached.promise = mongoose.connect(uri, {
+      bufferCommands: false,
+      maxPoolSize: 10,
+      minPoolSize: 0,
+      serverSelectionTimeoutMS: 10000,
+    });
   }
 
   cached.conn = await cached.promise;

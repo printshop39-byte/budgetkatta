@@ -27,7 +27,7 @@ export default function InsuranceEstimator() {
 
   return (
     <div className="glass-card glass-card-gold space-y-5 p-6">
-      <h3 className="font-display text-xl font-bold text-white">{t('ins.est_title')}</h3>
+      <h3 className="font-display text-xl font-bold text-slate-800">{t('ins.est_title')}</h3>
 
       <div className="space-y-4">
         <div className="flex gap-2">
@@ -38,7 +38,7 @@ export default function InsuranceEstimator() {
               className={`flex-1 rounded-lg border px-2 py-2 text-xs font-deva transition-all ${
                 type === opt.value
                   ? 'border-bk-gold bg-bk-gold/15 text-bk-gold'
-                  : 'border-white/10 text-white/60 hover:border-white/20'
+                  : 'border-slate-200 text-slate-500 hover:border-slate-200'
               }`}
             >
               {t(opt.key)}
@@ -48,7 +48,7 @@ export default function InsuranceEstimator() {
 
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-white/70 font-deva">{t('ins.age')}</label>
+            <label className="text-sm text-slate-600 font-deva">{t('ins.age')}</label>
             <span className="text-sm font-bold text-bk-gold">{age}</span>
           </div>
           <input
@@ -64,7 +64,7 @@ export default function InsuranceEstimator() {
 
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-white/70 font-deva">{t('ins.cover')}</label>
+            <label className="text-sm text-slate-600 font-deva">{t('ins.cover')}</label>
             <span className="text-sm font-bold text-bk-gold">{formatINR(cover)}</span>
           </div>
           <input
@@ -80,7 +80,7 @@ export default function InsuranceEstimator() {
 
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-white/70 font-deva">{t('ins.policy_term')}</label>
+            <label className="text-sm text-slate-600 font-deva">{t('ins.policy_term')}</label>
             <span className="text-sm font-bold text-bk-gold">{term}</span>
           </div>
           <input
@@ -105,18 +105,18 @@ export default function InsuranceEstimator() {
       {result && (
         <div className="space-y-3 pt-2">
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl bg-white/5 p-3 text-center">
+            <div className="rounded-xl bg-slate-900/[0.035] p-3 text-center">
               <p className="text-base font-bold text-bk-gold">
                 {formatINR(result.minPremium)} – {formatINR(result.maxPremium)}
               </p>
-              <p className="mt-1 text-xs text-white/60 font-deva">{t('ins.est_premium')}</p>
+              <p className="mt-1 text-xs text-slate-500 font-deva">{t('ins.est_premium')}</p>
             </div>
-            <div className="rounded-xl bg-white/5 p-3 text-center">
+            <div className="rounded-xl bg-slate-900/[0.035] p-3 text-center">
               <p className="text-base font-bold text-bk-gold">{formatINR(result.suggestedCover)}</p>
-              <p className="mt-1 text-xs text-white/60 font-deva">{t('ins.suggested_cover')}</p>
+              <p className="mt-1 text-xs text-slate-500 font-deva">{t('ins.suggested_cover')}</p>
             </div>
           </div>
-          <p className="text-center text-xs text-white/40">{result.riskNote}</p>
+          <p className="text-center text-xs text-slate-400">{result.riskNote}</p>
           <InterestButton module="INSURANCE" sourcePage="INSURANCE_ESTIMATOR" full />
         </div>
       )}

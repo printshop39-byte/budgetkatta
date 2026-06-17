@@ -40,7 +40,7 @@ function SplineFallback({ loading = false }: { loading?: boolean }) {
         🤖
       </motion.span>
       {loading && (
-        <span className="absolute bottom-2 text-[10px] uppercase tracking-wider text-white/40">
+        <span className="absolute bottom-2 text-[10px] uppercase tracking-wider text-slate-400">
           loading 3D…
         </span>
       )}
@@ -194,12 +194,12 @@ export default function Floating3DGuide() {
 
             {/* Mobile: compact avatar */}
             {isMobile && (
-              <div className="flex items-center gap-3 border-b border-white/10 p-4">
+              <div className="flex items-center gap-3 border-b border-slate-200 p-4">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-bk-gold to-amber-600 text-xl">
                   🤖
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white font-deva">{t('bot.title')}</p>
+                  <p className="text-sm font-semibold text-slate-800 font-deva">{t('bot.title')}</p>
                   <p className="text-xs text-bk-success">● Online</p>
                 </div>
               </div>
@@ -213,7 +213,7 @@ export default function Floating3DGuide() {
                 >
                   <div
                     className={`max-w-[80%] rounded-xl px-3 py-2 text-sm leading-relaxed font-deva ${
-                      msg.role === 'user' ? 'bg-bk-gold text-bk-dark' : 'bg-white/10 text-white'
+                      msg.role === 'user' ? 'bg-bk-gold text-bk-dark' : 'bg-slate-900/[0.05] text-slate-800'
                     }`}
                   >
                     {msg.text}
@@ -222,8 +222,8 @@ export default function Floating3DGuide() {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="rounded-xl bg-white/10 px-3 py-2">
-                    <span className="animate-pulse text-xs text-white/60">...</span>
+                  <div className="rounded-xl bg-slate-900/[0.05] px-3 py-2">
+                    <span className="animate-pulse text-xs text-slate-500">...</span>
                   </div>
                 </div>
               )}
@@ -234,7 +234,7 @@ export default function Floating3DGuide() {
                 <button
                   key={action.key}
                   onClick={() => handleQuickAction(action.key, action.module)}
-                  className="rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/80 transition-all hover:border-bk-gold/40 hover:bg-bk-gold/20 hover:text-bk-gold font-deva"
+                  className="rounded-lg border border-slate-200 bg-slate-900/[0.035] px-2 py-1 text-xs text-slate-700 transition-all hover:border-bk-gold/40 hover:bg-bk-gold/20 hover:text-bk-gold font-deva"
                 >
                   {action.icon} {t(action.key)}
                 </button>
@@ -247,7 +247,7 @@ export default function Floating3DGuide() {
               </button>
             </div>
 
-            <div className="flex items-center gap-2 border-t border-white/10 p-3">
+            <div className="flex items-center gap-2 border-t border-slate-200 p-3">
               <input
                 ref={inputRef}
                 value={inputText}
@@ -255,7 +255,7 @@ export default function Floating3DGuide() {
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 aria-label={t('bot.type_here')}
                 placeholder={t('bot.type_here')}
-                className="flex-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none placeholder:text-white/30 focus:border-bk-gold/50 font-deva"
+                className="flex-1 rounded-xl border border-slate-200 bg-slate-900/[0.035] px-3 py-2 text-sm text-slate-800 outline-none placeholder:text-slate-300 focus:border-bk-gold/50 font-deva"
               />
               <button
                 onClick={handleSend}

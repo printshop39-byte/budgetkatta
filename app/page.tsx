@@ -7,6 +7,7 @@ import CalculatorCards from '@/components/home/CalculatorCards';
 import HowItWorks from '@/components/home/HowItWorks';
 import ExplainerSection from '@/components/home/ExplainerSection';
 import SmartGuideSection from '@/components/home/SmartGuideSection';
+import Reveal from '@/components/shared/Reveal';
 
 export const metadata: Metadata = {
   // Absolute title so the layout's "%s | BudgetKatta" template isn't doubled.
@@ -20,13 +21,13 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <StatsSection />
-      <QuickSelector />
-      <ModuleCards />
-      <CalculatorCards />
-      <HowItWorks />
-      <ExplainerSection />
-      <SmartGuideSection />
+      <Reveal><StatsSection /></Reveal>
+      <Reveal><QuickSelector /></Reveal>
+      <Reveal><ModuleCards /></Reveal>
+      <Reveal><CalculatorCards /></Reveal>
+      <Reveal><HowItWorks /></Reveal>
+      <Reveal><ExplainerSection /></Reveal>
+      <Reveal><SmartGuideSection /></Reveal>
     </>
   );
 }

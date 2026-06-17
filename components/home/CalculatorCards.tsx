@@ -18,7 +18,7 @@ export default function CalculatorCards() {
   return (
     <section className="px-4 py-10">
       <div className="mx-auto max-w-5xl">
-        <h2 className="mb-6 text-center font-display text-2xl font-bold text-white font-deva">
+        <h2 className="mb-6 text-center font-display text-2xl font-bold text-slate-800 font-deva">
           {t('home.calc_title')}
         </h2>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -32,10 +32,10 @@ export default function CalculatorCards() {
             >
               <Link
                 href={c.href}
-                className="glass-card glass-card-gold flex flex-col items-center gap-2 rounded-2xl p-5 text-center transition-all hover:bg-white/[0.07]"
+                className="glass-card glass-card-gold flex flex-col items-center gap-2 rounded-2xl p-5 text-center transition-all hover:bg-slate-900/[0.04]"
               >
                 <span className="text-2xl">{c.icon}</span>
-                <span className="text-xs font-semibold text-white/85 font-deva">{t(c.key)}</span>
+                <span className="text-xs font-semibold text-slate-700 font-deva">{t(c.key)}</span>
               </Link>
             </motion.div>
           ))}

@@ -20,12 +20,12 @@ export default function SIPCalculator() {
 
   return (
     <div className="glass-card glass-card-gold space-y-5 p-6">
-      <h3 className="font-display text-xl font-bold text-white">{t('sip.calc_title')}</h3>
+      <h3 className="font-display text-xl font-bold text-slate-800">{t('sip.calc_title')}</h3>
 
       <div className="space-y-4">
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-white/70 font-deva">{t('sip.monthly_invest')}</label>
+            <label className="text-sm text-slate-600 font-deva">{t('sip.monthly_invest')}</label>
             <span className="text-sm font-bold text-bk-gold">{formatINR(monthly)}</span>
           </div>
           <input
@@ -41,7 +41,7 @@ export default function SIPCalculator() {
 
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-white/70 font-deva">{t('sip.tenure_year')}</label>
+            <label className="text-sm text-slate-600 font-deva">{t('sip.tenure_year')}</label>
             <span className="text-sm font-bold text-bk-gold">{years}</span>
           </div>
           <input
@@ -57,7 +57,7 @@ export default function SIPCalculator() {
 
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-white/70 font-deva">{t('sip.expected_return')}</label>
+            <label className="text-sm text-slate-600 font-deva">{t('sip.expected_return')}</label>
             <span className="text-sm font-bold text-bk-gold">{returnRate}%</span>
           </div>
           <input
@@ -86,9 +86,9 @@ export default function SIPCalculator() {
             { label: t('sip.returns'), value: formatINR(result.estimatedReturns) },
             { label: t('sip.maturity'), value: formatINR(result.maturityValue) },
           ].map((item) => (
-            <div key={item.label} className="rounded-xl bg-white/5 p-3 text-center">
+            <div key={item.label} className="rounded-xl bg-slate-900/[0.035] p-3 text-center">
               <p className="text-base font-bold text-bk-gold">{item.value}</p>
-              <p className="mt-1 text-xs text-white/60 font-deva">{item.label}</p>
+              <p className="mt-1 text-xs text-slate-500 font-deva">{item.label}</p>
             </div>
           ))}
           <div className="col-span-3">

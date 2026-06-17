@@ -31,7 +31,7 @@ export default function AnimatedExplainerCard({
           <span className="pointer-events-none absolute h-8 w-8 rounded-full bg-bk-gold/20 blur-md animate-pulse-gold" />
           {visual ?? <span className="relative text-2xl animate-float">{explainer.icon}</span>}
         </div>
-        <h3 className="font-display text-base font-bold text-white font-deva">
+        <h3 className="font-display text-base font-bold text-slate-800 font-deva">
           {explainer.title[language]}
         </h3>
       </div>
@@ -49,7 +49,7 @@ export default function AnimatedExplainerCard({
             <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-bk-gold/15 text-xs font-bold text-bk-gold">
               {i + 1}
             </span>
-            <span className="text-sm text-white/75 font-deva">{step[language]}</span>
+            <span className="text-sm text-slate-600 font-deva">{step[language]}</span>
           </motion.li>
         ))}
       </ol>

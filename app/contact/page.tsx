@@ -73,12 +73,12 @@ export default function ContactPage() {
           className="lg:col-span-3"
         >
           <div className="glass-card glass-card-gold p-6">
-            <h2 className="mb-4 font-display text-xl font-bold text-white">{t('contact.form_title')}</h2>
+            <h2 className="mb-4 font-display text-xl font-bold text-slate-800">{t('contact.form_title')}</h2>
 
             {done ? (
               <div className="flex flex-col items-center gap-3 py-10 text-center">
                 <span className="text-4xl">✅</span>
-                <p className="text-white font-deva">{t('lead.success')}</p>
+                <p className="text-slate-800 font-deva">{t('lead.success')}</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
@@ -148,18 +148,18 @@ export default function ContactPage() {
           transition={{ delay: 0.2 }}
           className="space-y-4 lg:col-span-2"
         >
-          <h2 className="font-display text-xl font-bold text-white">{t('contact.info_title')}</h2>
+          <h2 className="font-display text-xl font-bold text-slate-800">{t('contact.info_title')}</h2>
           {infoCards.map((c) => (
             <div key={c.label} className="glass-card flex items-start gap-3 p-4">
               <span className="text-xl">{c.icon}</span>
               <div>
-                <p className="text-xs text-white/50 font-deva">{c.label}</p>
+                <p className="text-xs text-slate-400 font-deva">{c.label}</p>
                 {c.href ? (
                   <a href={c.href} className="text-sm font-semibold text-bk-gold hover:underline">
                     {c.value}
                   </a>
                 ) : (
-                  <p className="text-sm font-semibold text-white font-deva">{c.value}</p>
+                  <p className="text-sm font-semibold text-slate-800 font-deva">{c.value}</p>
                 )}
               </div>
             </div>
@@ -171,7 +171,7 @@ export default function ContactPage() {
               href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3 font-bold text-white transition-colors hover:bg-emerald-500 font-deva"
+              className="flex items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3 font-bold text-slate-800 transition-colors hover:bg-emerald-500 font-deva"
             >
               💬 {t('contact.whatsapp')}
             </a>
@@ -189,7 +189,7 @@ export default function ContactPage() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-sm text-white/70 font-deva">{label}</span>
+      <span className="mb-1 block text-sm text-slate-600 font-deva">{label}</span>
       {children}
     </label>
   );

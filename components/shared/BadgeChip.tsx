@@ -3,12 +3,12 @@ import type { ReactNode } from 'react';
 type Tone = 'gold' | 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 
 const toneMap: Record<Tone, string> = {
-  gold: 'bg-bk-gold/15 text-bk-gold border-bk-gold/30',
-  success: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-  warning: 'bg-amber-400/15 text-amber-300 border-amber-400/30',
-  danger: 'bg-red-500/15 text-red-400 border-red-500/30',
-  info: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
-  neutral: 'bg-white/5 text-white/70 border-white/10',
+  gold: 'bg-bk-gold/10 text-bk-gold border-bk-gold/30',
+  success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  warning: 'bg-amber-50 text-amber-700 border-amber-200',
+  danger: 'bg-rose-50 text-rose-700 border-rose-200',
+  info: 'bg-sky-50 text-sky-700 border-sky-200',
+  neutral: 'bg-slate-100 text-slate-600 border-slate-200',
 };
 
 export default function BadgeChip({

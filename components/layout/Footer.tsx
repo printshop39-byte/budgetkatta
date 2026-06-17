@@ -42,17 +42,17 @@ export default function Footer() {
   return (
     <footer>
       <TrustSection />
-      <div className="border-t border-white/5 bg-bk-dark px-4 py-12">
+      <div className="border-t border-slate-100 bg-bk-dark px-4 py-12">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2">
               <span className="text-2xl">💰</span>
-              <span className="font-display text-lg font-bold text-white">
+              <span className="font-display text-lg font-bold text-slate-800">
                 Budget<span className="text-bk-gold">Katta</span>
               </span>
             </Link>
-            <p className="mt-3 text-sm leading-relaxed text-white/55 font-deva">{t('footer.desc')}</p>
+            <p className="mt-3 text-sm leading-relaxed text-slate-500 font-deva">{t('footer.desc')}</p>
             <p className="mt-3 text-xs text-bk-gold/80 font-deva">{t('footer.tagline')}</p>
           </div>
 
@@ -82,18 +82,18 @@ export default function Footer() {
 
           <FooterColumn title={t('footer.col_trust')}>
             {trustItems.map((k) => (
-              <li key={k} className="text-sm text-white/55 font-deva">
+              <li key={k} className="text-sm text-slate-500 font-deva">
                 {t(k)}
               </li>
             ))}
           </FooterColumn>
         </div>
 
-        <div className="mx-auto mt-10 flex max-w-6xl flex-col items-center justify-between gap-3 border-t border-white/5 pt-6 text-center sm:flex-row sm:text-left">
-          <p className="text-xs text-white/40 font-deva">{t('footer.rights')}</p>
+        <div className="mx-auto mt-10 flex max-w-6xl flex-col items-center justify-between gap-3 border-t border-slate-100 pt-6 text-center sm:flex-row sm:text-left">
+          <p className="text-xs text-slate-400 font-deva">{t('footer.rights')}</p>
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="text-xs text-white/50 transition-colors hover:text-bk-gold"
+            className="text-xs text-slate-400 transition-colors hover:text-bk-gold"
           >
             {CONTACT_EMAIL}
           </a>
@@ -106,7 +106,7 @@ export default function Footer() {
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="mb-3 text-sm font-semibold text-white font-deva">{title}</h3>
+      <h3 className="mb-3 text-sm font-semibold text-slate-800 font-deva">{title}</h3>
       <ul className="space-y-2">{children}</ul>
     </div>
   );
@@ -115,7 +115,7 @@ function FooterColumn({ title, children }: { title: string; children: React.Reac
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <li>
-      <Link href={href} className="text-sm text-white/55 transition-colors hover:text-bk-gold font-deva">
+      <Link href={href} className="text-sm text-slate-500 transition-colors hover:text-bk-gold font-deva">
         {children}
       </Link>
     </li>

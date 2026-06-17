@@ -51,21 +51,21 @@ export default function RatesPage() {
         {/* FD highest */}
         <section>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="font-display text-xl font-bold text-white">{t('rates.fd_title')}</h2>
+            <h2 className="font-display text-xl font-bold text-slate-800">{t('rates.fd_title')}</h2>
             <DataSourceBadge source={source} updatedAt={updatedAt} />
           </div>
           <div className="overflow-x-auto glass-card p-0">
             <table className="w-full min-w-[360px] text-sm">
               <thead>
-                <tr className="border-b border-white/10 text-left text-white/50">
+                <tr className="border-b border-slate-200 text-left text-slate-400">
                   <th className="p-3 font-medium">{t('fd.col_bank')}</th>
                   <th className="p-3 font-medium">{t('fd.col_regular')}</th>
                 </tr>
               </thead>
               <tbody>
                 {fdTop.map((r) => (
-                  <tr key={r.bank} className="border-b border-white/5">
-                    <td className="p-3 text-white font-deva">{r.bank}</td>
+                  <tr key={r.bank} className="border-b border-slate-100">
+                    <td className="p-3 text-slate-800 font-deva">{r.bank}</td>
                     <td className="p-3 font-bold text-bk-gold">{r.rate}%</td>
                   </tr>
                 ))}
@@ -76,11 +76,11 @@ export default function RatesPage() {
 
         {/* Loan ranges */}
         <section>
-          <h2 className="mb-3 font-display text-xl font-bold text-white">{t('rates.loan_title')}</h2>
+          <h2 className="mb-3 font-display text-xl font-bold text-slate-800">{t('rates.loan_title')}</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {loanRanges.map((l) => (
               <div key={l.type} className="glass-card p-4 text-center">
-                <p className="text-sm text-white/60 font-deva">{t(loanKey[l.type])}</p>
+                <p className="text-sm text-slate-500 font-deva">{t(loanKey[l.type])}</p>
                 <p className="mt-1 font-display text-lg font-bold text-bk-gold">
                   {l.min}%–{l.max}%
                 </p>
@@ -92,8 +92,8 @@ export default function RatesPage() {
         {/* Market info */}
         <section>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="font-display text-xl font-bold text-white">{t('rates.market_title')}</h2>
-            <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs text-white/55 font-deva">
+            <h2 className="font-display text-xl font-bold text-slate-800">{t('rates.market_title')}</h2>
+            <span className="rounded-full border border-slate-200 bg-slate-900/[0.035] px-2.5 py-0.5 text-xs text-slate-500 font-deva">
               {t('rates.sample_badge')}
             </span>
           </div>
@@ -102,13 +102,13 @@ export default function RatesPage() {
               <div key={c.title[language]} className="glass-card p-5">
                 <div className="mb-2 flex items-center gap-2">
                   <span className="text-2xl">{c.icon}</span>
-                  <h3 className="font-display text-base font-bold text-white font-deva">
+                  <h3 className="font-display text-base font-bold text-slate-800 font-deva">
                     {c.title[language]}
                   </h3>
                 </div>
                 <ul className="space-y-1.5">
                   {c.lines.map((line, i) => (
-                    <li key={i} className="text-xs leading-relaxed text-white/60 font-deva">
+                    <li key={i} className="text-xs leading-relaxed text-slate-500 font-deva">
                       • {line[language]}
                     </li>
                   ))}
@@ -120,7 +120,7 @@ export default function RatesPage() {
 
         {/* Quick calculators */}
         <section>
-          <h2 className="mb-3 font-display text-xl font-bold text-white">{t('rates.tools_title')}</h2>
+          <h2 className="mb-3 font-display text-xl font-bold text-slate-800">{t('rates.tools_title')}</h2>
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
             <FDCalculator />
             <EMICalculator />

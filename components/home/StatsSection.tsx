@@ -20,7 +20,7 @@ export default function StatsSection() {
             <p className="font-display text-2xl font-extrabold text-bk-gold md:text-3xl">
               {s.value}
             </p>
-            <p className="mt-1 text-xs text-white/60 font-deva md:text-sm">{s.label}</p>
+            <p className="mt-1 text-xs text-slate-500 font-deva md:text-sm">{s.label}</p>
           </div>
         ))}
       </div>

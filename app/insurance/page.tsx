@@ -42,13 +42,13 @@ export default function InsurancePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-8 text-center">
-        <h1 className="font-display text-3xl font-extrabold text-white md:text-4xl">{t('ins.title')}</h1>
-        <p className="mt-2 text-white/55 font-deva">{t('ins.subtitle')}</p>
+        <h1 className="font-display text-3xl font-extrabold text-slate-800 md:text-4xl">{t('ins.title')}</h1>
+        <p className="mt-2 text-slate-500 font-deva">{t('ins.subtitle')}</p>
       </header>
 
       {/* Insurance types */}
       <section className="mb-12">
-        <h2 className="mb-3 font-display text-xl font-bold text-white font-deva">{t('ins.types_title')}</h2>
+        <h2 className="mb-3 font-display text-xl font-bold text-slate-800 font-deva">{t('ins.types_title')}</h2>
         <div className="mb-4 flex flex-wrap gap-2">
           {insuranceTypes.map((it) => (
             <button
@@ -57,7 +57,7 @@ export default function InsurancePage() {
               className={`rounded-xl border px-3 py-2 text-sm font-deva transition-all ${
                 insType === it.id
                   ? 'border-bk-gold bg-bk-gold/15 text-bk-gold'
-                  : 'border-white/10 text-white/70 hover:border-white/25'
+                  : 'border-slate-200 text-slate-600 hover:border-slate-200'
               }`}
             >
               {it.icon} {it.label[language]}
@@ -73,25 +73,25 @@ export default function InsurancePage() {
         >
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             <div>
-              <h3 className="text-sm font-semibold text-white/80 font-deva">{t('ins.what_is')}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-white/70 font-deva">{activeType.whatIs[language]}</p>
-              <h3 className="mt-4 text-sm font-semibold text-white/80 font-deva">{t('ins.who')}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-white/70 font-deva">{activeType.who[language]}</p>
+              <h3 className="text-sm font-semibold text-slate-700 font-deva">{t('ins.what_is')}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-slate-600 font-deva">{activeType.whatIs[language]}</p>
+              <h3 className="mt-4 text-sm font-semibold text-slate-700 font-deva">{t('ins.who')}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-slate-600 font-deva">{activeType.who[language]}</p>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white/80 font-deva">{t('ins.benefits')}</h3>
+              <h3 className="text-sm font-semibold text-slate-700 font-deva">{t('ins.benefits')}</h3>
               <ul className="mt-1 space-y-1.5">
                 {activeType.benefits.map((b, i) => (
-                  <li key={i} className="flex gap-2 text-sm text-white/70 font-deva">
+                  <li key={i} className="flex gap-2 text-sm text-slate-600 font-deva">
                     <span className="text-bk-success">✓</span>
                     {b[language]}
                   </li>
                 ))}
               </ul>
-              <h3 className="mt-4 text-sm font-semibold text-white/80 font-deva">{t('ins.check')}</h3>
+              <h3 className="mt-4 text-sm font-semibold text-slate-700 font-deva">{t('ins.check')}</h3>
               <ul className="mt-1 space-y-1.5">
                 {activeType.check.map((c, i) => (
-                  <li key={i} className="flex gap-2 text-sm text-white/70 font-deva">
+                  <li key={i} className="flex gap-2 text-sm text-slate-600 font-deva">
                     <span className="text-bk-gold">•</span>
                     {c[language]}
                   </li>
@@ -119,7 +119,7 @@ export default function InsurancePage() {
                   className={`rounded-lg border px-3 py-1.5 text-sm font-deva transition-all ${
                     type === f.value
                       ? 'border-bk-gold bg-bk-gold/15 text-bk-gold'
-                      : 'border-white/10 text-white/60 hover:border-white/20'
+                      : 'border-slate-200 text-slate-500 hover:border-slate-200'
                   }`}
                 >
                   {t(f.key)}
@@ -135,7 +135,7 @@ export default function InsurancePage() {
           <div className="overflow-x-auto glass-card p-0">
             <table className="w-full min-w-[620px] text-sm">
               <thead>
-                <tr className="border-b border-white/10 text-left text-white/50">
+                <tr className="border-b border-slate-200 text-left text-slate-400">
                   <th className="p-3 font-medium">{t('ins.col_company')}</th>
                   <th className="p-3 font-medium">{t('ins.col_plan')}</th>
                   <th className="p-3 font-medium">{t('ins.col_premium')}</th>
@@ -149,11 +149,11 @@ export default function InsurancePage() {
                   const premium = formatINR(plan.annualPremium);
                   const feat = plan.features.join(', ');
                   return (
-                    <tr key={plan.id} className="border-b border-white/5">
-                      <td className="p-3 font-deva text-white">{plan.company}</td>
-                      <td className="p-3 text-white/70">{plan.planName}</td>
+                    <tr key={plan.id} className="border-b border-slate-100">
+                      <td className="p-3 font-deva text-slate-800">{plan.company}</td>
+                      <td className="p-3 text-slate-600">{plan.planName}</td>
                       <td className="p-3 font-bold text-bk-gold">{premium}</td>
-                      <td className="p-3 text-xs text-white/60">{feat}</td>
+                      <td className="p-3 text-xs text-slate-500">{feat}</td>
                       <td className="p-3 text-right">
                         <button
                           disabled={inCompare}
@@ -164,7 +164,7 @@ export default function InsurancePage() {
                               data: [plan.company, plan.planName, premium, feat],
                             })
                           }
-                          className="rounded-lg border border-white/10 px-3 py-1 text-xs text-white/70 transition-colors hover:border-bk-gold/40 hover:text-bk-gold disabled:opacity-40 font-deva"
+                          className="rounded-lg border border-slate-200 px-3 py-1 text-xs text-slate-600 transition-colors hover:border-bk-gold/40 hover:text-bk-gold disabled:opacity-40 font-deva"
                         >
                           {inCompare ? '✓' : t('btn.compare')}
                         </button>
@@ -185,7 +185,7 @@ export default function InsurancePage() {
       </div>
 
       <section className="mt-12">
-        <h2 className="mb-4 font-display text-xl font-bold text-white font-deva">{t('doc.section_title')}</h2>
+        <h2 className="mb-4 font-display text-xl font-bold text-slate-800 font-deva">{t('doc.section_title')}</h2>
         <DocumentChecklist documents={insuranceDocuments} />
       </section>
     </div>

@@ -23,7 +23,7 @@ export default function DocumentChecklist({ documents }: { documents: DocItem[] 
     <div className="space-y-6">
       {groups.map((group) => (
         <div key={group.cat}>
-          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-white/40 font-deva">
+          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400 font-deva">
             {categoryLabel[group.cat][language]}
           </h4>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -41,12 +41,12 @@ export default function DocumentChecklist({ documents }: { documents: DocItem[] 
                   <div className="flex items-start gap-2.5">
                     <span className="text-base">{required ? '✅' : '🟡'}</span>
                     <div className="flex-1">
-                      <p className="text-sm font-semibold text-white font-deva">{doc.name[language]}</p>
+                      <p className="text-sm font-semibold text-slate-800 font-deva">{doc.name[language]}</p>
                       <span
                         className={`mt-1 inline-block rounded-full px-2 py-0.5 text-[10px] font-medium ${
                           required
-                            ? 'bg-emerald-500/15 text-emerald-400'
-                            : 'bg-amber-400/15 text-amber-300'
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'bg-amber-50 text-amber-700'
                         }`}
                       >
                         {required ? t('doc.required') : t('doc.sometimes')}
@@ -62,7 +62,7 @@ export default function DocumentChecklist({ documents }: { documents: DocItem[] 
                     ℹ️ {t('doc.why')}
                   </button>
                   {open[key] && (
-                    <p className="mt-1.5 text-xs leading-relaxed text-white/55 font-deva">
+                    <p className="mt-1.5 text-xs leading-relaxed text-slate-500 font-deva">
                       {doc.explanation[language]}
                     </p>
                   )}

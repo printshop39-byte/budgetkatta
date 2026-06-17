@@ -3,35 +3,37 @@
 @tailwind utilities;
 
 :root {
-  /* Primary Background */
-  --bg-dark: #0a0e1a;
-  --bg-card: #111827;
-  --bg-glass: rgba(255, 255, 255, 0.05);
+  /* Soft light premium palette */
+  --bg-soft: #f8fafc; /* slate-50 */
+  --surface: #ffffff;
+  --surface-glass: rgba(255, 255, 255, 0.7);
 
-  /* Brand Accent */
-  --gold-primary: #f5a623;
-  --gold-light: #ffd166;
-  --gold-muted: #b8861a;
+  /* Teal primary accent */
+  --teal-700: #0f766e;
+  --teal-600: #0d9488;
+  --teal-500: #14b8a6;
 
-  /* Text */
-  --text-primary: #f9fafb;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  /* Text on light */
+  --text-primary: #1e293b; /* slate-800 */
+  --text-secondary: #475569; /* slate-600 */
+  --text-muted: #94a3b8; /* slate-400 */
 
   /* Status */
-  --success: #10b981;
-  --warning: #fbbf24;
-  --danger: #ef4444;
-  --info: #3b82f6;
+  --success: #0f9d6b;
+  --warning: #d97706;
+  --danger: #e11d48;
+  --info: #2563eb;
 
   /* Borders */
-  --border-glass: rgba(255, 255, 255, 0.08);
-  --border-gold: rgba(245, 166, 35, 0.3);
+  --border-glass: rgba(255, 255, 255, 0.5);
 }
 
 @layer base {
   body {
-    background-color: var(--bg-dark);
+    /* Soft radial gradient backdrop */
+    background-color: #ffffff;
+    background-image: radial-gradient(ellipse at top, #ccfbf1 0%, #f8fafc 45%, #ffffff 100%);
+    background-attachment: fixed;
     color: var(--text-primary);
     font-family: var(--font-inter), 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -39,46 +41,49 @@
 
   /* Visible keyboard focus across all interactive elements. */
   :focus-visible {
-    outline: 2px solid var(--gold-primary);
+    outline: 2px solid var(--teal-600);
     outline-offset: 2px;
-    border-radius: 6px;
+    border-radius: 8px;
   }
-  /* Don't show the ring for mouse clicks. */
   :focus:not(:focus-visible) {
     outline: none;
   }
 }
 
 @layer components {
+  /* Soft glassmorphism */
   .glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    background: var(--surface-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    border-radius: 1.5rem; /* rounded-3xl */
+    box-shadow: 0 8px 30px rgb(0 0 0 / 0.04);
   }
 
+  /* Teal-tinted glass variant */
   .glass-card-gold {
-    border: 1px solid rgba(245, 166, 35, 0.25);
-    box-shadow: 0 8px 32px rgba(245, 166, 35, 0.08);
+    border: 1px solid rgba(13, 148, 136, 0.22);
+    box-shadow: 0 10px 34px rgb(13 148 136 / 0.08);
   }
 
   .bk-input {
     width: 100%;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.625rem 0.75rem;
+    border-radius: 0.875rem;
+    border: 1px solid rgb(226 232 240); /* slate-200 */
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.625rem 0.875rem;
     font-size: 0.875rem;
-    color: #fff;
+    color: var(--text-primary);
     outline: none;
+    transition: border-color 0.15s ease;
   }
   .bk-input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgb(148 163 184); /* slate-400 */
   }
   .bk-input:focus {
-    border-color: rgba(245, 166, 35, 0.5);
+    border-color: var(--teal-600);
+    box-shadow: 0 0 0 3px rgb(13 148 136 / 0.12);
   }
 }
 

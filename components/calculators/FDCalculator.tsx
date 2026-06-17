@@ -21,12 +21,12 @@ export default function FDCalculator() {
 
   return (
     <div className="glass-card glass-card-gold space-y-5 p-6">
-      <h3 className="font-display text-xl font-bold text-white">{t('fd.calc_title')}</h3>
+      <h3 className="font-display text-xl font-bold text-slate-800">{t('fd.calc_title')}</h3>
 
       <div className="space-y-4">
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-white/70 font-deva">{t('fd.amount')}</label>
+            <label className="text-sm text-slate-600 font-deva">{t('fd.amount')}</label>
             <span className="text-sm font-bold text-bk-gold">{formatINR(amount)}</span>
           </div>
           <input
@@ -42,7 +42,7 @@ export default function FDCalculator() {
 
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-white/70 font-deva">{t('fd.rate')}</label>
+            <label className="text-sm text-slate-600 font-deva">{t('fd.rate')}</label>
             <span className="text-sm font-bold text-bk-gold">{rate}%</span>
           </div>
           <input
@@ -58,7 +58,7 @@ export default function FDCalculator() {
 
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-white/70 font-deva">{t('fd.tenure')}</label>
+            <label className="text-sm text-slate-600 font-deva">{t('fd.tenure')}</label>
             <span className="text-sm font-bold text-bk-gold">{years}</span>
           </div>
           <input
@@ -72,7 +72,7 @@ export default function FDCalculator() {
           />
         </div>
 
-        <label className="flex cursor-pointer items-center gap-2 text-sm text-white/70 font-deva">
+        <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-600 font-deva">
           <input
             type="checkbox"
             checked={senior}
@@ -96,9 +96,9 @@ export default function FDCalculator() {
             { label: t('fd.maturity'), value: formatINR(result.maturityAmount) },
             { label: t('fd.interest_earned'), value: formatINR(result.totalInterest) },
           ].map((item) => (
-            <div key={item.label} className="rounded-xl bg-white/5 p-3 text-center">
+            <div key={item.label} className="rounded-xl bg-slate-900/[0.035] p-3 text-center">
               <p className="text-lg font-bold text-bk-gold">{item.value}</p>
-              <p className="mt-1 text-xs text-white/60 font-deva">{item.label}</p>
+              <p className="mt-1 text-xs text-slate-500 font-deva">{item.label}</p>
             </div>
           ))}
           <div className="col-span-2">

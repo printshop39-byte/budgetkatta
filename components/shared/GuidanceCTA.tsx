@@ -57,7 +57,7 @@ export default function GuidanceCTA({
           className={`rounded-xl px-5 py-2.5 text-sm font-bold transition-colors font-deva ${
             i === 0
               ? 'bg-bk-gold text-bk-dark hover:bg-bk-gold-light'
-              : 'border border-white/15 text-white/80 hover:border-bk-gold/40 hover:text-bk-gold'
+              : 'border border-slate-200 text-slate-700 hover:border-bk-gold/40 hover:text-bk-gold'
           }`}
         >
           {t(item.labelKey)}

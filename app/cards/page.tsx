@@ -17,11 +17,11 @@ export default function CardsPage() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <section className="glass-card glass-card-gold p-6">
             <h2 className="font-display text-lg font-bold text-bk-gold">{c.credit.title[language]}</h2>
-            <p className="mt-1.5 leading-relaxed text-white/75 font-deva">{c.credit.body[language]}</p>
+            <p className="mt-1.5 leading-relaxed text-slate-600 font-deva">{c.credit.body[language]}</p>
           </section>
           <section className="glass-card p-6">
             <h2 className="font-display text-lg font-bold text-bk-gold">{c.debit.title[language]}</h2>
-            <p className="mt-1.5 leading-relaxed text-white/75 font-deva">{c.debit.body[language]}</p>
+            <p className="mt-1.5 leading-relaxed text-slate-600 font-deva">{c.debit.body[language]}</p>
           </section>
         </div>
 
@@ -30,7 +30,7 @@ export default function CardsPage() {
             <h2 className="font-display text-lg font-bold text-bk-gold">{sec.title[language]}</h2>
             <ul className="mt-2 space-y-2">
               {sec.points.map((p, i) => (
-                <li key={i} className="flex gap-2 text-white/75 font-deva">
+                <li key={i} className="flex gap-2 text-slate-600 font-deva">
                   <span className="text-bk-gold">•</span>
                   {p[language]}
                 </li>
@@ -41,7 +41,7 @@ export default function CardsPage() {
 
         <section className="glass-card p-6">
           <h2 className="font-display text-lg font-bold text-bk-gold">{c.rewards.title[language]}</h2>
-          <p className="mt-1.5 leading-relaxed text-white/75 font-deva">{c.rewards.body[language]}</p>
+          <p className="mt-1.5 leading-relaxed text-slate-600 font-deva">{c.rewards.body[language]}</p>
         </section>
 
         <button

@@ -8,12 +8,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'bk-dark': '#0A0E1A',
-        'bk-card': '#111827',
-        'bk-gold': '#F5A623',
-        'bk-gold-light': '#FFD166',
-        'bk-success': '#10B981',
-        'bk-danger': '#EF4444',
+        // Light "soft premium" theme. Token names kept for compatibility:
+        // bk-dark now reads as the on-accent (white) / light-surface color,
+        // bk-card as a light surface, and bk-gold as the teal primary accent.
+        'bk-dark': '#ffffff',
+        'bk-card': '#ffffff',
+        'bk-gold': '#0f766e', // teal-700 — primary accent (good contrast on light)
+        'bk-gold-light': '#0d9488', // teal-600 — hover
+        'bk-success': '#0f9d6b',
+        'bk-danger': '#e11d48',
       },
       fontFamily: {
         display: ['var(--font-poppins)', 'Poppins', 'sans-serif'],
@@ -35,8 +38,8 @@ const config: Config = {
           '50%': { transform: 'translateY(-10px)' },
         },
         pulseGold: {
-          '0%, 100%': { boxShadow: '0 0 0 0 rgba(245,166,35,0.4)' },
-          '50%': { boxShadow: '0 0 0 12px rgba(245,166,35,0)' },
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(13,148,136,0.35)' },
+          '50%': { boxShadow: '0 0 0 12px rgba(13,148,136,0)' },
         },
         fadeUp: {
           from: { opacity: '0', transform: 'translateY(20px)' },

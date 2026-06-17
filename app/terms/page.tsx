@@ -18,7 +18,7 @@ export default function TermsPage() {
               <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-bk-gold/15 text-xs font-bold text-bk-gold">
                 {i + 1}
               </span>
-              <p className="leading-relaxed text-white/75 font-deva">{t(p)}</p>
+              <p className="leading-relaxed text-slate-600 font-deva">{t(p)}</p>
             </li>
           ))}
         </ul>

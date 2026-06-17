@@ -90,13 +90,13 @@ export default function LeadFormModal() {
           >
             <div className="mb-4 flex items-start justify-between">
               <div>
-                <h3 className="font-display text-xl font-bold text-white">{t('lead.title')}</h3>
-                <p className="mt-1 text-sm text-white/55 font-deva">{t('lead.subtitle')}</p>
+                <h3 className="font-display text-xl font-bold text-slate-800">{t('lead.title')}</h3>
+                <p className="mt-1 text-sm text-slate-500 font-deva">{t('lead.subtitle')}</p>
               </div>
               <button
                 onClick={close}
                 aria-label={t('btn.close')}
-                className="rounded-lg p-1.5 text-white/50 hover:bg-white/5 hover:text-white"
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-900/[0.035] hover:text-slate-800"
               >
                 ✕
               </button>
@@ -105,7 +105,7 @@ export default function LeadFormModal() {
             {done ? (
               <div className="flex flex-col items-center gap-3 py-8 text-center">
                 <span className="text-4xl">✅</span>
-                <p className="text-white font-deva">{t('lead.success')}</p>
+                <p className="text-slate-800 font-deva">{t('lead.success')}</p>
                 <button
                   onClick={close}
                   className="mt-2 rounded-xl bg-bk-gold px-5 py-2.5 font-bold text-bk-dark transition-colors hover:bg-bk-gold-light font-deva"
@@ -121,7 +121,7 @@ export default function LeadFormModal() {
                     {t('lead.module')}: {t(moduleLabelKey[module])}
                   </span>
                   {product && (
-                    <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-white/70 font-deva">
+                    <span className="rounded-full border border-slate-200 bg-slate-900/[0.035] px-2.5 py-1 text-slate-600 font-deva">
                       {product}
                     </span>
                   )}
@@ -177,7 +177,7 @@ export default function LeadFormModal() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-sm text-white/70 font-deva">{label}</span>
+      <span className="mb-1 block text-sm text-slate-600 font-deva">{label}</span>
       {children}
     </label>
   );

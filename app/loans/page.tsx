@@ -47,8 +47,8 @@ export default function LoansPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-6 text-center">
-        <h1 className="font-display text-3xl font-extrabold text-white md:text-4xl">{t('loan.title')}</h1>
-        <p className="mt-2 text-white/55 font-deva">{t('easy.emi_first')}</p>
+        <h1 className="font-display text-3xl font-extrabold text-slate-800 md:text-4xl">{t('loan.title')}</h1>
+        <p className="mt-2 text-slate-500 font-deva">{t('easy.emi_first')}</p>
       </header>
 
       {/* Quick question cards */}
@@ -63,7 +63,7 @@ export default function LoansPage() {
             className="glass-card flex items-center gap-2 p-4 text-left transition-all hover:border-bk-gold/40"
           >
             <span className="text-xl">{q.icon}</span>
-            <span className="text-sm font-semibold text-white/85 font-deva">{t(q.key)}</span>
+            <span className="text-sm font-semibold text-slate-700 font-deva">{t(q.key)}</span>
           </motion.button>
         ))}
       </div>
@@ -77,7 +77,7 @@ export default function LoansPage() {
             className={`flex flex-col items-center gap-1 rounded-xl border px-2 py-3 text-xs font-deva transition-all ${
               type === lt
                 ? 'border-bk-gold bg-bk-gold/15 text-bk-gold'
-                : 'border-white/10 text-white/70 hover:border-white/25'
+                : 'border-slate-200 text-slate-600 hover:border-slate-200'
             }`}
           >
             <span className="text-lg">{loanDetails[lt].icon}</span>
@@ -96,7 +96,7 @@ export default function LoansPage() {
       >
         <div className="flex items-center gap-3">
           <span className="text-3xl">{detail.icon}</span>
-          <h2 className="font-display text-xl font-bold text-white font-deva">{loanLabel}</h2>
+          <h2 className="font-display text-xl font-bold text-slate-800 font-deva">{loanLabel}</h2>
           <span className="ml-auto"><DataSourceBadge source={source} updatedAt={updatedAt} /></span>
         </div>
 
@@ -106,32 +106,32 @@ export default function LoansPage() {
             { label: t('loan.f_fee'), value: fee },
             { label: t('loan.f_tenure'), value: tenure },
           ].map((s) => (
-            <div key={s.label} className="rounded-xl bg-white/5 p-3 text-center">
+            <div key={s.label} className="rounded-xl bg-slate-900/[0.035] p-3 text-center">
               <p className="text-base font-bold text-bk-gold">{s.value}</p>
-              <p className="mt-1 text-xs text-white/60 font-deva">{s.label}</p>
+              <p className="mt-1 text-xs text-slate-500 font-deva">{s.label}</p>
             </div>
           ))}
         </div>
 
         <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
           <div>
-            <h3 className="mb-1.5 text-sm font-semibold text-white/80 font-deva">{t('loan.f_eligibility')}</h3>
+            <h3 className="mb-1.5 text-sm font-semibold text-slate-700 font-deva">{t('loan.f_eligibility')}</h3>
             <ul className="space-y-1.5">
               {detail.eligibility.map((e, i) => (
-                <li key={i} className="flex gap-2 text-sm text-white/70 font-deva">
+                <li key={i} className="flex gap-2 text-sm text-slate-600 font-deva">
                   <span className="text-bk-gold">✓</span>
                   {e[language]}
                 </li>
               ))}
             </ul>
-            <h3 className="mb-1.5 mt-4 text-sm font-semibold text-white/80 font-deva">{t('loan.f_who')}</h3>
-            <p className="text-sm text-white/70 font-deva">{detail.who[language]}</p>
+            <h3 className="mb-1.5 mt-4 text-sm font-semibold text-slate-700 font-deva">{t('loan.f_who')}</h3>
+            <p className="text-sm text-slate-600 font-deva">{detail.who[language]}</p>
           </div>
           <div>
-            <h3 className="mb-1.5 text-sm font-semibold text-white/80 font-deva">{t('loan.f_mistakes')}</h3>
+            <h3 className="mb-1.5 text-sm font-semibold text-slate-700 font-deva">{t('loan.f_mistakes')}</h3>
             <ul className="space-y-1.5">
               {detail.mistakes.map((m, i) => (
-                <li key={i} className="flex gap-2 text-sm text-white/70 font-deva">
+                <li key={i} className="flex gap-2 text-sm text-slate-600 font-deva">
                   <span className="text-bk-danger">⚠️</span>
                   {m[language]}
                 </li>
@@ -151,13 +151,13 @@ export default function LoansPage() {
       {/* Documents for this loan */}
       <div id="loan-docs" className="mt-10 scroll-mt-20">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-display text-xl font-bold text-white font-deva">{t('loan.f_documents')}</h2>
-          <label className="flex items-center gap-2 text-sm text-white/60 font-deva">
+          <h2 className="font-display text-xl font-bold text-slate-800 font-deva">{t('loan.f_documents')}</h2>
+          <label className="flex items-center gap-2 text-sm text-slate-500 font-deva">
             {t('doc.profile')}
             <select
               value={profile}
               onChange={(e) => setProfile(e.target.value as ProfileType)}
-              className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-sm text-white outline-none focus:border-bk-gold/50"
+              className="rounded-lg border border-slate-200 bg-slate-900/[0.035] px-2 py-1.5 text-sm text-slate-800 outline-none focus:border-bk-gold/50"
             >
               {profileOptions.map((o) => (
                 <option key={o.value} value={o.value} className="bg-bk-card">
@@ -172,7 +172,7 @@ export default function LoansPage() {
 
       {/* EMI calculator */}
       <div id="loan-calc" className="mt-10 scroll-mt-20">
-        <h2 className="mb-4 font-display text-xl font-bold text-white font-deva">{t('loan.emi_title')}</h2>
+        <h2 className="mb-4 font-display text-xl font-bold text-slate-800 font-deva">{t('loan.emi_title')}</h2>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div>
             <EMICalculator />
@@ -182,7 +182,7 @@ export default function LoansPage() {
           <div className="overflow-x-auto glass-card p-0">
             <table className="w-full min-w-[320px] text-sm">
               <thead>
-                <tr className="border-b border-white/10 text-left text-white/50">
+                <tr className="border-b border-slate-200 text-left text-slate-400">
                   <th className="p-3 font-medium">{t('loan.col_bank')}</th>
                   <th className="p-3 font-medium">{t('loan.col_roi')}</th>
                   <th className="p-3 font-medium">{t('loan.col_fee')}</th>
@@ -190,10 +190,10 @@ export default function LoansPage() {
               </thead>
               <tbody>
                 {rows.map((l) => (
-                  <tr key={l.id} className="border-b border-white/5">
-                    <td className="p-3 text-white font-deva">{l.bankName}</td>
+                  <tr key={l.id} className="border-b border-slate-100">
+                    <td className="p-3 text-slate-800 font-deva">{l.bankName}</td>
                     <td className="p-3 font-bold text-bk-gold">{l.roiMin}%–{l.roiMax}%</td>
-                    <td className="p-3 text-white/70">{l.processingFee}</td>
+                    <td className="p-3 text-slate-600">{l.processingFee}</td>
                   </tr>
                 ))}
               </tbody>

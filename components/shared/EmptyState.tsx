@@ -9,7 +9,7 @@ export default function EmptyState({ messageKey = 'state.empty' }: { messageKey?
   return (
     <div className="flex flex-col items-center justify-center gap-2 py-12 text-center">
       <span className="text-4xl opacity-40">📭</span>
-      <p className="text-sm text-white/50 font-deva">{t(messageKey)}</p>
+      <p className="text-sm text-slate-400 font-deva">{t(messageKey)}</p>
     </div>
   );
 }

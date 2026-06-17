@@ -16,6 +16,7 @@ const primaryLinks = [
   { href: '/sip', key: 'nav.sip' },
   { href: '/insurance', key: 'nav.insurance' },
   { href: '/rates', key: 'nav.rates' },
+  { href: '/directory', key: 'nav.directory' },
   { href: '/documents', key: 'nav.documents' },
   { href: '/about', key: 'nav.about' },
   { href: '/contact', key: 'nav.contact' },

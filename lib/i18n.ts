@@ -240,6 +240,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- Nav / rates / documents / CTA ---
     'nav.rates': 'दर/बाजार',
+    'nav.directory': 'बँक डिरेक्टरी',
     'nav.documents': 'कागदपत्रे',
     'nav.cta': 'मोफत मार्गदर्शन घ्या',
 
@@ -816,6 +817,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- Nav / rates / documents / CTA ---
     'nav.rates': 'Rates / Market',
+    'nav.directory': 'Bank Directory',
     'nav.documents': 'Documents',
     'nav.cta': 'Get Free Guidance',
 

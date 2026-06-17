@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  /* Dark premium fintech palette */
-  --bg-base: #020617; /* slate-950 */
-  --bg-surface: #0f172a; /* slate-900 */
-  --bg-surface-2: #1e293b; /* slate-800 */
-  --surface-glass: rgba(15, 23, 42, 0.6); /* slate-900 / 60 */
+  /* Premium navy-blue fintech palette */
+  --bg-base: #050814; /* deep navy */
+  --bg-surface: #0A1128; /* navy surface */
+  --bg-surface-2: #142042; /* raised navy */
+  --surface-glass: rgba(15, 23, 42, 0.55); /* frosted navy glass */
 
   /* Amber / yellow primary accents */
   --amber-300: #fcd34d;
@@ -34,11 +34,11 @@
 
 @layer base {
   body {
-    /* Dark radial backdrop: slate-900 glow at top, amber halo, fading into slate-950 */
-    background-color: #020617;
+    /* Premium navy backdrop: amber halo at top over a deep navy-blue gradient. */
+    background-color: #050814;
     background-image:
       radial-gradient(ellipse 80% 60% at 50% 0%, rgba(251, 191, 36, 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at top, #0f172a 0%, #020617 55%, #020617 100%);
+      radial-gradient(ellipse at top, #0f172a 0%, #0A1128 45%, #050814 100%);
     background-attachment: fixed;
     color: var(--text-primary);
     font-family: var(--font-inter), 'Inter', sans-serif;

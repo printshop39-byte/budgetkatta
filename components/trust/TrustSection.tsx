@@ -15,7 +15,7 @@ export default function TrustSection() {
   const t = getTranslation(language);
 
   return (
-    <section className="border-t border-slate-800 bg-slate-950 px-4 py-10">
+    <section className="border-t border-slate-800 bg-[#050814] px-4 py-10">
       <div className="mx-auto max-w-5xl space-y-8">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
           {trustIcons.map((badge) => (

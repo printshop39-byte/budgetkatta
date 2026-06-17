@@ -42,7 +42,7 @@ export default function Footer() {
   return (
     <footer>
       <TrustSection />
-      <div className="border-t border-slate-800 bg-slate-950 px-4 py-12">
+      <div className="border-t border-slate-800 bg-[#050814] px-4 py-12">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">

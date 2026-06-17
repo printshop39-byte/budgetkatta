@@ -8,7 +8,7 @@
 // The data access lives in lib/locations.ts; swapping that layer for MongoDB
 // Atlas later requires no changes here.
 import { NextResponse } from 'next/server';
-import { getDistricts, getTalukas, getVillages } from '@/lib/locations';
+import { getDistricts, getTalukas, getVillages, searchLocations } from '@/lib/locations';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,6 +16,13 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const district = searchParams.get('district');
   const taluka = searchParams.get('taluka');
+  const q = searchParams.get('q');
+
+  // Voice / fuzzy search: GET /api/locations?q=<spoken transcript>
+  if (q !== null) {
+    const match = await searchLocations(q);
+    return NextResponse.json({ ok: true, level: 'search', match });
+  }
 
   if (district && taluka) {
     const data = await getVillages(district, taluka);

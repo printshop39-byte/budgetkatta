@@ -345,6 +345,9 @@ export async function getTalukas(districtId: string): Promise<TalukaRef[]> {
   return dist.talukas.map((tk) => ({ id: tk.id, name: tk.name }));
 }
 
+const villagePincode = (dist: DistrictRaw, talukaIndex: number) =>
+  `${dist.pinBase}${String(11 + talukaIndex).padStart(2, '0')}`; // representative
+
 /** Villages (with pincode + branches) for a taluka. */
 export async function getVillages(districtId: string, talukaId: string): Promise<Village[]> {
   const dist = MAHARASHTRA.find((x) => x.id === districtId);
@@ -352,13 +355,110 @@ export async function getVillages(districtId: string, talukaId: string): Promise
   const idx = dist.talukas.findIndex((tk) => tk.id === talukaId);
   if (idx === -1) return [];
   const tk = dist.talukas[idx];
-  const pincode = `${dist.pinBase}${String(11 + idx).padStart(2, '0')}`; // representative
   return [
     {
       id: `${tk.id}-town`,
       name: tk.name,
-      pincode,
+      pincode: villagePincode(dist, idx),
       branches: makeBranches(dist, tk),
     },
   ];
+}
+
+// ── Voice / fuzzy search ──────────────────────────────────────────────────────
+export interface LocationMatch {
+  matched: boolean;
+  districtId?: string;
+  talukaId?: string;
+  villageId?: string;
+  district?: Bi;
+  taluka?: Bi;
+  pincode?: string;
+}
+
+interface SearchEntry {
+  districtId: string;
+  talukaId: string;
+  villageId: string;
+  pincode: string;
+  text: string; // pre-lowercased haystack (en + mr names, pincode, bank aliases)
+}
+
+let SEARCH_INDEX: SearchEntry[] | null = null;
+
+function buildSearchIndex(): SearchEntry[] {
+  const entries: SearchEntry[] = [];
+  for (const dist of MAHARASHTRA) {
+    dist.talukas.forEach((tk, idx) => {
+      const pincode = villagePincode(dist, idx);
+      const branches = makeBranches(dist, tk);
+      const aliases = branches
+        .map((b) =>
+          b.name.en.includes('State Bank')
+            ? 'sbi state bank of india'
+            : b.name.en.includes('Co-op')
+              ? 'dccb cooperative co-op patsanstha'
+              : '',
+        )
+        .join(' ');
+      const text = [
+        dist.name.en,
+        dist.name.mr,
+        tk.name.en,
+        tk.name.mr,
+        pincode,
+        aliases,
+        'bank बँक बँका पतसंस्था सहकारी',
+      ]
+        .join(' ')
+        .toLowerCase();
+      entries.push({ districtId: dist.id, talukaId: tk.id, villageId: `${tk.id}-town`, pincode, text });
+    });
+  }
+  return entries;
+}
+
+/**
+ * Fuzzy-match a spoken/typed query against the location + bank index and return
+ * the best District → Taluka → Village chain. Token-overlap scoring with a strong
+ * boost for exact pincodes. Returns { matched: false } when nothing scores.
+ */
+export async function searchLocations(query: string): Promise<LocationMatch> {
+  const q = (query || '').trim().toLowerCase();
+  if (!q) return { matched: false };
+
+  const index = (SEARCH_INDEX ??= buildSearchIndex());
+  const tokens = q.split(/[\s,./-]+/).filter((tok) => tok.length >= 2);
+  const pin = tokens.find((tok) => /^\d{6}$/.test(tok));
+
+  let best: SearchEntry | null = null;
+  let bestScore = 0;
+  for (const e of index) {
+    let score = 0;
+    if (pin) {
+      if (e.pincode === pin) score += 10;
+      else if (e.pincode.slice(0, 4) === pin.slice(0, 4)) score += 3;
+    }
+    for (const tok of tokens) {
+      if (!/^\d+$/.test(tok) && e.text.includes(tok)) score += 2;
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      best = e;
+    }
+  }
+
+  if (!best || bestScore === 0) return { matched: false };
+
+  const dist = MAHARASHTRA.find((x) => x.id === best!.districtId)!;
+  const tk = dist.talukas.find((x) => x.id === best!.talukaId)!;
+  return {
+    matched: true,
+    districtId: best.districtId,
+    talukaId: best.talukaId,
+    villageId: best.villageId,
+    district: dist.name,
+    taluka: tk.name,
+    pincode: best.pincode,
+  };
 }

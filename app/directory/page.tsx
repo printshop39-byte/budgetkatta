@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, ShieldCheck, Loader2 } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
+import VoiceSearchAgent from '@/components/directory/VoiceSearchAgent';
 
 type Bi = { en: string; mr: string };
 type BranchType = 'DCCB' | 'Patsanstha' | 'Commercial';
@@ -53,6 +54,7 @@ export default function DirectoryPage() {
   const [loadingDistricts, setLoadingDistricts] = useState(true);
   const [loadingTalukas, setLoadingTalukas] = useState(false);
   const [loadingVillages, setLoadingVillages] = useState(false);
+  const [voiceNote, setVoiceNote] = useState<{ text: string; ok: boolean } | null>(null);
 
   // Districts on mount.
   useEffect(() => {
@@ -67,13 +69,13 @@ export default function DirectoryPage() {
     };
   }, []);
 
-  // Talukas whenever a district is chosen.
+  // Fetch talukas for the current district. Child resets live in the change
+  // handlers (not here) so a programmatic voice match can set all 3 IDs at once.
   useEffect(() => {
-    setTalukas([]);
-    setTalukaId('');
-    setVillages([]);
-    setVillageId('');
-    if (!districtId) return;
+    if (!districtId) {
+      setTalukas([]);
+      return;
+    }
     let active = true;
     setLoadingTalukas(true);
     fetchLocations({ district: districtId })
@@ -85,11 +87,12 @@ export default function DirectoryPage() {
     };
   }, [districtId]);
 
-  // Villages whenever a taluka is chosen.
+  // Fetch villages for the current district + taluka.
   useEffect(() => {
-    setVillages([]);
-    setVillageId('');
-    if (!districtId || !talukaId) return;
+    if (!districtId || !talukaId) {
+      setVillages([]);
+      return;
+    }
     let active = true;
     setLoadingVillages(true);
     fetchLocations({ district: districtId, taluka: talukaId })
@@ -100,6 +103,39 @@ export default function DirectoryPage() {
       active = false;
     };
   }, [districtId, talukaId]);
+
+  // Manual selection handlers own the cascade reset.
+  const onDistrictChange = (id: string) => {
+    setDistrictId(id);
+    setTalukaId('');
+    setVillageId('');
+    setVoiceNote(null);
+  };
+  const onTalukaChange = (id: string) => {
+    setTalukaId(id);
+    setVillageId('');
+  };
+
+  // Voice transcript → server fuzzy search → apply the matched chain.
+  const handleVoiceResult = async (transcript: string) => {
+    try {
+      const res = await fetch(`/api/locations?q=${encodeURIComponent(transcript)}`, { cache: 'no-store' });
+      const json = await res.json();
+      const m = json.match;
+      if (m?.matched) {
+        setDistrictId(m.districtId);
+        setTalukaId(m.talukaId);
+        setVillageId(m.villageId);
+        const place = m.district ? m.district[language] : '';
+        setVoiceNote({ text: (language === 'mr' ? 'दाखवत आहे: ' : 'Showing results for: ') + place, ok: true });
+        setTimeout(() => document.getElementById('voice-results')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+      } else {
+        setVoiceNote({ text: language === 'mr' ? 'काही जुळले नाही. पुन्हा प्रयत्न करा.' : 'No match found. Please try again.', ok: false });
+      }
+    } catch {
+      setVoiceNote({ text: language === 'mr' ? 'शोध अयशस्वी. पुन्हा प्रयत्न करा.' : 'Search failed. Please try again.', ok: false });
+    }
+  };
 
   const village = useMemo(() => villages.find((v) => v.id === villageId), [villages, villageId]);
   const districtName = districts.find((x) => x.id === districtId)?.name;
@@ -135,7 +171,7 @@ export default function DirectoryPage() {
             <select
               value={districtId}
               disabled={loadingDistricts}
-              onChange={(e) => setDistrictId(e.target.value)}
+              onChange={(e) => onDistrictChange(e.target.value)}
               className={selectClass}
             >
               <option value="">{language === 'mr' ? '— जिल्हा —' : '— District —'}</option>
@@ -156,7 +192,7 @@ export default function DirectoryPage() {
             <select
               value={talukaId}
               disabled={!districtId || loadingTalukas}
-              onChange={(e) => setTalukaId(e.target.value)}
+              onChange={(e) => onTalukaChange(e.target.value)}
               className={selectClass}
             >
               <option value="">{language === 'mr' ? '— तालुका —' : '— Taluka —'}</option>
@@ -193,7 +229,7 @@ export default function DirectoryPage() {
 
       {/* Results */}
       {village && districtName && talukaName && (
-        <motion.div key={village.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mt-8">
+        <motion.div id="voice-results" key={village.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mt-8">
           {/* Pincode banner */}
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5">
             <div>
@@ -275,6 +311,9 @@ export default function DirectoryPage() {
             : '🔒 Security Warning: BudgetKatta never asks for mobile OTP or personal documents.'}
         </p>
       </div>
+
+      {/* Voice-activated AI search */}
+      <VoiceSearchAgent language={language} onResult={handleVoiceResult} note={voiceNote} />
     </div>
   );
 }

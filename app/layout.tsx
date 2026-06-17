@@ -3,6 +3,7 @@ import { Inter, Poppins, Noto_Sans_Devanagari } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import ThemeApplier from '@/components/layout/ThemeApplier';
 import Floating3DGuide from '@/components/bot/Floating3DGuide';
 import CompareDrawer from '@/components/compare/CompareDrawer';
 import LeadFormModal from '@/components/lead/LeadFormModal';
@@ -57,8 +58,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="mr" className={`${inter.variable} ${poppins.variable} ${deva.variable}`}>
+    <html lang="mr" data-theme="dark" suppressHydrationWarning className={`${inter.variable} ${poppins.variable} ${deva.variable}`}>
+      <head>
+        {/* Set the persisted theme before paint to avoid a flash of the wrong palette. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=JSON.parse(localStorage.getItem('bk-theme')||'{}').state;document.documentElement.dataset.theme=(t&&t.theme)||'dark';}catch(e){document.documentElement.dataset.theme='dark';}})();`,
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0f172a] via-[#0A1128] to-[#050814] text-slate-200 antialiased">
+        <ThemeApplier />
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />

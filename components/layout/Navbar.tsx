@@ -2,9 +2,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Sun, Moon } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { useLeadFormStore } from '@/store/leadFormStore';
+import { useThemeStore } from '@/store/themeStore';
 
 // Desktop navbar links.
 const primaryLinks = [
@@ -29,6 +31,7 @@ export default function Navbar() {
   const { language, setLanguage } = useLanguageStore();
   const t = getTranslation(language);
   const openLead = useLeadFormStore((s) => s.open);
+  const { theme, toggleTheme } = useThemeStore();
   const [open, setOpen] = useState(false);
 
   return (
@@ -61,6 +64,14 @@ export default function Navbar() {
             className="hidden rounded-xl bg-amber-400 px-4 py-2 text-sm font-bold text-slate-950 transition-all duration-300 hover:bg-amber-500 hover:shadow-[0_0_22px_rgba(251,191,36,0.45)] active:scale-95 font-deva lg:block"
           >
             {t('nav.cta_short')}
+          </button>
+          <button
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+            className="rounded-lg border border-slate-800 p-2 text-slate-400 transition-colors hover:border-amber-400/40 hover:text-amber-400"
+          >
+            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
           <div className="flex overflow-hidden rounded-lg border border-slate-800">
             {(['mr', 'en'] as const).map((lng) => (

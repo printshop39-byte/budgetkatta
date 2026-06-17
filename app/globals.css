@@ -93,6 +93,106 @@
   }
 }
 
+/* ============================================================
+   LIGHT THEME — activated via <html data-theme="light">.
+   The app's components are authored with dark Tailwind classes, so light
+   mode is applied as a scoped global re-skin: CSS-variable remap + overrides
+   for the shared component classes and the most common slate/navy utilities.
+   ============================================================ */
+:root[data-theme='light'] {
+  --bg-base: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-surface-2: #f1f5f9; /* slate-100 */
+  --surface-glass: rgba(255, 255, 255, 0.72);
+  --text-primary: #0f172a; /* slate-900 */
+  --text-secondary: #334155; /* slate-700 */
+  --text-muted: #64748b; /* slate-500 */
+  --text-accent: #0d9488; /* teal-600 */
+  --border-default: rgba(203, 213, 225, 1); /* slate-300 */
+  --border-glass: rgba(13, 148, 136, 0.22); /* teal */
+}
+
+/* Smooth palette transition when toggling. */
+html[data-theme] body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html[data-theme='light'] body {
+  background-color: #f8fafc !important;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(13, 148, 136, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse at top, #ccfbf1 0%, #f1f5f9 45%, #ffffff 100%) !important;
+  color: var(--text-primary);
+}
+
+/* Frosted glass cards on light */
+html[data-theme='light'] .glass-card {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(203, 213, 225, 0.9);
+  box-shadow: 0 8px 30px rgb(2 6 23 / 0.06);
+}
+html[data-theme='light'] .glass-card-gold {
+  border-color: rgba(13, 148, 136, 0.28);
+  box-shadow: 0 10px 34px rgb(13 148 136 / 0.1);
+}
+html[data-theme='light'] .bk-input {
+  border-color: rgb(203 213 225);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
+}
+html[data-theme='light'] .bk-input::placeholder {
+  color: rgb(148 163 184);
+}
+html[data-theme='light'] .bk-input:focus {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgb(13 148 136 / 0.16);
+}
+
+/* Surfaces: dark slate + navy backgrounds → light. */
+html[data-theme='light'] [class*='bg-slate-9']:not(body),
+html[data-theme='light'] [class*='bg-slate-8']:not(body) {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+html[data-theme='light'] [class*='0A1128']:not(body) {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  background-image: none !important;
+}
+html[data-theme='light'] [class*='050814']:not(body),
+html[data-theme='light'] [class*='0A0F1C']:not(body),
+html[data-theme='light'] [class*='0B1120']:not(body) {
+  background-color: #f8fafc !important;
+  background-image: none !important;
+}
+
+/* Text: light-on-dark → dark-on-light. */
+html[data-theme='light'] [class*='text-slate-1'],
+html[data-theme='light'] [class*='text-slate-2'],
+html[data-theme='light'] [class*='text-slate-3'] {
+  color: #1e293b !important; /* slate-800 */
+}
+html[data-theme='light'] [class*='text-slate-4'],
+html[data-theme='light'] [class*='text-slate-5'] {
+  color: #64748b !important; /* slate-500 */
+}
+
+/* Borders */
+html[data-theme='light'] [class*='border-slate-7'],
+html[data-theme='light'] [class*='border-slate-8'] {
+  border-color: #e2e8f0 !important; /* slate-200 */
+}
+
+/* Accent text/borders shift amber → crisp teal in light mode
+   (solid amber/gold CTA buttons are left intact for brand recognition). */
+html[data-theme='light'] [class*='text-amber-'],
+html[data-theme='light'] [class*='text-bk-gold'] {
+  color: #0d9488 !important; /* teal-600 */
+}
+
+/* Security disclaimer stays high-contrast in both palettes. */
+html[data-theme='light'] .bk-security-note {
+  color: #be123c !important; /* rose-700 */
+}
+
 /* Respect reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,

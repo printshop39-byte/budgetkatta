@@ -115,6 +115,15 @@ export default function LeadFormModal() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
+                {/* Security disclaimer */}
+                <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-3">
+                  <p className="bk-security-note text-xs font-semibold leading-relaxed text-rose-200 font-deva">
+                    {language === 'mr'
+                      ? '🔒 सुरक्षा सतर्कता: बजेटकट्टा तुमच्याकडे कधीही मोबाईल OTP, पासवर्ड किंवा वैयक्तिक कागदपत्रांची मागणी करत नाही. कृपया तुमची खाजगी माहिती कोणासोबतही शेअर करू नका.'
+                      : '🔒 Security Warning: BudgetKatta will NEVER ask for your mobile OTP, passwords, or personal identity documents. Please do not share sensitive information with anyone.'}
+                  </p>
+                </div>
+
                 {/* Context chips */}
                 <div className="flex flex-wrap gap-2 text-xs">
                   <span className="rounded-full border border-amber-400/30 bg-amber-400/10 px-2.5 py-1 text-amber-400 font-deva">

@@ -42,7 +42,17 @@ export default function Footer() {
   return (
     <footer>
       <TrustSection />
-      <div className="border-t border-slate-800 bg-[#050814] px-4 py-12">
+      {/* Security disclaimer banner */}
+      <div className="border-t border-slate-800 bg-[#050814] px-4 pt-8">
+        <div className="mx-auto max-w-6xl rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4">
+          <p className="bk-security-note text-center text-sm font-semibold leading-relaxed text-rose-200 font-deva sm:text-left">
+            {language === 'mr'
+              ? '🔒 सुरक्षा सतर्कता: बजेटकट्टा तुमच्याकडे कधीही मोबाईल OTP, पासवर्ड किंवा वैयक्तिक कागदपत्रांची (Personal Documents) मागणी करत नाही. कृपया तुमची खाजगी माहिती कोणासोबतही शेअर करू नका.'
+              : '🔒 Security Warning: BudgetKatta will NEVER ask for your mobile OTP, passwords, or personal identity documents. Please do not share sensitive information with anyone.'}
+          </p>
+        </div>
+      </div>
+      <div className="bg-[#050814] px-4 pb-12 pt-8">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">

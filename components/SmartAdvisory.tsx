@@ -1,13 +1,17 @@
-﻿"use client";
+"use client";
 
 import { useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, HelpCircle as QuestionIcon, RefreshCw, ArrowRight, Sparkles } from "lucide-react";
+import { useLanguageStore } from "@/store/languageStore";
+import { getTranslation } from "@/lib/i18n";
 
 export default function SmartAdvisory() {
   const [userQuery, setUserQuery] = useState("");
   const [chatResponse, setChatResponse] = useState<string | null>(null);
   const [chatLoading, setChatLoading] = useState(false);
+  const language = useLanguageStore((s) => s.language);
+  const t = getTranslation(language);
 
   const handleSmartQuery = (e: FormEvent) => {
     e.preventDefault();
@@ -20,16 +24,16 @@ export default function SmartAdvisory() {
       const query = userQuery.toLowerCase();
       let response = "";
 
-      if (query.includes("गुंतवणूक") || query.includes("investment") || query.includes("कुठे")) {
-        response = "तुमच्यासाठी सल्ला: जर तुम्ही नवशिक्या असाल, तर दरमहा कमीत कमी ५०० रुपयांपासून म्युच्युअल फंडमध्ये SIP (शिस्तबद्ध गुंतवणूक) सुरू करा. यामुळे तुम्हाला चक्रवाढ व्याजाचा फायदा मिळेल आणि जोखीमही कमी राहील. दीर्घकालीन उद्दिष्टांसाठी (उदा. १०+ वर्षे) लार्ज-कॅप किंवा इंडेक्स फंड उत्तम पर्याय आहेत.";
+      if (query.includes("गुंतवणूक") || query.includes("investment") || query.includes("कुठे") || query.includes("invest")) {
+        response = t("adv.resp_investment");
       } else if (query.includes("कर्ज") || query.includes("loan") || query.includes("emi")) {
-        response = "तुमच्यासाठी सल्ला: कर्ज घेताना नेहमी लक्षात ठेवा की तुमचा एकूण ईएमआय (EMI) तुमच्या मासिक उत्पन्नाच्या ३५% पेक्षा जास्त नसावा. गृहकर्जासाठी शक्यतो जास्त डाऊनपेमेंट करा आणि वेळेपूर्वी कर्ज फेडण्यासाठी दरवर्षी ५-१०% अतिरिक्त हप्ता देण्याचा प्रयत्न करा.";
+        response = t("adv.resp_loan");
       } else if (query.includes("विमा") || query.includes("insurance")) {
-        response = "तुमच्यासाठी सल्ला: आपल्या कुटुंबाच्या सुरक्षेसाठी दोन विमा असणे अत्यंत आवश्यक आहे. १) टर्म विमा (तुमच्या वार्षिक उत्पन्नाच्या किमान १५ पट कव्हर असणारा), २) आरोग्य विमा (किमान ५ ते १० लाख रुपयांचा फॅमिली फ्लोटर). कोणत्याही इन्व्हेस्टमेंट कम इन्शुरन्स (उदा. पारंपरिक मनीबॅक पॉलिसी) मध्ये गुंतवणे टाळा.";
-      } else if (query.includes("बचत") || query.includes("saving") || query.includes("खर्च")) {
-        response = "तुमच्यासाठी सल्ला: बजेट बनवण्यासाठी '५०/३०/२०' चा सुवर्ण नियम वापरा. उत्पन्नातील ५०% भाग तुमच्या गरजांवर (भाडे, अन्न, बिले), ३०% भाग तुमच्या इच्छांवर (फिरणे, हॉटेलिंग) आणि किमान २०% भाग भविष्यातील बचतीसाठी व गुंतवणुकीसाठी बाजूला काढा. दरमहा खर्चाची नोंद ठेवल्यास वायफळ खर्च कमी होण्यास मदत होते.";
+        response = t("adv.resp_ins");
+      } else if (query.includes("बचत") || query.includes("saving") || query.includes("खर्च") || query.includes("budget")) {
+        response = t("adv.resp_save");
       } else {
-        response = "तुमच्या प्रश्नाचे विश्लेषण: बजेटकट्टाच्या मते, सुदृढ आर्थिक आरोग्यासाठी प्रथम १ लाख रुपयांचा आणीबाणीचा निधी (Emergency Fund) तयार करा, त्यानंतर स्वतःचा टर्म व आरोग्य विमा घ्या, आणि शेवटी म्युच्युअल फंड किंवा एफडीमध्ये नियमित गुंतवणूक सुरू करा. कोणत्याही मदतीसाठी आमचे कॅल्क्युलेटर वापरून पाहा!";
+        response = t("adv.resp_default");
       }
 
       setChatResponse(response);
@@ -43,28 +47,28 @@ export default function SmartAdvisory() {
         {/* Left Column: Information */}
         <div className="lg:col-span-6 space-y-6">
           <span className="text-xs font-bold text-amber-300 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">
-            स्मार्ट सल्लागार
+            {t("adv.eyebrow")}
           </span>
           <h2 className="text-3xl/[1.4] md:text-4xl/[1.4] font-extrabold text-slate-100 tracking-normal">
-            तुमच्या प्रश्नांचे निरसन, एका क्षणात!
+            {t("adv.title")}
           </h2>
           <p className="text-slate-400 leading-relaxed text-base">
-            गुंतवणूक, कर्ज, विमा किंवा बजेट संदर्भात तुमच्या मनात काही शंका आहे का? खाली तुमच्या शब्दांत प्रश्न विचारा आणि आमचा डिजिटल आर्थिक सल्लागार तुम्हाला सर्वोत्तम मार्गदर्शन करेल.
+            {t("adv.desc")}
           </p>
 
           <div className="space-y-4 pt-2">
             <div className="flex items-start space-x-3">
               <CheckCircle2 className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
               <div>
-                <span className="text-sm font-bold text-slate-200">झटपट शिफारसी</span>
-                <p className="text-xs text-slate-400">कोणतीही क्लिष्ट आकडेमोड न करता सोपे आणि व्यावहारिक उपाय.</p>
+                <span className="text-sm font-bold text-slate-200">{t("adv.bullet1_title")}</span>
+                <p className="text-xs text-slate-400">{t("adv.bullet1_desc")}</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
               <CheckCircle2 className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
               <div>
-                <span className="text-sm font-bold text-slate-200">पूर्णपणे सुरक्षित व खाजगी</span>
-                <p className="text-xs text-slate-400">तुमची माहिती १००% सुरक्षित ठेवली जाते आणि कोणाशीही शेअर केली जात नाही.</p>
+                <span className="text-sm font-bold text-slate-200">{t("adv.bullet2_title")}</span>
+                <p className="text-xs text-slate-400">{t("adv.bullet2_desc")}</p>
               </div>
             </div>
           </div>
@@ -77,14 +81,14 @@ export default function SmartAdvisory() {
               <div className="p-2 bg-amber-500/10 rounded-xl text-amber-400 border border-amber-400/30">
                 <QuestionIcon className="h-5 w-5 animate-pulse" />
               </div>
-              <h3 className="text-lg font-bold text-slate-100">तुमचा प्रश्न इथे विचारा:</h3>
+              <h3 className="text-lg font-bold text-slate-100">{t("adv.ask_title")}</h3>
             </div>
 
             <form onSubmit={handleSmartQuery} className="space-y-4">
               <div className="relative">
                 <textarea
                   rows={3}
-                  placeholder="उदा. 'मी दरमहा ३००० रुपयांची बचत कुठे करावी?' किंवा 'माझे उत्पन्न ५०,००० आहे, कर्ज किती घ्यावे?'"
+                  placeholder={t("adv.placeholder")}
                   value={userQuery}
                   onChange={(e) => setUserQuery(e.target.value)}
                   className="w-full px-5 py-4 bg-slate-950/80 border border-slate-800 rounded-2xl text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:bg-slate-950 text-sm font-medium transition-all resize-none"
@@ -92,7 +96,7 @@ export default function SmartAdvisory() {
               </div>
 
               <div className="flex justify-between items-center">
-                <span className="text-[10px] text-slate-400 font-bold">मराठी किंवा इंग्लिश भाषेत लिहा</span>
+                <span className="text-[10px] text-slate-400 font-bold">{t("adv.hint")}</span>
                 <button
                   type="submit"
                   disabled={chatLoading || !userQuery.trim()}
@@ -101,11 +105,11 @@ export default function SmartAdvisory() {
                   {chatLoading ? (
                     <>
                       <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                      <span>शोधात आहे...</span>
+                      <span>{t("adv.searching")}</span>
                     </>
                   ) : (
                     <>
-                      <span>सल्ला मिळवा</span>
+                      <span>{t("adv.get_advice")}</span>
                       <ArrowRight className="h-3.5 w-3.5" />
                     </>
                   )}
@@ -126,7 +130,7 @@ export default function SmartAdvisory() {
                     <span className="p-1 bg-amber-500/20 rounded-lg text-amber-300">
                       <Sparkles className="h-3.5 w-3.5" />
                     </span>
-                    <span className="text-xs font-bold text-amber-300">बजेटकट्टा सल्लागाराचे उत्तर:</span>
+                    <span className="text-xs font-bold text-amber-300">{t("adv.answer_label")}</span>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed font-medium">{chatResponse}</p>
                 </motion.div>

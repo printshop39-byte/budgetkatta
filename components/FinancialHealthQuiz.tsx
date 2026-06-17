@@ -1,61 +1,65 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Award, ChevronRight, Star } from "lucide-react";
 import { scrollToSection } from "@/lib/scroll";
-
-const quizQuestions = [
-  {
-    q: "तुमच्या उत्पन्नातून तुम्ही दरमहा किती टक्के बचत करता?",
-    options: [
-      { text: "१०% पेक्षा कमी", score: 10 },
-      { text: "१०% ते २०%", score: 20 },
-      { text: "२०% ते ३०%", score: 30 },
-      { text: "३०% पेक्षा जास्त", score: 40 },
-    ],
-  },
-  {
-    q: "तुमच्याकडे किती महिन्यांचा आणीबाणीचा निधी (Emergency Fund) उपलब्ध आहे?",
-    options: [
-      { text: "काहीच नाही", score: 0 },
-      { text: "१ ते २ महिन्यांचा", score: 15 },
-      { text: "३ ते ५ महिन्यांचा", score: 30 },
-      { text: "६ महिने किंवा त्यापेक्षा जास्त", score: 40 },
-    ],
-  },
-  {
-    q: "तुम्ही तुमच्या आयुष्याचा (Term Insurance) आणि आरोग्याचा (Health Insurance) विमा उतरवला आहे का?",
-    options: [
-      { text: "दोन्हीही नाही", score: 0 },
-      { text: "फक्त आरोग्य विमा आहे", score: 15 },
-      { text: "फक्त टर्म विमा आहे", score: 15 },
-      { text: "होय, दोन्ही योग्य कव्हरसह उपलब्ध आहेत", score: 40 },
-    ],
-  },
-  {
-    q: "तुमच्या एकूण उत्पन्नाच्या तुलनेत तुमचा कर्ज हप्ता (EMI) किती आहे?",
-    options: [
-      { text: "माझ्यावर कोणतेही कर्ज नाही", score: 40 },
-      { text: "उत्पन्नाच्या ३०% पेक्षा कमी", score: 30 },
-      { text: "उत्पन्नाच्या ३०% ते ५०%", score: 15 },
-      { text: "उत्पन्नाच्या ५०% पेक्षा जास्त (चिंतेची बाब)", score: 5 },
-    ],
-  },
-  {
-    q: "गुंतवणुकीबद्दल तुमचे ज्ञान आणि नियोजन कसे आहे?",
-    options: [
-      { text: "मी फक्त बँकेत किंवा सुरक्षित ठिकाणी पैसे ठेवतो", score: 15 },
-      { text: "मी म्युच्युअल फंड आणि शेअर्समध्ये नियमित गुंतवणूक करतो", score: 40 },
-      { text: "नुकतीच सुरुवात केली आहे, अजून खूप शिकायचे आहे", score: 25 },
-      { text: "गुंतवणूक करत नाही, सर्व पैसे खर्च होतात", score: 5 },
-    ],
-  },
-];
+import { useLanguageStore } from "@/store/languageStore";
+import { getTranslation } from "@/lib/i18n";
 
 export default function FinancialHealthQuiz() {
   const [quizStep, setQuizStep] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<number[]>([]);
+  const language = useLanguageStore((s) => s.language);
+  const t = getTranslation(language);
+
+  const quizQuestions = [
+    {
+      q: t("quiz.q1"),
+      options: [
+        { text: t("quiz.q1.o1"), score: 10 },
+        { text: t("quiz.q1.o2"), score: 20 },
+        { text: t("quiz.q1.o3"), score: 30 },
+        { text: t("quiz.q1.o4"), score: 40 },
+      ],
+    },
+    {
+      q: t("quiz.q2"),
+      options: [
+        { text: t("quiz.q2.o1"), score: 0 },
+        { text: t("quiz.q2.o2"), score: 15 },
+        { text: t("quiz.q2.o3"), score: 30 },
+        { text: t("quiz.q2.o4"), score: 40 },
+      ],
+    },
+    {
+      q: t("quiz.q3"),
+      options: [
+        { text: t("quiz.q3.o1"), score: 0 },
+        { text: t("quiz.q3.o2"), score: 15 },
+        { text: t("quiz.q3.o3"), score: 15 },
+        { text: t("quiz.q3.o4"), score: 40 },
+      ],
+    },
+    {
+      q: t("quiz.q4"),
+      options: [
+        { text: t("quiz.q4.o1"), score: 40 },
+        { text: t("quiz.q4.o2"), score: 30 },
+        { text: t("quiz.q4.o3"), score: 15 },
+        { text: t("quiz.q4.o4"), score: 5 },
+      ],
+    },
+    {
+      q: t("quiz.q5"),
+      options: [
+        { text: t("quiz.q5.o1"), score: 15 },
+        { text: t("quiz.q5.o2"), score: 40 },
+        { text: t("quiz.q5.o3"), score: 25 },
+        { text: t("quiz.q5.o4"), score: 5 },
+      ],
+    },
+  ];
 
   const handleQuizAnswer = (score: number) => {
     const newAnswers = [...quizAnswers, score];
@@ -72,10 +76,10 @@ export default function FinancialHealthQuiz() {
   };
 
   const getHealthStatus = (score: number) => {
-    if (score >= 85) return { label: "उत्कृष्ट (Excellent)", color: "text-amber-300 bg-amber-500/10 border-amber-400/30", desc: "तुमचे आर्थिक नियोजन अत्यंत उत्कृष्ट आहे! तुम्ही आर्थिक स्वातंत्र्याच्या (Financial Freedom) अगदी जवळ आहात. अशीच शिस्त कायम ठेवा." };
-    if (score >= 60) return { label: "चांगले (Good)", color: "text-amber-300 bg-amber-500/10 border-amber-400/30", desc: "तुमची आर्थिक स्थिती चांगली आहे, पण अजून काही गोष्टींमध्ये सुधारणा होऊ शकते. जसे की आणीबाणीचा निधी वाढवणे किंवा विम्याचे योग्य नियोजन करणे." };
-    if (score >= 40) return { label: "मध्यम (Average)", color: "text-yellow-300 bg-yellow-500/10 border-yellow-400/30", desc: "तुमच्या नियोजनात काही त्रुटी आहेत. मासिक खर्च नियंत्रित करणे आणि बचतीचे प्रमाण वाढवून योग्य ठिकाणी गुंतवणूक करणे गरजेचे आहे." };
-    return { label: "धोकादायक (Needs Attention)", color: "text-rose-300 bg-rose-500/10 border-rose-400/30", desc: "तुमचे आर्थिक नियोजन अत्यंत चिंताजनक आहे. कर्ज कमी करणे, तातडीने आणीबाणीचा निधी तयार करणे आणि वायफळ खर्च रोखणे तुमच्यासाठी गरजेचे आहे." };
+    if (score >= 85) return { label: t("quiz.label_excellent"), color: "text-amber-300 bg-amber-500/10 border-amber-400/30", desc: t("quiz.desc_excellent") };
+    if (score >= 60) return { label: t("quiz.label_good"), color: "text-amber-300 bg-amber-500/10 border-amber-400/30", desc: t("quiz.desc_good") };
+    if (score >= 40) return { label: t("quiz.label_avg"), color: "text-yellow-300 bg-yellow-500/10 border-yellow-400/30", desc: t("quiz.desc_avg") };
+    return { label: t("quiz.label_risk"), color: "text-rose-300 bg-rose-500/10 border-rose-400/30", desc: t("quiz.desc_risk") };
   };
 
   const resetQuiz = () => {
@@ -94,13 +98,13 @@ export default function FinancialHealthQuiz() {
           {/* Left Content */}
           <div className="lg:col-span-6 space-y-6">
             <span className="text-xs font-bold text-amber-300 bg-amber-500/10 px-3.5 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">
-              आरोग्य तपासणी
+              {t("quiz.eyebrow")}
             </span>
             <h2 className="text-3xl/[1.4] md:text-4xl/[1.4] font-extrabold tracking-normal">
-              तुमचे आर्थिक आरोग्य (Financial Health) मोजा!
+              {t("quiz.title")}
             </h2>
             <p className="text-slate-300 leading-relaxed text-sm md:text-base">
-              फक्त ५ सोप्या प्रश्नांची उत्तरे द्या आणि मिळवा तुमचा आर्थिक आरोग्य स्कोअर. हे तुम्हाला समजण्यास मदत करेल की तुम्ही योग्य दिशेने जात आहात की नाही!
+              {t("quiz.desc")}
             </p>
 
             <div className="flex items-center space-x-4 pt-2">
@@ -111,7 +115,7 @@ export default function FinancialHealthQuiz() {
                 <Star className="h-4 w-4 text-amber-400 fill-amber-400" />
                 <Star className="h-4 w-4 text-amber-400 fill-amber-400" />
               </div>
-              <span className="text-xs text-slate-400">१०,०००+ हून अधिक लोकांनी चाचणी घेतली आहे</span>
+              <span className="text-xs text-slate-400">{t("quiz.testimonial")}</span>
             </div>
           </div>
 
@@ -131,14 +135,14 @@ export default function FinancialHealthQuiz() {
                     <Award className="h-8 w-8" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold">आर्थिक आरोग्य स्कोअर मिळवा</h3>
-                    <p className="text-xs text-slate-400 mt-1">सर्व उत्तरे गोपनीय ठेवण्यात येतील</p>
+                    <h3 className="text-xl font-bold">{t("quiz.start_title")}</h3>
+                    <p className="text-xs text-slate-400 mt-1">{t("quiz.start_sub")}</p>
                   </div>
                   <button
                     onClick={() => setQuizStep(1)}
                     className="w-full py-3.5 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-slate-950 font-extrabold text-sm shadow-md shadow-amber-500/30 transition-all transform hover:scale-102"
                   >
-                    चाचणी सुरू करा
+                    {t("quiz.start_btn")}
                   </button>
                 </motion.div>
               )}
@@ -154,7 +158,7 @@ export default function FinancialHealthQuiz() {
                 >
                   {/* Progress indicator */}
                   <div className="flex justify-between items-center">
-                    <span className="text-[10px] font-bold text-amber-300 uppercase">प्रश्न {quizStep} पैकी {quizQuestions.length}</span>
+                    <span className="text-[10px] font-bold text-amber-300 uppercase">{t("quiz.q_prefix")} {quizStep} {t("quiz.q_of")} {quizQuestions.length}</span>
                     <div className="w-1/2 h-1.5 bg-slate-900/10 rounded-full overflow-hidden">
                       <div style={{ width: `${(quizStep / quizQuestions.length) * 100}%` }} className="h-full bg-amber-400 rounded-full" />
                     </div>
@@ -181,8 +185,8 @@ export default function FinancialHealthQuiz() {
               {quizStep > quizQuestions.length && (
                 <motion.div key="results" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-6 text-center">
                   <div>
-                    <span className="text-[10px] font-bold text-amber-300 uppercase tracking-widest block mb-2">चाचणीचा निकाल</span>
-                    <h3 className="text-xl font-bold text-white">तुमचा आर्थिक आरोग्य स्कोअर</h3>
+                    <span className="text-[10px] font-bold text-amber-300 uppercase tracking-widest block mb-2">{t("quiz.result_eyebrow")}</span>
+                    <h3 className="text-xl font-bold text-white">{t("quiz.result_title")}</h3>
                   </div>
 
                   {/* Circular Score Gauge */}
@@ -203,14 +207,14 @@ export default function FinancialHealthQuiz() {
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                       <span className="text-3xl font-black text-white">{calculateHealthScore()}</span>
-                      <span className="text-[10px] font-bold text-amber-300">१०० पैकी</span>
+                      <span className="text-[10px] font-bold text-amber-300">{t("quiz.out_of")}</span>
                     </div>
                   </div>
 
                   {/* Status Badge & Description */}
                   <div className={`p-4 rounded-2xl border text-left space-y-1.5 ${getHealthStatus(calculateHealthScore()).color}`}>
                     <span className="text-xs font-bold uppercase tracking-wider block">
-                      आर्थिक स्थिती: {getHealthStatus(calculateHealthScore()).label}
+                      {t("quiz.status_prefix")}: {getHealthStatus(calculateHealthScore()).label}
                     </span>
                     <p className="text-[11px] leading-relaxed opacity-95">{getHealthStatus(calculateHealthScore()).desc}</p>
                   </div>
@@ -220,7 +224,7 @@ export default function FinancialHealthQuiz() {
                       onClick={resetQuiz}
                       className="flex-1 py-3 bg-slate-900/5 border border-white/10 hover:bg-slate-900/10 text-white rounded-full font-bold text-xs transition-all"
                     >
-                      पुन्हा चाचणी द्या
+                      {t("quiz.retry")}
                     </button>
                     <button
                       onClick={() => {
@@ -229,7 +233,7 @@ export default function FinancialHealthQuiz() {
                       }}
                       className="flex-1 py-3 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-slate-950 rounded-full font-bold text-xs shadow-md shadow-amber-500/30 transition-all"
                     >
-                      नियोजन सुरू करा
+                      {t("quiz.plan_btn")}
                     </button>
                   </div>
                 </motion.div>

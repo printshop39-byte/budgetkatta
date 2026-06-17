@@ -1,38 +1,42 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
 import { Sparkles, AlertTriangle, Wallet, BookOpen } from "lucide-react";
 import { scrollToSection } from "@/lib/scroll";
 import { useCalculatorStore } from "@/store/calculatorStore";
+import { useLanguageStore } from "@/store/languageStore";
+import { getTranslation } from "@/lib/i18n";
 
 export default function EducationHub() {
   const setActiveTab = useCalculatorStore((s) => s.setActiveTab);
+  const language = useLanguageStore((s) => s.language);
+  const t = getTranslation(language);
 
   const articles = [
     {
-      title: "चक्रवाढ व्याजाची जादू (Power of Compounding)",
-      desc: "अल्बर्ट आइनस्टाईन यांनी चक्रवाढ व्याजाला जगातील 'आठवे आश्चर्य' म्हटले होते. जितक्या लवकर तुम्ही गुंतवणूक सुरू कराल, तितकाच तुमचा परतावा महाकाय वेगाने वाढेल.",
+      title: t("edu.a1.title"),
+      desc: t("edu.a1.desc"),
       icon: <Sparkles className="h-6 w-6 text-amber-400" />,
       color: "border-amber-400/30 bg-amber-500/5 text-amber-200",
       btnColor: "text-amber-300 hover:bg-amber-500/15",
     },
     {
-      title: "महागाईचा राक्षस (Inflation Demon)",
-      desc: "बँकेच्या बचत खात्यात पडलेले तुमचे पैसे दरवर्षी महागाईमुळे (सहसा ५-६%) मूल्य गमावत असतात. त्यावर मात करण्यासाठी तुम्हाला महागाईपेक्षा जास्त परतावा देणाऱ्या पर्यायात गुंतवणूक करणे गरजेचे आहे.",
+      title: t("edu.a2.title"),
+      desc: t("edu.a2.desc"),
       icon: <AlertTriangle className="h-6 w-6 text-rose-400" />,
       color: "border-rose-400/30 bg-rose-500/5 text-rose-200",
       btnColor: "text-rose-300 hover:bg-rose-500/15",
     },
     {
-      title: "आणीबाणीचा निधी (Emergency Fund)",
-      desc: "कोणतीही गुंतवणूक सुरू करण्यापूर्वी, तुमच्या ६ महिन्यांच्या घरखर्चाइतकी रक्कम बँकेच्या बचत खात्यात बाजूला ठेवावी. यामुळे अनपेक्षित संकटसमयी कर्ज घेण्याची वेळ येत জরিমানা.",
+      title: t("edu.a3.title"),
+      desc: t("edu.a3.desc"),
       icon: <Wallet className="h-6 w-6 text-yellow-400" />,
       color: "border-yellow-400/30 bg-yellow-500/5 text-yellow-200",
       btnColor: "text-yellow-300 hover:bg-yellow-500/15",
     },
     {
-      title: "गुंतवणुकीचा 'नियम ७२' (Rule of 72)",
-      desc: "तुमचे पैसे किती वर्षांत दुप्पट होतील हे शोधण्याची सोपी पद्धत म्हणजे ७२ ला तुमच्या वार्षिक व्याजदराने भागा. उदा. जर व्याजदर ९% असेल, तर ७२/९ = ८ वर्षात पैसे दुप्पट होतील.",
+      title: t("edu.a4.title"),
+      desc: t("edu.a4.desc"),
       icon: <BookOpen className="h-6 w-6 text-blue-400" />,
       color: "border-blue-400/30 bg-blue-500/5 text-blue-200",
       btnColor: "text-blue-300 hover:bg-blue-500/15",
@@ -42,10 +46,10 @@ export default function EducationHub() {
   return (
     <section id="literacy" className="py-20 px-6 max-w-7xl mx-auto border-t border-slate-800">
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <span className="text-xs font-bold text-amber-300 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">आर्थिक साक्षरता</span>
-        <h2 className="text-3xl/[1.4] md:text-4xl/[1.4] font-extrabold text-slate-100 mt-4 tracking-normal">चला पैशांची भाषा शिकूया!</h2>
+        <span className="text-xs font-bold text-amber-300 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">{t("edu.eyebrow")}</span>
+        <h2 className="text-3xl/[1.4] md:text-4xl/[1.4] font-extrabold text-slate-100 mt-4 tracking-normal">{t("edu.title")}</h2>
         <p className="text-slate-400 mt-3 text-base">
-          आर्थिक यश मिळवण्यासाठी योग्य आर्थिक संकल्पना समजून घेणे अत्यंत महत्त्वाचे आहे.
+          {t("edu.subtitle")}
         </p>
       </div>
 
@@ -75,7 +79,7 @@ export default function EducationHub() {
                 }}
                 className={`w-full py-2.5 rounded-xl text-xs font-bold text-center transition-all ${item.btnColor}`}
               >
-                नियोजनासाठी कॅल्क्युलेटर वापरा
+                {t("edu.btn")}
               </button>
             </div>
           </motion.div>

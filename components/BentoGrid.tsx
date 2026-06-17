@@ -1,58 +1,62 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
 import { TrendingUp, Landmark, PieChart, ShieldCheck, ArrowRight } from "lucide-react";
 import { scrollToSection } from "@/lib/scroll";
 import { useCalculatorStore, type CalculatorType } from "@/store/calculatorStore";
+import { useLanguageStore } from "@/store/languageStore";
+import { getTranslation } from "@/lib/i18n";
 
 export default function BentoGrid() {
   const setActiveTab = useCalculatorStore((s) => s.setActiveTab);
+  const language = useLanguageStore((s) => s.language);
+  const t = getTranslation(language);
 
   const cards = [
     {
       id: "sip",
-      title: "म्युच्युअल फंड (SIP) कट्टा",
-      desc: "चक्रवाढ व्याजाची (Power of Compounding) जादू पहा. दरमहा छोटी बचत करून करोडपती होण्याचे स्वप्न कसे पूर्ण करायचे ते मोजा.",
+      title: t("bento.sip.title"),
+      desc: t("bento.sip.desc"),
       accent: "from-amber-500/10 to-yellow-500/5 hover:border-amber-400/60 text-amber-300",
-      badge: "१२-१५% सरासरी परतावा",
+      badge: t("bento.sip.badge"),
       icon: <TrendingUp className="h-7 w-7 text-amber-400" />,
-      stat: "₹५०० पासून सुरुवात",
+      stat: t("bento.sip.stat"),
     },
     {
       id: "fd",
-      title: "मुदत ठेव (FD) कट्टा",
-      desc: "बँक किंवा पोस्ट ऑफिसमधील मुदत ठेव गुंतवणुकीवर मिळणारे हमखास व्याज आणि मॅच्युरिटी रक्कम एका क्लिकवर अचूक मोजा.",
+      title: t("bento.fd.title"),
+      desc: t("bento.fd.desc"),
       accent: "from-yellow-500/10 to-amber-500/5 hover:border-yellow-400/60 text-yellow-300",
-      badge: "७.८% पर्यंत व्याजदर",
+      badge: t("bento.fd.badge"),
       icon: <Landmark className="h-7 w-7 text-yellow-400" />,
-      stat: "हमीभाव परतावा",
+      stat: t("bento.fd.stat"),
     },
     {
       id: "emi",
-      title: "कर्ज हप्ता (EMI) कट्टा",
-      desc: "गृहकर्ज, वाहन कर्ज किंवा वैयक्तिक कर्ज घेण्यापूर्वी त्याचा मासिक हप्ता (EMI) आणि एकूण द्यावे लागणारे व्याज सहज तपासा.",
+      title: t("bento.emi.title"),
+      desc: t("bento.emi.desc"),
       accent: "from-blue-500/10 to-sky-500/5 hover:border-blue-400/60 text-blue-300",
-      badge: "अचूक हप्ता विभागणी",
+      badge: t("bento.emi.badge"),
       icon: <PieChart className="h-7 w-7 text-blue-400" />,
-      stat: "व्याज दर तुलना",
+      stat: t("bento.emi.stat"),
     },
     {
       id: "insurance",
-      title: "विमा सल्ला कट्टा",
-      desc: "तुमच्या पश्यात कुटुंबाला सुरक्षित ठेवण्यासाठी योग्य टर्म इन्शुरन्स कव्हर आणि वाढत्या खर्चात आरोग्याचे संरक्षण करण्यासाठी आरोग्य विमा निवडा.",
+      title: t("bento.ins.title"),
+      desc: t("bento.ins.desc"),
       accent: "from-rose-500/10 to-red-500/5 hover:border-rose-400/60 text-rose-300",
-      badge: "कुटुंब सुरक्षा नियोजन",
+      badge: t("bento.ins.badge"),
       icon: <ShieldCheck className="h-7 w-7 text-rose-400" />,
-      stat: "१५ पट उत्पन्न संरक्षण",
+      stat: t("bento.ins.stat"),
     },
   ];
 
   return (
     <section className="py-16 px-6 max-w-7xl mx-auto border-t border-slate-800">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <h2 className="text-3xl font-extrabold text-slate-100 tracking-normal leading-[1.4]">आमची प्रमुख डिजिटल साधने</h2>
+        <h2 className="text-3xl font-extrabold text-slate-100 tracking-normal leading-[1.4]">{t("bento.title")}</h2>
         <p className="text-slate-400 mt-3 text-base">
-          तुमच्या विविध आर्थिक गरजांचे विश्लेषण करण्यासाठी खालीलपैकी कोणत्याही कट्ट्यावर क्लिक करा.
+          {t("bento.subtitle")}
         </p>
       </div>
 

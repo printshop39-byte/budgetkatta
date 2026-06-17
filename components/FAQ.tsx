@@ -1,36 +1,28 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown as AccordionIcon } from "lucide-react";
-
-const faqs = [
-  {
-    q: "म्युच्युअल फंडमधील SIP खरोखरच सुरक्षित आहे का?",
-    a: "म्युच्युअल फंडमध्ये बाजारातील चढ-उतारांची जोखीम असते, पण दीर्घकाळात (५ ते १० वर्षे किंवा अधिक) सरासरी १२% ते १५% पर्यंत चांगला परतावा मिळतो. बँक एफडीच्या तुलनेत महागाईवर मात करण्यासाठी SIP हा एक उत्तम मार्ग मानला जातो.",
-  },
-  {
-    q: "५०/३०/२० नियम म्हणजे काय आणि तो कसा वापरावा?",
-    a: "हा एक सोपा बजेट नियम आहे. यामध्ये तुमच्या मासिक उत्पन्नाचे ३ भाग केले जातात: ५०% अत्यावश्यक गरजा (Needs), ३०% वैयक्तिक इच्छा (Wants) आणि २०% बचत व गुंतवणूक (Savings). हा नियम पाळल्यास तुमचे आर्थिक नियोजन आपोआप शिस्तबद्ध होते.",
-  },
-  {
-    q: "टर्म इन्शुरन्स का आवश्यक आहे? पारंपारिक विम्यापेक्षा तो कसा वेगळा आहे?",
-    a: "टर्म इन्शुरन्स हा खऱ्या अर्थाने शुद्ध विमा आहे. यामध्ये खूपच कमी प्रीमियममध्ये मोठा विमा सुरक्षितता (उदा. ५० लाख किंवा १ कोटी) मिळते. जर विमाधारकाचा मृत्यू झाला तर संपूर्ण रक्कम कुटुंबाला मिळते. पारंपारिक विम्यात विमा आणि गुंतवणूक एकत्र केल्यामुळे परतावा खूपच कमी (५-६%) मिळतो आणि विमा कव्हरही अपुरे असते.",
-  },
-  {
-    q: "आणीबाणीचा निधी (Emergency Fund) किती असावा आणि तो कुठे ठेवावा?",
-    a: "तुमच्या एकूण मासिक खर्चाच्या किमान ६ पट रक्कम आणीबाणीचा निधी म्हणून सुरक्षित असावी. हा निधी अशा ठिकाणी असावा जिथून तो कधीही काढता येईल, जसे की बँकेचे बचत खाते किंवा लिक्विड म्युच्युअल फंड.",
-  },
-];
+import { useLanguageStore } from "@/store/languageStore";
+import { getTranslation } from "@/lib/i18n";
 
 export default function FAQ() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const language = useLanguageStore((s) => s.language);
+  const t = getTranslation(language);
+
+  const faqs = [
+    { q: t("faq.q1"), a: t("faq.a1") },
+    { q: t("faq.q2"), a: t("faq.a2") },
+    { q: t("faq.q3"), a: t("faq.a3") },
+    { q: t("faq.q4"), a: t("faq.a4") },
+  ];
 
   return (
     <section className="py-20 px-6 max-w-4xl mx-auto border-t border-slate-800">
       <div className="text-center mb-12">
-        <span className="text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">प्रश्नोत्तरे</span>
-        <h2 className="text-3xl font-extrabold text-slate-100 mt-4 tracking-normal leading-[1.4]">वारंवार विचारले जाणारे प्रश्न (FAQs)</h2>
+        <span className="text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">{t("faq.eyebrow")}</span>
+        <h2 className="text-3xl font-extrabold text-slate-100 mt-4 tracking-normal leading-[1.4]">{t("faq.title")}</h2>
       </div>
 
       {/* Accordion Cards */}

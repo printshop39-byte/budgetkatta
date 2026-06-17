@@ -1,21 +1,25 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
+import { useLeadFormStore } from '@/store/leadFormStore';
 
-// Primary links shown in the desktop navbar.
+// Desktop navbar links.
 const primaryLinks = [
   { href: '/', key: 'nav.home' },
   { href: '/fds', key: 'nav.fd' },
   { href: '/loans', key: 'nav.loans' },
   { href: '/sip', key: 'nav.sip' },
   { href: '/insurance', key: 'nav.insurance' },
+  { href: '/rates', key: 'nav.rates' },
+  { href: '/documents', key: 'nav.documents' },
   { href: '/about', key: 'nav.about' },
   { href: '/contact', key: 'nav.contact' },
 ];
 
-// Extra links shown only in the mobile menu.
+// Extra links shown only in the mobile drawer.
 const mobileExtraLinks = [
   { href: '/privacy', key: 'nav.privacy' },
   { href: '/terms', key: 'nav.terms' },
@@ -24,6 +28,7 @@ const mobileExtraLinks = [
 export default function Navbar() {
   const { language, setLanguage } = useLanguageStore();
   const t = getTranslation(language);
+  const openLead = useLeadFormStore((s) => s.open);
   const [open, setOpen] = useState(false);
 
   return (
@@ -42,7 +47,7 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="rounded-lg px-3 py-2 text-sm text-white/70 transition-colors hover:bg-white/5 hover:text-bk-gold font-deva"
+              className="rounded-lg px-2.5 py-2 text-sm text-white/70 transition-colors hover:bg-white/5 hover:text-bk-gold font-deva"
             >
               {t(l.key)}
             </Link>
@@ -68,31 +73,73 @@ export default function Navbar() {
           </div>
 
           <button
-            onClick={() => setOpen((o) => !o)}
+            onClick={() => setOpen(true)}
             className="rounded-lg p-2 text-white/70 hover:bg-white/5 lg:hidden"
-            aria-label="Toggle menu"
+            aria-label="Open menu"
             aria-expanded={open}
           >
-            {open ? '✕' : '☰'}
+            ☰
           </button>
         </div>
       </nav>
 
-      {/* Mobile menu */}
-      {open && (
-        <div className="border-t border-white/5 px-4 py-2 lg:hidden">
-          {[...primaryLinks, ...mobileExtraLinks].map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
+      {/* Mobile slide-out drawer */}
+      <AnimatePresence>
+        {open && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
-              className="block rounded-lg px-3 py-2.5 text-sm text-white/80 hover:bg-white/5 hover:text-bk-gold font-deva"
+              className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
+            />
+            <motion.aside
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 320 }}
+              className="fixed right-0 top-0 z-50 flex h-full w-72 flex-col border-l border-white/10 bg-bk-card p-5 lg:hidden"
             >
-              {t(l.key)}
-            </Link>
-          ))}
-        </div>
-      )}
+              <div className="mb-4 flex items-center justify-between">
+                <span className="font-display font-bold text-white">
+                  Budget<span className="text-bk-gold">Katta</span>
+                </span>
+                <button
+                  onClick={() => setOpen(false)}
+                  aria-label="Close menu"
+                  className="rounded-lg p-1.5 text-white/60 hover:bg-white/5 hover:text-white"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto">
+                {[...primaryLinks, ...mobileExtraLinks].map((l) => (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-lg px-3 py-2.5 text-sm text-white/80 hover:bg-white/5 hover:text-bk-gold font-deva"
+                  >
+                    {t(l.key)}
+                  </Link>
+                ))}
+              </div>
+
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  openLead({ module: 'GENERAL', sourcePage: 'MOBILE_MENU' });
+                }}
+                className="mt-4 w-full rounded-xl bg-bk-gold py-3 text-sm font-bold text-bk-dark transition-colors hover:bg-bk-gold-light font-deva"
+              >
+                {t('nav.cta')}
+              </button>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

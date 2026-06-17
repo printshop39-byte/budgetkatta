@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const loanSchema = new mongoose.Schema(
   {
     bankName: { type: String, required: true },
-    loanType: { type: String, enum: ['home', 'personal', 'vehicle', 'business', 'education'] },
+    loanType: { type: String, enum: ['home', 'personal', 'vehicle', 'business', 'education', 'gold'] },
     roiMin: Number,
     roiMax: Number,
     processingFee: String,

@@ -7,9 +7,22 @@ import TrustSection from '@/components/trust/TrustSection';
 
 const productLinks = [
   { href: '/fds', key: 'nav.fd' },
-  { href: '/loans', key: 'nav.loans' },
+  { href: '/loans', key: 'loan.home' },
+  { href: '/loans', key: 'loan.personal' },
+  { href: '/loans', key: 'loan.vehicle' },
+  { href: '/loans', key: 'loan.education' },
+  { href: '/loans', key: 'loan.gold' },
   { href: '/sip', key: 'nav.sip' },
-  { href: '/insurance', key: 'nav.insurance' },
+  { href: '/insurance', key: 'ins.health' },
+  { href: '/insurance', key: 'ins.term' },
+];
+
+const toolLinks = [
+  { href: '/fds', key: 'tools.fd' },
+  { href: '/loans', key: 'tools.emi' },
+  { href: '/sip', key: 'tools.sip' },
+  { href: '/insurance', key: 'tools.ins' },
+  { href: '/documents', key: 'tools.docs' },
 ];
 
 const companyLinks = [
@@ -19,8 +32,6 @@ const companyLinks = [
   { href: '/terms', key: 'nav.terms' },
   { href: '/disclaimer', key: 'nav.disclaimer' },
 ];
-
-const trustItems = ['trust.secure', 'trust.transparent', 'trust.ai', 'trust.no_hidden'];
 
 export default function Footer() {
   const { language } = useLanguageStore();
@@ -43,30 +54,27 @@ export default function Footer() {
             <p className="mt-3 text-xs text-bk-gold/80 font-deva">{t('footer.tagline')}</p>
           </div>
 
-          {/* Products */}
           <FooterColumn title={t('footer.col_products')}>
-            {productLinks.map((l) => (
-              <FooterLink key={l.href} href={l.href}>
+            {productLinks.map((l, i) => (
+              <FooterLink key={l.key + i} href={l.href}>
                 {t(l.key)}
               </FooterLink>
             ))}
           </FooterColumn>
 
-          {/* Company */}
+          <FooterColumn title={t('tools.title')}>
+            {toolLinks.map((l) => (
+              <FooterLink key={l.key} href={l.href}>
+                {t(l.key)}
+              </FooterLink>
+            ))}
+          </FooterColumn>
+
           <FooterColumn title={t('footer.col_company')}>
             {companyLinks.map((l) => (
-              <FooterLink key={l.href} href={l.href}>
+              <FooterLink key={l.key} href={l.href}>
                 {t(l.key)}
               </FooterLink>
-            ))}
-          </FooterColumn>
-
-          {/* Trust */}
-          <FooterColumn title={t('footer.col_trust')}>
-            {trustItems.map((k) => (
-              <li key={k} className="text-sm text-white/55 font-deva">
-                {t(k)}
-              </li>
             ))}
           </FooterColumn>
         </div>

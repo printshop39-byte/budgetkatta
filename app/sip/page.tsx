@@ -9,6 +9,8 @@ import BadgeChip from '@/components/shared/BadgeChip';
 import DataSourceBadge from '@/components/shared/DataSourceBadge';
 import TableSkeleton from '@/components/shared/TableSkeleton';
 import CalculatorDisclaimer from '@/components/shared/CalculatorDisclaimer';
+import DocumentChecklist from '@/components/shared/DocumentChecklist';
+import { sipDocuments } from '@/lib/documentChecklists';
 import type { SIPFund } from '@/types';
 
 const riskTone = { low: 'success', medium: 'warning', high: 'danger' } as const;
@@ -93,6 +95,11 @@ export default function SIPPage() {
           <CalculatorDisclaimer />
         </div>
       </div>
+
+      <section className="mt-12">
+        <h2 className="mb-4 font-display text-xl font-bold text-white font-deva">{t('doc.section_title')}</h2>
+        <DocumentChecklist documents={sipDocuments} />
+      </section>
     </div>
   );
 }

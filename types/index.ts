@@ -2,6 +2,9 @@
 
 export type Language = 'mr' | 'hi';
 
+/** Bilingual string — localized content kept centrally in lib/ data modules. */
+export type Bi = { mr: string; hi: string };
+
 export type LeadModule = 'FD' | 'LOAN' | 'SIP' | 'INSURANCE' | 'GENERAL' | 'CONTACT';
 
 export interface LeadPayload {
@@ -35,7 +38,7 @@ export interface FDRate {
 export interface LoanProduct {
   id: string;
   bankName: string;
-  loanType: 'home' | 'personal' | 'vehicle' | 'business' | 'education';
+  loanType: 'home' | 'personal' | 'vehicle' | 'business' | 'education' | 'gold';
   roiMin: number;
   roiMax: number;
   processingFee: string;

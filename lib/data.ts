@@ -117,6 +117,30 @@ export const loanProducts: LoanProduct[] = [
     maxAmount: 15000000,
     features: ['Moratorium period', 'Tax benefit u/s 80E'],
   },
+  {
+    id: 'muthoot-gold',
+    bankName: 'Muthoot Finance',
+    loanType: 'gold',
+    roiMin: 9.0,
+    roiMax: 22.0,
+    processingFee: 'Up to 1%',
+    maxTenureMonths: 36,
+    collateralRequired: true,
+    maxAmount: 5000000,
+    features: ['Disbursal in minutes', 'Loan against gold ornaments'],
+  },
+  {
+    id: 'hdfc-gold',
+    bankName: 'HDFC Bank',
+    loanType: 'gold',
+    roiMin: 8.5,
+    roiMax: 16.0,
+    processingFee: 'Up to 1%',
+    maxTenureMonths: 24,
+    collateralRequired: true,
+    maxAmount: 4000000,
+    features: ['Flexible repayment', 'High per-gram value'],
+  },
 ];
 
 export const sipFunds: SIPFund[] = [

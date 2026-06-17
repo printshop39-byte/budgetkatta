@@ -13,6 +13,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useLanguageStore } from '@/store/languageStore';
+import { useBotStore } from '@/store/botStore';
 import { getTranslation } from '@/lib/i18n';
 import { sendLeadToN8N } from '@/lib/leadAutomation';
 import { isVapiConfigured, startVoiceCall, voiceComingSoonMessage } from '@/lib/vapi';
@@ -60,7 +61,7 @@ const quickActions: { key: string; module: LeadModule; icon: string }[] = [
 ];
 
 export default function Floating3DGuide() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setOpen: setIsOpen } = useBotStore();
   const [isMobile, setIsMobile] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
@@ -162,7 +163,7 @@ export default function Floating3DGuide() {
   return (
     <>
       <motion.button
-        onClick={() => setIsOpen((o) => !o)}
+        onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-bk-gold to-amber-600 text-2xl shadow-lg shadow-bk-gold/30 animate-pulse-gold"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}

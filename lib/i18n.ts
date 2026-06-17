@@ -13,7 +13,7 @@ export const i18n: Record<Language, Record<string, string>> = {
   mr: {
     // --- Navbar ---
     'nav.home': 'मुख्यपृष्ठ',
-    'nav.fd': 'ठेव (FD)',
+    'nav.fd': 'FD दर',
     'nav.loans': 'कर्ज',
     'nav.sip': 'SIP',
     'nav.insurance': 'विमा',
@@ -22,8 +22,8 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- Hero Section ---
     'hero.badge': '🏆 महाराष्ट्रातील #1 आर्थिक मार्गदर्शक',
-    'hero.title': 'स्मार्ट गुंतवणूक,\nसुरक्षित भविष्य',
-    'hero.subtitle': 'FD, कर्ज, SIP आणि विम्याच्या सर्वोत्तम योजना एकाच ठिकाणी. AI सहाय्यित मार्गदर्शन.',
+    'hero.title': 'तुमच्या पैशांसाठी सोपी, पारदर्शक\nआणि स्मार्ट माहिती',
+    'hero.subtitle': 'FD, कर्ज, SIP, विमा आणि कागदपत्रांची माहिती आता मराठी आणि हिंदीत, एका ठिकाणी.',
     'hero.cta_primary': 'आता सुरुवात करा',
     'hero.cta_secondary': 'कॅल्क्युलेटर वापरा',
     'hero.stat_banks': 'बँका',
@@ -238,6 +238,91 @@ export const i18n: Record<Language, Record<string, string>> = {
     'disclaimer.d4': 'कोणताही निर्णय घेण्यापूर्वी प्रमाणित आर्थिक सल्लागाराचा सल्ला घ्या.',
     'disclaimer.d5': 'ही माहिती केवळ शैक्षणिक व माहितीपर उद्देशासाठी आहे.',
 
+    // --- Nav / rates / documents / CTA ---
+    'nav.rates': 'दर/बाजार',
+    'nav.documents': 'कागदपत्रे',
+    'nav.cta': 'मोफत मार्गदर्शन घ्या',
+
+    // --- Easy-explanation phrases ---
+    'easy.at_glance': 'एका नजरेत माहिती',
+    'easy.docs_quick': 'कागदपत्रे लगेच समजून घ्या',
+    'easy.emi_first': 'EMI आधीच पाहा, मग निर्णय घ्या',
+    'easy.simple': 'दर, अटी आणि कागदपत्रे सोप्या भाषेत',
+    'easy.clear': 'गोंधळ नको, स्पष्ट तुलना करा',
+    'easy.profile': 'तुमच्या प्रोफाइलनुसार मार्गदर्शन',
+
+    // --- Guidance CTAs ---
+    'cta.free_guidance': 'मोफत मार्गदर्शन घ्या',
+    'cta.check_docs': 'कागदपत्रे तपासा',
+    'cta.use_emi': 'EMI कॅल्क्युलेटर वापरा',
+    'cta.compare': 'तुलना करा',
+
+    // --- Loan extras ---
+    'loan.gold': 'गोल्ड लोन',
+    'loan.q_amount': 'किती कर्ज हवे आहे?',
+    'loan.q_emi': 'EMI किती येईल?',
+    'loan.q_approval': 'मंजुरीसाठी काय लागेल?',
+    'loan.q_docs': 'कागदपत्रे लगेच पाहा',
+    'loan.f_rate': 'व्याजदर श्रेणी',
+    'loan.f_fee': 'प्रक्रिया शुल्क',
+    'loan.f_tenure': 'कमाल कालावधी',
+    'loan.f_eligibility': 'पात्रता',
+    'loan.f_documents': 'आवश्यक कागदपत्रे',
+    'loan.f_who': 'कोणासाठी योग्य?',
+    'loan.f_mistakes': 'टाळायच्या चुका',
+    'loan.f_cta': 'मला हे कर्ज हवे आहे',
+
+    // --- Documents page ---
+    'doc.title': 'कर्ज, FD, SIP आणि विम्यासाठी लागणारी कागदपत्रे',
+    'doc.subtitle': 'तुमच्या प्रोफाइलनुसार नेमकी यादी एका क्लिकवर पाहा.',
+    'doc.product': 'उत्पादन निवडा',
+    'doc.profile': 'तुमची प्रोफाइल',
+    'doc.download': 'डाउनलोड यादी',
+    'doc.download_soon': 'डाउनलोड सुविधा लवकरच सुरू होईल',
+    'doc.need_help': 'मला मदत हवी आहे',
+    'doc.why': 'हे कागदपत्र का लागते?',
+    'doc.required': 'आवश्यक',
+    'doc.sometimes': 'कधीकधी लागते',
+    'doc.section_title': 'आवश्यक कागदपत्रे',
+
+    // --- Rates page ---
+    'rates.title': 'दर आणि बाजार माहिती',
+    'rates.subtitle': 'FD, कर्ज दर आणि बाजार माहिती एका ठिकाणी.',
+    'rates.fd_title': 'सर्वोच्च FD दर',
+    'rates.loan_title': 'कर्ज व्याजदर श्रेणी',
+    'rates.market_title': 'बाजार माहिती',
+    'rates.tools_title': 'झटपट कॅल्क्युलेटर',
+    'rates.sample_badge': 'नमुना माहिती',
+
+    // --- Credit score page ---
+    'cs.title': 'क्रेडिट स्कोअर मार्गदर्शन',
+    'cs.subtitle': 'क्रेडिट स्कोअर सोप्या भाषेत समजून घ्या आणि सुधारा.',
+    'cs.cta': 'क्रेडिट स्कोअर मार्गदर्शन हवे आहे',
+
+    // --- Cards page ---
+    'cards.title': 'क्रेडिट व डेबिट कार्ड मार्गदर्शन',
+    'cards.subtitle': 'कोणते कार्ड तुमच्यासाठी योग्य? सोप्या भाषेत समजून घ्या.',
+    'cards.cta': 'मला कार्डबाबत मदत हवी',
+
+    // --- Home extras ---
+    'home.selector_title': 'तुम्हाला काय पाहिजे?',
+    'home.guide_title': '3D स्मार्ट गाईड',
+    'home.guide_sub': 'गोंधळ झाला? आमचा स्मार्ट गाईड तुम्हाला मार्ग दाखवेल.',
+    'home.docs_cta': 'कागदपत्रे लगेच पाहा',
+    'home.docs_sub': 'तुमच्या प्रोफाइलनुसार नेमकी यादी.',
+
+    // --- Explainers ---
+    'explain.section_title': 'सोपं समजून घ्या',
+
+    // --- Footer tools / extra ---
+    'tools.title': 'साधने',
+    'tools.fd': 'FD कॅल्क्युलेटर',
+    'tools.emi': 'EMI कॅल्क्युलेटर',
+    'tools.sip': 'SIP कॅल्क्युलेटर',
+    'tools.ins': 'विमा अंदाज',
+    'tools.docs': 'कागदपत्र यादी',
+    'ins.term': 'टर्म विमा',
+
     // --- Footer ---
     'footer.tagline': 'महाराष्ट्राचा विश्वासू आर्थिक मार्गदर्शक',
     'footer.desc': 'मराठी आणि हिंदीमध्ये FD, कर्ज, SIP आणि विमा यांची सोपी, पारदर्शक तुलना व माहिती.',
@@ -253,7 +338,7 @@ export const i18n: Record<Language, Record<string, string>> = {
   hi: {
     // --- Navbar ---
     'nav.home': 'होम',
-    'nav.fd': 'FD जमा',
+    'nav.fd': 'FD दर',
     'nav.loans': 'लोन',
     'nav.sip': 'SIP',
     'nav.insurance': 'बीमा',
@@ -262,8 +347,8 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- Hero Section ---
     'hero.badge': '🏆 भारत का #1 वित्तीय मार्गदर्शक',
-    'hero.title': 'स्मार्ट निवेश,\nसुरक्षित भविष्य',
-    'hero.subtitle': 'FD, लोन, SIP और बीमा की सर्वश्रेष्ठ योजनाएं एक ही जगह। AI-सहायता प्राप्त मार्गदर्शन।',
+    'hero.title': 'आपके पैसों के लिए आसान, पारदर्शी\nऔर स्मार्ट जानकारी',
+    'hero.subtitle': 'FD, लोन, SIP, बीमा और दस्तावेज़ की जानकारी अब मराठी और हिंदी में, एक ही जगह.',
     'hero.cta_primary': 'अभी शुरू करें',
     'hero.cta_secondary': 'कैलकुलेटर उपयोग करें',
     'hero.stat_banks': 'बैंक',
@@ -477,6 +562,91 @@ export const i18n: Record<Language, Record<string, string>> = {
     'disclaimer.d3': 'पिछला रिटर्न भविष्य के रिटर्न की गारंटी नहीं देता।',
     'disclaimer.d4': 'कोई भी निर्णय लेने से पहले प्रमाणित वित्तीय सलाहकार से सलाह लें।',
     'disclaimer.d5': 'यह जानकारी केवल शैक्षणिक व सूचनात्मक उद्देश्य के लिए है।',
+
+    // --- Nav / rates / documents / CTA ---
+    'nav.rates': 'दर/बाजार',
+    'nav.documents': 'दस्तावेज़',
+    'nav.cta': 'मुफ्त मार्गदर्शन लें',
+
+    // --- Easy-explanation phrases ---
+    'easy.at_glance': 'एक नज़र में जानकारी',
+    'easy.docs_quick': 'दस्तावेज़ तुरंत समझें',
+    'easy.emi_first': 'पहले EMI देखें, फिर निर्णय लें',
+    'easy.simple': 'दर, शर्तें और दस्तावेज़ आसान भाषा में',
+    'easy.clear': 'कन्फ्यूजन नहीं, साफ तुलना',
+    'easy.profile': 'आपकी प्रोफाइल के अनुसार मार्गदर्शन',
+
+    // --- Guidance CTAs ---
+    'cta.free_guidance': 'मुफ्त मार्गदर्शन लें',
+    'cta.check_docs': 'दस्तावेज़ देखें',
+    'cta.use_emi': 'EMI कैलकुलेटर इस्तेमाल करें',
+    'cta.compare': 'तुलना करें',
+
+    // --- Loan extras ---
+    'loan.gold': 'गोल्ड लोन',
+    'loan.q_amount': 'कितना लोन चाहिए?',
+    'loan.q_emi': 'EMI कितनी आएगी?',
+    'loan.q_approval': 'अप्रूवल के लिए क्या चाहिए?',
+    'loan.q_docs': 'दस्तावेज़ तुरंत देखें',
+    'loan.f_rate': 'ब्याज दर श्रेणी',
+    'loan.f_fee': 'प्रोसेसिंग शुल्क',
+    'loan.f_tenure': 'अधिकतम अवधि',
+    'loan.f_eligibility': 'पात्रता',
+    'loan.f_documents': 'ज़रूरी दस्तावेज़',
+    'loan.f_who': 'किसके लिए सही?',
+    'loan.f_mistakes': 'बचने वाली गलतियां',
+    'loan.f_cta': 'मुझे यह लोन चाहिए',
+
+    // --- Documents page ---
+    'doc.title': 'लोन, FD, SIP और बीमा के लिए ज़रूरी दस्तावेज़',
+    'doc.subtitle': 'अपनी प्रोफाइल के अनुसार सटीक सूची एक क्लिक में देखें।',
+    'doc.product': 'उत्पाद चुनें',
+    'doc.profile': 'आपकी प्रोफाइल',
+    'doc.download': 'डाउनलोड सूची',
+    'doc.download_soon': 'डाउनलोड सुविधा जल्द शुरू होगी',
+    'doc.need_help': 'मुझे मदद चाहिए',
+    'doc.why': 'यह दस्तावेज़ क्यों चाहिए?',
+    'doc.required': 'आवश्यक',
+    'doc.sometimes': 'कभी-कभी ज़रूरी',
+    'doc.section_title': 'ज़रूरी दस्तावेज़',
+
+    // --- Rates page ---
+    'rates.title': 'दर और बाजार जानकारी',
+    'rates.subtitle': 'FD, लोन दर और बाजार जानकारी एक ही जगह।',
+    'rates.fd_title': 'सर्वोच्च FD दरें',
+    'rates.loan_title': 'लोन ब्याज दर श्रेणी',
+    'rates.market_title': 'बाजार जानकारी',
+    'rates.tools_title': 'झटपट कैलकुलेटर',
+    'rates.sample_badge': 'सैंपल जानकारी',
+
+    // --- Credit score page ---
+    'cs.title': 'क्रेडिट स्कोर मार्गदर्शन',
+    'cs.subtitle': 'क्रेडिट स्कोर आसान भाषा में समझें और सुधारें।',
+    'cs.cta': 'क्रेडिट स्कोर मार्गदर्शन चाहिए',
+
+    // --- Cards page ---
+    'cards.title': 'क्रेडिट व डेबिट कार्ड मार्गदर्शन',
+    'cards.subtitle': 'कौन सा कार्ड आपके लिए सही? आसान भाषा में समझें।',
+    'cards.cta': 'मुझे कार्ड के बारे में मदद चाहिए',
+
+    // --- Home extras ---
+    'home.selector_title': 'आपको क्या चाहिए?',
+    'home.guide_title': '3D स्मार्ट गाइड',
+    'home.guide_sub': 'कन्फ्यूजन है? हमारा स्मार्ट गाइड आपको रास्ता दिखाएगा।',
+    'home.docs_cta': 'दस्तावेज़ तुरंत देखें',
+    'home.docs_sub': 'आपकी प्रोफाइल के अनुसार सटीक सूची।',
+
+    // --- Explainers ---
+    'explain.section_title': 'आसानी से समझें',
+
+    // --- Footer tools / extra ---
+    'tools.title': 'टूल्स',
+    'tools.fd': 'FD कैलकुलेटर',
+    'tools.emi': 'EMI कैलकुलेटर',
+    'tools.sip': 'SIP कैलकुलेटर',
+    'tools.ins': 'बीमा अनुमान',
+    'tools.docs': 'दस्तावेज़ सूची',
+    'ins.term': 'टर्म बीमा',
 
     // --- Footer ---
     'footer.tagline': 'भारत का भरोसेमंद वित्तीय मार्गदर्शक',

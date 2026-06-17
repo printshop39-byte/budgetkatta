@@ -10,6 +10,8 @@ import BadgeChip from '@/components/shared/BadgeChip';
 import DataSourceBadge from '@/components/shared/DataSourceBadge';
 import TableSkeleton from '@/components/shared/TableSkeleton';
 import CalculatorDisclaimer from '@/components/shared/CalculatorDisclaimer';
+import DocumentChecklist from '@/components/shared/DocumentChecklist';
+import { fdDocuments } from '@/lib/documentChecklists';
 import type { FDRate } from '@/types';
 
 type Filter = 'all' | 'govt' | 'private';
@@ -122,6 +124,11 @@ export default function FDPage() {
           <CalculatorDisclaimer />
         </div>
       </div>
+
+      <section className="mt-12">
+        <h2 className="mb-4 font-display text-xl font-bold text-white font-deva">{t('doc.section_title')}</h2>
+        <DocumentChecklist documents={fdDocuments} />
+      </section>
     </div>
   );
 }

@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import HeroSection from '@/components/home/HeroSection';
 import StatsSection from '@/components/home/StatsSection';
+import QuickSelector from '@/components/home/QuickSelector';
 import ModuleCards from '@/components/home/ModuleCards';
+import ExplainerSection from '@/components/home/ExplainerSection';
+import SmartGuideSection from '@/components/home/SmartGuideSection';
 
 export const metadata: Metadata = {
   // Absolute title so the layout's "%s | BudgetKatta" template isn't doubled.
@@ -16,7 +19,10 @@ export default function HomePage() {
     <>
       <HeroSection />
       <StatsSection />
+      <QuickSelector />
       <ModuleCards />
+      <ExplainerSection />
+      <SmartGuideSection />
     </>
   );
 }

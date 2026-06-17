@@ -23,6 +23,14 @@ const config: Config = {
         body: ['var(--font-inter)', 'Inter', 'sans-serif'],
         deva: ['var(--font-deva)', 'Noto Sans Devanagari', 'sans-serif'],
       },
+      // Non-standard utilities used by the reference design (h-4.5, p-4.5, scale-102).
+      spacing: {
+        '4.5': '1.125rem',
+        '5.5': '1.375rem',
+      },
+      scale: {
+        '102': '1.02',
+      },
       backdropBlur: {
         xs: '2px',
       },

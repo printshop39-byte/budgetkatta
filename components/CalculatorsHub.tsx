@@ -1162,7 +1162,9 @@ export default function CalculatorsHub() {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as CalculatorType)}
                 className={`px-5 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 ${
-                  activeTab === tab.id ? "bg-slate-900 text-white shadow-md" : "text-slate-600 hover:text-slate-900 hover:bg-white/90"
+                  activeTab === tab.id
+                    ? "bg-slate-900 text-white shadow-md shadow-[0_0_20px_rgba(13,148,136,0.3)]"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-white/90 hover:shadow-[0_0_16px_rgba(13,148,136,0.12)]"
                 }`}
               >
                 {tab.label}

@@ -61,18 +61,18 @@ export default function BentoGrid() {
         {cards.map((card) => (
           <motion.div
             key={card.id}
-            whileHover={{ y: -6, scale: 1.02 }}
+            whileHover={{ y: -6, scale: 1.02, boxShadow: "0px 0px 24px rgba(13,148,136,0.15)" }}
             transition={{ type: "spring", stiffness: 100 }}
             onClick={() => {
               setActiveTab(card.id as CalculatorType);
               scrollToSection("calculators");
             }}
-            className={`relative bg-gradient-to-br ${card.accent} p-7 rounded-[28px] border border-white/60 shadow-[0_10px_30px_rgba(0,0,0,0.02)] cursor-pointer hover:shadow-[0_15px_35px_rgba(0,0,0,0.05)] transition-all group flex flex-col justify-between`}
+            className={`relative bg-gradient-to-br ${card.accent} p-7 rounded-[28px] border border-white/60 shadow-[0_10px_30px_rgba(0,0,0,0.02)] cursor-pointer hover:border-teal-300/60 transition-all duration-300 group flex flex-col justify-between`}
           >
             <div>
               {/* Header of Bento Card */}
               <div className="flex justify-between items-start mb-6">
-                <div className="p-3.5 bg-white rounded-2xl shadow-sm border border-slate-100 group-hover:scale-110 transition-transform duration-300">
+                <div className="p-3.5 bg-white rounded-2xl shadow-sm border border-slate-100 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_18px_rgba(13,148,136,0.2)]">
                   {card.icon}
                 </div>
                 <span className="text-[10px] font-bold px-2.5 py-1 bg-white/80 rounded-full border border-slate-200/60">

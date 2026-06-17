@@ -1,6 +1,7 @@
 'use client';
 // GuidanceCTA — reusable CTA row. Each button either navigates, opens the lead
 // form, opens the bot, or scrolls to a section on the page.
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
@@ -51,17 +52,19 @@ export default function GuidanceCTA({
   return (
     <div className={`flex flex-wrap gap-3 ${className}`}>
       {items.map((item, i) => (
-        <button
+        <motion.button
           key={item.labelKey + i}
           onClick={() => run(item.action)}
-          className={`rounded-xl px-5 py-2.5 text-sm font-bold transition-colors font-deva ${
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className={`rounded-xl px-5 py-2.5 text-sm font-bold transition-all duration-300 font-deva ${
             i === 0
-              ? 'bg-bk-gold text-bk-dark hover:bg-bk-gold-light'
-              : 'border border-slate-200 text-slate-700 hover:border-bk-gold/40 hover:text-bk-gold'
+              ? 'bg-bk-gold text-bk-dark hover:bg-bk-gold-light hover:shadow-[0_0_24px_rgba(13,148,136,0.4)]'
+              : 'border border-slate-200 bg-white/60 backdrop-blur-md text-slate-700 hover:border-bk-gold/50 hover:text-bk-gold hover:shadow-[0_0_20px_rgba(13,148,136,0.15)]'
           }`}
         >
           {t(item.labelKey)}
-        </button>
+        </motion.button>
       ))}
     </div>
   );

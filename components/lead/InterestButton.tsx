@@ -1,5 +1,6 @@
 'use client';
 // InterestButton — opens the global lead form pre-filled with context.
+import { motion } from 'framer-motion';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
@@ -19,13 +20,15 @@ export default function InterestButton({ module, product, sourcePage, className 
   const t = getTranslation(language);
 
   return (
-    <button
+    <motion.button
       onClick={() => open({ module, product, sourcePage })}
-      className={`rounded-xl bg-bk-gold px-5 py-2.5 font-bold text-bk-dark transition-colors hover:bg-bk-gold-light font-deva ${
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.97 }}
+      className={`rounded-xl bg-bk-gold px-5 py-2.5 font-bold text-bk-dark transition-all duration-300 hover:bg-bk-gold-light hover:shadow-[0_0_24px_rgba(13,148,136,0.4)] font-deva ${
         full ? 'w-full' : ''
       } ${className}`}
     >
       {t('btn.interested')}
-    </button>
+    </motion.button>
   );
 }

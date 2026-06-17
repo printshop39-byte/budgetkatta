@@ -58,7 +58,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => openLead({ module: 'GENERAL', sourcePage: 'NAVBAR_CTA' })}
-            className="hidden rounded-xl bg-bk-gold px-4 py-2 text-sm font-bold text-bk-dark transition-colors hover:bg-bk-gold-light font-deva lg:block"
+            className="hidden rounded-xl bg-bk-gold px-4 py-2 text-sm font-bold text-bk-dark transition-all duration-300 hover:bg-bk-gold-light hover:shadow-[0_0_22px_rgba(13,148,136,0.45)] active:scale-95 font-deva lg:block"
           >
             {t('nav.cta_short')}
           </button>

@@ -161,7 +161,7 @@ export default function LeadFormModal() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full rounded-xl bg-bk-gold py-3 font-bold text-bk-dark transition-colors hover:bg-bk-gold-light disabled:opacity-60 font-deva"
+                  className="w-full rounded-xl bg-bk-gold py-3 font-bold text-bk-dark transition-all duration-300 hover:bg-bk-gold-light hover:shadow-[0_0_24px_rgba(13,148,136,0.4)] disabled:opacity-60 disabled:hover:shadow-none font-deva"
                 >
                   {sending ? t('lead.sending') : t('lead.submit')}
                 </button>

@@ -56,21 +56,25 @@ export default function HeroSection() {
 
           {/* CTA Actions */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-            <button
+            <motion.button
               onClick={() => scrollToSection("calculators")}
-              className="px-8 py-4 rounded-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-bold text-base shadow-lg shadow-teal-600/15 hover:shadow-xl hover:shadow-teal-600/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center space-x-2"
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="group px-8 py-4 rounded-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-bold text-base shadow-lg shadow-teal-600/15 hover:shadow-[0_0_30px_rgba(13,148,136,0.5)] transition-all duration-300 flex items-center justify-center space-x-2"
             >
               <span>आत्ताच मोजा</span>
-              <ArrowRight className="h-5 w-5" />
-            </button>
+              <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </motion.button>
 
-            <button
+            <motion.button
               onClick={() => scrollToSection("health-quiz")}
-              className="px-8 py-4 rounded-full bg-white/70 backdrop-blur-md border border-white/50 text-slate-700 font-semibold text-base hover:bg-white hover:border-teal-200 transition-all shadow-[0_8px_30px_rgb(0,0,0,0.03)] flex items-center justify-center space-x-2"
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="group px-8 py-4 rounded-full bg-white/70 backdrop-blur-md border border-white/50 text-slate-700 font-semibold text-base hover:bg-white hover:border-teal-300 hover:text-teal-700 hover:shadow-[0_0_22px_rgba(13,148,136,0.18)] transition-all duration-300 flex items-center justify-center space-x-2"
             >
-              <Activity className="h-5 w-5 text-teal-600" />
+              <Activity className="h-5 w-5 text-teal-600 transition-all duration-300 group-hover:drop-shadow-[0_0_6px_rgba(13,148,136,0.6)]" />
               <span>आरोग्य स्कोअर तपासा</span>
-            </button>
+            </motion.button>
           </div>
 
           {/* Micro-Social Proof */}

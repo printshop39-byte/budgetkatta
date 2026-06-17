@@ -173,6 +173,78 @@ export const insuranceTypes: InsuranceType[] = [
       { mr: 'क्लेमसाठी लागणारे पुरावे', en: 'Evidence required for a claim' },
     ],
   },
+  {
+    id: 'vehicle_all',
+    icon: '🚗',
+    label: { mr: 'सर्व प्रकार वाहन विमा', en: 'All-Type Vehicle Insurance' },
+    whatIs: {
+      mr: 'दुचाकी, चारचाकी आणि व्यावसायिक वाहनांसाठी संपूर्ण विमा संरक्षण.',
+      en: 'Complete insurance cover for 2-wheelers, 4-wheelers and commercial vehicles.',
+    },
+    who: { mr: 'कोणतेही वाहन असणाऱ्या प्रत्येक मालकासाठी.', en: 'For every owner of any vehicle.' },
+    benefits: [
+      { mr: 'अपघात, चोरी व तृतीय-पक्ष नुकसान कव्हर', en: 'Covers accident, theft and third-party damage' },
+      { mr: 'कॅशलेस गॅरेज नेटवर्क', en: 'Cashless garage network' },
+    ],
+    check: [
+      { mr: 'IDV (वाहनाचे विमा मूल्य) तपासा', en: 'Check the IDV (Insured Declared Value)' },
+      { mr: 'झिरो-डेप ॲड-ऑन उपलब्ध आहे का?', en: 'Is a zero-depreciation add-on available?' },
+    ],
+  },
+  {
+    id: 'property',
+    icon: '🏠',
+    label: { mr: 'मालमत्ता व पूर विमा', en: 'Property & Flood Insurance' },
+    whatIs: {
+      mr: 'घर, दुकान आणि पुरामुळे होणाऱ्या नुकसानीपासून संरक्षण.',
+      en: 'Protection for home, shop and flood-related damage.',
+    },
+    who: { mr: 'घरमालक, दुकानदार व मालमत्ताधारकांसाठी.', en: 'For homeowners, shopkeepers and property owners.' },
+    benefits: [
+      { mr: 'नैसर्गिक आपत्ती व आगीपासून संरक्षण', en: 'Cover against natural disasters and fire' },
+      { mr: 'पूर व पाण्यामुळे होणारे नुकसान कव्हर', en: 'Covers flood and water damage' },
+    ],
+    check: [
+      { mr: 'पूर कव्हर समाविष्ट आहे का?', en: 'Is flood cover included?' },
+      { mr: 'घराची रचना व सामान दोन्ही कव्हर?', en: 'Are both structure and contents covered?' },
+    ],
+  },
+  {
+    id: 'machinery',
+    icon: '⚙️',
+    label: { mr: 'यंत्रसामग्री बिघाड विमा', en: 'Machinery Breakdown' },
+    whatIs: {
+      mr: 'औद्योगिक यंत्रे व उपकरणांच्या अचानक बिघाडासाठी विमा.',
+      en: 'Insurance for the sudden breakdown of industrial machinery and equipment.',
+    },
+    who: { mr: 'कारखाने, उद्योग व उपकरणधारकांसाठी.', en: 'For factories, industries and equipment owners.' },
+    benefits: [
+      { mr: 'दुरुस्ती व बदली खर्च कव्हर', en: 'Covers repair and replacement costs' },
+      { mr: 'उत्पादन थांबल्याचे नुकसान कमी', en: 'Reduces losses from production downtime' },
+    ],
+    check: [
+      { mr: 'कोणती यंत्रे कव्हर होतात?', en: 'Which machines are covered?' },
+      { mr: 'देखभाल अटी तपासा', en: 'Check the maintenance conditions' },
+    ],
+  },
+  {
+    id: 'travel',
+    icon: '✈️',
+    label: { mr: 'प्रवास विमा', en: 'Travel Insurance' },
+    whatIs: {
+      mr: 'देशांतर्गत व आंतरराष्ट्रीय प्रवासातील जोखमींपासून संरक्षण.',
+      en: 'Protection against risks during domestic and international travel.',
+    },
+    who: { mr: 'वारंवार किंवा परदेशी प्रवास करणाऱ्यांसाठी.', en: 'For frequent or overseas travellers.' },
+    benefits: [
+      { mr: 'वैद्यकीय आणीबाणी व सामान हरवल्याचे कव्हर', en: 'Covers medical emergencies and lost baggage' },
+      { mr: 'फ्लाइट रद्द/विलंब भरपाई', en: 'Compensation for flight cancellation/delay' },
+    ],
+    check: [
+      { mr: 'कव्हरचा भौगोलिक विस्तार तपासा', en: 'Check the geographical scope of cover' },
+      { mr: 'आधीच्या आजारांचा समावेश आहे का?', en: 'Are pre-existing conditions included?' },
+    ],
+  },
 ];
 
 // ── /cards ─────────────────────────────────────────────────────────────────

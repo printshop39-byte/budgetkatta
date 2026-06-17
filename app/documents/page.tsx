@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import PageShell from '@/components/shared/PageShell';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
@@ -38,7 +38,7 @@ export default function DocumentsPage() {
       {/* Selectors */}
       <div className="glass-card glass-card-gold grid grid-cols-1 gap-4 p-5 sm:grid-cols-2">
         <label className="block">
-          <span className="mb-1 block text-sm text-slate-600 font-deva">{t('doc.product')}</span>
+          <span className="mb-1 block text-sm text-slate-400 font-deva">{t('doc.product')}</span>
           <select
             value={product}
             onChange={(e) => setProduct(e.target.value as ProductType)}
@@ -52,7 +52,7 @@ export default function DocumentsPage() {
           </select>
         </label>
         <label className="block">
-          <span className="mb-1 block text-sm text-slate-600 font-deva">{t('doc.profile')}</span>
+          <span className="mb-1 block text-sm text-slate-400 font-deva">{t('doc.profile')}</span>
           <select
             value={profile}
             onChange={(e) => setProfile(e.target.value as ProfileType)}
@@ -71,7 +71,7 @@ export default function DocumentsPage() {
       <div className="mt-4 flex flex-wrap gap-3">
         <button
           onClick={() => setShowDownloadNote((v) => !v)}
-          className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-700 transition-colors hover:border-bk-gold/40 hover:text-bk-gold font-deva"
+          className="rounded-xl border border-slate-800 px-5 py-2.5 text-sm font-bold text-slate-300 transition-colors hover:border-bk-gold/40 hover:text-bk-gold font-deva"
         >
           ⬇️ {t('doc.download')}
         </button>

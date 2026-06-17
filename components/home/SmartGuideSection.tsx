@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useLanguageStore } from '@/store/languageStore';
@@ -20,10 +20,10 @@ export default function SmartGuideSection() {
         >
           <span className="text-4xl">📄</span>
           <div>
-            <h3 className="font-display text-lg font-bold text-slate-800 group-hover:text-bk-gold font-deva">
+            <h3 className="font-display text-lg font-bold text-slate-100 group-hover:text-bk-gold font-deva">
               {t('home.docs_cta')}
             </h3>
-            <p className="mt-1 text-sm text-slate-500 font-deva">{t('home.docs_sub')}</p>
+            <p className="mt-1 text-sm text-slate-400 font-deva">{t('home.docs_sub')}</p>
           </div>
           <span className="ml-auto text-bk-gold opacity-0 transition-opacity group-hover:opacity-100">→</span>
         </Link>
@@ -39,8 +39,8 @@ export default function SmartGuideSection() {
             <span className="relative text-3xl animate-float">🤖</span>
           </span>
           <div>
-            <h3 className="font-display text-lg font-bold text-slate-800 font-deva">{t('home.guide_title')}</h3>
-            <p className="mt-1 text-sm text-slate-500 font-deva">{t('home.guide_sub')}</p>
+            <h3 className="font-display text-lg font-bold text-slate-200 font-deva">{t('home.guide_title')}</h3>
+            <p className="mt-1 text-sm text-slate-400 font-deva">{t('home.guide_sub')}</p>
           </div>
         </motion.button>
       </div>

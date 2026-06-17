@@ -16,11 +16,11 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="relative overflow-x-hidden selection:bg-teal-200 selection:text-teal-900">
+    <div className="relative overflow-x-hidden bg-slate-950 text-slate-100 selection:bg-amber-400/30 selection:text-amber-100">
       {/* Background decorations (premium organic blobs) */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-teal-100/30 rounded-full filter blur-[120px] -z-10 pointer-events-none" />
-      <div className="absolute top-[800px] right-0 w-[400px] h-[400px] bg-emerald-100/20 rounded-full filter blur-[100px] -z-10 pointer-events-none" />
-      <div className="absolute bottom-[1000px] left-[-100px] w-[600px] h-[600px] bg-sky-100/20 rounded-full filter blur-[140px] -z-10 pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-amber-500/10 rounded-full filter blur-[120px] -z-10 pointer-events-none" />
+      <div className="absolute top-[800px] right-0 w-[400px] h-[400px] bg-yellow-500/10 rounded-full filter blur-[100px] -z-10 pointer-events-none" />
+      <div className="absolute bottom-[1000px] left-[-100px] w-[600px] h-[600px] bg-amber-400/5 rounded-full filter blur-[140px] -z-10 pointer-events-none" />
 
       <HeroSection />
       <BentoGrid />

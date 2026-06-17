@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 // ============================================================
 // Floating3DGuide.tsx
 // AI-powered guide — Desktop: interactive Spline 3D robot | Mobile: compact card
@@ -194,13 +194,13 @@ export default function Floating3DGuide() {
 
             {/* Mobile: compact avatar */}
             {isMobile && (
-              <div className="flex items-center gap-3 border-b border-slate-200 p-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-bk-gold to-amber-600 text-xl">
+              <div className="flex items-center gap-3 border-b border-slate-800 p-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 text-xl">
                   🤖
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-slate-800 font-deva">{t('bot.title')}</p>
-                  <p className="text-xs text-bk-success">● Online</p>
+                  <p className="text-sm font-semibold text-slate-200 font-deva">{t('bot.title')}</p>
+                  <p className="text-xs text-amber-400">● Online</p>
                 </div>
               </div>
             )}
@@ -213,7 +213,7 @@ export default function Floating3DGuide() {
                 >
                   <div
                     className={`max-w-[80%] rounded-xl px-3 py-2 text-sm leading-relaxed font-deva ${
-                      msg.role === 'user' ? 'bg-bk-gold text-bk-dark' : 'bg-slate-900/[0.05] text-slate-800'
+                      msg.role === 'user' ? 'bg-amber-400 text-slate-950' : 'bg-slate-800/60 text-slate-200'
                     }`}
                   >
                     {msg.text}
@@ -222,8 +222,8 @@ export default function Floating3DGuide() {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="rounded-xl bg-slate-900/[0.05] px-3 py-2">
-                    <span className="animate-pulse text-xs text-slate-500">...</span>
+                  <div className="rounded-xl bg-slate-800/60 px-3 py-2">
+                    <span className="animate-pulse text-xs text-slate-400">...</span>
                   </div>
                 </div>
               )}
@@ -234,20 +234,20 @@ export default function Floating3DGuide() {
                 <button
                   key={action.key}
                   onClick={() => handleQuickAction(action.key, action.module)}
-                  className="rounded-lg border border-slate-200 bg-slate-900/[0.035] px-2 py-1 text-xs text-slate-700 transition-all hover:border-bk-gold/40 hover:bg-bk-gold/20 hover:text-bk-gold font-deva"
+                  className="rounded-lg border border-slate-800 bg-slate-800/60 px-2 py-1 text-xs text-slate-300 transition-all hover:border-amber-400/40 hover:bg-amber-400/20 hover:text-amber-400 font-deva"
                 >
                   {action.icon} {t(action.key)}
                 </button>
               ))}
               <button
                 onClick={startVoiceAssistant}
-                className="rounded-lg border border-bk-gold/30 bg-bk-gold/10 px-2 py-1 text-xs text-bk-gold transition-all hover:bg-bk-gold/20 font-deva"
+                className="rounded-lg border border-amber-400/30 bg-amber-400/10 px-2 py-1 text-xs text-amber-400 transition-all hover:bg-amber-400/20 font-deva"
               >
                 🎤 {t('btn.voice')}
               </button>
             </div>
 
-            <div className="flex items-center gap-2 border-t border-slate-200 p-3">
+            <div className="flex items-center gap-2 border-t border-slate-800 p-3">
               <input
                 ref={inputRef}
                 value={inputText}
@@ -255,11 +255,11 @@ export default function Floating3DGuide() {
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 aria-label={t('bot.type_here')}
                 placeholder={t('bot.type_here')}
-                className="flex-1 rounded-xl border border-slate-200 bg-slate-900/[0.035] px-3 py-2 text-sm text-slate-800 outline-none placeholder:text-slate-300 focus:border-bk-gold/50 font-deva"
+                className="flex-1 rounded-xl border border-slate-800 bg-slate-800/60 px-3 py-2 text-sm text-slate-200 outline-none placeholder:text-slate-400 focus:border-amber-400/50 font-deva"
               />
               <button
                 onClick={handleSend}
-                className="flex h-9 w-9 items-center justify-center rounded-xl bg-bk-gold font-bold text-bk-dark transition-colors hover:bg-bk-gold-light"
+                className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-400 font-bold text-slate-950 transition-colors hover:bg-amber-500"
                 aria-label={t('bot.send')}
               >
                 →

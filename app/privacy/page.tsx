@@ -22,7 +22,7 @@ export default function PrivacyPage() {
         {sections.map((s) => (
           <section key={s.h}>
             <h2 className="font-display text-lg font-bold text-bk-gold">{t(s.h)}</h2>
-            <p className="mt-1.5 leading-relaxed text-slate-600 font-deva">
+            <p className="mt-1.5 leading-relaxed text-slate-400 font-deva">
               {t(s.b)}
               {s.b === 'privacy.contact' && (
                 <>

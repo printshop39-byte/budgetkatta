@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import type { DataSource } from '@/lib/useRemoteData';
@@ -27,11 +27,11 @@ export default function DataSourceBadge({
       <span
         className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-medium ${
           live
-            ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-            : 'border-slate-200 bg-slate-100 text-slate-500'
+            ? 'border-emerald-500/30 bg-amber-400/10 text-emerald-300'
+            : 'border-slate-800 bg-slate-900 text-slate-400'
         }`}
       >
-        <span className={`h-1.5 w-1.5 rounded-full ${live ? 'bg-emerald-500' : 'bg-slate-400'}`} />
+        <span className={`h-1.5 w-1.5 rounded-full ${live ? 'bg-amber-400' : 'bg-slate-9500'}`} />
         {live ? t('data.live') : t('data.demo')}
       </span>
       {time && (

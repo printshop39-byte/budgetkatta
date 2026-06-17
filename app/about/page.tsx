@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import PageShell from '@/components/shared/PageShell';
@@ -32,9 +32,9 @@ export default function AboutPage() {
         transition={{ delay: 0.1 }}
         className="glass-card glass-card-gold space-y-4 p-6 md:p-8"
       >
-        <p className="text-base leading-relaxed text-slate-700 font-deva">{t('about.intro')}</p>
-        <p className="text-base leading-relaxed text-slate-600 font-deva">{t('about.compare')}</p>
-        <p className="text-base leading-relaxed text-slate-600 font-deva">{t('about.ai')}</p>
+        <p className="text-base leading-relaxed text-slate-300 font-deva">{t('about.intro')}</p>
+        <p className="text-base leading-relaxed text-slate-400 font-deva">{t('about.compare')}</p>
+        <p className="text-base leading-relaxed text-slate-400 font-deva">{t('about.ai')}</p>
       </motion.div>
 
       {/* Trust badges */}
@@ -45,7 +45,7 @@ export default function AboutPage() {
             className="glass-card flex flex-col items-center gap-2 p-4 text-center transition-all hover:border-bk-gold/30"
           >
             <span className="text-2xl">{badge.emoji}</span>
-            <p className="text-xs leading-snug text-slate-700 font-deva">{t(badge.key)}</p>
+            <p className="text-xs leading-snug text-slate-300 font-deva">{t(badge.key)}</p>
           </div>
         ))}
       </div>
@@ -59,7 +59,7 @@ export default function AboutPage() {
             className={`rounded-xl px-5 py-3 font-bold transition-colors font-deva ${
               i === ctas.length - 1
                 ? 'bg-bk-gold text-bk-dark hover:bg-bk-gold-light'
-                : 'border border-slate-200 text-slate-700 hover:border-bk-gold/40 hover:text-bk-gold'
+                : 'border border-slate-800 text-slate-300 hover:border-bk-gold/40 hover:text-bk-gold'
             }`}
           >
             {t(cta.key)}

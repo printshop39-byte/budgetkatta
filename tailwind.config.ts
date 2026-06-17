@@ -8,15 +8,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Light "soft premium" theme. Token names kept for compatibility:
-        // bk-dark now reads as the on-accent (white) / light-surface color,
-        // bk-card as a light surface, and bk-gold as the teal primary accent.
-        'bk-dark': '#ffffff',
-        'bk-card': '#ffffff',
-        'bk-gold': '#0f766e', // teal-700 — primary accent (good contrast on light)
-        'bk-gold-light': '#0d9488', // teal-600 — hover
-        'bk-success': '#0f9d6b',
-        'bk-danger': '#e11d48',
+        // Dark premium fintech theme with amber/yellow accents.
+        // Legacy token names kept for compatibility:
+        //   bk-dark  -> slate-950 base
+        //   bk-card  -> slate-900 surface
+        //   bk-gold  -> amber-400 primary accent
+        'bk-dark': '#020617',      // slate-950
+        'bk-card': '#0f172a',      // slate-900
+        'bk-gold': '#fbbf24',      // amber-400 — primary accent
+        'bk-gold-light': '#fcd34d', // amber-300 — hover
+        'bk-success': '#34d399',
+        'bk-danger': '#f43f5e',
       },
       fontFamily: {
         display: ['var(--font-poppins)', 'Poppins', 'sans-serif'],
@@ -46,8 +48,8 @@ const config: Config = {
           '50%': { transform: 'translateY(-10px)' },
         },
         pulseGold: {
-          '0%, 100%': { boxShadow: '0 0 0 0 rgba(13,148,136,0.35)' },
-          '50%': { boxShadow: '0 0 0 12px rgba(13,148,136,0)' },
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(251,191,36,0.45)' },
+          '50%': { boxShadow: '0 0 0 12px rgba(251,191,36,0)' },
         },
         fadeUp: {
           from: { opacity: '0', transform: 'translateY(20px)' },

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 // PageShell — shared chrome for company/legal pages: animated bilingual heading
 // + container. Title/subtitle come from i18n keys (no hardcoded copy).
 import { motion } from 'framer-motion';
@@ -28,9 +28,9 @@ export default function PageShell({
         transition={{ duration: 0.4 }}
         className="mb-10 text-center"
       >
-        <h1 className="font-display text-3xl font-extrabold text-slate-800 md:text-4xl">{t(titleKey)}</h1>
+        <h1 className="font-display text-3xl font-extrabold text-slate-100 md:text-4xl">{t(titleKey)}</h1>
         {subtitleKey && (
-          <p className="mx-auto mt-3 max-w-2xl text-slate-500 font-deva">{t(subtitleKey)}</p>
+          <p className="mx-auto mt-3 max-w-2xl text-slate-400 font-deva">{t(subtitleKey)}</p>
         )}
       </motion.header>
       {children}

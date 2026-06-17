@@ -24,7 +24,7 @@ export default function InterestButton({ module, product, sourcePage, className 
       onClick={() => open({ module, product, sourcePage })}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
-      className={`rounded-xl bg-bk-gold px-5 py-2.5 font-bold text-bk-dark transition-all duration-300 hover:bg-bk-gold-light hover:shadow-[0_0_24px_rgba(13,148,136,0.4)] font-deva ${
+      className={`rounded-xl bg-amber-400 px-5 py-2.5 font-bold text-slate-950 transition-all duration-300 hover:bg-amber-500 hover:shadow-[0_0_24px_rgba(251,191,36,0.4)] font-deva ${
         full ? 'w-full' : ''
       } ${className}`}
     >

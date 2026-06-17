@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 
@@ -15,21 +15,21 @@ export default function TrustSection() {
   const t = getTranslation(language);
 
   return (
-    <section className="border-t border-slate-100 bg-bk-card px-4 py-10">
+    <section className="border-t border-slate-800 bg-slate-950 px-4 py-10">
       <div className="mx-auto max-w-5xl space-y-8">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
           {trustIcons.map((badge) => (
             <div
               key={badge.key}
-              className="glass-card flex flex-col items-center gap-2 p-4 text-center transition-all hover:border-bk-gold/30"
+              className="glass-card flex flex-col items-center gap-2 p-4 text-center transition-all hover:border-amber-400/30"
             >
               <span className="text-2xl">{badge.emoji}</span>
-              <p className="text-xs leading-snug text-slate-700 font-deva">{t(badge.key)}</p>
+              <p className="text-xs leading-snug text-slate-300 font-deva">{t(badge.key)}</p>
             </div>
           ))}
         </div>
 
-        <div className="glass-card border-l-4 border-bk-gold/50 p-5">
+        <div className="glass-card border-l-4 border-amber-400/50 p-5">
           <p className="text-xs leading-relaxed text-slate-400 font-deva">
             ⚠️ {t('trust.disclaimer')}
           </p>

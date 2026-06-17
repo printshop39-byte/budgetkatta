@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useLanguageStore } from '@/store/languageStore';
@@ -32,10 +32,10 @@ export default function ModuleCards() {
             >
               <span className="text-3xl">{m.icon}</span>
               <div>
-                <h3 className="font-display text-lg font-bold text-slate-800 group-hover:text-bk-gold">
+                <h3 className="font-display text-lg font-bold text-slate-100 group-hover:text-bk-gold">
                   {t(m.key)}
                 </h3>
-                <p className="mt-1 text-sm text-slate-500 font-deva">{t(m.sub)}</p>
+                <p className="mt-1 text-sm text-slate-400 font-deva">{t(m.sub)}</p>
               </div>
               <span className="ml-auto text-bk-gold opacity-0 transition-opacity group-hover:opacity-100">
                 →

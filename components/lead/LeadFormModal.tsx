@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 // LeadFormModal — bilingual "I am interested" capture form.
 // Collects Name, Mobile, City, Module, Selected product, Language and submits
 // to /api/leads (which persists + forwards to n8n). UI never blocks on webhook
@@ -90,13 +90,13 @@ export default function LeadFormModal() {
           >
             <div className="mb-4 flex items-start justify-between">
               <div>
-                <h3 className="font-display text-xl font-bold text-slate-800">{t('lead.title')}</h3>
-                <p className="mt-1 text-sm text-slate-500 font-deva">{t('lead.subtitle')}</p>
+                <h3 className="font-display text-xl font-bold text-slate-200">{t('lead.title')}</h3>
+                <p className="mt-1 text-sm text-slate-400 font-deva">{t('lead.subtitle')}</p>
               </div>
               <button
                 onClick={close}
                 aria-label={t('btn.close')}
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-900/[0.035] hover:text-slate-800"
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800/60 hover:text-slate-200"
               >
                 ✕
               </button>
@@ -105,10 +105,10 @@ export default function LeadFormModal() {
             {done ? (
               <div className="flex flex-col items-center gap-3 py-8 text-center">
                 <span className="text-4xl">✅</span>
-                <p className="text-slate-800 font-deva">{t('lead.success')}</p>
+                <p className="text-slate-200 font-deva">{t('lead.success')}</p>
                 <button
                   onClick={close}
-                  className="mt-2 rounded-xl bg-bk-gold px-5 py-2.5 font-bold text-bk-dark transition-colors hover:bg-bk-gold-light font-deva"
+                  className="mt-2 rounded-xl bg-amber-400 px-5 py-2.5 font-bold text-slate-950 transition-colors hover:bg-amber-500 font-deva"
                 >
                   {t('btn.close')}
                 </button>
@@ -117,11 +117,11 @@ export default function LeadFormModal() {
               <form onSubmit={handleSubmit} className="space-y-3">
                 {/* Context chips */}
                 <div className="flex flex-wrap gap-2 text-xs">
-                  <span className="rounded-full border border-bk-gold/30 bg-bk-gold/10 px-2.5 py-1 text-bk-gold font-deva">
+                  <span className="rounded-full border border-amber-400/30 bg-amber-400/10 px-2.5 py-1 text-amber-400 font-deva">
                     {t('lead.module')}: {t(moduleLabelKey[module])}
                   </span>
                   {product && (
-                    <span className="rounded-full border border-slate-200 bg-slate-900/[0.035] px-2.5 py-1 text-slate-600 font-deva">
+                    <span className="rounded-full border border-slate-800 bg-slate-800/60 px-2.5 py-1 text-slate-400 font-deva">
                       {product}
                     </span>
                   )}
@@ -161,7 +161,7 @@ export default function LeadFormModal() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full rounded-xl bg-bk-gold py-3 font-bold text-bk-dark transition-all duration-300 hover:bg-bk-gold-light hover:shadow-[0_0_24px_rgba(13,148,136,0.4)] disabled:opacity-60 disabled:hover:shadow-none font-deva"
+                  className="w-full rounded-xl bg-amber-400 py-3 font-bold text-slate-950 transition-all duration-300 hover:bg-amber-500 hover:shadow-[0_0_24px_rgba(251,191,36,0.4)] disabled:opacity-60 disabled:hover:shadow-none font-deva"
                 >
                   {sending ? t('lead.sending') : t('lead.submit')}
                 </button>
@@ -177,7 +177,7 @@ export default function LeadFormModal() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-sm text-slate-600 font-deva">{label}</span>
+      <span className="mb-1 block text-sm text-slate-400 font-deva">{label}</span>
       {children}
     </label>
   );

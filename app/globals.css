@@ -3,36 +3,42 @@
 @tailwind utilities;
 
 :root {
-  /* Soft light premium palette */
-  --bg-soft: #f8fafc; /* slate-50 */
-  --surface: #ffffff;
-  --surface-glass: rgba(255, 255, 255, 0.7);
+  /* Dark premium fintech palette */
+  --bg-base: #020617; /* slate-950 */
+  --bg-surface: #0f172a; /* slate-900 */
+  --bg-surface-2: #1e293b; /* slate-800 */
+  --surface-glass: rgba(15, 23, 42, 0.6); /* slate-900 / 60 */
 
-  /* Teal primary accent */
-  --teal-700: #0f766e;
-  --teal-600: #0d9488;
-  --teal-500: #14b8a6;
+  /* Amber / yellow primary accents */
+  --amber-300: #fcd34d;
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+  --yellow-500: #eab308;
 
-  /* Text on light */
-  --text-primary: #1e293b; /* slate-800 */
-  --text-secondary: #475569; /* slate-600 */
+  /* Text on dark */
+  --text-primary: #e2e8f0; /* slate-200 */
+  --text-secondary: #cbd5e1; /* slate-300 */
   --text-muted: #94a3b8; /* slate-400 */
+  --text-accent: #fbbf24; /* amber-400 */
 
   /* Status */
-  --success: #0f9d6b;
-  --warning: #d97706;
-  --danger: #e11d48;
-  --info: #2563eb;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #f43f5e;
+  --info: #60a5fa;
 
   /* Borders */
-  --border-glass: rgba(255, 255, 255, 0.5);
+  --border-default: rgba(30, 41, 59, 1); /* slate-800 */
+  --border-glass: rgba(251, 191, 36, 0.18); /* amber-400 / 18% */
 }
 
 @layer base {
   body {
-    /* Soft radial gradient backdrop */
-    background-color: #ffffff;
-    background-image: radial-gradient(ellipse at top, #ccfbf1 0%, #f8fafc 45%, #ffffff 100%);
+    /* Dark radial backdrop: slate-900 glow at top, amber halo, fading into slate-950 */
+    background-color: #020617;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(251, 191, 36, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at top, #0f172a 0%, #020617 55%, #020617 100%);
     background-attachment: fixed;
     color: var(--text-primary);
     font-family: var(--font-inter), 'Inter', sans-serif;
@@ -41,7 +47,7 @@
 
   /* Visible keyboard focus across all interactive elements. */
   :focus-visible {
-    outline: 2px solid var(--teal-600);
+    outline: 2px solid var(--amber-400);
     outline-offset: 2px;
     border-radius: 8px;
   }
@@ -51,39 +57,39 @@
 }
 
 @layer components {
-  /* Soft glassmorphism */
+  /* Dark glassmorphism */
   .glass-card {
     background: var(--surface-glass);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--border-glass);
+    border: 1px solid rgb(30 41 59); /* slate-800 */
     border-radius: 1.5rem; /* rounded-3xl */
-    box-shadow: 0 8px 30px rgb(0 0 0 / 0.04);
+    box-shadow: 0 8px 30px rgb(0 0 0 / 0.45);
   }
 
-  /* Teal-tinted glass variant */
+  /* Amber-tinted glass variant */
   .glass-card-gold {
-    border: 1px solid rgba(13, 148, 136, 0.22);
-    box-shadow: 0 10px 34px rgb(13 148 136 / 0.08);
+    border: 1px solid rgba(251, 191, 36, 0.28);
+    box-shadow: 0 10px 34px rgb(251 191 36 / 0.12), 0 0 0 1px rgba(251, 191, 36, 0.05) inset;
   }
 
   .bk-input {
     width: 100%;
     border-radius: 0.875rem;
-    border: 1px solid rgb(226 232 240); /* slate-200 */
-    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgb(30 41 59); /* slate-800 */
+    background: rgba(15, 23, 42, 0.7); /* slate-900 / 70 */
     padding: 0.625rem 0.875rem;
     font-size: 0.875rem;
     color: var(--text-primary);
     outline: none;
-    transition: border-color 0.15s ease;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
   .bk-input::placeholder {
-    color: rgb(148 163 184); /* slate-400 */
+    color: rgb(100 116 139); /* slate-500 */
   }
   .bk-input:focus {
-    border-color: var(--teal-600);
-    box-shadow: 0 0 0 3px rgb(13 148 136 / 0.12);
+    border-color: var(--amber-400);
+    box-shadow: 0 0 0 3px rgb(251 191 36 / 0.18);
   }
 }
 

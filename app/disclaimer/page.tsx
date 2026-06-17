@@ -16,7 +16,7 @@ export default function DisclaimerPage() {
           {points.map((p) => (
             <li key={p} className="flex gap-3">
               <span className="mt-1 text-bk-gold">⚠️</span>
-              <p className="leading-relaxed text-slate-600 font-deva">{t(p)}</p>
+              <p className="leading-relaxed text-slate-400 font-deva">{t(p)}</p>
             </li>
           ))}
         </ul>

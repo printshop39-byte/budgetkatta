@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 // app/admin/page.tsx — admin placeholder, gated by NEXT_PUBLIC_ENABLE_ADMIN=true.
 // Shows count cards per collection. No CRUD UI yet — clean structure only.
 
@@ -45,8 +45,8 @@ export default function AdminPage() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center">
         <span className="text-4xl">🔒</span>
-        <h1 className="mt-4 font-display text-2xl font-bold text-slate-800">Admin disabled</h1>
-        <p className="mt-2 text-slate-500">
+        <h1 className="mt-4 font-display text-2xl font-bold text-slate-200">Admin disabled</h1>
+        <p className="mt-2 text-slate-400">
           Set <code className="rounded bg-slate-900/[0.05] px-1.5 py-0.5 text-bk-gold">NEXT_PUBLIC_ENABLE_ADMIN=true</code>{' '}
           in <code className="rounded bg-slate-900/[0.05] px-1.5 py-0.5">.env.local</code> and restart to enable.
         </p>
@@ -57,8 +57,8 @@ export default function AdminPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-10">
       <header className="mb-8">
-        <h1 className="font-display text-3xl font-extrabold text-slate-800">Admin</h1>
-        <p className="mt-2 text-slate-500">
+        <h1 className="font-display text-3xl font-extrabold text-slate-200">Admin</h1>
+        <p className="mt-2 text-slate-400">
           Data overview. Full CRUD coming later — this is a structural placeholder.
         </p>
       </header>
@@ -74,8 +74,8 @@ export default function AdminPage() {
                   <span
                     className={`rounded-full border px-2 py-0.5 text-xs ${
                       info.source === 'mongodb'
-                        ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400'
-                        : 'border-slate-200 bg-slate-900/[0.035] text-slate-400'
+                        ? 'border-amber-400/40/30 bg-amber-400/10 text-amber-400'
+                        : 'border-slate-800 bg-slate-900/[0.035] text-slate-400'
                     }`}
                   >
                     {info.source}
@@ -85,7 +85,7 @@ export default function AdminPage() {
               <p className="mt-4 font-display text-3xl font-extrabold text-bk-gold">
                 {info ? info.count : '—'}
               </p>
-              <p className="mt-1 text-sm text-slate-600">{c.title}</p>
+              <p className="mt-1 text-sm text-slate-400">{c.title}</p>
             </div>
           );
         })}

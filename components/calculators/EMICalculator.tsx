@@ -20,12 +20,12 @@ export default function EMICalculator() {
 
   return (
     <div className="glass-card glass-card-gold space-y-5 p-6">
-      <h3 className="font-display text-xl font-bold text-slate-800">{t('loan.emi_title')}</h3>
+      <h3 className="font-display text-xl font-bold text-slate-100">{t('loan.emi_title')}</h3>
 
       <div className="space-y-4">
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-slate-600 font-deva">{t('loan.amount')}</label>
+            <label className="text-sm text-slate-400 font-deva">{t('loan.amount')}</label>
             <span className="text-sm font-bold text-bk-gold">{formatINR(principal)}</span>
           </div>
           <input
@@ -41,7 +41,7 @@ export default function EMICalculator() {
 
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-slate-600 font-deva">{t('loan.rate')}</label>
+            <label className="text-sm text-slate-400 font-deva">{t('loan.rate')}</label>
             <span className="text-sm font-bold text-bk-gold">{rate}%</span>
           </div>
           <input
@@ -57,7 +57,7 @@ export default function EMICalculator() {
 
         <div>
           <div className="mb-1 flex justify-between">
-            <label className="text-sm text-slate-600 font-deva">{t('loan.tenure_month')}</label>
+            <label className="text-sm text-slate-400 font-deva">{t('loan.tenure_month')}</label>
             <span className="text-sm font-bold text-bk-gold">{tenure}</span>
           </div>
           <input
@@ -86,9 +86,9 @@ export default function EMICalculator() {
             { label: t('loan.total_interest'), value: formatINR(result.totalInterest) },
             { label: t('loan.total_amount'), value: formatINR(result.totalAmount) },
           ].map((item) => (
-            <div key={item.label} className="rounded-xl bg-slate-900/[0.035] p-3 text-center">
+            <div key={item.label} className="rounded-xl bg-slate-800/60 p-3 text-center">
               <p className="text-base font-bold text-bk-gold">{item.value}</p>
-              <p className="mt-1 text-xs text-slate-500 font-deva">{item.label}</p>
+              <p className="mt-1 text-xs text-slate-400 font-deva">{item.label}</p>
             </div>
           ))}
           <div className="col-span-3">

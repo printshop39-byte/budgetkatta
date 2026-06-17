@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 // CompareDrawer.tsx — slide-up glass drawer showing selected items side-by-side.
 
 import { useCompareStore } from '@/store/compareStore';
@@ -43,19 +43,19 @@ export default function CompareDrawer() {
           className="fixed bottom-0 left-0 right-0 z-40 max-h-[60vh] overflow-y-auto rounded-t-3xl glass-card p-5 shadow-2xl"
         >
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-display text-lg font-bold text-slate-800">
+            <h3 className="font-display text-lg font-bold text-slate-200">
               {t('btn.compare')} ({items.length})
             </h3>
             <div className="flex gap-2">
               <button
                 onClick={clearCompare}
-                className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm text-slate-400 transition-colors hover:border-slate-300 hover:text-slate-800 font-deva"
+                className="rounded-lg border border-slate-800 px-3 py-1.5 text-sm text-slate-400 transition-colors hover:border-slate-700 hover:text-slate-200 font-deva"
               >
                 {t('btn.clear')}
               </button>
               <button
                 onClick={handleInterested}
-                className="rounded-lg bg-bk-gold px-4 py-1.5 text-sm font-bold text-bk-dark transition-colors hover:bg-bk-gold-light font-deva"
+                className="rounded-lg bg-amber-400 px-4 py-1.5 text-sm font-bold text-slate-950 transition-colors hover:bg-amber-500 font-deva"
               >
                 {t('btn.interested')}
               </button>
@@ -65,12 +65,12 @@ export default function CompareDrawer() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[500px]">
               <thead>
-                <tr className="border-b border-slate-200">
+                <tr className="border-b border-slate-800">
                   <th className="py-2 text-left text-sm font-normal text-slate-400">Field</th>
                   {items.map((item, i) => (
                     <th
                       key={i}
-                      className="py-2 text-center text-sm font-semibold text-bk-gold font-deva"
+                      className="py-2 text-center text-sm font-semibold text-amber-400 font-deva"
                     >
                       {item.name}
                     </th>
@@ -79,12 +79,12 @@ export default function CompareDrawer() {
               </thead>
               <tbody>
                 {cols.map((col, ci) => (
-                  <tr key={col} className="border-b border-slate-100">
-                    <td className="py-2.5 pr-4 text-sm text-slate-500">{col}</td>
+                  <tr key={col} className="border-b border-slate-800">
+                    <td className="py-2.5 pr-4 text-sm text-slate-400">{col}</td>
                     {items.map((item, ii) => (
                       <td
                         key={ii}
-                        className="py-2.5 text-center text-sm text-slate-800 font-deva"
+                        className="py-2.5 text-center text-sm text-slate-200 font-deva"
                       >
                         {item.data?.[ci] ?? '—'}
                       </td>

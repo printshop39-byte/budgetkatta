@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 // AnimatedExplainerCard — lightweight, animated 3-step explainer.
 // • CSS/Framer-Motion animated icon by default (no heavy video).
 // • Architecture is Spline/Lottie-ready: pass `visual` to override the default
@@ -24,14 +24,14 @@ export default function AnimatedExplainerCard({
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="glass-card flex h-full flex-col gap-4 p-5"
+      className="glass-card flex h-full flex-col gap-4 p-5 bg-slate-900/60 border border-slate-800 rounded-2xl"
     >
       <div className="flex items-center gap-3">
-        <div className="relative flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-bk-gold/20 to-bk-card">
-          <span className="pointer-events-none absolute h-8 w-8 rounded-full bg-bk-gold/20 blur-md animate-pulse-gold" />
+        <div className="relative flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-amber-400/20 to-slate-900">
+          <span className="pointer-events-none absolute h-8 w-8 rounded-full bg-amber-400/20 blur-md animate-pulse-gold" />
           {visual ?? <span className="relative text-2xl animate-float">{explainer.icon}</span>}
         </div>
-        <h3 className="font-display text-base font-bold text-slate-800 font-deva">
+        <h3 className="font-display text-base font-bold text-slate-200 font-deva">
           {explainer.title[language]}
         </h3>
       </div>
@@ -46,10 +46,10 @@ export default function AnimatedExplainerCard({
             transition={{ delay: 0.1 + i * 0.1 }}
             className="flex items-center gap-3"
           >
-            <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-bk-gold/15 text-xs font-bold text-bk-gold">
+            <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-amber-400/15 text-xs font-bold text-amber-300">
               {i + 1}
             </span>
-            <span className="text-sm text-slate-600 font-deva">{step[language]}</span>
+            <span className="text-sm text-slate-400 font-deva">{step[language]}</span>
           </motion.li>
         ))}
       </ol>

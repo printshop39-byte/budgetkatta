@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -38,33 +38,33 @@ export default function SmartAdvisory() {
   };
 
   return (
-    <section id="budget-section" className="py-20 px-6 max-w-7xl mx-auto border-t border-slate-100">
+    <section id="budget-section" className="py-20 px-6 max-w-7xl mx-auto border-t border-slate-800">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left Column: Information */}
         <div className="lg:col-span-6 space-y-6">
-          <span className="text-xs font-bold text-teal-600 bg-teal-50 px-3 py-1.5 rounded-full border border-teal-100 uppercase tracking-widest">
+          <span className="text-xs font-bold text-amber-300 bg-amber-500/10 px-3 py-1.5 rounded-full border border-amber-400/30 uppercase tracking-widest">
             स्मार्ट सल्लागार
           </span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-100 tracking-tight">
             तुमच्या प्रश्नांचे निरसन, एका क्षणात!
           </h2>
-          <p className="text-slate-600 leading-relaxed text-base">
+          <p className="text-slate-400 leading-relaxed text-base">
             गुंतवणूक, कर्ज, विमा किंवा बजेट संदर्भात तुमच्या मनात काही शंका आहे का? खाली तुमच्या शब्दांत प्रश्न विचारा आणि आमचा डिजिटल आर्थिक सल्लागार तुम्हाला सर्वोत्तम मार्गदर्शन करेल.
           </p>
 
           <div className="space-y-4 pt-2">
             <div className="flex items-start space-x-3">
-              <CheckCircle2 className="h-5 w-5 text-teal-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
               <div>
-                <span className="text-sm font-bold text-slate-800">झटपट शिफारसी</span>
-                <p className="text-xs text-slate-500">कोणतीही क्लिष्ट आकडेमोड न करता सोपे आणि व्यावहारिक उपाय.</p>
+                <span className="text-sm font-bold text-slate-200">झटपट शिफारसी</span>
+                <p className="text-xs text-slate-400">कोणतीही क्लिष्ट आकडेमोड न करता सोपे आणि व्यावहारिक उपाय.</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
-              <CheckCircle2 className="h-5 w-5 text-teal-600 mt-0.5 flex-shrink-0" />
+              <CheckCircle2 className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
               <div>
-                <span className="text-sm font-bold text-slate-800">पूर्णपणे सुरक्षित व खाजगी</span>
-                <p className="text-xs text-slate-500">तुमची माहिती १००% सुरक्षित ठेवली जाते आणि कोणाशीही शेअर केली जात नाही.</p>
+                <span className="text-sm font-bold text-slate-200">पूर्णपणे सुरक्षित व खाजगी</span>
+                <p className="text-xs text-slate-400">तुमची माहिती १००% सुरक्षित ठेवली जाते आणि कोणाशीही शेअर केली जात नाही.</p>
               </div>
             </div>
           </div>
@@ -72,12 +72,12 @@ export default function SmartAdvisory() {
 
         {/* Right Column: Interactive Query Box */}
         <div className="lg:col-span-6">
-          <div className="bg-white/75 backdrop-blur-xl border border-white/60 p-8 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.03)] space-y-6">
+          <div className="bg-slate-900/75 backdrop-blur-xl border border-slate-800 p-8 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.4)] space-y-6">
             <div className="flex items-center space-x-2">
-              <div className="p-2 bg-teal-50 rounded-xl text-teal-600">
+              <div className="p-2 bg-amber-500/10 rounded-xl text-amber-400 border border-amber-400/30">
                 <QuestionIcon className="h-5 w-5 animate-pulse" />
               </div>
-              <h3 className="text-lg font-bold text-slate-800">तुमचा प्रश्न इथे विचारा:</h3>
+              <h3 className="text-lg font-bold text-slate-100">तुमचा प्रश्न इथे विचारा:</h3>
             </div>
 
             <form onSubmit={handleSmartQuery} className="space-y-4">
@@ -87,7 +87,7 @@ export default function SmartAdvisory() {
                   placeholder="उदा. 'मी दरमहा ३००० रुपयांची बचत कुठे करावी?' किंवा 'माझे उत्पन्न ५०,००० आहे, कर्ज किती घ्यावे?'"
                   value={userQuery}
                   onChange={(e) => setUserQuery(e.target.value)}
-                  className="w-full px-5 py-4 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:bg-white text-sm font-medium transition-all resize-none"
+                  className="w-full px-5 py-4 bg-slate-950/80 border border-slate-800 rounded-2xl text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:bg-slate-950 text-sm font-medium transition-all resize-none"
                 />
               </div>
 
@@ -96,7 +96,7 @@ export default function SmartAdvisory() {
                 <button
                   type="submit"
                   disabled={chatLoading || !userQuery.trim()}
-                  className="px-6 py-2.5 rounded-full bg-slate-900 hover:bg-slate-800 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold text-xs transition-all shadow-sm flex items-center space-x-1.5"
+                  className="px-6 py-2.5 rounded-full bg-amber-400 hover:bg-amber-500 disabled:bg-slate-800 disabled:text-slate-400 text-slate-950 font-bold text-xs transition-all shadow-sm shadow-amber-500/30 flex items-center space-x-1.5"
                 >
                   {chatLoading ? (
                     <>
@@ -120,15 +120,15 @@ export default function SmartAdvisory() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="bg-teal-50/60 border border-teal-100 p-5 rounded-2xl space-y-2.5"
+                  className="bg-amber-500/10 border border-amber-400/30 p-5 rounded-2xl space-y-2.5"
                 >
                   <div className="flex items-center space-x-1.5">
-                    <span className="p-1 bg-teal-100 rounded-lg text-teal-700">
+                    <span className="p-1 bg-amber-500/20 rounded-lg text-amber-300">
                       <Sparkles className="h-3.5 w-3.5" />
                     </span>
-                    <span className="text-xs font-bold text-teal-800">बजेटकट्टा सल्लागाराचे उत्तर:</span>
+                    <span className="text-xs font-bold text-amber-300">बजेटकट्टा सल्लागाराचे उत्तर:</span>
                   </div>
-                  <p className="text-xs text-slate-700 leading-relaxed font-medium">{chatResponse}</p>
+                  <p className="text-xs text-slate-300 leading-relaxed font-medium">{chatResponse}</p>
                 </motion.div>
               )}
             </AnimatePresence>

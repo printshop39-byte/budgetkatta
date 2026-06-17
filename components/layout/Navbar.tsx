@@ -32,12 +32,12 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-100 bg-bk-dark/80 backdrop-blur-lg">
+    <header className="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/80 backdrop-blur-lg">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl">💰</span>
-          <span className="font-display text-lg font-bold text-slate-800">
-            Budget<span className="text-bk-gold">Katta</span>
+          <span className="font-display text-lg font-bold text-slate-200">
+            Budget<span className="text-amber-400">Katta</span>
           </span>
         </Link>
 
@@ -47,7 +47,7 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="rounded-lg px-2.5 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-900/[0.035] hover:text-bk-gold font-deva"
+              className="rounded-lg px-2.5 py-2 text-sm text-slate-400 transition-colors hover:bg-slate-800/60 hover:text-amber-400 font-deva"
             >
               {t(l.key)}
             </Link>
@@ -58,11 +58,11 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => openLead({ module: 'GENERAL', sourcePage: 'NAVBAR_CTA' })}
-            className="hidden rounded-xl bg-bk-gold px-4 py-2 text-sm font-bold text-bk-dark transition-all duration-300 hover:bg-bk-gold-light hover:shadow-[0_0_22px_rgba(13,148,136,0.45)] active:scale-95 font-deva lg:block"
+            className="hidden rounded-xl bg-amber-400 px-4 py-2 text-sm font-bold text-slate-950 transition-all duration-300 hover:bg-amber-500 hover:shadow-[0_0_22px_rgba(251,191,36,0.45)] active:scale-95 font-deva lg:block"
           >
             {t('nav.cta_short')}
           </button>
-          <div className="flex overflow-hidden rounded-lg border border-slate-200">
+          <div className="flex overflow-hidden rounded-lg border border-slate-800">
             {(['mr', 'hi'] as const).map((lng) => (
               <button
                 key={lng}
@@ -70,7 +70,7 @@ export default function Navbar() {
                 aria-pressed={language === lng}
                 aria-label={lng === 'mr' ? 'मराठी भाषा' : 'हिंदी भाषा'}
                 className={`px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  language === lng ? 'bg-bk-gold text-bk-dark' : 'text-slate-500 hover:text-slate-800'
+                  language === lng ? 'bg-amber-400 text-slate-950' : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
                 {lng === 'mr' ? 'मराठी' : 'हिंदी'}
@@ -80,7 +80,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setOpen(true)}
-            className="rounded-lg p-2 text-slate-600 hover:bg-slate-900/[0.035] lg:hidden"
+            className="rounded-lg p-2 text-slate-400 hover:bg-slate-800/60 lg:hidden"
             aria-label="Open menu"
             aria-expanded={open}
           >
@@ -105,16 +105,16 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 320 }}
-              className="fixed right-0 top-0 z-50 flex h-full w-72 flex-col border-l border-slate-200 bg-bk-card p-5 lg:hidden"
+              className="fixed right-0 top-0 z-50 flex h-full w-72 flex-col border-l border-slate-800 bg-slate-900 p-5 lg:hidden"
             >
               <div className="mb-4 flex items-center justify-between">
-                <span className="font-display font-bold text-slate-800">
-                  Budget<span className="text-bk-gold">Katta</span>
+                <span className="font-display font-bold text-slate-200">
+                  Budget<span className="text-amber-400">Katta</span>
                 </span>
                 <button
                   onClick={() => setOpen(false)}
                   aria-label="Close menu"
-                  className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-900/[0.035] hover:text-slate-800"
+                  className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800/60 hover:text-slate-200"
                 >
                   ✕
                 </button>
@@ -126,7 +126,7 @@ export default function Navbar() {
                     key={l.href}
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="block rounded-lg px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-900/[0.035] hover:text-bk-gold font-deva"
+                    className="block rounded-lg px-3 py-2.5 text-sm text-slate-300 hover:bg-slate-800/60 hover:text-amber-400 font-deva"
                   >
                     {t(l.key)}
                   </Link>
@@ -138,7 +138,7 @@ export default function Navbar() {
                   setOpen(false);
                   openLead({ module: 'GENERAL', sourcePage: 'MOBILE_MENU' });
                 }}
-                className="mt-4 w-full rounded-xl bg-bk-gold py-3 text-sm font-bold text-bk-dark transition-colors hover:bg-bk-gold-light font-deva"
+                className="mt-4 w-full rounded-xl bg-amber-400 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-amber-500 font-deva"
               >
                 {t('nav.cta')}
               </button>

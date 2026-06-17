@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { sipFunds } from '@/lib/data';
 import { useRemoteData } from '@/lib/useRemoteData';
 import { useLanguageStore } from '@/store/languageStore';
@@ -26,21 +26,21 @@ export default function SIPPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-6 text-center">
-        <h1 className="font-display text-3xl font-extrabold text-slate-800 md:text-4xl">{t('sip.title')}</h1>
-        <p className="mt-2 text-slate-500 font-deva">{t('sip.subtitle')}</p>
-        <p className="mx-auto mt-3 max-w-2xl rounded-2xl border border-bk-gold/15 bg-bk-gold/5 px-4 py-2.5 text-sm text-slate-600 font-deva">
+        <h1 className="font-display text-3xl font-extrabold text-slate-200 md:text-4xl">{t('sip.title')}</h1>
+        <p className="mt-2 text-slate-400 font-deva">{t('sip.subtitle')}</p>
+        <p className="mx-auto mt-3 max-w-2xl rounded-2xl border border-bk-gold/15 bg-bk-gold/5 px-4 py-2.5 text-sm text-slate-400 font-deva">
           💡 {t('sip.intro')}
         </p>
       </header>
 
       {/* Risk type cards */}
       <div className="mb-8">
-        <h2 className="mb-3 font-display text-lg font-bold text-slate-800 font-deva">{t('sip.risk_title')}</h2>
+        <h2 className="mb-3 font-display text-lg font-bold text-slate-200 font-deva">{t('sip.risk_title')}</h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {[
             { key: 'sip.risk_equity', tone: 'border-rose-200 bg-rose-50 text-rose-700', icon: '🚀' },
             { key: 'sip.risk_hybrid', tone: 'border-amber-200 bg-amber-50 text-amber-700', icon: '⚖️' },
-            { key: 'sip.risk_debt', tone: 'border-emerald-200 bg-emerald-50 text-emerald-700', icon: '🛟' },
+            { key: 'sip.risk_debt', tone: 'border-amber-400/40 bg-amber-400 text-amber-400', icon: '🛟' },
           ].map((r) => (
             <div key={r.key} className={`rounded-2xl border p-4 text-center ${r.tone}`}>
               <span className="text-2xl">{r.icon}</span>
@@ -61,7 +61,7 @@ export default function SIPPage() {
           <div className="overflow-x-auto glass-card p-0">
             <table className="w-full min-w-[620px] text-sm">
               <thead>
-                <tr className="border-b border-slate-200 text-left text-slate-400">
+                <tr className="border-b border-slate-800 text-left text-slate-400">
                   <th className="p-3 font-medium">{t('sip.col_fund')}</th>
                   <th className="p-3 font-medium">{t('sip.col_category')}</th>
                   <th className="p-3 font-medium">{t('sip.col_3y')}</th>
@@ -74,9 +74,9 @@ export default function SIPPage() {
                 {funds.map((fund) => {
                   const inCompare = items.some((i) => i.id === fund.id);
                   return (
-                    <tr key={fund.id} className="border-b border-slate-100">
-                      <td className="p-3 font-deva text-slate-800">{fund.fundName}</td>
-                      <td className="p-3 text-slate-600">{fund.category}</td>
+                    <tr key={fund.id} className="border-b border-slate-800">
+                      <td className="p-3 font-deva text-slate-200">{fund.fundName}</td>
+                      <td className="p-3 text-slate-400">{fund.category}</td>
                       <td className="p-3 font-bold text-bk-success">{fund.return3y}%</td>
                       <td className="p-3 font-bold text-bk-gold">{fund.return5y}%</td>
                       <td className="p-3">
@@ -98,7 +98,7 @@ export default function SIPPage() {
                               ],
                             })
                           }
-                          className="rounded-lg border border-slate-200 px-3 py-1 text-xs text-slate-600 transition-colors hover:border-bk-gold/40 hover:text-bk-gold disabled:opacity-40 font-deva"
+                          className="rounded-lg border border-slate-800 px-3 py-1 text-xs text-slate-400 transition-colors hover:border-bk-gold/40 hover:text-bk-gold disabled:opacity-40 font-deva"
                         >
                           {inCompare ? '✓' : t('btn.compare')}
                         </button>
@@ -119,7 +119,7 @@ export default function SIPPage() {
       </div>
 
       <section className="mt-12">
-        <h2 className="mb-4 font-display text-xl font-bold text-slate-800 font-deva">{t('doc.section_title')}</h2>
+        <h2 className="mb-4 font-display text-xl font-bold text-slate-200 font-deva">{t('doc.section_title')}</h2>
         <DocumentChecklist documents={sipDocuments} />
       </section>
 

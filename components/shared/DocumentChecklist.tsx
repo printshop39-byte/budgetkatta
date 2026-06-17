@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 // DocumentChecklist — renders localized document cards with requirement badges
 // (✅ required / 🟡 sometimes) and an expandable "why is this needed?" note.
 import { useState } from 'react';
@@ -41,12 +41,12 @@ export default function DocumentChecklist({ documents }: { documents: DocItem[] 
                   <div className="flex items-start gap-2.5">
                     <span className="text-base">{required ? '✅' : '🟡'}</span>
                     <div className="flex-1">
-                      <p className="text-sm font-semibold text-slate-800 font-deva">{doc.name[language]}</p>
+                      <p className="text-sm font-semibold text-slate-200 font-deva">{doc.name[language]}</p>
                       <span
                         className={`mt-1 inline-block rounded-full px-2 py-0.5 text-[10px] font-medium ${
                           required
-                            ? 'bg-emerald-50 text-emerald-700'
-                            : 'bg-amber-50 text-amber-700'
+                            ? 'bg-amber-400/10 text-emerald-300'
+                            : 'bg-amber-500/10 text-amber-300'
                         }`}
                       >
                         {required ? t('doc.required') : t('doc.sometimes')}
@@ -56,13 +56,13 @@ export default function DocumentChecklist({ documents }: { documents: DocItem[] 
 
                   <button
                     onClick={() => setOpen((o) => ({ ...o, [key]: !o[key] }))}
-                    className="mt-2.5 flex items-center gap-1 text-xs text-bk-gold/80 hover:text-bk-gold font-deva"
+                    className="mt-2.5 flex items-center gap-1 text-xs text-amber-400/80 hover:text-amber-400 font-deva"
                     aria-expanded={!!open[key]}
                   >
                     ℹ️ {t('doc.why')}
                   </button>
                   {open[key] && (
-                    <p className="mt-1.5 text-xs leading-relaxed text-slate-500 font-deva">
+                    <p className="mt-1.5 text-xs leading-relaxed text-slate-400 font-deva">
                       {doc.explanation[language]}
                     </p>
                   )}

@@ -44,9 +44,19 @@ const buildRates = (base24: number, base22: number, baseSilver: number): CityRat
     silver: Math.round(baseSilver + c.dS),
   }));
 
+// Per-gram base rates (₹) — the single source of truth for both the city table
+// and the interactive calculator. In India 1 Tola = exactly 12 g.
+const METAL_PER_GRAM = { '24k': 14595, '22k': 13900, silver: 275 } as const;
+type MetalKey = keyof typeof METAL_PER_GRAM;
+
 // Realistic current-market defaults (June 2026). Used as-is, and as the graceful
 // fallback whenever the live API is unavailable, rate-limited, or CORS-blocked.
-const DEFAULT_RATES = buildRates(151100, 138500, 265000);
+// Gold rows are per 10 g; silver is per 1 kg — derived from the per-gram bases.
+const DEFAULT_RATES = buildRates(
+  METAL_PER_GRAM['24k'] * 10,
+  METAL_PER_GRAM['22k'] * 10,
+  METAL_PER_GRAM.silver * 1000,
+);
 
 const toDevanagariDigits = (s: string) => s.replace(/[0-9]/g, (d) => '०१२३४५६७८९'[Number(d)]);
 
@@ -62,6 +72,26 @@ export default function RatesPage() {
 
   const [rates, setRates] = useState<CityRate[]>(DEFAULT_RATES);
   const [isLive, setIsLive] = useState(false);
+
+  // Interactive metal-price calculator state.
+  const [metal, setMetal] = useState<MetalKey>('24k');
+  const [grams, setGrams] = useState(12); // default to 1 Tola
+
+  const metalOptions: { key: MetalKey; label: { en: string; mr: string } }[] = [
+    { key: '24k', label: { en: '24K Gold', mr: '२४K सोने' } },
+    { key: '22k', label: { en: '22K Gold', mr: '२२K सोने' } },
+    { key: 'silver', label: { en: 'Silver', mr: 'चांदी' } },
+  ];
+
+  const presets: { grams: number; label: { en: string; mr: string } }[] = [
+    { grams: 1, label: { en: '1 Gram', mr: '१ ग्रॅम' } },
+    { grams: 10, label: { en: '10 Grams', mr: '१० ग्रॅम' } },
+    { grams: 12, label: { en: '1 Tola (12g)', mr: '१ तोळा (१२ ग्रॅम)' } },
+    { grams: 1000, label: { en: '1 KG (1000g)', mr: '१ किलो (१००० ग्रॅम)' } },
+  ];
+
+  const calcTotal = grams * METAL_PER_GRAM[metal];
+  const gramsDisplay = language === 'mr' ? toDevanagariDigits(String(grams)) : String(grams);
 
   // Attempt a live spot-price fetch; silently keep realistic defaults on any failure.
   useEffect(() => {
@@ -96,7 +126,8 @@ export default function RatesPage() {
         // the FX constant may be stale). Only let live data take over when it lands
         // within ±15% of our curated baseline; otherwise keep the trusted defaults.
         const within = (live: number, base: number) => live >= base * 0.85 && live <= base * 1.15;
-        const plausible = within(base24, 151100) && within(baseSilver, 265000);
+        const plausible =
+          within(base24, METAL_PER_GRAM['24k'] * 10) && within(baseSilver, METAL_PER_GRAM.silver * 1000);
 
         if (active && plausible) {
           setRates(buildRates(base24, base22, baseSilver));
@@ -247,6 +278,90 @@ export default function RatesPage() {
               <div className="shrink-0 text-right">
                 <span className="font-display text-4xl font-extrabold text-bk-gold">6.50%</span>
               </div>
+            </div>
+          </div>
+
+          {/* Live Metal Price Calculator */}
+          <div className="mt-4 rounded-2xl bg-slate-900 border border-slate-800 p-6 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
+            <div className="mb-5 flex items-center gap-2.5">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-500" />
+              </span>
+              <h3 className="font-display text-lg font-bold text-slate-200 font-deva">
+                {language === 'mr' ? 'लाईव्ह धातू दर कॅल्क्युलेटर' : 'Live Metal Price Calculator'}
+              </h3>
+            </div>
+
+            {/* Metal selector */}
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-slate-400 font-deva">
+              {language === 'mr' ? 'धातू निवडा' : 'Select Metal'}
+            </p>
+            <div className="mb-6 grid grid-cols-3 gap-2">
+              {metalOptions.map((m) => (
+                <button
+                  key={m.key}
+                  onClick={() => setMetal(m.key)}
+                  className={`rounded-xl border px-3 py-2.5 text-sm font-bold font-deva transition-all ${
+                    metal === m.key
+                      ? 'border-amber-400 bg-amber-400/15 text-amber-300 shadow-[0_0_18px_rgba(251,191,36,0.25)]'
+                      : 'border-slate-800 bg-slate-950/60 text-slate-400 hover:border-amber-400/40 hover:text-amber-300'
+                  }`}
+                >
+                  {m.label[language]}
+                </button>
+              ))}
+            </div>
+
+            {/* Weight selector */}
+            <div className="mb-2 flex items-end justify-between">
+              <p className="text-xs font-bold uppercase tracking-widest text-slate-400 font-deva">
+                {language === 'mr' ? 'वजन निवडा' : 'Select Weight'}
+              </p>
+              <span className="font-display text-lg font-bold text-amber-300 font-deva">
+                {gramsDisplay} {language === 'mr' ? 'ग्रॅम' : 'g'}
+              </span>
+            </div>
+            <input
+              type="range"
+              min={1}
+              max={1000}
+              step={1}
+              value={grams}
+              onChange={(e) => setGrams(Number(e.target.value))}
+              className="w-full accent-amber-400 cursor-pointer"
+              aria-label={language === 'mr' ? 'वजन निवडा' : 'Select Weight'}
+            />
+
+            {/* Quick presets */}
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+              {presets.map((p) => (
+                <button
+                  key={p.grams}
+                  onClick={() => setGrams(p.grams)}
+                  className={`rounded-lg border px-2 py-2 text-xs font-semibold font-deva transition-all ${
+                    grams === p.grams
+                      ? 'border-amber-400 bg-amber-400/15 text-amber-300'
+                      : 'border-slate-800 bg-slate-950/60 text-slate-400 hover:border-amber-400/40 hover:text-amber-300'
+                  }`}
+                >
+                  {p.label[language]}
+                </button>
+              ))}
+            </div>
+
+            {/* Total value */}
+            <div className="mt-6 rounded-2xl border border-amber-400/30 bg-amber-500/10 p-5 text-center">
+              <p className="text-xs font-bold uppercase tracking-widest text-amber-400 font-deva">
+                {language === 'mr' ? 'एकूण अंदाजित मूल्य' : 'Total Estimated Value'}
+              </p>
+              <p className="mt-1.5 font-display text-3xl font-extrabold text-bk-gold font-deva sm:text-4xl">
+                {formatINR(calcTotal, language)}
+              </p>
+              <p className="mt-1 text-xs text-slate-400 font-deva">
+                {gramsDisplay} {language === 'mr' ? 'ग्रॅम' : 'g'} × {formatINR(METAL_PER_GRAM[metal], language)}
+                {language === 'mr' ? '/ग्रॅम' : '/g'}
+              </p>
             </div>
           </div>
         </section>

@@ -47,6 +47,27 @@ const buildRates = (base24: number, base22: number, baseSilver: number): CityRat
 // Per-gram base rates (₹) — the single source of truth for both the city table
 // and the interactive calculator. In India 1 Tola = exactly 12 g.
 const METAL_PER_GRAM = { '24k': 14595, '22k': 13900, silver: 275 } as const;
+
+// City-wise real-estate & rent benchmarks (indicative market figures, ₹).
+// plotPerSqft / officePerSqft / shopPerSqft are per sq.ft.; homeRent2bhk is
+// a monthly figure for a typical 2 BHK flat.
+type RealEstateRow = {
+  city: { en: string; mr: string };
+  plotPerSqft: number;
+  homeRent2bhk: number;
+  officePerSqft: number;
+  shopPerSqft: number;
+};
+
+const realEstateRates: RealEstateRow[] = [
+  { city: { en: 'Mumbai', mr: 'मुंबई' }, plotPerSqft: 32000, homeRent2bhk: 55000, officePerSqft: 130, shopPerSqft: 320 },
+  { city: { en: 'Pune', mr: 'पुणे' }, plotPerSqft: 9500, homeRent2bhk: 28000, officePerSqft: 75, shopPerSqft: 180 },
+  { city: { en: 'Nagpur', mr: 'नागपूर' }, plotPerSqft: 4200, homeRent2bhk: 16000, officePerSqft: 45, shopPerSqft: 110 },
+  { city: { en: 'Nashik', mr: 'नाशिक' }, plotPerSqft: 3800, homeRent2bhk: 14000, officePerSqft: 40, shopPerSqft: 95 },
+  { city: { en: 'Aurangabad', mr: 'छत्रपती संभाजीनगर' }, plotPerSqft: 3500, homeRent2bhk: 12500, officePerSqft: 38, shopPerSqft: 90 },
+  { city: { en: 'Kolhapur', mr: 'कोल्हापूर' }, plotPerSqft: 3200, homeRent2bhk: 11500, officePerSqft: 35, shopPerSqft: 85 },
+  { city: { en: 'Thane', mr: 'ठाणे' }, plotPerSqft: 18500, homeRent2bhk: 38000, officePerSqft: 95, shopPerSqft: 230 },
+];
 type MetalKey = keyof typeof METAL_PER_GRAM;
 
 // Realistic current-market defaults (June 2026). Used as-is, and as the graceful
@@ -363,6 +384,57 @@ export default function RatesPage() {
                 {language === 'mr' ? '/ग्रॅम' : '/g'}
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* Real Estate & Rent Tracker */}
+        <section>
+          <div className="rounded-2xl bg-slate-900 border border-slate-800 p-6 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
+            <div className="mb-4 flex items-center gap-2.5">
+              <span className="text-xl">🏙️</span>
+              <h2 className="font-display text-xl font-bold text-slate-200 font-deva">
+                {language === 'mr' ? 'रिअल इस्टेट आणि भाडे कट्टा' : 'Real Estate & Rent Tracker'}
+              </h2>
+            </div>
+
+            <div className="overflow-x-auto rounded-xl border border-slate-800">
+              <table className="w-full min-w-[640px] text-sm">
+                <thead>
+                  <tr className="border-b border-slate-800 text-left text-slate-400">
+                    <th className="p-3 font-medium font-deva">{language === 'mr' ? 'शहर' : 'City'}</th>
+                    <th className="p-3 text-right font-medium font-deva">
+                      {language === 'mr' ? 'ओपन प्लॉट (प्रति स्क्वे. फूट)' : 'Open Plot (Per Sq. Ft.)'}
+                    </th>
+                    <th className="p-3 text-right font-medium font-deva">
+                      {language === 'mr' ? 'निवासी घर भाडे (२ BHK)' : 'Home Rent (2 BHK Flat)'}
+                    </th>
+                    <th className="p-3 text-right font-medium font-deva">
+                      {language === 'mr' ? 'ऑफिस भाडे (प्रति स्क्वे. फूट)' : 'Office Rent (Per Sq. Ft.)'}
+                    </th>
+                    <th className="p-3 text-right font-medium font-deva">
+                      {language === 'mr' ? 'कमर्शियल दुकान भाडे (प्रति स्क्वे. फूट)' : 'Commercial Rent (Shop Front)'}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {realEstateRates.map((r) => (
+                    <tr key={r.city.en} className="border-b border-slate-800 last:border-0 transition-colors hover:bg-amber-400/5">
+                      <td className="p-3 font-semibold text-slate-200 font-deva">{r.city[language]}</td>
+                      <td className="p-3 text-right font-bold text-bk-gold font-deva">{formatINR(r.plotPerSqft, language)}</td>
+                      <td className="p-3 text-right font-bold text-slate-200 font-deva">{formatINR(r.homeRent2bhk, language)}</td>
+                      <td className="p-3 text-right font-bold text-slate-200 font-deva">{formatINR(r.officePerSqft, language)}</td>
+                      <td className="p-3 text-right font-bold text-amber-300/90 font-deva">{formatINR(r.shopPerSqft, language)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="mt-4 text-xs leading-relaxed text-slate-400 font-deva">
+              {language === 'mr'
+                ? 'टीप: रिअल इस्टेट दर हे सूचक बेंचमार्क असून विशिष्ट परिसर/लोकॅलिटी निर्देशांकानुसार बदलू शकतात.'
+                : 'Note: Real estate rates are indicative benchmarks and are subject to specific locality indices.'}
+            </p>
           </div>
         </section>
 

@@ -245,6 +245,24 @@ export const insuranceTypes: InsuranceType[] = [
       { mr: 'आधीच्या आजारांचा समावेश आहे का?', en: 'Are pre-existing conditions included?' },
     ],
   },
+  {
+    id: 'crop',
+    icon: '🌾',
+    label: { mr: 'पिक विमा (Crop Insurance)', en: 'Crop Insurance' },
+    whatIs: {
+      mr: 'नैसर्गिक आपत्ती, दुष्काळ, पूर आणि अवकाळी पावसामुळे शेतीच्या पिकांचे होणाऱ्या नुकसानीपासून आर्थिक संरक्षण मिळवा. शेतीला द्या हमखास आधार.',
+      en: 'Protect your agricultural yield against natural calamities, droughts, floods, and unseasonal rains. Get secure financial backup for your farm.',
+    },
+    who: { mr: 'शेतकरी व कृषी कर्ज घेणाऱ्या प्रत्येकासाठी.', en: 'For farmers and anyone availing a crop loan.' },
+    benefits: [
+      { mr: 'पीक नुकसानीची भरपाई', en: 'Compensation for crop loss' },
+      { mr: 'PMFBY अंतर्गत कमी हप्ता', en: 'Low premium under PMFBY' },
+    ],
+    check: [
+      { mr: 'अधिसूचित पीक व क्षेत्र तपासा', en: 'Check notified crops and area' },
+      { mr: 'नोंदणीची अंतिम तारीख चुकवू नका', en: "Don't miss the enrolment cut-off date" },
+    ],
+  },
 ];
 
 // ── /cards ─────────────────────────────────────────────────────────────────

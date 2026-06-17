@@ -5,6 +5,7 @@ import PageShell from '@/components/shared/PageShell';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { submitLead } from '@/lib/leadAutomation';
+import { CONTACT_EMAIL } from '@/lib/config';
 import type { LeadModule } from '@/types';
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
@@ -56,7 +57,7 @@ export default function ContactPage() {
   }
 
   const infoCards = [
-    { icon: '✉️', label: t('contact.info_email'), value: 'support@budgetkatta.in', href: 'mailto:support@budgetkatta.in' },
+    { icon: '✉️', label: t('contact.info_email'), value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
     { icon: '📍', label: t('contact.info_area'), value: t('contact.info_area_val') },
     { icon: '⏱️', label: t('contact.info_response'), value: t('contact.info_response_val') },
   ];

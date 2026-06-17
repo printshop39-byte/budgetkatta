@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
+import { CONTACT_EMAIL } from '@/lib/config';
 import TrustSection from '@/components/trust/TrustSection';
 
 const productLinks = [
@@ -73,10 +74,10 @@ export default function Footer() {
         <div className="mx-auto mt-10 flex max-w-6xl flex-col items-center justify-between gap-3 border-t border-white/5 pt-6 text-center sm:flex-row sm:text-left">
           <p className="text-xs text-white/40 font-deva">{t('footer.rights')}</p>
           <a
-            href="mailto:support@budgetkatta.in"
+            href={`mailto:${CONTACT_EMAIL}`}
             className="text-xs text-white/50 transition-colors hover:text-bk-gold"
           >
-            support@budgetkatta.in
+            {CONTACT_EMAIL}
           </a>
         </div>
       </div>

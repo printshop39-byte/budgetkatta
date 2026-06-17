@@ -2,6 +2,7 @@
 import PageShell from '@/components/shared/PageShell';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
+import { CONTACT_EMAIL } from '@/lib/config';
 
 const sections = [
   { h: 'privacy.h_collect', b: 'privacy.collect' },
@@ -21,7 +22,17 @@ export default function PrivacyPage() {
         {sections.map((s) => (
           <section key={s.h}>
             <h2 className="font-display text-lg font-bold text-bk-gold">{t(s.h)}</h2>
-            <p className="mt-1.5 leading-relaxed text-white/70 font-deva">{t(s.b)}</p>
+            <p className="mt-1.5 leading-relaxed text-white/70 font-deva">
+              {t(s.b)}
+              {s.b === 'privacy.contact' && (
+                <>
+                  {' '}
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-bk-gold hover:underline">
+                    {CONTACT_EMAIL}
+                  </a>
+                </>
+              )}
+            </p>
           </section>
         ))}
       </div>

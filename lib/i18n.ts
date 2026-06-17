@@ -217,7 +217,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'privacy.h_delete': 'माहिती हटवण्याची विनंती',
     'privacy.delete': 'तुम्ही कधीही तुमची माहिती हटवण्याची विनंती करू शकता.',
     'privacy.h_contact': 'संपर्क',
-    'privacy.contact': 'गोपनीयतेबाबत प्रश्नांसाठी support@budgetkatta.in वर संपर्क साधा.',
+    'privacy.contact': 'गोपनीयतेबाबत प्रश्नांसाठी आमच्याशी संपर्क साधा:',
 
     // --- Terms page ---
     'terms.title': 'अटी व शर्ती',
@@ -457,7 +457,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'privacy.h_delete': 'जानकारी हटाने का अनुरोध',
     'privacy.delete': 'आप कभी भी अपनी जानकारी हटाने का अनुरोध कर सकते हैं।',
     'privacy.h_contact': 'संपर्क',
-    'privacy.contact': 'गोपनीयता संबंधी प्रश्नों के लिए support@budgetkatta.in पर संपर्क करें।',
+    'privacy.contact': 'गोपनीयता संबंधी प्रश्नों के लिए हमसे संपर्क करें:',
 
     // --- Terms page ---
     'terms.title': 'नियम व शर्तें',

@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Background */
+  --bg-dark: #0a0e1a;
+  --bg-card: #111827;
+  --bg-glass: rgba(255, 255, 255, 0.05);
+
+  /* Brand Accent */
+  --gold-primary: #f5a623;
+  --gold-light: #ffd166;
+  --gold-muted: #b8861a;
+
+  /* Text */
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+
+  /* Status */
+  --success: #10b981;
+  --warning: #fbbf24;
+  --danger: #ef4444;
+  --info: #3b82f6;
+
+  /* Borders */
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-gold: rgba(245, 166, 35, 0.3);
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-inter), 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Visible keyboard focus across all interactive elements. */
+  :focus-visible {
+    outline: 2px solid var(--gold-primary);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  /* Don't show the ring for mouse clicks. */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-card-gold {
+    border: 1px solid rgba(245, 166, 35, 0.25);
+    box-shadow: 0 8px 32px rgba(245, 166, 35, 0.08);
+  }
+
+  .bk-input {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.625rem 0.75rem;
+    font-size: 0.875rem;
+    color: #fff;
+    outline: none;
+  }
+  .bk-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .bk-input:focus {
+    border-color: rgba(245, 166, 35, 0.5);
+  }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

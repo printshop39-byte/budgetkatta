@@ -42,7 +42,7 @@ const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
     ],
     ctaPrimary: "आत्ताच मोजा",
     ctaSecondary: "आरोग्य स्कोअर तपासा",
-    socialCount: "५०,०००+ मराठी बांधव",
+    socialCount: "५०,०००+ भारतीय युजर्स",
     socialSub: "बजेटकट्टाचा दरमहा वापर करत आहेत",
     livePortfolio: "Live Portfolio",
     yearlyDelta: "+२४.८% वार्षिक",
@@ -67,8 +67,8 @@ const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
     ],
     ctaPrimary: "Calculate Now",
     ctaSecondary: "Check Health Score",
-    socialCount: "50,000+ Active Users",
-    socialSub: "Use BudgetKatta every month",
+    socialCount: "50,000+ Indian Users",
+    socialSub: "Trust BudgetKatta every month",
     livePortfolio: "Live Portfolio",
     yearlyDelta: "+24.8% Yearly",
     wealthLabel: "Projected Net Worth (after 10 years)",
@@ -153,9 +153,9 @@ export default function HeroSection() {
           <div className="pt-6 flex items-center space-x-6">
             <div className="flex -space-x-3">
               {[
-                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=100&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1542596594-649edbc13630?w=100&fit=crop&q=80",
               ].map((avatar, i) => (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img key={i} src={avatar} alt="User" className="w-10 h-10 rounded-full border-2 border-slate-900 object-cover" />

@@ -29,3 +29,16 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# RBI source PDFs (reference input, not app code) + editor junk
+list bank/
+Thumbs.db
+*.Thumbs.db
+
+# Real RBI CSV export (keep only the .sample.csv in git)
+data/rbi_master_banks.csv
+
+# Large banking CSV exports (reference input, never commit)
+csv file list/
+data/*.csv
+!data/rbi_master_banks.sample.csv

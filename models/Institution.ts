@@ -1,18 +1,22 @@
 // models/Institution.ts
-// One row per bank/branch record imported from the RBI master list.
-// Designed for the bank directory (District → City → Pincode lookups).
+// One row per bank/branch/banking-channel record imported from the official
+// banking export CSVs. Backs the bank directory (District → City → Pincode).
 import mongoose from 'mongoose';
 
 const institutionSchema = new mongoose.Schema(
   {
-    bankName: { type: String, required: true, index: true },
-    // Public | Private | Co-op | SFB | RRB | Foreign | Other — kept as free string
-    // so an unexpected RBI category label never rejects a row.
-    category: { type: String, default: 'Other', index: true },
-    state: { type: String, default: '' },
-    district: { type: String, default: '', index: true },
+    name: { type: String, required: true, index: true }, // Bank Name
+    branch: { type: String, default: '' }, // Banking Channel Name
+    address: { type: String, default: '' }, // Full address string
     city: { type: String, default: '' },
+    district: { type: String, default: '', index: true },
+    state: { type: String, default: '' },
     pincode: { type: String, default: '', index: true },
+    // Verified export data → authorized by default.
+    isRbiAuthorized: { type: Boolean, default: true },
+    // Useful extras present in the export (optional).
+    bankGroup: { type: String, default: '' },
+    ifsc: { type: String, default: '' },
   },
   { timestamps: true },
 );

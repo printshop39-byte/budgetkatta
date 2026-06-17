@@ -1,207 +1,222 @@
 // scripts/import-rbi-banks.ts
-// Bulk-import an official RBI bank/branch CSV export into MongoDB Atlas.
+// Stream-import the official banking export CSV(s) into MongoDB Atlas.
+//
+// The real exports are PIPE-delimited ("|") and have NO dedicated Branch/City/
+// Pincode columns — the pincode is embedded at the end of the quoted Address
+// field. This script maps them onto the Institution schema and bulk-inserts in
+// batches (streaming keeps memory flat across the ~185k-row files).
 //
 // Usage:
 //   1. Put MONGODB_URI in .env.local
-//   2. Export the RBI master list as CSV → data/rbi_master_banks.csv
-//   3. Run:
-//        npm run import:rbi            # append to existing data
-//        npm run import:rbi -- --clear # wipe the collection first, then import
-//        npm run import:rbi -- --file=data/other.csv
+//   2. Pass the file(s), or drop CSVs in data/ and run with no --file:
+//        npm run import-banks -- --file="csv file list/Banking Export Data Excel_1781716077178.csv"
+//        npm run import-banks -- --clear --file=data/a.csv --file=data/b.csv
+//        npm run import-banks -- --dry-run --limit=20 --file="csv file list/all Banking Export Data Excel_1781716332642.csv"
 //
-// Expected CSV header (case / spacing / underscores are tolerated):
-//   Bank_Name, Category, State, District, City, Pincode
-//
-// Design notes:
-//   • Native fs parsing — no extra dependency, handles quoted fields & commas.
-//   • Rows missing a Bank_Name are skipped (logged); other blanks default safely.
-//   • insertMany in batches of 500 with { ordered: false } so one bad row never
-//     aborts the whole import, and progress is logged as it goes.
+// Flags:
+//   --clear        wipe the Institution collection before importing
+//   --dry-run      parse + map only, print a sample + counts (no DB connection)
+//   --limit=N      stop after N data rows (handy with --dry-run)
+//   --file=path    CSV to import (repeatable). Defaults to every *.csv in data/.
 
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 
 import fs from 'fs';
 import path from 'path';
+import csv from 'csv-parser';
 import { connectDB } from '@/lib/mongodb';
 import { Institution } from '@/models/Institution';
 
-const BATCH_SIZE = 500;
+const SEPARATOR = '|'; // these exports are pipe-delimited
+const BATCH_SIZE = 5000;
 
-// ── CSV parsing ───────────────────────────────────────────────────────────────
-
-// Parse a single CSV line respecting quotes and "" escapes.
-function parseLine(line: string): string[] {
-  const out: string[] = [];
-  let field = '';
-  let inQuotes = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (inQuotes) {
-      if (ch === '"') {
-        if (line[i + 1] === '"') {
-          field += '"';
-          i++;
-        } else {
-          inQuotes = false;
-        }
-      } else {
-        field += ch;
-      }
-    } else if (ch === '"') {
-      inQuotes = true;
-    } else if (ch === ',') {
-      out.push(field);
-      field = '';
-    } else {
-      field += ch;
-    }
-  }
-  out.push(field);
-  return out;
-}
-
-// Normalise a header cell to a canonical key: lower-case, strip non-alphanumerics.
+// ── Flexible header → field mapping ───────────────────────────────────────────
+// Headers vary across exports (BANK / Bank Name / BANK NAME, BRANCH / Banking
+// Channel Name, etc.). Normalise each header and pick the first row value whose
+// normalised key is in the candidate list.
 const normKey = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
-// Map canonical header keys → our field names. Several spellings accepted.
-const HEADER_MAP: Record<string, string> = {
-  bankname: 'bankName',
-  bank: 'bankName',
-  name: 'bankName',
-  category: 'category',
-  type: 'category',
-  banktype: 'category',
-  state: 'state',
-  district: 'district',
-  city: 'city',
-  branch: 'city',
-  pincode: 'pincode',
-  pin: 'pincode',
-  zip: 'pincode',
-};
-
-interface RawRow {
-  bankName?: string;
-  category?: string;
-  state?: string;
-  district?: string;
-  city?: string;
-  pincode?: string;
-}
-
-function parseCsv(content: string): RawRow[] {
-  // Strip a UTF-8 BOM if present, normalise line endings.
-  const text = content.replace(/^﻿/, '');
-  const lines = text.split(/\r\n|\n|\r/).filter((l) => l.trim().length > 0);
-  if (lines.length === 0) return [];
-
-  const headerCells = parseLine(lines[0]).map((h) => HEADER_MAP[normKey(h)] ?? null);
-
-  const rows: RawRow[] = [];
-  for (let i = 1; i < lines.length; i++) {
-    const cells = parseLine(lines[i]);
-    const row: RawRow = {};
-    headerCells.forEach((key, idx) => {
-      if (key) row[key as keyof RawRow] = (cells[idx] ?? '').trim();
-    });
-    rows.push(row);
+// Return the value for the first candidate (in PRIORITY order) that exists and
+// is non-empty in the row — not merely the first matching column.
+function pick(row: Record<string, string>, candidates: string[]): string {
+  for (const cand of candidates) {
+    for (const [k, v] of Object.entries(row)) {
+      if (normKey(k) === cand && v != null && String(v).trim() !== '') {
+        return String(v).trim();
+      }
+    }
   }
-  return rows;
+  return '';
 }
 
-// ── Mapping & validation ───────────────────────────────────────────────────────
+// Pull a 6-digit pincode out of a column or, failing that, the address tail.
+function extractPincode(row: Record<string, string>, address: string): string {
+  const explicit = pick(row, ['pincode', 'pin', 'pincode6', 'zip', 'zipcode']);
+  if (/^\d{6}$/.test(explicit)) return explicit;
+  // Address looks like "<text>,-1,<DISTRICT>,<STATE>,<PINCODE>" → take last 6-digit run.
+  const matches = address.match(/\b\d{6}\b/g);
+  return matches ? matches[matches.length - 1] : '';
+}
 
-function toDoc(row: RawRow) {
-  const bankName = (row.bankName ?? '').trim();
-  if (!bankName) return null; // required — skip incomplete rows
+function mapRow(row: Record<string, string>) {
+  const name = pick(row, ['bankname', 'bank', 'name', 'institutionname']);
+  if (!name) return null; // required — skip incomplete rows
 
-  const pincodeRaw = (row.pincode ?? '').replace(/\D/g, '');
-  const pincode = /^\d{6}$/.test(pincodeRaw) ? pincodeRaw : ''; // keep only valid 6-digit pins
-
+  const address = pick(row, ['address', 'fulladdress', 'addr']);
+  // Branch: prefer an explicit branch name, else the channel name — but some
+  // exports put a numeric code there, so fall back to the readable centre.
+  let branch = pick(row, ['branch', 'branchname', 'bankingchannelname']);
+  if (!branch || /^\d+$/.test(branch)) branch = pick(row, ['center', 'centre', 'subdistrict']);
   return {
-    bankName,
-    category: (row.category ?? '').trim() || 'Other',
-    state: (row.state ?? '').trim(),
-    district: (row.district ?? '').trim(),
-    city: (row.city ?? '').trim(),
-    pincode,
+    name,
+    branch,
+    address,
+    // Centre is the town/locality; Sub District ("NO BLOCK" etc.) is a last resort.
+    city: pick(row, ['city', 'center', 'centre', 'town', 'subdistrict']),
+    district: pick(row, ['district', 'dist']),
+    state: pick(row, ['state']),
+    pincode: extractPincode(row, address),
+    isRbiAuthorized: true, // verified export data
+    bankGroup: pick(row, ['bankgroup', 'category', 'banktype', 'type']),
+    ifsc: pick(row, ['ifsccode', 'ifsc']),
   };
 }
 
-// ── Main ─────────────────────────────────────────────────────────────────────
+// ── File resolution ────────────────────────────────────────────────────────────
+function resolveFiles(args: string[]): string[] {
+  const explicit = args
+    .filter((a) => a.startsWith('--file='))
+    .map((a) => path.resolve(process.cwd(), a.slice('--file='.length)));
+  if (explicit.length) return explicit;
 
+  const dataDir = path.resolve(process.cwd(), 'data');
+  if (!fs.existsSync(dataDir)) return [];
+  return fs
+    .readdirSync(dataDir)
+    .filter((f) => f.toLowerCase().endsWith('.csv'))
+    .map((f) => path.join(dataDir, f));
+}
+
+// Stream one file, mapping + collecting valid docs (respecting --limit).
+function streamFile(file: string, limit: number, onDoc: (doc: any) => Promise<void>): Promise<{ read: number; skipped: number }> {
+  return new Promise((resolve, reject) => {
+    let read = 0;
+    let skipped = 0;
+    let stopped = false;
+    const stream = fs.createReadStream(file).pipe(csv({ separator: SEPARATOR }));
+
+    stream.on('data', (row: Record<string, string>) => {
+      if (stopped) return;
+      read += 1;
+      const doc = mapRow(row);
+      if (!doc) {
+        skipped += 1;
+        return;
+      }
+      // Backpressure: pause while the (async) batch flush runs.
+      stream.pause();
+      onDoc(doc)
+        .then(() => {
+          if (limit && read >= limit) {
+            stopped = true;
+            stream.destroy();
+            resolve({ read, skipped });
+          } else {
+            stream.resume();
+          }
+        })
+        .catch(reject);
+    });
+    stream.on('end', () => !stopped && resolve({ read, skipped }));
+    stream.on('error', reject);
+    stream.on('close', () => !stopped && resolve({ read, skipped }));
+  });
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
 async function main() {
   const args = process.argv.slice(2);
   const clearFirst = args.includes('--clear');
   const dryRun = args.includes('--dry-run');
-  const fileArg = args.find((a) => a.startsWith('--file='));
-  const filePath = path.resolve(process.cwd(), fileArg ? fileArg.split('=')[1] : 'data/rbi_master_banks.csv');
+  const limitArg = args.find((a) => a.startsWith('--limit='));
+  const limit = limitArg ? parseInt(limitArg.split('=')[1], 10) || 0 : 0;
 
-  // --dry-run parses + validates only, so it needs no database connection.
+  const files = resolveFiles(args);
+  if (files.length === 0) {
+    console.error('❌ No CSV files. Pass --file=path or drop *.csv into data/.');
+    process.exit(1);
+  }
+  for (const f of files) {
+    if (!fs.existsSync(f)) {
+      console.error(`❌ File not found: ${f}`);
+      process.exit(1);
+    }
+  }
+
   if (!dryRun && !process.env.MONGODB_URI) {
     console.error('❌ MONGODB_URI is not set. Add it to .env.local and retry.');
     process.exit(1);
   }
-  if (!fs.existsSync(filePath)) {
-    console.error(`❌ CSV not found at: ${filePath}`);
-    console.error('   Place the RBI export there, or pass --file=path/to/file.csv');
-    process.exit(1);
+
+  if (!dryRun) {
+    console.log('⏳ Connecting to MongoDB…');
+    await connectDB();
+    if (clearFirst) {
+      // Wipe the collection before a fresh import.
+      const { deletedCount } = await Institution.deleteMany({});
+      // await Institution.deleteMany({}); // (manual wipe — uncomment if not using --clear)
+      console.log(`🧹 Cleared Institution collection (${deletedCount ?? 0} removed).`);
+    }
   }
 
-  console.log(`📄 Reading ${filePath}…`);
-  const content = fs.readFileSync(filePath, 'utf8');
-  const rawRows = parseCsv(content);
-  console.log(`   Parsed ${rawRows.length} data rows.`);
+  let inserted = 0;
+  let totalSkipped = 0;
+  const sample: any[] = [];
+  let batch: any[] = [];
 
-  const docs: ReturnType<typeof toDoc>[] = [];
-  let skipped = 0;
-  for (const row of rawRows) {
-    const doc = toDoc(row);
-    if (doc) docs.push(doc);
-    else skipped += 1;
-  }
-  if (skipped) console.log(`   ⚠️  Skipped ${skipped} row(s) with no Bank_Name.`);
-  if (docs.length === 0) {
-    console.error('❌ No valid rows to import. Check the CSV header/columns.');
-    process.exit(1);
+  const flush = async () => {
+    if (batch.length === 0) return;
+    const toInsert = batch;
+    batch = [];
+    try {
+      const res = await Institution.insertMany(toInsert, { ordered: false });
+      inserted += res.length;
+    } catch (err: any) {
+      const ok = err?.result?.insertedCount ?? err?.insertedDocs?.length ?? 0;
+      inserted += ok;
+      console.warn(`   ⚠️  Batch partial: ${toInsert.length - ok} failed, ${ok} inserted.`);
+    }
+    console.log(`   ➕ Inserted ${inserted} banks…`);
+  };
+
+  for (const file of files) {
+    console.log(`📄 Streaming ${path.basename(file)}…`);
+    const { read, skipped } = await streamFile(file, limit, async (doc) => {
+      if (dryRun) {
+        inserted += 1;
+        if (sample.length < 3) sample.push(doc);
+        return;
+      }
+      batch.push(doc);
+      if (batch.length >= BATCH_SIZE) await flush();
+    });
+    totalSkipped += skipped;
+    console.log(`   Read ${read} row(s), skipped ${skipped} (no Bank Name).`);
   }
 
   if (dryRun) {
-    const noPin = docs.filter((d) => d && !d.pincode).length;
-    console.log(`\n🔍 Dry run — ${docs.length} valid record(s) ready, ${noPin} with no/invalid pincode.`);
-    console.log('   Sample (first 3):');
-    docs.slice(0, 3).forEach((d) => console.log('   •', JSON.stringify(d)));
+    console.log(`\n🔍 Dry run — ${inserted} valid record(s) mapped, ${totalSkipped} skipped.`);
+    const noPin = sample.filter((d) => !d.pincode).length;
+    console.log(`   Sample (first ${sample.length}):`);
+    sample.forEach((d) => console.log('   •', JSON.stringify(d)));
+    if (noPin) console.log(`   (note: ${noPin}/${sample.length} sampled rows had no extractable pincode)`);
     console.log('\n   No database changes made. Drop --dry-run to import.');
     process.exit(0);
   }
 
-  console.log('⏳ Connecting to MongoDB…');
-  await connectDB();
-
-  if (clearFirst) {
-    const { deletedCount } = await Institution.deleteMany({});
-    console.log(`🧹 Cleared existing collection (${deletedCount ?? 0} removed).`);
-  }
-
-  let inserted = 0;
-  let failed = 0;
-  for (let i = 0; i < docs.length; i += BATCH_SIZE) {
-    const batch = docs.slice(i, i + BATCH_SIZE);
-    try {
-      const res = await Institution.insertMany(batch, { ordered: false });
-      inserted += res.length;
-    } catch (err: any) {
-      // With ordered:false, valid docs in the batch still insert; count them.
-      const ok = err?.result?.insertedCount ?? err?.insertedDocs?.length ?? 0;
-      inserted += ok;
-      failed += batch.length - ok;
-      console.warn(`   ⚠️  Batch ${i / BATCH_SIZE + 1}: ${batch.length - ok} row(s) failed, ${ok} inserted.`);
-    }
-    console.log(`   ➕ Inserted ${inserted}/${docs.length} banks…`);
-  }
-
-  console.log(`\n✅ Done. Inserted ${inserted} record(s)${failed ? `, ${failed} failed` : ''}.`);
+  await flush();
+  console.log(`\n✅ Done. Inserted ${inserted} record(s) across ${files.length} file(s); skipped ${totalSkipped}.`);
   await (await connectDB()).disconnect();
   process.exit(0);
 }

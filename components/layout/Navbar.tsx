@@ -12,7 +12,9 @@ import { useThemeStore } from '@/store/themeStore';
 // Single source of truth for header navigation — used by BOTH the desktop bar
 // and the mobile drawer so they can never drift out of sync. Labels are inlined
 // bilingually here to guarantee every route shows in both languages.
-type NavItem = { href: string; label: { mr: string; en: string } };
+// `secondary` items (Documents/About/Contact) are kept out of the crowded
+// desktop bar — they remain in the footer and the full mobile drawer.
+type NavItem = { href: string; label: { mr: string; en: string }; secondary?: boolean };
 
 const NAV_ITEMS: NavItem[] = [
   { href: '/', label: { mr: 'मुख्यपृष्ठ', en: 'Home' } },
@@ -22,10 +24,14 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/insurance', label: { mr: 'विमा', en: 'Insurance' } },
   { href: '/rates', label: { mr: 'दर/बाजार', en: 'Rates / Market' } },
   { href: '/directory', label: { mr: 'बँक निर्देशिका', en: 'Bank Directory' } },
-  { href: '/documents', label: { mr: 'कागदपत्रे', en: 'Documents' } },
-  { href: '/about', label: { mr: 'आमच्याबद्दल', en: 'About Us' } },
-  { href: '/contact', label: { mr: 'संपर्क', en: 'Contact' } },
+  { href: '/documents', label: { mr: 'कागदपत्रे', en: 'Documents' }, secondary: true },
+  { href: '/about', label: { mr: 'आमच्याबद्दल', en: 'About Us' }, secondary: true },
+  { href: '/contact', label: { mr: 'संपर्क', en: 'Contact' }, secondary: true },
 ];
+
+// Desktop bar shows only the primary routes; the full list (incl. secondary)
+// renders in the mobile drawer.
+const DESKTOP_ITEMS = NAV_ITEMS.filter((i) => !i.secondary);
 
 const isActive = (pathname: string, href: string) =>
   href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
@@ -51,7 +57,7 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <div className="hidden items-center gap-0.5 lg:flex">
-          {NAV_ITEMS.map((l) => {
+          {DESKTOP_ITEMS.map((l) => {
             const active = isActive(pathname, l.href);
             return (
               <Link
@@ -148,20 +154,24 @@ export default function Navbar() {
               {/* Scrollable nav list — min-h-0 lets the flex child actually scroll
                   when the full list exceeds the viewport height (e.g. on 390px). */}
               <div className="-mr-2 min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain pr-2">
-                {NAV_ITEMS.map((l) => {
+                {NAV_ITEMS.map((l, idx) => {
                   const active = isActive(pathname, l.href);
+                  // Divider above the first secondary item to set it apart.
+                  const firstSecondary = l.secondary && !NAV_ITEMS[idx - 1]?.secondary;
                   return (
-                    <Link
-                      key={l.href}
-                      href={l.href}
-                      onClick={() => setOpen(false)}
-                      aria-current={active ? 'page' : undefined}
-                      className={`block rounded-xl px-4 py-3 text-sm font-medium font-deva transition-colors ${
-                        active ? 'bg-amber-400/10 text-amber-400' : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-400'
-                      }`}
-                    >
-                      {l.label[language]}
-                    </Link>
+                    <div key={l.href}>
+                      {firstSecondary && <div className="my-2 border-t border-slate-800" />}
+                      <Link
+                        href={l.href}
+                        onClick={() => setOpen(false)}
+                        aria-current={active ? 'page' : undefined}
+                        className={`block rounded-xl px-4 py-3 text-sm font-medium font-deva transition-colors ${
+                          active ? 'bg-amber-400/10 text-amber-400' : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-400'
+                        }`}
+                      >
+                        {l.label[language]}
+                      </Link>
+                    </div>
                   );
                 })}
               </div>

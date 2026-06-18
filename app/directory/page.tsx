@@ -4,7 +4,7 @@
 // Each level is fetched on demand from /api/locations so no data ships in the bundle.
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, ShieldCheck, Loader2, Landmark, Wallet } from 'lucide-react';
+import { MapPin, ShieldCheck, Loader2, Landmark, Wallet, Search, Copy, Check, Info } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import VoiceSearchAgent from '@/components/directory/VoiceSearchAgent';
 
@@ -55,6 +55,19 @@ export default function DirectoryPage() {
   const [loadingBranches, setLoadingBranches] = useState(false);
   const [voiceNote, setVoiceNote] = useState<{ text: string; ok: boolean } | null>(null);
   const [filter, setFilter] = useState<BankFilter>('main');
+  const [query, setQuery] = useState('');
+  const [copied, setCopied] = useState<string | null>(null);
+
+  // Copy IFSC / address to clipboard with brief "copied" feedback.
+  const copyText = async (key: string, value: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(key);
+      setTimeout(() => setCopied((c) => (c === key ? null : c)), 1500);
+    } catch {
+      /* clipboard unavailable — silently ignore */
+    }
+  };
 
   // SEO deep-link: read the filter from the URL on mount (?filter=payments).
   useEffect(() => {
@@ -126,8 +139,20 @@ export default function DirectoryPage() {
   const onDistrictChange = (v: string) => {
     setDistrict(v);
     setCity('');
+    setQuery('');
     setVoiceNote(null);
   };
+
+  // Client-side narrowing of the city's loaded branches by name / branch /
+  // address / IFSC / pincode. Server already scoped to district + city.
+  const q = query.trim().toLowerCase();
+  const visibleBranches = q
+    ? branches.filter((b) =>
+        [b.name, b.branch, b.address, b.pincode, b.ifsc]
+          .filter(Boolean)
+          .some((f) => f.toLowerCase().includes(q))
+      )
+    : branches;
 
   // Voice transcript → server fuzzy search → apply matched district + city.
   const handleVoiceResult = async (transcript: string) => {
@@ -188,6 +213,18 @@ export default function DirectoryPage() {
         })}
       </div>
 
+      {/* Payments-bank disclaimer — these are not full bank branches */}
+      {filter === 'payments' && (
+        <div className="mb-4 flex items-start gap-2.5 rounded-2xl border border-sky-400/30 bg-sky-400/10 p-4">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-sky-300" />
+          <p className="text-sm leading-relaxed text-sky-100 font-deva">
+            {language === 'mr'
+              ? 'ही पूर्ण बँक शाखा नसून पेमेंट्स बँक / सेवा केंद्र (CSP/BC) असू शकते. येथे ठेव, कर्ज व काही सेवा मर्यादित असतात — संपूर्ण बँकिंगसाठी मुख्य बँक निवडा.'
+              : 'These may be Payments Banks / service points (CSP/BC), not full bank branches. Deposits, loans and some services are limited here — choose Main Banks for full banking.'}
+          </p>
+        </div>
+      )}
+
       {/* Cascading dropdowns */}
       <div className="rounded-2xl border border-slate-700/50 bg-slate-900/60 p-6 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -225,6 +262,26 @@ export default function DirectoryPage() {
         </div>
       </div>
 
+      {/* In-city search — narrows the loaded branches by name / IFSC / pincode */}
+      {city && !loadingBranches && branches.length > 0 && (
+        <div className="mt-6">
+          <label className="relative block">
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={
+                language === 'mr'
+                  ? 'बँकेचे नाव, गाव, IFSC किंवा पिनकोड शोधा'
+                  : 'Search bank name, area, IFSC or pincode'
+              }
+              className="w-full rounded-xl border border-slate-700/60 bg-slate-900/70 py-3 pl-10 pr-4 text-sm text-slate-200 font-deva outline-none transition-colors placeholder:text-slate-500 focus:border-amber-400"
+            />
+          </label>
+        </div>
+      )}
+
       {/* Results */}
       {city && (
         <div id="voice-results" className="mt-8">
@@ -250,13 +307,20 @@ export default function DirectoryPage() {
                   {titleCase(city)}, {titleCase(district)}
                 </p>
                 <span className="text-sm font-bold text-bk-gold font-deva">
-                  {branches.length}
-                  {branches.length === 300 ? '+' : ''} {language === 'mr' ? 'शाखा' : 'branches'}
+                  {visibleBranches.length}
+                  {!q && branches.length === 300 ? '+' : ''} {language === 'mr' ? 'शाखा' : 'branches'}
                 </span>
               </div>
 
+              {visibleBranches.length === 0 ? (
+                <p className="py-10 text-center text-sm text-slate-400 font-deva">
+                  {language === 'mr'
+                    ? `"${query}" साठी काही जुळले नाही.`
+                    : `No matches for "${query}".`}
+                </p>
+              ) : (
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {branches.map((b, i) => {
+                {visibleBranches.map((b, i) => {
                   const mapsQuery = encodeURIComponent(`${b.name} ${b.branch} ${b.address} ${b.pincode}`);
                   return (
                     <div
@@ -297,7 +361,7 @@ export default function DirectoryPage() {
                         </p>
                       )}
 
-                      <div className="mt-4 pt-1">
+                      <div className="mt-4 flex flex-wrap gap-2 pt-1">
                         <a
                           href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
                           target="_blank"
@@ -307,11 +371,34 @@ export default function DirectoryPage() {
                           <MapPin className="h-3.5 w-3.5" />
                           {language === 'mr' ? 'नकाशावर पहा' : 'View on Map'}
                         </a>
+                        {b.ifsc && (
+                          <button
+                            onClick={() => copyText(`ifsc-${i}`, b.ifsc)}
+                            className="inline-flex items-center gap-1.5 rounded-full border border-slate-700 px-4 py-2 text-xs font-bold text-slate-300 transition-colors hover:border-amber-400/40 hover:text-amber-300 font-deva"
+                          >
+                            {copied === `ifsc-${i}` ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+                            {copied === `ifsc-${i}`
+                              ? language === 'mr' ? 'कॉपी झाले' : 'Copied'
+                              : language === 'mr' ? 'IFSC कॉपी' : 'Copy IFSC'}
+                          </button>
+                        )}
+                        {b.address && (
+                          <button
+                            onClick={() => copyText(`addr-${i}`, [b.name, b.branch, b.address, b.pincode].filter(Boolean).join(', '))}
+                            className="inline-flex items-center gap-1.5 rounded-full border border-slate-700 px-4 py-2 text-xs font-bold text-slate-300 transition-colors hover:border-amber-400/40 hover:text-amber-300 font-deva"
+                          >
+                            {copied === `addr-${i}` ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+                            {copied === `addr-${i}`
+                              ? language === 'mr' ? 'कॉपी झाले' : 'Copied'
+                              : language === 'mr' ? 'पत्ता कॉपी' : 'Copy Address'}
+                          </button>
+                        )}
                       </div>
                     </div>
                   );
                 })}
               </div>
+              )}
 
               <p className="mt-4 text-xs leading-relaxed text-slate-500 font-deva">
                 {language === 'mr'

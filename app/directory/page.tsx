@@ -237,6 +237,34 @@ export default function DirectoryPage() {
         </p>
       </header>
 
+      {/* Universal search — Enter locates a place/pincode (server `q` search);
+          typing live-filters the loaded branch list below. */}
+      <div className="mb-5">
+        <label className="relative block">
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && query.trim()) handleVoiceResult(query.trim());
+            }}
+            placeholder={
+              language === 'mr'
+                ? 'बँकेचे नाव, गाव, IFSC किंवा पिनकोड शोधा'
+                : 'Search by Bank Name, Village, IFSC, or Pincode'
+            }
+            aria-label={language === 'mr' ? 'बँक शोधा' : 'Search banks'}
+            className="w-full rounded-xl border border-slate-700/60 bg-slate-900/70 py-3 pl-10 pr-4 text-sm text-slate-200 font-deva outline-none transition-colors placeholder:text-slate-500 focus:border-amber-400"
+          />
+        </label>
+        <p className="mt-1.5 px-1 text-xs text-slate-500 font-deva">
+          {language === 'mr'
+            ? 'गाव/पिनकोड शोधण्यासाठी Enter दाबा, किंवा खाली जिल्हा व शहर निवडा.'
+            : 'Press Enter to find a village/pincode, or pick a district and city below.'}
+        </p>
+      </div>
+
       {/* Bank-type tabs — horizontally scrollable on mobile */}
       <div className="mb-4 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none]">
         {BANK_FILTERS.map((f) => {
@@ -309,26 +337,6 @@ export default function DirectoryPage() {
           </label>
         </div>
       </div>
-
-      {/* In-city search — narrows the loaded branches by name / IFSC / pincode */}
-      {city && !loadingBranches && branches.length > 0 && (
-        <div className="mt-6">
-          <label className="relative block">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={
-                language === 'mr'
-                  ? 'बँकेचे नाव, गाव, IFSC किंवा पिनकोड शोधा'
-                  : 'Search bank name, area, IFSC or pincode'
-              }
-              className="w-full rounded-xl border border-slate-700/60 bg-slate-900/70 py-3 pl-10 pr-4 text-sm text-slate-200 font-deva outline-none transition-colors placeholder:text-slate-500 focus:border-amber-400"
-            />
-          </label>
-        </div>
-      )}
 
       {/* Results */}
       {city && (
@@ -404,6 +412,17 @@ export default function DirectoryPage() {
                         </p>
                       )}
 
+                      {filter === 'payments' && (
+                        <div className="mt-3 flex items-start gap-2 rounded-xl border border-amber-400/40 bg-amber-400/10 p-2.5">
+                          <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-300" />
+                          <p className="text-[11px] leading-snug text-amber-200 font-deva">
+                            {language === 'mr'
+                              ? 'ही पूर्ण बँक शाखा नसून पेमेंट्स बँक/सेवा केंद्र असू शकते.'
+                              : 'This may be a Payments Bank/Service Center, not a full-service bank branch.'}
+                          </p>
+                        </div>
+                      )}
+
                       <div className="mt-4 flex flex-wrap gap-2 pt-1">
                         <a
                           href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
@@ -421,8 +440,8 @@ export default function DirectoryPage() {
                           >
                             {copied === `ifsc-${i}` ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
                             {copied === `ifsc-${i}`
-                              ? language === 'mr' ? 'कॉपी झाले' : 'Copied'
-                              : language === 'mr' ? 'IFSC कॉपी' : 'Copy IFSC'}
+                              ? language === 'mr' ? 'कॉपी झाले!' : 'Copied!'
+                              : language === 'mr' ? 'IFSC कॉपी' : 'IFSC Copy'}
                           </button>
                         )}
                         {b.address && (
@@ -432,8 +451,8 @@ export default function DirectoryPage() {
                           >
                             {copied === `addr-${i}` ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
                             {copied === `addr-${i}`
-                              ? language === 'mr' ? 'कॉपी झाले' : 'Copied'
-                              : language === 'mr' ? 'पत्ता कॉपी' : 'Copy Address'}
+                              ? language === 'mr' ? 'कॉपी झाले!' : 'Copied!'
+                              : language === 'mr' ? 'पत्ता कॉपी' : 'Address Copy'}
                           </button>
                         )}
                       </div>
@@ -456,19 +475,20 @@ export default function DirectoryPage() {
                   </button>
                 </div>
               )}
-
-              <p className="mt-4 text-xs leading-relaxed text-slate-500 font-deva">
-                {language === 'mr'
-                  ? 'टीप: शाखा तपशील अधिकृत निर्यात डेटावरून. भेट देण्यापूर्वी संबंधित बँकेकडे पडताळून पहा.'
-                  : 'Note: Branch details are from official export data. Please verify with the bank before visiting.'}
-              </p>
             </motion.div>
           )}
         </div>
       )}
 
+      {/* Global trust note — always visible at the bottom of the directory */}
+      <p className="mt-10 text-center text-xs leading-relaxed text-slate-500 font-deva">
+        {language === 'mr'
+          ? 'माहिती RBI/बँकांच्या उपलब्ध डेटावर आधारित आहे. भेट देण्यापूर्वी बँकेशी खात्री करा.'
+          : 'Information is based on available RBI/Bank data. Please verify with the bank before visiting.'}
+      </p>
+
       {/* Bottom security warning */}
-      <div className="mt-10 rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4">
+      <div className="mt-4 rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4">
         <p className="bk-security-note text-center text-sm font-semibold leading-relaxed text-rose-200 font-deva">
           {language === 'mr'
             ? '🔒 सुरक्षा सतर्कता: बजेटकट्टा कधीही मोबाईल OTP किंवा वैयक्तिक कागदपत्रांची मागणी करत नाही.'

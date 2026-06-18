@@ -45,6 +45,14 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Devanagari needs more vertical room for matras (ि ी े ै ो ौ) and the
+     shirorekha; a roomier default line-height + legibility rendering keeps
+     Marathi/Hindi text from cramping. Explicit `leading-*` still overrides. */
+  .font-deva {
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+  }
+
   /* Visible keyboard focus across all interactive elements. */
   :focus-visible {
     outline: 2px solid var(--amber-400);

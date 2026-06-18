@@ -2,9 +2,9 @@
 // Bank & Patsanstha directory — District → City cascade served live from MongoDB
 // (the Institution collection populated from the official banking exports).
 // Each level is fetched on demand from /api/locations so no data ships in the bundle.
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, ShieldCheck, Loader2, Landmark } from 'lucide-react';
+import { MapPin, ShieldCheck, Loader2, Landmark, Wallet } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import VoiceSearchAgent from '@/components/directory/VoiceSearchAgent';
 
@@ -23,6 +23,17 @@ const titleCase = (s: string) =>
     .toLowerCase()
     .replace(/\b\w/g, (c) => c.toUpperCase())
     .replace(/\bM Corp\b/i, '(M Corp.)');
+
+type Category = 'all' | 'payments-banks' | 'rbi-authorized';
+
+// A Payments Bank is any institution whose name contains "PAYMENTS BANK".
+const isPaymentsBank = (name: string) => /payments\s+bank/i.test(name);
+
+const CATEGORY_LABELS: Record<Category, { en: string; mr: string }> = {
+  all: { en: 'All Banks', mr: 'सर्व बँका' },
+  'payments-banks': { en: 'Payments Banks', mr: 'पेमेंट्स बँका' },
+  'rbi-authorized': { en: 'RBI Authorized', mr: 'RBI मान्यताप्राप्त' },
+};
 
 async function fetchLocations(params: Record<string, string>): Promise<any> {
   const qs = new URLSearchParams(params).toString();
@@ -45,6 +56,46 @@ export default function DirectoryPage() {
   const [loadingCities, setLoadingCities] = useState(false);
   const [loadingBranches, setLoadingBranches] = useState(false);
   const [voiceNote, setVoiceNote] = useState<{ text: string; ok: boolean } | null>(null);
+  const [category, setCategory] = useState<Category>('all');
+
+  // SEO deep-link: read the category from the URL on mount (?category=payments-banks).
+  useEffect(() => {
+    const c = new URLSearchParams(window.location.search).get('category');
+    if (c === 'payments-banks' || c === 'rbi-authorized') setCategory(c);
+  }, []);
+
+  // Update the URL when the category changes (no navigation / no extra fetch).
+  const selectCategory = (c: Category) => {
+    setCategory(c);
+    const params = new URLSearchParams(window.location.search);
+    if (c === 'all') params.delete('category');
+    else params.set('category', c);
+    const qs = params.toString();
+    window.history.replaceState(null, '', `${window.location.pathname}${qs ? `?${qs}` : ''}`);
+  };
+
+  // Counts + filtered view derived purely from the already-loaded city set
+  // (capped at 300) — no duplicate data, no extra queries.
+  const counts = useMemo(
+    () => ({
+      all: branches.length,
+      'payments-banks': branches.filter((b) => isPaymentsBank(b.name)).length,
+      'rbi-authorized': branches.filter((b) => b.isRbiAuthorized).length,
+    }),
+    [branches],
+  );
+
+  const filteredBranches = useMemo(
+    () =>
+      branches.filter((b) =>
+        category === 'payments-banks'
+          ? isPaymentsBank(b.name)
+          : category === 'rbi-authorized'
+            ? b.isRbiAuthorized
+            : true,
+      ),
+    [branches, category],
+  );
 
   // Districts on mount.
   useEffect(() => {
@@ -138,6 +189,28 @@ export default function DirectoryPage() {
         </p>
       </header>
 
+      {/* Category tabs — horizontally scrollable on mobile */}
+      <div className="mb-4 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none]">
+        {(['all', 'payments-banks', 'rbi-authorized'] as Category[]).map((c) => {
+          const active = category === c;
+          return (
+            <button
+              key={c}
+              onClick={() => selectCategory(c)}
+              aria-pressed={active}
+              className={`shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-sm font-bold font-deva transition-all ${
+                active
+                  ? 'border-amber-400 bg-amber-400/15 text-amber-300 shadow-[0_0_18px_rgba(251,191,36,0.25)]'
+                  : 'border-slate-700 bg-slate-900/60 text-slate-400 hover:border-amber-400/40 hover:text-amber-300'
+              }`}
+            >
+              {CATEGORY_LABELS[c][language]}
+              {c !== 'all' && counts[c] > 0 ? ` (${counts[c].toLocaleString('en-IN')})` : ''}
+            </button>
+          );
+        })}
+      </div>
+
       {/* Cascading dropdowns */}
       <div className="rounded-2xl border border-slate-700/50 bg-slate-900/60 p-6 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -183,9 +256,19 @@ export default function DirectoryPage() {
               <Loader2 className="h-5 w-5 animate-spin text-amber-400" />
               {language === 'mr' ? 'शाखा शोधत आहे…' : 'Finding branches…'}
             </div>
-          ) : branches.length === 0 ? (
+          ) : filteredBranches.length === 0 ? (
             <p className="py-12 text-center text-sm text-slate-400 font-deva">
-              {language === 'mr' ? 'या शहरात नोंदी सापडल्या नाहीत.' : 'No records found for this city.'}
+              {category === 'payments-banks'
+                ? language === 'mr'
+                  ? 'या शहरात पेमेंट्स बँक आढळली नाही.'
+                  : 'No Payments Banks found in this city.'
+                : category === 'rbi-authorized'
+                  ? language === 'mr'
+                    ? 'या शहरात RBI मान्यताप्राप्त नोंदी नाहीत.'
+                    : 'No RBI Authorized records in this city.'
+                  : language === 'mr'
+                    ? 'या शहरात नोंदी सापडल्या नाहीत.'
+                    : 'No records found for this city.'}
             </p>
           ) : (
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
@@ -194,13 +277,13 @@ export default function DirectoryPage() {
                   {titleCase(city)}, {titleCase(district)}
                 </p>
                 <span className="text-sm font-bold text-bk-gold font-deva">
-                  {branches.length}
+                  {filteredBranches.length}
                   {branches.length === 300 ? '+' : ''} {language === 'mr' ? 'शाखा' : 'branches'}
                 </span>
               </div>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {branches.map((b, i) => {
+                {filteredBranches.map((b, i) => {
                   const mapsQuery = encodeURIComponent(`${b.name} ${b.branch} ${b.address} ${b.pincode}`);
                   return (
                     <div
@@ -208,12 +291,20 @@ export default function DirectoryPage() {
                       className="flex flex-col rounded-2xl border border-slate-700/50 bg-slate-900/60 p-5 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
                     >
                       <div className="mb-2 flex items-start justify-between gap-2">
-                        {b.isRbiAuthorized && (
-                          <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2.5 py-1 text-[10px] font-bold text-emerald-300 font-deva">
-                            <ShieldCheck className="h-3 w-3" />
-                            {language === 'mr' ? '🟢 RBI नोंदणीकृत' : '🟢 RBI Authorized'}
-                          </span>
-                        )}
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          {b.isRbiAuthorized && (
+                            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2.5 py-1 text-[10px] font-bold text-emerald-300 font-deva">
+                              <ShieldCheck className="h-3 w-3" />
+                              {language === 'mr' ? '🟢 RBI नोंदणीकृत' : '🟢 RBI Authorized'}
+                            </span>
+                          )}
+                          {isPaymentsBank(b.name) && (
+                            <span className="inline-flex items-center gap-1 rounded-full border border-sky-400/40 bg-sky-400/10 px-2.5 py-1 text-[10px] font-bold text-sky-300 font-deva">
+                              <Wallet className="h-3 w-3" />
+                              {language === 'mr' ? 'पेमेंट्स बँक' : 'Payments Bank'}
+                            </span>
+                          )}
+                        </div>
                         {b.ifsc && (
                           <span className="rounded-full border border-slate-700 bg-slate-800/60 px-2.5 py-1 font-mono text-[10px] font-medium text-slate-400">
                             {b.ifsc}

@@ -23,9 +23,15 @@ export function isMongoConfigured(): boolean {
 export async function connectDB(): Promise<typeof mongoose> {
   // Read the env lazily (inside the function) so dotenv-loaded scripts and
   // serverless cold starts both see the value at call time.
-  const uri = process.env.MONGODB_URI;
+  const uri = process.env.MONGODB_URI?.trim();
   if (!uri) {
     throw new Error('MONGODB_URI is not defined in environment variables.');
+  }
+  // Validate the scheme up front so a malformed value (wrapping quotes, missing
+  // prefix, stray whitespace) produces a clear message instead of a raw
+  // MongoParseError stack. Never log the URI itself — it holds credentials.
+  if (!/^mongodb(\+srv)?:\/\//.test(uri)) {
+    throw new Error('MONGODB_URI is malformed. It must start with mongodb:// or mongodb+srv://');
   }
 
   if (cached.conn) return cached.conn;

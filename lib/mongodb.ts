@@ -39,12 +39,20 @@ export async function connectDB(): Promise<typeof mongoose> {
   if (!cached.promise) {
     // Connection pooling tuned for serverless: a small reused pool per warm
     // instance, fail fast if Atlas is unreachable.
-    cached.promise = mongoose.connect(uri, {
-      bufferCommands: false,
-      maxPoolSize: 10,
-      minPoolSize: 0,
-      serverSelectionTimeoutMS: 10000,
-    });
+    cached.promise = mongoose
+      .connect(uri, {
+        bufferCommands: false,
+        maxPoolSize: 10,
+        minPoolSize: 0,
+        serverSelectionTimeoutMS: 10000,
+      })
+      .catch((err) => {
+        // Don't cache a rejected promise — otherwise a warm instance keeps
+        // throwing the old error even after the cause (e.g. Atlas IP allowlist)
+        // is fixed. Reset so the next request retries with a fresh connection.
+        cached.promise = null;
+        throw err;
+      });
   }
 
   cached.conn = await cached.promise;

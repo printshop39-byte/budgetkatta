@@ -15,6 +15,7 @@ export async function GET(request: Request) {
   const district = searchParams.get('district');
   const city = searchParams.get('city');
   const q = searchParams.get('q');
+  const filter = searchParams.get('filter') === 'payments' ? 'payments' : 'main'; // default main
 
   try {
     if (q !== null) {
@@ -22,8 +23,8 @@ export async function GET(request: Request) {
       return NextResponse.json({ ok: true, level: 'search', match });
     }
     if (district && city) {
-      const data = await getBranches(district, city);
-      return NextResponse.json({ ok: true, level: 'branches', count: data.length, data });
+      const data = await getBranches(district, city, filter);
+      return NextResponse.json({ ok: true, level: 'branches', filter, count: data.length, data });
     }
     if (district) {
       const data = await getCities(district);

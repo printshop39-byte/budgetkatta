@@ -46,11 +46,35 @@ export async function getCities(district: string): Promise<string[]> {
   return rows.filter(Boolean).sort((a, b) => a.localeCompare(b));
 }
 
-/** Branch records for a district + city (capped for performance). */
-export async function getBranches(district: string, city: string): Promise<Branch[]> {
+export type BankFilter = 'main' | 'payments';
+
+// "PAYMENTS BANK" anywhere in the institution name (Airtel/Fino/India Post/Jio/Paytm…).
+const PAYMENTS_NAME_RE = /payments\s+bank/i;
+
+/**
+ * Branch records for a district + city (capped for performance).
+ * filter='main'     → primary banks only (Public/Private/Co-op/SFB/RRB) — excludes
+ *                     Payments Banks + CSP/BC outlets so the default view isn't flooded.
+ * filter='payments' → only Payments Banks (bankGroup or name match).
+ */
+export async function getBranches(
+  district: string,
+  city: string,
+  filter: BankFilter = 'main',
+): Promise<Branch[]> {
   if (!isMongoConfigured() || !district || !city) return [];
   await connectDB();
-  const docs = await Institution.find({ district, city })
+
+  const query: Record<string, unknown> = { district, city };
+  if (filter === 'payments') {
+    query.$or = [{ bankGroup: 'PAYMENTS BANKS' }, { name: PAYMENTS_NAME_RE }];
+  } else {
+    // main: exclude anything that is a Payments Bank by group OR by name.
+    query.bankGroup = { $ne: 'PAYMENTS BANKS' };
+    query.name = { $not: PAYMENTS_NAME_RE };
+  }
+
+  const docs = await Institution.find(query)
     .select('name branch address pincode isRbiAuthorized ifsc')
     .limit(300)
     .lean();

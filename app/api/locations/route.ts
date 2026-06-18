@@ -6,7 +6,7 @@
 //   GET /api/locations?district=<d>&city=<c>    → branch records for district+city
 //   GET /api/locations?q=<spoken transcript>    → fuzzy { matched, district?, city? }
 import { NextResponse } from 'next/server';
-import { getDistricts, getCities, getBranches, searchLocations } from '@/lib/locations';
+import { getDistricts, getCities, getBranches, searchLocations, parseBankFilter } from '@/lib/locations';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,7 +15,8 @@ export async function GET(request: Request) {
   const district = searchParams.get('district');
   const city = searchParams.get('city');
   const q = searchParams.get('q');
-  const filter = searchParams.get('filter') === 'payments' ? 'payments' : 'main'; // default main
+  const filter = parseBankFilter(searchParams.get('filter')); // default 'main'
+  const page = Number(searchParams.get('page')) || 0;
 
   try {
     if (q !== null) {
@@ -23,8 +24,17 @@ export async function GET(request: Request) {
       return NextResponse.json({ ok: true, level: 'search', match });
     }
     if (district && city) {
-      const data = await getBranches(district, city, filter);
-      return NextResponse.json({ ok: true, level: 'branches', filter, count: data.length, data });
+      const { branches, total, hasMore, page: p } = await getBranches(district, city, filter, page);
+      return NextResponse.json({
+        ok: true,
+        level: 'branches',
+        filter,
+        page: p,
+        total,
+        hasMore,
+        count: branches.length,
+        data: branches,
+      });
     }
     if (district) {
       const data = await getCities(district);

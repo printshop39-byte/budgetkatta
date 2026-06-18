@@ -3,6 +3,7 @@
 // (the Institution collection populated from the official banking exports).
 // Each level is fetched on demand from /api/locations so no data ships in the bundle.
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { MapPin, ShieldCheck, Loader2, Landmark, Wallet, Search, Copy, Check, Info } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
@@ -24,12 +25,16 @@ const titleCase = (s: string) =>
     .replace(/\b\w/g, (c) => c.toUpperCase())
     .replace(/\bM Corp\b/i, '(M Corp.)');
 
-// Server-side bank filter. 'main' = primary banks (Public/Private/Co-op/SFB/RRB),
-// excluding the Payments Bank / CSP / BC flood; 'payments' = only Payments Banks.
-type BankFilter = 'main' | 'payments';
+// Server-side bank category (kept in sync with lib/locations BankFilter). The
+// API narrows results to one category; 'main' (Public/Private) is the default.
+type BankFilter = 'main' | 'cooperative' | 'sfb' | 'rrb' | 'payments';
+const BANK_FILTERS: BankFilter[] = ['main', 'cooperative', 'sfb', 'rrb', 'payments'];
 
 const FILTER_LABELS: Record<BankFilter, { en: string; mr: string }> = {
   main: { en: 'Main Banks', mr: 'मुख्य बँका' },
+  cooperative: { en: 'Co-operative', mr: 'सहकारी बँका' },
+  sfb: { en: 'Small Finance', mr: 'स्मॉल फायनान्स' },
+  rrb: { en: 'Regional Rural', mr: 'ग्रामीण बँका' },
   payments: { en: 'Payments Banks', mr: 'पेमेंट्स बँका' },
 };
 
@@ -57,6 +62,10 @@ export default function DirectoryPage() {
   const [filter, setFilter] = useState<BankFilter>('main');
   const [query, setQuery] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
+  const [total, setTotal] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
+  const [page, setPage] = useState(0);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   // Copy IFSC / address to clipboard with brief "copied" feedback.
   const copyText = async (key: string, value: string) => {
@@ -69,18 +78,23 @@ export default function DirectoryPage() {
     }
   };
 
-  // SEO deep-link: read the filter from the URL on mount (?filter=payments).
+  // SEO deep-link on mount: ?filter=<category> and ?d=<district>&c=<city>
+  // (the latter set by the /directory/[district] landing pages).
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).get('filter') === 'payments') setFilter('payments');
+    const p = new URLSearchParams(window.location.search);
+    const f = p.get('filter');
+    if (f && (BANK_FILTERS as string[]).includes(f)) setFilter(f as BankFilter);
+    const d = p.get('d');
+    const c = p.get('c');
+    if (d) setDistrict(d);
+    if (c) setCity(c);
   }, []);
 
-  // Switching tab: update URL + reset city/branches (branches re-fetch on re-select
-  // with the new filter). District is preserved.
+  // Switching category: update URL only. The branches effect re-fetches for the
+  // current district/city with the new filter (district + city are preserved).
   const selectFilter = (f: BankFilter) => {
     if (f === filter) return;
     setFilter(f);
-    setCity('');
-    setBranches([]);
     const params = new URLSearchParams(window.location.search);
     if (f === 'main') params.delete('filter');
     else params.set('filter', f);
@@ -119,22 +133,53 @@ export default function DirectoryPage() {
     };
   }, [district]);
 
-  // Branches for the current district + city.
+  // Branches for the current district + city + category (first page).
   useEffect(() => {
     if (!district || !city) {
       setBranches([]);
+      setTotal(0);
+      setHasMore(false);
       return;
     }
     let active = true;
     setLoadingBranches(true);
-    fetchLocations({ district, city, filter })
-      .then((j) => active && setBranches(j.data ?? []))
-      .catch(() => active && setBranches([]))
+    setPage(0);
+    fetchLocations({ district, city, filter, page: '0' })
+      .then((j) => {
+        if (!active) return;
+        setBranches(j.data ?? []);
+        setTotal(j.total ?? (j.data?.length ?? 0));
+        setHasMore(Boolean(j.hasMore));
+      })
+      .catch(() => {
+        if (!active) return;
+        setBranches([]);
+        setTotal(0);
+        setHasMore(false);
+      })
       .finally(() => active && setLoadingBranches(false));
     return () => {
       active = false;
     };
   }, [district, city, filter]);
+
+  // Append the next page of branches ("Load More").
+  const loadMore = async () => {
+    if (loadingMore || !hasMore) return;
+    const next = page + 1;
+    setLoadingMore(true);
+    try {
+      const j = await fetchLocations({ district, city, filter, page: String(next) });
+      setBranches((prev) => [...prev, ...(j.data ?? [])]);
+      setTotal(j.total ?? total);
+      setHasMore(Boolean(j.hasMore));
+      setPage(next);
+    } catch {
+      /* keep what we have */
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   const onDistrictChange = (v: string) => {
     setDistrict(v);
@@ -194,7 +239,7 @@ export default function DirectoryPage() {
 
       {/* Bank-type tabs — horizontally scrollable on mobile */}
       <div className="mb-4 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none]">
-        {(['main', 'payments'] as BankFilter[]).map((f) => {
+        {BANK_FILTERS.map((f) => {
           const active = filter === f;
           return (
             <button
@@ -219,8 +264,11 @@ export default function DirectoryPage() {
           <Info className="mt-0.5 h-4 w-4 shrink-0 text-sky-300" />
           <p className="text-sm leading-relaxed text-sky-100 font-deva">
             {language === 'mr'
-              ? 'ही पूर्ण बँक शाखा नसून पेमेंट्स बँक / सेवा केंद्र (CSP/BC) असू शकते. येथे ठेव, कर्ज व काही सेवा मर्यादित असतात — संपूर्ण बँकिंगसाठी मुख्य बँक निवडा.'
-              : 'These may be Payments Banks / service points (CSP/BC), not full bank branches. Deposits, loans and some services are limited here — choose Main Banks for full banking.'}
+              ? 'ही पूर्ण बँक शाखा नसून पेमेंट्स बँक / सेवा केंद्र (CSP/BC) असू शकते. येथे ठेव, कर्ज व काही सेवा मर्यादित असतात — संपूर्ण बँकिंगसाठी मुख्य बँक निवडा. '
+              : 'These may be Payments Banks / service points (CSP/BC), not full bank branches. Deposits, loans and some services are limited here — choose Main Banks for full banking. '}
+            <Link href="/guides/payments-bank" className="font-bold text-sky-300 underline">
+              {language === 'mr' ? 'अधिक माहिती →' : 'Learn more →'}
+            </Link>
           </p>
         </div>
       )}
@@ -292,13 +340,9 @@ export default function DirectoryPage() {
             </div>
           ) : branches.length === 0 ? (
             <p className="py-12 text-center text-sm text-slate-400 font-deva">
-              {filter === 'payments'
-                ? language === 'mr'
-                  ? 'या शहरात पेमेंट्स बँक आढळली नाही.'
-                  : 'No Payments Banks found in this city.'
-                : language === 'mr'
-                  ? 'या शहरात मुख्य बँक आढळली नाही.'
-                  : 'No main banks found in this city.'}
+              {language === 'mr'
+                ? `या शहरात "${FILTER_LABELS[filter].mr}" आढळल्या नाहीत.`
+                : `No ${FILTER_LABELS[filter].en} found in this city.`}
             </p>
           ) : (
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
@@ -307,8 +351,7 @@ export default function DirectoryPage() {
                   {titleCase(city)}, {titleCase(district)}
                 </p>
                 <span className="text-sm font-bold text-bk-gold font-deva">
-                  {visibleBranches.length}
-                  {!q && branches.length === 300 ? '+' : ''} {language === 'mr' ? 'शाखा' : 'branches'}
+                  {q ? visibleBranches.length : total} {language === 'mr' ? 'शाखा' : 'branches'}
                 </span>
               </div>
 
@@ -398,6 +441,20 @@ export default function DirectoryPage() {
                   );
                 })}
               </div>
+              )}
+
+              {/* Load More — hidden while a client-side search is active */}
+              {!q && hasMore && (
+                <div className="mt-6 flex justify-center">
+                  <button
+                    onClick={loadMore}
+                    disabled={loadingMore}
+                    className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/10 px-6 py-2.5 text-sm font-bold text-amber-300 transition-colors hover:bg-amber-400/20 disabled:opacity-60 font-deva"
+                  >
+                    {loadingMore && <Loader2 className="h-4 w-4 animate-spin" />}
+                    {language === 'mr' ? 'अधिक शाखा पहा' : 'Load More'}
+                  </button>
+                </div>
               )}
 
               <p className="mt-4 text-xs leading-relaxed text-slate-500 font-deva">

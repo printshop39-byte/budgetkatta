@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import HeroSection from '@/components/HeroSection';
+import PopularTools from '@/components/home/PopularTools';
 import BentoGrid from '@/components/BentoGrid';
 import CalculatorsHub from '@/components/CalculatorsHub';
 import FinancialHealthQuiz from '@/components/FinancialHealthQuiz';
@@ -23,6 +24,7 @@ export default function HomePage() {
       <div className="absolute bottom-[1000px] left-[-100px] w-[600px] h-[600px] bg-amber-400/5 rounded-full filter blur-[140px] -z-10 pointer-events-none" />
 
       <HeroSection />
+      <PopularTools />
       <BentoGrid />
       <CalculatorsHub />
       <FinancialHealthQuiz />

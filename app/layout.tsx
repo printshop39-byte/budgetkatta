@@ -7,6 +7,7 @@ import ThemeApplier from '@/components/layout/ThemeApplier';
 import Floating3DGuide from '@/components/bot/Floating3DGuide';
 import CompareDrawer from '@/components/compare/CompareDrawer';
 import LeadFormModal from '@/components/lead/LeadFormModal';
+import ServiceWorkerRegister from '@/components/layout/ServiceWorkerRegister';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -75,6 +76,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Floating3DGuide />
         <CompareDrawer />
         <LeadFormModal />
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

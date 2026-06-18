@@ -46,39 +46,77 @@ export async function getCities(district: string): Promise<string[]> {
   return rows.filter(Boolean).sort((a, b) => a.localeCompare(b));
 }
 
-export type BankFilter = 'main' | 'payments';
+export type BankFilter = 'main' | 'cooperative' | 'sfb' | 'rrb' | 'payments';
 
-// "PAYMENTS BANK" anywhere in the institution name (Airtel/Fino/India Post/Jio/Paytm…).
-const PAYMENTS_NAME_RE = /payments\s+bank/i;
+export const BANK_FILTERS: BankFilter[] = ['main', 'cooperative', 'sfb', 'rrb', 'payments'];
+
+const isBankFilter = (v: string | null): v is BankFilter =>
+  v !== null && (BANK_FILTERS as string[]).includes(v);
+
+export const parseBankFilter = (v: string | null): BankFilter => (isBankFilter(v) ? v : 'main');
+
+// Best-effort category detection. The official export's `bankGroup` values are
+// not perfectly standardised, so each category matches `bankGroup` OR the bank
+// `name`. Tune these patterns once the real bankGroup distribution is known.
+const CATEGORY_RE: Record<Exclude<BankFilter, 'main'>, RegExp> = {
+  payments: /payments?\s*bank/i,
+  cooperative: /co.?op|sahakari|nagari|urban\s+co|mahila\s+(co|bank)|patsanstha|pat\s*sanstha/i,
+  sfb: /small\s*finance/i,
+  rrb: /regional\s*rural|gramin|grameen|gramीण|gramin\s*bank/i,
+};
+
+const PAGE_SIZE = 60;
+
+/** Build the Mongo query fragment that selects a single bank category. */
+function categoryClause(filter: BankFilter): Record<string, unknown> {
+  if (filter === 'main') {
+    // Primary commercial (Public/Private): exclude every specialised category.
+    const negatives = [CATEGORY_RE.payments, CATEGORY_RE.cooperative, CATEGORY_RE.sfb, CATEGORY_RE.rrb];
+    return {
+      $and: negatives.map((re) => ({ name: { $not: re }, bankGroup: { $not: re } })),
+    };
+  }
+  const re = CATEGORY_RE[filter];
+  return { $or: [{ bankGroup: re }, { name: re }] };
+}
+
+export interface BranchPage {
+  branches: Branch[];
+  total: number;
+  hasMore: boolean;
+  page: number;
+}
 
 /**
- * Branch records for a district + city (capped for performance).
- * filter='main'     → primary banks only (Public/Private/Co-op/SFB/RRB) — excludes
- *                     Payments Banks + CSP/BC outlets so the default view isn't flooded.
- * filter='payments' → only Payments Banks (bankGroup or name match).
+ * Paginated branch records for a district + city, narrowed to a bank category.
+ *   main        → primary commercial (Public/Private)
+ *   cooperative → co-operative banks / patsanstha
+ *   sfb         → small finance banks
+ *   rrb         → regional rural banks
+ *   payments    → payments banks / service points
  */
 export async function getBranches(
   district: string,
   city: string,
   filter: BankFilter = 'main',
-): Promise<Branch[]> {
-  if (!isMongoConfigured() || !district || !city) return [];
+  page = 0,
+): Promise<BranchPage> {
+  if (!isMongoConfigured() || !district || !city) return { branches: [], total: 0, hasMore: false, page: 0 };
   await connectDB();
 
-  const query: Record<string, unknown> = { district, city };
-  if (filter === 'payments') {
-    query.$or = [{ bankGroup: 'PAYMENTS BANKS' }, { name: PAYMENTS_NAME_RE }];
-  } else {
-    // main: exclude anything that is a Payments Bank by group OR by name.
-    query.bankGroup = { $ne: 'PAYMENTS BANKS' };
-    query.name = { $not: PAYMENTS_NAME_RE };
-  }
+  const query: Record<string, unknown> = { district, city, ...categoryClause(filter) };
+  const safePage = Number.isFinite(page) && page > 0 ? Math.floor(page) : 0;
 
-  const docs = await Institution.find(query)
-    .select('name branch address pincode isRbiAuthorized ifsc')
-    .limit(300)
-    .lean();
-  return (docs as any[]).map((d) => ({
+  const [docs, total] = await Promise.all([
+    Institution.find(query)
+      .select('name branch address pincode isRbiAuthorized ifsc')
+      .skip(safePage * PAGE_SIZE)
+      .limit(PAGE_SIZE)
+      .lean(),
+    Institution.countDocuments(query),
+  ]);
+
+  const branches = (docs as any[]).map((d) => ({
     name: d.name ?? '',
     branch: d.branch ?? '',
     address: d.address ?? '',
@@ -86,6 +124,8 @@ export async function getBranches(
     isRbiAuthorized: d.isRbiAuthorized !== false,
     ifsc: d.ifsc ?? '',
   }));
+
+  return { branches, total, hasMore: (safePage + 1) * PAGE_SIZE < total, page: safePage };
 }
 
 /**

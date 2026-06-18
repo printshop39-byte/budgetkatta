@@ -24,6 +24,9 @@ const institutionSchema = new mongoose.Schema(
 // Common access patterns: filter by district then city (branch lookup) or pincode.
 institutionSchema.index({ district: 1, city: 1 });
 institutionSchema.index({ district: 1, pincode: 1 });
+// The directory's branch query is district + city + category (bankGroup/name);
+// this compound index covers the paginated category lookup.
+institutionSchema.index({ district: 1, city: 1, bankGroup: 1 });
 
 export const Institution =
   mongoose.models.Institution || mongoose.model('Institution', institutionSchema);

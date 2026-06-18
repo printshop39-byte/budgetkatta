@@ -2,9 +2,10 @@
 // Bank & Patsanstha directory — District → City cascade served live from MongoDB
 // (the Institution collection populated from the official banking exports).
 // Each level is fetched on demand from /api/locations so no data ships in the bundle.
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import AffiliateBanner from '@/components/AffiliateBanner';
 import { MapPin, ShieldCheck, Loader2, Landmark, Wallet, Search, Copy, Check, Info } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import VoiceSearchAgent from '@/components/directory/VoiceSearchAgent';
@@ -374,8 +375,8 @@ export default function DirectoryPage() {
                 {visibleBranches.map((b, i) => {
                   const mapsQuery = encodeURIComponent(`${b.name} ${b.branch} ${b.address} ${b.pincode}`);
                   return (
+                    <Fragment key={i}>
                     <div
-                      key={i}
                       className="flex flex-col rounded-2xl border border-slate-700/50 bg-slate-900/60 p-5 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
                     >
                       <div className="mb-2 flex items-start justify-between gap-2">
@@ -457,6 +458,14 @@ export default function DirectoryPage() {
                         )}
                       </div>
                     </div>
+                    {/* Affiliate slot after every 10th branch (full-width) */}
+                    {(i + 1) % 10 === 0 && (
+                      <AffiliateBanner
+                        className="md:col-span-2"
+                        variant={((i + 1) / 10) % 2 === 0 ? 'creditCard' : 'demat'}
+                      />
+                    )}
+                    </Fragment>
                   );
                 })}
               </div>

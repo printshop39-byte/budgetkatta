@@ -1,7 +1,9 @@
 ﻿'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 import PageShell from '@/components/shared/PageShell';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
+import AffiliateBanner from '@/components/AffiliateBanner';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { useLeadFormStore } from '@/store/leadFormStore';
@@ -91,6 +93,33 @@ export default function DocumentsPage() {
       {/* Checklist */}
       <div className="mt-8">
         <DocumentChecklist documents={documents} />
+      </div>
+
+      {/* Quick links to the dedicated per-loan checklist pages */}
+      <div className="mt-8">
+        <p className="mb-2 text-sm font-semibold text-slate-300 font-deva">
+          {language === 'mr' ? 'कर्ज प्रकारानुसार चेकलिस्ट' : 'Checklists by loan type'}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {[
+            { href: '/loans/home-loan', label: { mr: 'गृहकर्ज', en: 'Home Loan' } },
+            { href: '/loans/personal-loan', label: { mr: 'वैयक्तिक कर्ज', en: 'Personal Loan' } },
+            { href: '/loans/vehicle-loan', label: { mr: 'वाहन कर्ज', en: 'Auto Loan' } },
+            { href: '/loans/education-loan', label: { mr: 'शैक्षणिक कर्ज', en: 'Education Loan' } },
+          ].map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-bk-gold/40 hover:text-bk-gold font-deva"
+            >
+              {l.label[language]}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-8">
+        <AffiliateBanner variant="loan" />
       </div>
     </PageShell>
   );

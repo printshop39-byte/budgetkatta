@@ -295,7 +295,7 @@ export default function DirectoryPage() {
           {/* City / Taluka */}
           <label className="block">
             <span className="mb-1.5 flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-slate-400 font-deva">
-              {language === 'mr' ? 'शहर/तालुका निवडा' : 'Select City / Taluka'}
+              {language === 'mr' ? 'शहर / तालुका निवडा' : 'Select City / Taluka'}
               {loadingCities && <Spinner />}
             </span>
             <select value={city} disabled={!district || loadingCities} onChange={(e) => setCity(e.target.value)} className={selectClass}>

@@ -53,7 +53,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="bg-[#050814] px-4 pb-12 pt-8">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-3 lg:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2">
@@ -115,8 +115,8 @@ export default function Footer() {
 
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div>
-      <h3 className="mb-3 text-sm font-semibold text-slate-200 font-deva">{title}</h3>
+    <div className="min-w-0">
+      <h3 className="mb-3 text-sm font-semibold text-slate-200 font-deva break-words">{title}</h3>
       <ul className="space-y-2">{children}</ul>
     </div>
   );
@@ -125,7 +125,7 @@ function FooterColumn({ title, children }: { title: string; children: React.Reac
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <li>
-      <Link href={href} className="text-sm text-slate-400 transition-colors hover:text-amber-400 font-deva">
+      <Link href={href} className="block break-words text-sm text-slate-400 transition-colors hover:text-amber-400 font-deva">
         {children}
       </Link>
     </li>

@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
@@ -8,25 +9,26 @@ import { getTranslation } from '@/lib/i18n';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import { useThemeStore } from '@/store/themeStore';
 
-// Desktop navbar links.
-const primaryLinks = [
-  { href: '/', key: 'nav.home' },
-  { href: '/fds', key: 'nav.fd' },
-  { href: '/loans', key: 'nav.loans' },
-  { href: '/sip', key: 'nav.sip' },
-  { href: '/insurance', key: 'nav.insurance' },
-  { href: '/rates', key: 'nav.rates' },
-  { href: '/directory', key: 'nav.directory' },
-  { href: '/documents', key: 'nav.documents' },
-  { href: '/about', key: 'nav.about' },
-  { href: '/contact', key: 'nav.contact' },
+// Single source of truth for header navigation — used by BOTH the desktop bar
+// and the mobile drawer so they can never drift out of sync. Labels are inlined
+// bilingually here to guarantee every route shows in both languages.
+type NavItem = { href: string; label: { mr: string; en: string } };
+
+const NAV_ITEMS: NavItem[] = [
+  { href: '/', label: { mr: 'मुख्यपृष्ठ', en: 'Home' } },
+  { href: '/fds', label: { mr: 'FD दर', en: 'FD Rates' } },
+  { href: '/loans', label: { mr: 'कर्ज', en: 'Loans' } },
+  { href: '/sip', label: { mr: 'SIP', en: 'SIP' } },
+  { href: '/insurance', label: { mr: 'विमा', en: 'Insurance' } },
+  { href: '/rates', label: { mr: 'दर/बाजार', en: 'Rates / Market' } },
+  { href: '/directory', label: { mr: 'बँक निर्देशिका', en: 'Bank Directory' } },
+  { href: '/documents', label: { mr: 'कागदपत्रे', en: 'Documents' } },
+  { href: '/about', label: { mr: 'आमच्याबद्दल', en: 'About Us' } },
+  { href: '/contact', label: { mr: 'संपर्क', en: 'Contact' } },
 ];
 
-// Extra links shown only in the mobile drawer.
-const mobileExtraLinks = [
-  { href: '/privacy', key: 'nav.privacy' },
-  { href: '/terms', key: 'nav.terms' },
-];
+const isActive = (pathname: string, href: string) =>
+  href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 
 export default function Navbar() {
   const { language, setLanguage } = useLanguageStore();
@@ -34,11 +36,13 @@ export default function Navbar() {
   const openLead = useLeadFormStore((s) => s.open);
   const { theme, toggleTheme } = useThemeStore();
   const [open, setOpen] = useState(false);
+  const pathname = usePathname() || '/';
 
   return (
+    <>
     <header className="sticky top-0 z-40 border-b border-slate-800 bg-[#0A1128]/80 backdrop-blur-lg">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex shrink-0 items-center gap-2">
           <span className="text-2xl">💰</span>
           <span className="font-display text-lg font-bold text-slate-200">
             Budget<span className="text-amber-400">Katta</span>
@@ -47,15 +51,21 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <div className="hidden items-center gap-0.5 lg:flex">
-          {primaryLinks.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="rounded-lg px-2.5 py-2 text-sm text-slate-400 transition-colors hover:bg-slate-800/60 hover:text-amber-400 font-deva"
-            >
-              {t(l.key)}
-            </Link>
-          ))}
+          {NAV_ITEMS.map((l) => {
+            const active = isActive(pathname, l.href);
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={active ? 'page' : undefined}
+                className={`rounded-lg px-2.5 py-2 text-sm font-deva transition-colors ${
+                  active ? 'bg-amber-400/10 text-amber-400' : 'text-slate-400 hover:bg-slate-800/60 hover:text-amber-400'
+                }`}
+              >
+                {l.label[language]}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Language switcher + CTA + mobile toggle */}
@@ -100,9 +110,12 @@ export default function Navbar() {
           </button>
         </div>
       </nav>
+    </header>
 
-      {/* Mobile slide-out drawer */}
-      <AnimatePresence>
+    {/* Mobile slide-out drawer — rendered OUTSIDE <header> so its fixed
+        positioning resolves against the viewport, not the header's
+        backdrop-filter containing block (which would clip it to ~64px). */}
+    <AnimatePresence>
         {open && (
           <>
             <motion.div
@@ -117,9 +130,9 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 320 }}
-              className="fixed right-0 top-0 z-50 flex h-full w-72 flex-col border-l border-slate-800 bg-slate-900 p-5 lg:hidden"
+              className="fixed right-0 top-0 z-50 flex h-full max-h-screen w-72 max-w-[85vw] flex-col border-l border-slate-800 bg-slate-900 p-5 lg:hidden"
             >
-              <div className="mb-4 flex items-center justify-between">
+              <div className="mb-4 flex shrink-0 items-center justify-between">
                 <span className="font-display font-bold text-slate-200">
                   Budget<span className="text-amber-400">Katta</span>
                 </span>
@@ -132,17 +145,25 @@ export default function Navbar() {
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto">
-                {[...primaryLinks, ...mobileExtraLinks].map((l) => (
-                  <Link
-                    key={l.href}
-                    href={l.href}
-                    onClick={() => setOpen(false)}
-                    className="block rounded-lg px-3 py-2.5 text-sm text-slate-300 hover:bg-slate-800/60 hover:text-amber-400 font-deva"
-                  >
-                    {t(l.key)}
-                  </Link>
-                ))}
+              {/* Scrollable nav list — min-h-0 lets the flex child actually scroll
+                  when the full list exceeds the viewport height (e.g. on 390px). */}
+              <div className="-mr-2 min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain pr-2">
+                {NAV_ITEMS.map((l) => {
+                  const active = isActive(pathname, l.href);
+                  return (
+                    <Link
+                      key={l.href}
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      aria-current={active ? 'page' : undefined}
+                      className={`block rounded-xl px-4 py-3 text-sm font-medium font-deva transition-colors ${
+                        active ? 'bg-amber-400/10 text-amber-400' : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-400'
+                      }`}
+                    >
+                      {l.label[language]}
+                    </Link>
+                  );
+                })}
               </div>
 
               <button
@@ -150,7 +171,7 @@ export default function Navbar() {
                   setOpen(false);
                   openLead({ module: 'GENERAL', sourcePage: 'MOBILE_MENU' });
                 }}
-                className="mt-4 w-full rounded-xl bg-amber-400 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-amber-500 font-deva"
+                className="mt-4 w-full shrink-0 rounded-xl bg-amber-400 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-amber-500 font-deva"
               >
                 {t('nav.cta')}
               </button>
@@ -158,6 +179,6 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

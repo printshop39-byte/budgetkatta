@@ -1,6 +1,6 @@
 # BudgetKatta 💰
 
-Bilingual (मराठी + हिंदी) fintech information platform — FD rates, loans, SIP, and insurance with interactive calculators, a compare drawer, an interactive 3D AI guide bot, and n8n lead automation.
+Bilingual (मराठी + English) fintech information platform — FD rates, loans, SIP, and insurance with interactive calculators, a compare drawer, an interactive 3D AI guide bot, and n8n lead automation.
 
 Built with **Next.js 14 (App Router) · TypeScript · Tailwind CSS · Framer Motion · Zustand · Spline**.
 

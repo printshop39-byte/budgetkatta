@@ -88,7 +88,10 @@ export const i18n: Record<Language, Record<string, string>> = {
     'gadget.total_amount': 'एकूण परतफेड',
     'gadget.accessories_title': 'शिफारस केलेल्या अॅक्सेसरीज',
     'gadget.buy_now': 'आता खरेदी करा',
+    'gadget.new_tab': 'नवीन टॅबमध्ये उघडेल — साईट सुरूच राहील',
+    'gadget.link_soon': 'लिंक लवकरच उपलब्ध',
     'gadget.affiliate_note': 'टीप: वरील लिंक्स अॅफिलिएट लिंक्स आहेत. खरेदी केल्यास आम्हाला कमिशन मिळू शकते — तुम्हाला कोणताही अतिरिक्त खर्च येत नाही. किंमती बदलू शकतात.',
+    'gadget.find_stores': 'जवळचे EMI स्टोअर शोधा',
 
     // --- SIP Page ---
     'sip.title': 'SIP / म्युच्युअल फंड',
@@ -340,6 +343,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'tools.sip': 'SIP कॅल्क्युलेटर',
     'tools.ins': 'विमा अंदाज',
     'tools.docs': 'कागदपत्र यादी',
+    'tools.locator': 'स्टोअर लोकेटर',
     'ins.term': 'टर्म विमा',
 
     // --- UX pass v2 ---
@@ -683,7 +687,10 @@ export const i18n: Record<Language, Record<string, string>> = {
     'gadget.total_amount': 'Total Repayment',
     'gadget.accessories_title': 'Recommended Accessories',
     'gadget.buy_now': 'Buy Now',
+    'gadget.new_tab': 'Opens in a new tab — you stay on BudgetKatta',
+    'gadget.link_soon': 'Link coming soon',
     'gadget.affiliate_note': 'Note: The links above are affiliate links. We may earn a commission on purchases at no extra cost to you. Prices are indicative and may change.',
+    'gadget.find_stores': 'Find nearby EMI stores',
 
     // --- SIP Page ---
     'sip.title': 'SIP / Mutual Funds',
@@ -935,6 +942,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'tools.sip': 'SIP Calculator',
     'tools.ins': 'Insurance Estimate',
     'tools.docs': 'Document List',
+    'tools.locator': 'Store Locator',
     'ins.term': 'Term Insurance',
 
     // --- UX pass v2 ---

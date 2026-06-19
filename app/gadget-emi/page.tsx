@@ -2,6 +2,7 @@
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import GadgetEMISection from '@/components/gadget/GadgetEMISection';
+import LocatorSection from '@/components/home/LocatorSection';
 
 export default function GadgetEMIPage() {
   const { language } = useLanguageStore();
@@ -17,6 +18,9 @@ export default function GadgetEMIPage() {
       </header>
 
       <GadgetEMISection />
+
+      {/* Discoverable link to the Local Finance & Store Locator */}
+      <LocatorSection />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import PopularTools from '@/components/home/PopularTools';
 import BentoGrid from '@/components/BentoGrid';
 import CalculatorsHub from '@/components/CalculatorsHub';
 import AffiliateBanner from '@/components/AffiliateBanner';
+import LocatorSection from '@/components/home/LocatorSection';
 import FinancialHealthQuiz from '@/components/FinancialHealthQuiz';
 import SmartAdvisory from '@/components/SmartAdvisory';
 import EducationHub from '@/components/EducationHub';
@@ -28,6 +29,7 @@ export default function HomePage() {
       <PopularTools />
       <BentoGrid />
       <CalculatorsHub />
+      <LocatorSection />
       <div className="mx-auto max-w-4xl px-6 pb-4">
         <AffiliateBanner variant="demat" />
       </div>

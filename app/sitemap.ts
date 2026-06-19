@@ -10,6 +10,7 @@ const STATIC_ROUTES = [
   '/loans',
   '/sip',
   '/insurance',
+  '/gadget-emi',
   '/documents',
   '/rates',
   '/credit-score',

@@ -72,6 +72,24 @@ export const i18n: Record<Language, Record<string, string>> = {
     'loan.total_amount': 'एकूण परतफेड',
     'loan.calculate': 'EMI गणना करा',
 
+    // --- Gadget & Lifestyle EMI ---
+    'gadget.title': 'गॅजेट व लाइफस्टाईल EMI कॅल्क्युलेटर',
+    'gadget.subtitle': 'बाईक, कार, मोबाईल, लॅपटॉप, कॅमेरा आणि गिम्बल/अॅक्सेसरीजचा मासिक हप्ता मोजा.',
+    'gadget.category': 'श्रेणी निवडा',
+    'gadget.calc_title': 'EMI कॅल्क्युलेटर',
+    'gadget.price': 'वस्तूची किंमत (₹)',
+    'gadget.down_payment': 'डाऊन पेमेंट (₹)',
+    'gadget.rate': 'व्याजदर (%)',
+    'gadget.tenure': 'कालावधी',
+    'gadget.months': 'महिने',
+    'gadget.financed': 'वित्तपुरवठा रक्कम (कर्ज)',
+    'gadget.monthly_emi': 'मासिक EMI',
+    'gadget.total_interest': 'एकूण व्याज',
+    'gadget.total_amount': 'एकूण परतफेड',
+    'gadget.accessories_title': 'शिफारस केलेल्या अॅक्सेसरीज',
+    'gadget.buy_now': 'आता खरेदी करा',
+    'gadget.affiliate_note': 'टीप: वरील लिंक्स अॅफिलिएट लिंक्स आहेत. खरेदी केल्यास आम्हाला कमिशन मिळू शकते — तुम्हाला कोणताही अतिरिक्त खर्च येत नाही. किंमती बदलू शकतात.',
+
     // --- SIP Page ---
     'sip.title': 'SIP / म्युच्युअल फंड',
     'sip.subtitle': 'दीर्घकालीन संपत्ती निर्माणासाठी सर्वोत्तम फंड',
@@ -648,6 +666,24 @@ export const i18n: Record<Language, Record<string, string>> = {
     'loan.total_interest': 'Total Interest',
     'loan.total_amount': 'Total Repayment',
     'loan.calculate': 'Calculate EMI',
+
+    // --- Gadget & Lifestyle EMI ---
+    'gadget.title': 'Gadget & Lifestyle EMI Calculator',
+    'gadget.subtitle': 'Calculate the monthly EMI for bikes, cars, mobiles, laptops, cameras and gimbals/accessories.',
+    'gadget.category': 'Choose a category',
+    'gadget.calc_title': 'EMI Calculator',
+    'gadget.price': 'Item Price (₹)',
+    'gadget.down_payment': 'Down Payment (₹)',
+    'gadget.rate': 'Interest Rate (%)',
+    'gadget.tenure': 'Tenure',
+    'gadget.months': 'months',
+    'gadget.financed': 'Financed Amount (Loan)',
+    'gadget.monthly_emi': 'Monthly EMI',
+    'gadget.total_interest': 'Total Interest',
+    'gadget.total_amount': 'Total Repayment',
+    'gadget.accessories_title': 'Recommended Accessories',
+    'gadget.buy_now': 'Buy Now',
+    'gadget.affiliate_note': 'Note: The links above are affiliate links. We may earn a commission on purchases at no extra cost to you. Prices are indicative and may change.',
 
     // --- SIP Page ---
     'sip.title': 'SIP / Mutual Funds',

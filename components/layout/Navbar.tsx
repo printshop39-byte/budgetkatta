@@ -22,6 +22,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/loans', label: { mr: 'कर्ज', en: 'Loans' } },
   { href: '/sip', label: { mr: 'SIP', en: 'SIP' } },
   { href: '/insurance', label: { mr: 'विमा', en: 'Insurance' } },
+  { href: '/gadget-emi', label: { mr: 'गॅजेट EMI', en: 'Gadget EMI' } },
   { href: '/rates', label: { mr: 'दर/बाजार', en: 'Rates / Market' } },
   { href: '/directory', label: { mr: 'बँक निर्देशिका', en: 'Bank Directory' } },
   { href: '/documents', label: { mr: 'कागदपत्रे', en: 'Documents' }, secondary: true },

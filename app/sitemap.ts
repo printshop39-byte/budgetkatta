@@ -16,6 +16,7 @@ const STATIC_ROUTES = [
   '/credit-score',
   '/cards',
   '/directory',
+  '/locator',
   '/guides/payments-bank',
   '/about',
   '/contact',

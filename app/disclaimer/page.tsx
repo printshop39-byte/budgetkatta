@@ -3,7 +3,7 @@ import PageShell from '@/components/shared/PageShell';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 
-const points = ['disclaimer.d1', 'disclaimer.d2', 'disclaimer.d3', 'disclaimer.d4', 'disclaimer.d5'];
+const points = ['disclaimer.d1', 'disclaimer.d2', 'disclaimer.d3', 'disclaimer.d4', 'disclaimer.d5', 'disclaimer.d6'];
 
 export default function DisclaimerPage() {
   const { language } = useLanguageStore();

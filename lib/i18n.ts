@@ -126,6 +126,9 @@ export const i18n: Record<Language, Record<string, string>> = {
     'ins.policy_term': 'पॉलिसी कालावधी (वर्षे)',
     'ins.est_premium': 'अंदाजे वार्षिक प्रीमियम',
     'ins.suggested_cover': 'सुचविलेले संरक्षण',
+    'ins.irdai_title': 'महत्त्वाची सूचना (IRDAI)',
+    'ins.irdai_note': 'BudgetKatta हे IRDAI-नोंदणीकृत विमा मध्यस्थ किंवा वेब अ‍ॅग्रिगेटर नाही. येथील माहिती व अंदाज केवळ शैक्षणिक उद्देशासाठी आहेत — हा विमा सल्ला किंवा कोट (quote) नाही. विमा खरेदीसाठी IRDAI-नोंदणीकृत विमा कंपनी किंवा अधिकृत मध्यस्थाशी संपर्क साधा.',
+    'ins.est_note': 'हा फक्त ढोबळ शैक्षणिक अंदाज आहे — प्रत्यक्ष प्रीमियम किंवा कोट नव्हे.',
 
     // --- Buttons ---
     'btn.apply': 'अर्ज करा',
@@ -233,10 +236,16 @@ export const i18n: Record<Language, Record<string, string>> = {
     'privacy.collect': 'नाव, मोबाइल नंबर, शहर, तुमचा प्रश्न आणि निवडलेल्या उत्पादनातील स्वारस्य.',
     'privacy.h_why': 'माहिती का गोळा केली जाते',
     'privacy.why': 'फॉलो-अप, सेवा मार्गदर्शन आणि लीड सहाय्यासाठी.',
+    'privacy.h_consent': 'संमती',
+    'privacy.consent': 'फॉर्म सबमिट करताना तुम्ही तुमची माहिती गोळा करण्यास व फॉलो-अपसाठी वापरण्यास संमती देता. तुमच्या स्पष्ट संमतीशिवाय आम्ही तुमची माहिती भागीदारांना देत नाही.',
     'privacy.h_share': 'माहिती सामायिकरण',
-    'privacy.share': 'आम्ही तुमची वैयक्तिक माहिती विकत नाही.',
+    'privacy.share': 'आम्ही तुमची वैयक्तिक माहिती विकत नाही. तुमची माहिती फक्त तुमच्या स्पष्ट संमतीनंतरच संबंधित ब्रोकर / विमा कंपनी / सेवा भागीदारांना मार्गदर्शनासाठी दिली जाऊ शकते.',
+    'privacy.h_cookies': 'कुकीज व ट्रॅकिंग',
+    'privacy.cookies': 'आम्ही Google Analytics आणि अ‍ॅफिलिएट-ट्रॅकिंग कुकीज वापरतो. यातून वापराचे विश्लेषण व रेफरल नोंद होते. तुम्ही ब्राउझर सेटिंग्जमधून कुकीज बंद करू शकता.',
+    'privacy.h_retention': 'माहिती ठेवण्याचा कालावधी',
+    'privacy.retention': 'लीड माहिती १२ महिन्यांपेक्षा जास्त ठेवली जाणार नाही. त्यानंतर ती हटवली किंवा निनावी (anonymise) केली जाते.',
     'privacy.h_delete': 'माहिती हटवण्याची विनंती',
-    'privacy.delete': 'तुम्ही कधीही तुमची माहिती हटवण्याची विनंती करू शकता.',
+    'privacy.delete': 'तुम्ही कधीही तुमची माहिती हटवण्याची विनंती करू शकता. अशी विनंती ३० दिवसांत प्रक्रिया केली जाते.',
     'privacy.h_contact': 'संपर्क',
     'privacy.contact': 'गोपनीयतेबाबत प्रश्नांसाठी आमच्याशी संपर्क साधा:',
 
@@ -258,6 +267,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'disclaimer.d3': 'मागील परतावा भविष्यातील परताव्याची हमी देत नाही.',
     'disclaimer.d4': 'कोणताही निर्णय घेण्यापूर्वी प्रमाणित आर्थिक सल्लागाराचा सल्ला घ्या.',
     'disclaimer.d5': 'ही माहिती केवळ शैक्षणिक व माहितीपर उद्देशासाठी आहे.',
+    'disclaimer.d6': 'BudgetKatta हे SEBI / IRDAI / RBI नोंदणीकृत सल्लागार किंवा मध्यस्थ (intermediary) नाही. ही साइट केवळ शैक्षणिक माहिती देते — विमा, गुंतवणूक किंवा कर्जाचा सल्ला देत नाही.',
 
     // --- Nav / rates / documents / CTA ---
     'nav.rates': 'दर/बाजार',
@@ -380,6 +390,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'footer.col_company': 'कंपनी',
     'footer.col_trust': 'विश्वास',
     'footer.rights': '© 2026 बजेट कट्टा. सर्व हक्क राखीव.',
+    'footer.affiliate_disclosure': 'प्रकटीकरण: या साइटवरील काही लिंक्स अ‍ॅफिलिएट लिंक्स आहेत. तुम्ही त्यावरून खाते उघडल्यास किंवा खरेदी केल्यास BudgetKatta ला कमिशन मिळू शकते — तुम्हाला कोणताही अतिरिक्त खर्च येत नाही.',
 
     // --- Bento Grid ---
     'bento.title': 'आमची प्रमुख डिजिटल साधने',
@@ -725,6 +736,9 @@ export const i18n: Record<Language, Record<string, string>> = {
     'ins.policy_term': 'Policy Term (Years)',
     'ins.est_premium': 'Estimated Annual Premium',
     'ins.suggested_cover': 'Suggested Cover',
+    'ins.irdai_title': 'Important Notice (IRDAI)',
+    'ins.irdai_note': 'BudgetKatta is not an IRDAI-registered insurance intermediary or web aggregator. The information and estimates here are for educational purposes only — they are not insurance advice or a quote. To buy insurance, contact an IRDAI-registered insurer or licensed intermediary.',
+    'ins.est_note': 'This is only a rough educational estimate — not an actual premium or quote.',
 
     // --- Buttons ---
     'btn.apply': 'Apply',
@@ -832,10 +846,16 @@ export const i18n: Record<Language, Record<string, string>> = {
     'privacy.collect': 'Name, mobile number, city, your query and interest in the selected product.',
     'privacy.h_why': 'Why we collect this information',
     'privacy.why': 'For follow-up, service guidance and lead support.',
+    'privacy.h_consent': 'Consent',
+    'privacy.consent': 'By submitting a form you consent to your information being collected and used for follow-up. We do not share your data with partners without your explicit consent.',
     'privacy.h_share': 'Information sharing',
-    'privacy.share': 'We do not sell your personal information.',
+    'privacy.share': 'We do not sell your personal information. Your data may be shared with relevant brokers / insurers / service partners for guidance only after your explicit consent.',
+    'privacy.h_cookies': 'Cookies & Tracking',
+    'privacy.cookies': 'We use Google Analytics and affiliate-tracking cookies for usage analytics and referral attribution. You can disable cookies from your browser settings.',
+    'privacy.h_retention': 'Data Retention',
+    'privacy.retention': 'Lead data is not retained for more than 12 months, after which it is deleted or anonymised.',
     'privacy.h_delete': 'Data deletion request',
-    'privacy.delete': 'You can request the deletion of your information at any time.',
+    'privacy.delete': 'You can request the deletion of your information at any time. Such requests are processed within 30 days.',
     'privacy.h_contact': 'Contact',
     'privacy.contact': 'For privacy-related questions, please contact us:',
 
@@ -857,6 +877,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'disclaimer.d3': 'Past returns do not guarantee future returns.',
     'disclaimer.d4': 'Consult a certified financial advisor before making any decision.',
     'disclaimer.d5': 'This information is for educational and informational purposes only.',
+    'disclaimer.d6': 'BudgetKatta is not a SEBI / IRDAI / RBI registered advisor or intermediary. This site provides educational information only — it does not offer insurance, investment or loan advice.',
 
     // --- Nav / rates / documents / CTA ---
     'nav.rates': 'Rates / Market',
@@ -979,6 +1000,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'footer.col_company': 'Company',
     'footer.col_trust': 'Trust',
     'footer.rights': '© 2026 BudgetKatta. All rights reserved.',
+    'footer.affiliate_disclosure': 'Disclosure: Some links on this site are affiliate links. If you open an account or make a purchase through them, BudgetKatta may earn a commission — at no extra cost to you.',
 
     // --- Bento Grid ---
     'bento.title': 'Our Key Digital Tools',

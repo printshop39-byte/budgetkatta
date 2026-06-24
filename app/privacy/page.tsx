@@ -7,7 +7,10 @@ import { CONTACT_EMAIL } from '@/lib/config';
 const sections = [
   { h: 'privacy.h_collect', b: 'privacy.collect' },
   { h: 'privacy.h_why', b: 'privacy.why' },
+  { h: 'privacy.h_consent', b: 'privacy.consent' },
   { h: 'privacy.h_share', b: 'privacy.share' },
+  { h: 'privacy.h_cookies', b: 'privacy.cookies' },
+  { h: 'privacy.h_retention', b: 'privacy.retention' },
   { h: 'privacy.h_delete', b: 'privacy.delete' },
   { h: 'privacy.h_contact', b: 'privacy.contact' },
 ];

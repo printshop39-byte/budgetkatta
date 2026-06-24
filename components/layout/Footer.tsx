@@ -96,7 +96,12 @@ export default function Footer() {
           </FooterColumn>
         </div>
 
-        <div className="mx-auto mt-10 flex max-w-6xl flex-col items-center justify-between gap-3 border-t border-slate-800 pt-6 text-center sm:flex-row sm:text-left">
+        {/* Affiliate disclosure — required for ASCI / affiliate-network transparency. */}
+        <p className="mx-auto mt-10 max-w-6xl border-t border-slate-800 pt-6 text-xs leading-relaxed text-slate-500 font-deva">
+          {t('footer.affiliate_disclosure')}
+        </p>
+
+        <div className="mx-auto mt-4 flex max-w-6xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
           <p className="text-xs text-slate-400 font-deva">{t('footer.rights')}</p>
           <a
             href={`mailto:${CONTACT_EMAIL}`}

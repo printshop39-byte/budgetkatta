@@ -9,6 +9,7 @@ import CompareDrawer from '@/components/compare/CompareDrawer';
 import LeadFormModal from '@/components/lead/LeadFormModal';
 import ServiceWorkerRegister from '@/components/layout/ServiceWorkerRegister';
 import CookieConsent from '@/components/layout/CookieConsent';
+import JsonLd from '@/components/seo/JsonLd';
 
 // Body — Plus Jakarta Sans (brand body typeface)
 const jakarta = Plus_Jakarta_Sans({
@@ -69,6 +70,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=JSON.parse(localStorage.getItem('bk-theme')||'{}').state;document.documentElement.dataset.theme=(t&&t.theme)||'dark';}catch(e){document.documentElement.dataset.theme='dark';}})();`,
           }}
+        />
+        {/* Structured data: Organization + WebSite (SEO / AI answer surfaces). */}
+        <JsonLd
+          data={[
+            {
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: SITE_NAME,
+              url: APP_URL,
+              logo: `${APP_URL}/icon-512.png`,
+              description:
+                'महाराष्ट्रासाठी मराठी व इंग्रजीत FD, कर्ज, SIP व विमा यांची माहिती, तुलना व कॅल्क्युलेटर.',
+              email: 'hello@budgetkatta.in',
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: SITE_NAME,
+              url: APP_URL,
+              inLanguage: ['mr', 'en'],
+            },
+          ]}
         />
       </head>
       <body className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0f172a] via-[#0A1128] to-[#050814] text-slate-200 antialiased">

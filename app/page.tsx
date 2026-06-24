@@ -9,6 +9,21 @@ import FinancialHealthQuiz from '@/components/FinancialHealthQuiz';
 import SmartAdvisory from '@/components/SmartAdvisory';
 import EducationHub from '@/components/EducationHub';
 import FAQ from '@/components/FAQ';
+import JsonLd from '@/components/seo/JsonLd';
+import { getTranslation } from '@/lib/i18n';
+
+// FAQ structured data (server-rendered from the Marathi FAQ copy) so the
+// homepage is eligible for FAQ rich results / AI answer surfaces.
+const tMr = getTranslation('mr');
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [1, 2, 3, 4].map((i) => ({
+    '@type': 'Question',
+    name: tMr(`faq.q${i}`),
+    acceptedAnswer: { '@type': 'Answer', text: tMr(`faq.a${i}`) },
+  })),
+};
 
 export const metadata: Metadata = {
   title: { absolute: 'BudgetKatta — स्मार्ट आर्थिक मार्गदर्शक | स्मार्ट निवेश, सुरक्षित भविष्य' },
@@ -35,6 +50,7 @@ export default function HomePage() {
       <SmartAdvisory />
       <EducationHub />
       <FAQ />
+      <JsonLd data={faqSchema} />
     </div>
   );
 }

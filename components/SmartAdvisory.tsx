@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useRef, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, HelpCircle as QuestionIcon, RefreshCw, ArrowRight, Sparkles } from "lucide-react";
 import { useLanguageStore } from "@/store/languageStore";
@@ -10,12 +10,20 @@ export default function SmartAdvisory() {
   const [userQuery, setUserQuery] = useState("");
   const [chatResponse, setChatResponse] = useState<string | null>(null);
   const [chatLoading, setChatLoading] = useState(false);
+  const [showEmptyHint, setShowEmptyHint] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const language = useLanguageStore((s) => s.language);
   const t = getTranslation(language);
 
   const handleSmartQuery = (e: FormEvent) => {
     e.preventDefault();
-    if (!userQuery.trim()) return;
+    // Empty query: give clear feedback (focus + hint) instead of a dead click.
+    if (!userQuery.trim()) {
+      setShowEmptyHint(true);
+      textareaRef.current?.focus();
+      return;
+    }
+    setShowEmptyHint(false);
 
     setChatLoading(true);
     setChatResponse(null);
@@ -87,19 +95,25 @@ export default function SmartAdvisory() {
             <form onSubmit={handleSmartQuery} className="space-y-4">
               <div className="relative">
                 <textarea
+                  ref={textareaRef}
                   rows={3}
                   placeholder={t("adv.placeholder")}
                   value={userQuery}
-                  onChange={(e) => setUserQuery(e.target.value)}
+                  onChange={(e) => {
+                    setUserQuery(e.target.value);
+                    if (showEmptyHint) setShowEmptyHint(false);
+                  }}
                   className="w-full px-5 py-4 bg-slate-950/80 border border-slate-800 rounded-2xl text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:bg-slate-950 text-sm font-medium transition-all resize-none"
                 />
               </div>
 
               <div className="flex justify-between items-center">
-                <span className="text-[10px] text-slate-400 font-bold">{t("adv.hint")}</span>
+                <span className={`text-[10px] font-bold ${showEmptyHint ? "text-rose-300" : "text-slate-400"}`}>
+                  {showEmptyHint ? t("adv.empty_hint") : t("adv.hint")}
+                </span>
                 <button
                   type="submit"
-                  disabled={chatLoading || !userQuery.trim()}
+                  disabled={chatLoading}
                   className="px-6 py-2.5 rounded-full bg-amber-400 hover:bg-amber-500 disabled:bg-slate-800 disabled:text-slate-400 text-slate-950 font-bold text-xs transition-all shadow-sm shadow-amber-500/30 flex items-center space-x-1.5"
                 >
                   {chatLoading ? (

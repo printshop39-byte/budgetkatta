@@ -19,6 +19,7 @@ type HeroCopy = {
   socialSub: string;
   livePortfolio: string;
   yearlyDelta: string;
+  sampleNote: string;
   wealthLabel: string;
   wealthSub: string;
   fiveYearBadge: string;

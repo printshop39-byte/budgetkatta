@@ -9,6 +9,7 @@
 import { motion } from 'framer-motion';
 import { LineChart, CreditCard, Landmark, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
+import { AFFILIATE_LINKS, isLiveLink } from '@/lib/affiliate';
 
 type Bi = { mr: string; en: string };
 export type AffiliateVariant = 'demat' | 'creditCard' | 'loan' | 'insurance';
@@ -70,7 +71,9 @@ export default function AffiliateBanner({ variant = 'demat', href, className = '
   const { language } = useLanguageStore();
   const preset = PRESETS[variant];
   const Icon = preset.icon;
-  const target = href ?? preset.href;
+  // Prefer an explicit prop, then the central config, then the preset placeholder.
+  const target = href ?? AFFILIATE_LINKS[variant] ?? preset.href;
+  const live = isLiveLink(target);
 
   return (
     <motion.aside
@@ -94,15 +97,26 @@ export default function AffiliateBanner({ variant = 'demat', href, className = '
         </div>
       </div>
 
-      <a
-        href={target}
-        target="_blank"
-        rel="sponsored noopener noreferrer"
-        className="inline-flex w-full shrink-0 items-center justify-center gap-1.5 rounded-xl bg-amber-400 px-5 py-2.5 text-sm font-bold text-slate-950 transition-colors hover:bg-amber-500 font-deva sm:w-auto"
-      >
-        {preset.cta[language]}
-        <ArrowRight className="h-4 w-4" />
-      </a>
+      {live ? (
+        <a
+          href={target}
+          target="_blank"
+          rel="sponsored noopener noreferrer"
+          className="inline-flex w-full shrink-0 items-center justify-center gap-1.5 rounded-xl bg-amber-400 px-5 py-2.5 text-sm font-bold text-slate-950 transition-colors hover:bg-amber-500 font-deva sm:w-auto"
+        >
+          {preset.cta[language]}
+          <ArrowRight className="h-4 w-4" />
+        </a>
+      ) : (
+        // No real affiliate URL configured yet — show a non-navigating, disabled
+        // CTA instead of a dead `href="#"` link.
+        <span
+          aria-disabled="true"
+          className="inline-flex w-full shrink-0 cursor-not-allowed items-center justify-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/60 px-5 py-2.5 text-sm font-bold text-slate-500 font-deva sm:w-auto"
+        >
+          {language === 'mr' ? 'लवकरच' : 'Coming soon'}
+        </span>
+      )}
     </motion.aside>
   );
 }

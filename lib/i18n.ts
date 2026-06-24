@@ -90,7 +90,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'gadget.buy_now': 'आता खरेदी करा',
     'gadget.new_tab': 'नवीन टॅबमध्ये उघडेल — साईट सुरूच राहील',
     'gadget.link_soon': 'लिंक लवकरच उपलब्ध',
-    'gadget.affiliate_note': 'टीप: वरील लिंक्स अॅफिलिएट लिंक्स आहेत. खरेदी केल्यास आम्हाला कमिशन मिळू शकते — तुम्हाला कोणताही अतिरिक्त खर्च येत नाही. किंमती बदलू शकतात.',
+    'gadget.affiliate_note': 'टीप: वरील लिंक्स अॅफिलिएट लिंक्स आहेत. खरेदी केल्यास आम्हाला कमिशन मिळू शकते — तुम्हाला कोणताही अतिरिक्त खर्च येत नाही. Amazon Associate म्हणून BudgetKatta पात्र खरेदीवर कमिशन मिळवते. किंमती व उपलब्धता खरेदीच्या वेळी Amazon/Flipkart वर दर्शविल्याप्रमाणे लागू.',
     'gadget.find_stores': 'जवळचे EMI स्टोअर शोधा',
 
     // --- SIP Page ---
@@ -391,6 +391,10 @@ export const i18n: Record<Language, Record<string, string>> = {
     'footer.col_trust': 'विश्वास',
     'footer.rights': '© 2026 बजेट कट्टा. सर्व हक्क राखीव.',
     'footer.affiliate_disclosure': 'प्रकटीकरण: या साइटवरील काही लिंक्स अ‍ॅफिलिएट लिंक्स आहेत. तुम्ही त्यावरून खाते उघडल्यास किंवा खरेदी केल्यास BudgetKatta ला कमिशन मिळू शकते — तुम्हाला कोणताही अतिरिक्त खर्च येत नाही.',
+    'cookie.text': 'आम्ही वापराचे विश्लेषण व अ‍ॅफिलिएट ट्रॅकिंगसाठी कुकीज वापरतो. "स्वीकारा" दाबल्यास तुम्ही याला संमती देता.',
+    'cookie.learn': 'अधिक जाणून घ्या',
+    'cookie.accept': 'स्वीकारा',
+    'cookie.decline': 'नाकारा',
 
     // --- Bento Grid ---
     'bento.title': 'आमची प्रमुख डिजिटल साधने',
@@ -700,7 +704,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'gadget.buy_now': 'Buy Now',
     'gadget.new_tab': 'Opens in a new tab — you stay on BudgetKatta',
     'gadget.link_soon': 'Link coming soon',
-    'gadget.affiliate_note': 'Note: The links above are affiliate links. We may earn a commission on purchases at no extra cost to you. Prices are indicative and may change.',
+    'gadget.affiliate_note': 'Note: The links above are affiliate links. We may earn a commission on purchases at no extra cost to you. As an Amazon Associate, BudgetKatta earns from qualifying purchases. Prices and availability are accurate as shown on Amazon/Flipkart at the time of purchase.',
     'gadget.find_stores': 'Find nearby EMI stores',
 
     // --- SIP Page ---
@@ -1001,6 +1005,10 @@ export const i18n: Record<Language, Record<string, string>> = {
     'footer.col_trust': 'Trust',
     'footer.rights': '© 2026 BudgetKatta. All rights reserved.',
     'footer.affiliate_disclosure': 'Disclosure: Some links on this site are affiliate links. If you open an account or make a purchase through them, BudgetKatta may earn a commission — at no extra cost to you.',
+    'cookie.text': 'We use cookies for usage analytics and affiliate tracking. By clicking "Accept" you consent to this.',
+    'cookie.learn': 'Learn more',
+    'cookie.accept': 'Accept',
+    'cookie.decline': 'Decline',
 
     // --- Bento Grid ---
     'bento.title': 'Our Key Digital Tools',

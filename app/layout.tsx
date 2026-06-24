@@ -8,6 +8,7 @@ import Floating3DGuide from '@/components/bot/Floating3DGuide';
 import CompareDrawer from '@/components/compare/CompareDrawer';
 import LeadFormModal from '@/components/lead/LeadFormModal';
 import ServiceWorkerRegister from '@/components/layout/ServiceWorkerRegister';
+import CookieConsent from '@/components/layout/CookieConsent';
 
 // Body — Plus Jakarta Sans (brand body typeface)
 const jakarta = Plus_Jakarta_Sans({
@@ -78,6 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Floating3DGuide />
         <CompareDrawer />
         <LeadFormModal />
+        <CookieConsent />
         <ServiceWorkerRegister />
       </body>
     </html>

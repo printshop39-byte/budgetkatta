@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Poppins, Noto_Sans_Devanagari } from 'next/font/google';
+import { Plus_Jakarta_Sans, Outfit, Noto_Sans_Devanagari } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -9,17 +9,19 @@ import CompareDrawer from '@/components/compare/CompareDrawer';
 import LeadFormModal from '@/components/lead/LeadFormModal';
 import ServiceWorkerRegister from '@/components/layout/ServiceWorkerRegister';
 
-const inter = Inter({
+// Body — Plus Jakarta Sans (brand body typeface)
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-inter',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-jakarta',
   display: 'swap',
 });
 
-const poppins = Poppins({
+// Display / headings — Outfit (brand display typeface)
+const outfit = Outfit({
   subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  variable: '--font-poppins',
+  weight: ['600', '700', '800', '900'],
+  variable: '--font-outfit',
   display: 'swap',
 });
 
@@ -59,7 +61,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="mr" data-theme="dark" suppressHydrationWarning className={`${inter.variable} ${poppins.variable} ${deva.variable}`}>
+    <html lang="mr" data-theme="dark" suppressHydrationWarning className={`${jakarta.variable} ${outfit.variable} ${deva.variable}`}>
       <head>
         {/* Set the persisted theme before paint to avoid a flash of the wrong palette. */}
         <script

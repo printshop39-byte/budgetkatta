@@ -30,6 +30,16 @@
   /* Borders */
   --border-default: rgba(30, 41, 59, 1); /* slate-800 */
   --border-glass: rgba(251, 191, 36, 0.18); /* amber-400 / 18% */
+
+  /* ── BudgetKatta brand palette (brand board) ──────────────────────
+     Named brand colors, available as CSS variables alongside the
+     existing fintech theme. Use var(--brand-green) etc. */
+  --brand-green: #27AE60;       /* Savings Green — primary / CTA / icon */
+  --brand-green-tint: #E6F7EE;  /* green tint surface */
+  --brand-orange: #FF7A29;      /* Energy Orange — deals / badges / alerts */
+  --brand-orange-tint: #FFF0E6; /* orange tint surface */
+  --brand-navy: #1B2B4B;        /* Trust Navy — headlines / dark bg */
+  --brand-mint: #ECF2ED;        /* Mint Cream — background / cards */
 }
 
 @layer base {
@@ -41,7 +51,7 @@
       radial-gradient(ellipse at top, #0f172a 0%, #0A1128 45%, #050814 100%);
     background-attachment: fixed;
     color: var(--text-primary);
-    font-family: var(--font-inter), 'Inter', sans-serif;
+    font-family: var(--font-jakarta), 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 

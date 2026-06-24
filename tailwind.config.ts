@@ -19,10 +19,20 @@ const config: Config = {
         'bk-gold-light': '#fcd34d', // amber-300 — hover
         'bk-success': '#34d399',
         'bk-danger': '#f43f5e',
+
+        // ── Brand palette (BudgetKatta brand board) ──────────────────
+        // Available as named tokens (bg-bk-green, text-bk-orange, etc.).
+        'bk-green': '#27AE60',        // Savings Green — primary / CTA / icon
+        'bk-green-tint': '#E6F7EE',   // green tint surface
+        'bk-orange': '#FF7A29',       // Energy Orange — deals / badges / alerts
+        'bk-orange-tint': '#FFF0E6',  // orange tint surface
+        'bk-navy': '#1B2B4B',         // Trust Navy — headlines / dark bg
+        'bk-mint': '#ECF2ED',         // Mint Cream — background / cards
       },
       fontFamily: {
-        display: ['var(--font-poppins)', 'Poppins', 'sans-serif'],
-        body: ['var(--font-inter)', 'Inter', 'sans-serif'],
+        // Brand typefaces: Outfit (display/headings) + Plus Jakarta Sans (body).
+        display: ['var(--font-outfit)', 'Outfit', 'sans-serif'],
+        body: ['var(--font-jakarta)', 'Plus Jakarta Sans', 'sans-serif'],
         deva: ['var(--font-deva)', 'Noto Sans Devanagari', 'sans-serif'],
       },
       // Non-standard utilities used by the reference design (h-4.5, p-4.5, scale-102).

@@ -4,6 +4,7 @@ import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { CONTACT_EMAIL } from '@/lib/config';
 import TrustSection from '@/components/trust/TrustSection';
+import Logo from '@/components/layout/Logo';
 
 const productLinks = [
   { href: '/fds', key: 'nav.fd' },
@@ -57,12 +58,7 @@ export default function Footer() {
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-3 lg:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl">💰</span>
-              <span className="font-display text-lg font-bold text-slate-200">
-                Budget<span className="text-amber-400">Katta</span>
-              </span>
-            </Link>
+            <Logo />
             <p className="mt-3 text-sm leading-relaxed text-slate-400 font-deva">{t('footer.desc')}</p>
             <p className="mt-3 text-xs text-amber-400/80 font-deva">{t('footer.tagline')}</p>
           </div>

@@ -8,6 +8,7 @@ import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import { useThemeStore } from '@/store/themeStore';
+import Logo from '@/components/layout/Logo';
 
 // Single source of truth for header navigation — used by BOTH the desktop bar
 // and the mobile drawer so they can never drift out of sync. Labels are inlined
@@ -50,12 +51,7 @@ export default function Navbar() {
     <>
     <header className="sticky top-0 z-40 border-b border-slate-800 bg-[#0A1128]/80 backdrop-blur-lg">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <Link href="/" className="flex shrink-0 items-center gap-2">
-          <span className="text-2xl">💰</span>
-          <span className="font-display text-lg font-bold text-slate-200">
-            Budget<span className="text-amber-400">Katta</span>
-          </span>
-        </Link>
+        <Logo />
 
         {/* Desktop links */}
         <div className="hidden items-center gap-0.5 lg:flex">
@@ -141,9 +137,7 @@ export default function Navbar() {
               className="fixed right-0 top-0 z-50 flex h-full max-h-screen w-72 max-w-[85vw] flex-col border-l border-slate-800 bg-slate-900 p-5 lg:hidden"
             >
               <div className="mb-4 flex shrink-0 items-center justify-between">
-                <span className="font-display font-bold text-slate-200">
-                  Budget<span className="text-amber-400">Katta</span>
-                </span>
+                <Logo onClick={() => setOpen(false)} />
                 <button
                   onClick={() => setOpen(false)}
                   aria-label="Close menu"

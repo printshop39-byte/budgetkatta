@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
-import { brokerOffers } from '@/lib/brokerOffers';
+import { brokerOffers, BROKER_OFFERS_UPDATED } from '@/lib/brokerOffers';
 
 export default function BrokerOffers({ className = '' }: { className?: string }) {
   const { language } = useLanguageStore();
@@ -60,7 +60,9 @@ export default function BrokerOffers({ className = '' }: { className?: string })
         ))}
       </div>
 
-      <p className="mt-4 text-[11px] leading-relaxed text-slate-500 font-deva">{t('broker.indicative')}</p>
+      <p className="mt-4 text-[11px] leading-relaxed text-slate-500 font-deva">
+        {t('broker.indicative')} · {t('broker.last_updated')}: {BROKER_OFFERS_UPDATED}
+      </p>
     </section>
   );
 }

@@ -3,7 +3,6 @@ import HeroSection from '@/components/HeroSection';
 import PopularTools from '@/components/home/PopularTools';
 import BentoGrid from '@/components/BentoGrid';
 import CalculatorsHub from '@/components/CalculatorsHub';
-import AffiliateBanner from '@/components/AffiliateBanner';
 import BrokerOffers from '@/components/BrokerOffers';
 import LocatorSection from '@/components/home/LocatorSection';
 import FinancialHealthQuiz from '@/components/FinancialHealthQuiz';
@@ -31,9 +30,6 @@ export default function HomePage() {
       <BentoGrid />
       <CalculatorsHub />
       <LocatorSection />
-      <div className="mx-auto max-w-4xl px-6 pb-4">
-        <AffiliateBanner variant="demat" />
-      </div>
       <BrokerOffers />
       <FinancialHealthQuiz />
       <SmartAdvisory />

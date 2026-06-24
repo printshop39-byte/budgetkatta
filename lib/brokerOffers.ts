@@ -8,6 +8,10 @@
 // frequently. They are always shown with the "verify on official site" note
 // (broker.indicative) and a trailing '*'. Update them as needed.
 
+// Date the figures below were last reviewed. Update this whenever you verify /
+// change the charges so the UI can show users how fresh the data is.
+export const BROKER_OFFERS_UPDATED = '24 June 2026';
+
 type Bi = { mr: string; en: string };
 
 export interface BrokerOffer {

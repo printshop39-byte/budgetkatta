@@ -35,17 +35,18 @@ const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
     description:
       "बजेटकट्टा सोबत मिळवा मुदत ठेव (FD), म्युच्युअल फंड (SIP), कर्ज (EMI) आणि विम्याचे अचूक मार्गदर्शन. आर्थिकदृष्ट्या सक्षम बना, मराठीत अगदी सोप्या भाषेत!",
     bullets: [
-      "१००% विनामूल्य व कोणतीही छुप्या फी नाही",
+      "१००% विनामूल्य व कोणतेही छुपे शुल्क नाही",
       "फक्त एका क्लिकवर अचूक आकडेमोड",
       "५०/३०/२० बजेटिंगचा सोपा सल्लागार",
       "वैयक्तिक आर्थिक ध्येयांचे अचूक नियोजन",
     ],
     ctaPrimary: "आत्ताच मोजा",
     ctaSecondary: "आरोग्य स्कोअर तपासा",
-    socialCount: "५०,०००+ भारतीय युजर्स",
+    socialCount: "हजारो मराठी वापरकर्ते",
     socialSub: "बजेटकट्टाचा दरमहा वापर करत आहेत",
     livePortfolio: "Live Portfolio",
     yearlyDelta: "+२४.८% वार्षिक",
+    sampleNote: "नमुना उदाहरण — प्रत्यक्ष पोर्टफोलिओ किंवा हमी परतावा नाही.",
     wealthLabel: "एकूण अंदाजे संपत्ती (१० वर्षानंतर)",
     wealthSub: "दरमहा ₹१०,००० च्या बचतीची ताकद",
     fiveYearBadge: "५ वर्ष: ₹७.८ लाख",
@@ -67,10 +68,11 @@ const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
     ],
     ctaPrimary: "Calculate Now",
     ctaSecondary: "Check Health Score",
-    socialCount: "50,000+ Indian Users",
+    socialCount: "Thousands of Marathi users",
     socialSub: "Trust BudgetKatta every month",
     livePortfolio: "Live Portfolio",
     yearlyDelta: "+24.8% Yearly",
+    sampleNote: "Sample illustration — not an actual portfolio or guaranteed return.",
     wealthLabel: "Projected Net Worth (after 10 years)",
     wealthSub: "The power of saving ₹10,000 per month",
     fiveYearBadge: "5Y: ₹7.8L",
@@ -256,6 +258,9 @@ export default function HeroSection() {
                 </span>
               </div>
             </div>
+
+            {/* Compliance: this dashboard is illustrative, not a real portfolio. */}
+            <p className="mt-4 text-[10px] leading-snug text-slate-500 font-deva">{t.sampleNote}</p>
 
             {/* Floating Element 1: Golden 3D Coin */}
             <motion.div

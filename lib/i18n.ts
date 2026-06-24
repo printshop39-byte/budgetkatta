@@ -185,7 +185,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- Data source / freshness ---
     'data.demo': 'डेमो डेटा',
-    'data.live': 'MongoDB लाइव्ह',
+    'data.live': 'लाइव्ह डेटा',
     'data.updated': 'अद्ययावत',
 
     // --- Calculator disclaimer ---
@@ -253,7 +253,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'terms.title': 'अटी व शर्ती',
     'terms.subtitle': 'कृपया सेवा वापरण्यापूर्वी काळजीपूर्वक वाचा.',
     'terms.t1': 'बजेट कट्टा केवळ शैक्षणिक व माहितीपर आर्थिक तुलना सेवा देते.',
-    'terms.t2': '"MongoDB लाइव्ह" किंवा सत्यापित स्रोत म्हणून चिन्हांकित नसल्यास डेटा डेमो/नमुना असू शकतो.',
+    'terms.t2': '"लाइव्ह डेटा" किंवा सत्यापित स्रोत म्हणून चिन्हांकित नसल्यास काही डेटा नमुना/indicative असू शकतो.',
     'terms.t3': 'कोणताही निर्णय घेण्यापूर्वी बँक/विमा/फंडाच्या अधिकृत संकेतस्थळावर तपशील पडताळा.',
     'terms.t4': 'कोणत्याही परताव्याची हमी दिली जात नाही.',
     'terms.t5': 'आर्थिक सल्ल्याची कोणतीही हमी दिली जात नाही.',
@@ -415,6 +415,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'broker.cta': 'Official site वर तपासा',
     'broker.commission_note': 'BudgetKatta ला commission मिळू शकते · Official terms apply',
     'broker.indicative': 'टीप: वरील आकडे indicative आहेत व बदलू शकतात — official site वर तपासा.',
+    'broker.last_updated': 'शेवटचे अद्यतन',
     // ── Lead consent ──
     'lead.consent': 'मी BudgetKatta व त्याच्या verified partners कडून माझ्या निवडलेल्या product बद्दल call / WhatsApp / email मिळण्यास संमती देतो.',
     'lead.err_consent': 'कृपया पुढे जाण्यासाठी संमती द्या.',
@@ -443,7 +444,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'bento.emi.badge': 'अचूक हप्ता विभागणी',
     'bento.emi.stat': 'व्याज दर तुलना',
     'bento.ins.title': 'विमा सल्ला कट्टा',
-    'bento.ins.desc': 'तुमच्या पश्यात कुटुंबाला सुरक्षित ठेवण्यासाठी योग्य टर्म इन्शुरन्स कव्हर आणि वाढत्या खर्चात आरोग्याचे संरक्षण करण्यासाठी आरोग्य विमा निवडा.',
+    'bento.ins.desc': 'तुमच्या पश्चात कुटुंबाला सुरक्षित ठेवण्यासाठी योग्य टर्म इन्शुरन्स कव्हर आणि वाढत्या खर्चात आरोग्याचे संरक्षण करण्यासाठी आरोग्य विमा निवडा.',
     'bento.ins.badge': 'कुटुंब सुरक्षा नियोजन',
     'bento.ins.stat': '१५ पट उत्पन्न संरक्षण',
 
@@ -557,7 +558,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'quiz.eyebrow': 'आरोग्य तपासणी',
     'quiz.title': 'तुमचे आर्थिक आरोग्य (Financial Health) मोजा!',
     'quiz.desc': 'फक्त ५ सोप्या प्रश्नांची उत्तरे द्या आणि मिळवा तुमचा आर्थिक आरोग्य स्कोअर. हे तुम्हाला समजण्यास मदत करेल की तुम्ही योग्य दिशेने जात आहात की नाही!',
-    'quiz.testimonial': '१०,०००+ हून अधिक लोकांनी चाचणी घेतली आहे',
+    'quiz.testimonial': 'हजारो लोकांनी ही चाचणी घेतली आहे',
     'quiz.start_title': 'आर्थिक आरोग्य स्कोअर मिळवा',
     'quiz.start_sub': 'सर्व उत्तरे गोपनीय ठेवण्यात येतील',
     'quiz.start_btn': 'चाचणी सुरू करा',
@@ -585,7 +586,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'adv.bullet1_title': 'झटपट शिफारसी',
     'adv.bullet1_desc': 'कोणतीही क्लिष्ट आकडेमोड न करता सोपे आणि व्यावहारिक उपाय.',
     'adv.bullet2_title': 'पूर्णपणे सुरक्षित व खाजगी',
-    'adv.bullet2_desc': 'तुमची माहिती १००% सुरक्षित ठेवली जाते आणि कोणाशीही शेअर केली जात नाही.',
+    'adv.bullet2_desc': 'तुमची माहिती सुरक्षित ठेवली जाते. तुम्ही स्पष्ट संमती दिल्यासच निवडलेल्या product साठी verified partners सोबत माहिती share केली जाऊ शकते.',
     'adv.ask_title': 'तुमचा प्रश्न इथे विचारा:',
     'adv.placeholder': "उदा. 'मी दरमहा ३००० रुपयांची बचत कुठे करावी?' किंवा 'माझे उत्पन्न ५०,००० आहे, कर्ज किती घ्यावे?'",
     'adv.hint': 'मराठी किंवा इंग्लिश भाषेत लिहा',
@@ -830,7 +831,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- Data source / freshness ---
     'data.demo': 'Demo Data',
-    'data.live': 'MongoDB Live',
+    'data.live': 'Live Data',
     'data.updated': 'Updated',
 
     // --- Calculator disclaimer ---
@@ -898,7 +899,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'terms.title': 'Terms & Conditions',
     'terms.subtitle': 'Please read carefully before using the service.',
     'terms.t1': 'BudgetKatta provides only an educational and informational financial comparison service.',
-    'terms.t2': 'Unless marked as "MongoDB Live" or as a verified source, data may be demo or sample data.',
+    'terms.t2': 'Unless marked as "Live Data" or a verified source, some data may be sample or indicative.',
     'terms.t3': 'Verify details on the official website of the bank, insurer or fund house before making any decision.',
     'terms.t4': 'No returns of any kind are guaranteed.',
     'terms.t5': 'No financial advice is guaranteed.',
@@ -1060,6 +1061,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'broker.cta': 'Check on official site',
     'broker.commission_note': 'BudgetKatta may earn a commission · Official terms apply',
     'broker.indicative': 'Note: figures above are indicative and may change — verify on the official site.',
+    'broker.last_updated': 'Last updated',
     // ── Lead consent ──
     'lead.consent': 'I consent to receive calls / WhatsApp / email from BudgetKatta and its verified partners about my selected product.',
     'lead.err_consent': 'Please provide consent to proceed.',
@@ -1202,7 +1204,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'quiz.eyebrow': 'Health Check',
     'quiz.title': 'Measure Your Financial Health!',
     'quiz.desc': "Answer just 5 simple questions and get your financial health score. It'll help you understand whether you're heading in the right direction!",
-    'quiz.testimonial': '10,000+ people have taken this test',
+    'quiz.testimonial': 'Thousands have taken this test',
     'quiz.start_title': 'Get Your Financial Health Score',
     'quiz.start_sub': 'All your answers stay confidential',
     'quiz.start_btn': 'Start the Test',
@@ -1230,7 +1232,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'adv.bullet1_title': 'Instant Recommendations',
     'adv.bullet1_desc': 'Practical, easy answers — no complicated math required.',
     'adv.bullet2_title': '100% Secure & Private',
-    'adv.bullet2_desc': 'Your information stays 100% safe and is never shared with anyone.',
+    'adv.bullet2_desc': 'Your information is kept secure. It may be shared with verified partners for your selected product only after your explicit consent.',
     'adv.ask_title': 'Ask your question here:',
     'adv.placeholder': "e.g. 'Where should I park ₹3,000 a month?' or 'I earn ₹50,000 — how much loan can I take?'",
     'adv.hint': 'Type in English or Marathi',

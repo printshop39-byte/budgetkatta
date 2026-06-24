@@ -28,6 +28,7 @@ export default function ContactPage() {
   const [city, setCity] = useState('');
   const [service, setService] = useState<LeadModule>('GENERAL');
   const [message, setMessage] = useState('');
+  const [consent, setConsent] = useState(false);
   const [error, setError] = useState('');
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
@@ -36,6 +37,7 @@ export default function ContactPage() {
     e.preventDefault();
     if (!name.trim()) return setError(t('lead.err_name'));
     if (!/^\d{10}$/.test(phone.trim())) return setError(t('lead.err_phone'));
+    if (!consent) return setError(t('lead.err_consent'));
     setError('');
     setSending(true);
 
@@ -126,6 +128,16 @@ export default function ContactPage() {
                     className="bk-input resize-y"
                   />
                 </Field>
+
+                <label className="flex items-start gap-2.5 pt-1">
+                  <input
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 shrink-0 accent-bk-gold"
+                  />
+                  <span className="text-xs leading-relaxed text-slate-400 font-deva">{t('lead.consent')}</span>
+                </label>
 
                 {error && <p className="text-sm text-red-400 font-deva">{error}</p>}
 

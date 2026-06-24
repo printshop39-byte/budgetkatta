@@ -9,6 +9,7 @@
 import { motion } from 'framer-motion';
 import { LineChart, CreditCard, Landmark, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
+import { getTranslation } from '@/lib/i18n';
 import { AFFILIATE_LINKS, isLiveLink } from '@/lib/affiliate';
 
 type Bi = { mr: string; en: string };
@@ -69,6 +70,7 @@ interface AffiliateBannerProps {
 
 export default function AffiliateBanner({ variant = 'demat', href, className = '' }: AffiliateBannerProps) {
   const { language } = useLanguageStore();
+  const t = getTranslation(language);
   const preset = PRESETS[variant];
   const Icon = preset.icon;
   // Prefer an explicit prop, then the central config, then the preset placeholder.
@@ -83,17 +85,18 @@ export default function AffiliateBanner({ variant = 'demat', href, className = '
       className={`glass-card glass-card-gold relative flex flex-col items-start gap-3 p-5 sm:flex-row sm:items-center sm:justify-between ${className}`}
       aria-label={language === 'mr' ? 'जाहिरात' : 'Advertisement'}
     >
-      <span className="absolute right-3 top-3 rounded-full border border-slate-700 bg-slate-900/70 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-slate-500 font-deva">
-        {language === 'mr' ? 'जाहिरात' : 'Ad'}
+      <span className="absolute right-3 top-3 rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-amber-300/90">
+        {t('affiliate.badge')}
       </span>
 
-      <div className="flex items-start gap-3 pr-10 sm:pr-0">
+      <div className="flex items-start gap-3 pr-24 sm:pr-0">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-amber-400/30 bg-amber-400/10 text-amber-400">
           <Icon className="h-5 w-5" />
         </span>
         <div>
           <p className="text-sm font-bold text-slate-100 font-deva">{preset.title[language]}</p>
           <p className="mt-0.5 text-xs text-slate-400 font-deva">{preset.desc[language]}</p>
+          <p className="mt-1 text-[10px] leading-snug text-slate-500 font-deva">{t('affiliate.card_note')}</p>
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import PopularTools from '@/components/home/PopularTools';
 import BentoGrid from '@/components/BentoGrid';
 import CalculatorsHub from '@/components/CalculatorsHub';
 import AffiliateBanner from '@/components/AffiliateBanner';
+import BrokerOffers from '@/components/BrokerOffers';
 import LocatorSection from '@/components/home/LocatorSection';
 import FinancialHealthQuiz from '@/components/FinancialHealthQuiz';
 import SmartAdvisory from '@/components/SmartAdvisory';
@@ -13,7 +14,7 @@ import FAQ from '@/components/FAQ';
 export const metadata: Metadata = {
   title: { absolute: 'BudgetKatta — स्मार्ट आर्थिक मार्गदर्शक | स्मार्ट निवेश, सुरक्षित भविष्य' },
   description:
-    'महाराष्ट्रातील सर्वोत्तम FD दर, कर्ज, SIP आणि विमा | भारत का भरोसेमंद वित्तीय मार्गदर्शक। AI-सहाय्यित मार्गदर्शन.',
+    'महाराष्ट्रातील FD दर, कर्ज, SIP आणि विमा तुलना | भारत का भरोसेमंद वित्तीय मार्गदर्शक। AI-सहाय्यित मार्गदर्शन.',
   alternates: { canonical: '/' },
 };
 
@@ -33,6 +34,7 @@ export default function HomePage() {
       <div className="mx-auto max-w-4xl px-6 pb-4">
         <AffiliateBanner variant="demat" />
       </div>
+      <BrokerOffers />
       <FinancialHealthQuiz />
       <SmartAdvisory />
       <EducationHub />

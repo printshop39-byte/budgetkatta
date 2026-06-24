@@ -33,6 +33,7 @@ const companyLinks = [
   { href: '/privacy', key: 'nav.privacy' },
   { href: '/terms', key: 'nav.terms' },
   { href: '/disclaimer', key: 'nav.disclaimer' },
+  { href: '/affiliate-disclosure', key: 'nav.affiliate_disclosure' },
 ];
 
 const trustItems = ['trust.secure', 'trust.transparent', 'trust.ai', 'trust.educational', 'trust.no_hidden'];

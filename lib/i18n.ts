@@ -32,7 +32,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- FD Page ---
     'fd.title': 'मुदत ठेव (FD) दर',
-    'fd.subtitle': 'सर्व प्रमुख बँकांचे सर्वोत्तम FD दर',
+    'fd.subtitle': 'सर्व प्रमुख बँकांचे FD दर — तुलना करा',
     'fd.filter_all': 'सर्व बँका',
     'fd.filter_govt': 'सरकारी बँका',
     'fd.filter_private': 'खाजगी बँका',
@@ -53,7 +53,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- Loan Page ---
     'loan.title': 'कर्ज योजना',
-    'loan.subtitle': 'सर्वोत्तम कर्ज दर आणि अटी',
+    'loan.subtitle': 'कर्ज दर व अटींची तुलना',
     'loan.home': 'गृहकर्ज',
     'loan.personal': 'वैयक्तिक कर्ज',
     'loan.vehicle': 'वाहन कर्ज',
@@ -95,7 +95,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- SIP Page ---
     'sip.title': 'SIP / म्युच्युअल फंड',
-    'sip.subtitle': 'दीर्घकालीन संपत्ती निर्माणासाठी सर्वोत्तम फंड',
+    'sip.subtitle': 'दीर्घकालीन गुंतवणुकीसाठी फंड तुलना व कॅल्क्युलेटर',
     'sip.col_fund': 'फंडाचे नाव',
     'sip.col_category': 'प्रकार',
     'sip.col_3y': '3 वर्षे परतावा',
@@ -111,7 +111,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- Insurance Page ---
     'ins.title': 'विमा योजना',
-    'ins.subtitle': 'आरोग्य, जीवन आणि वाहन विम्याच्या सर्वोत्तम योजना',
+    'ins.subtitle': 'आरोग्य, जीवन व वाहन विमा — माहिती व तुलना',
     'ins.health': 'आरोग्य विमा',
     'ins.life': 'जीवन विमा',
     'ins.vehicle': 'वाहन विमा',
@@ -246,8 +246,8 @@ export const i18n: Record<Language, Record<string, string>> = {
     'privacy.retention': 'लीड माहिती १२ महिन्यांपेक्षा जास्त ठेवली जाणार नाही. त्यानंतर ती हटवली किंवा निनावी (anonymise) केली जाते.',
     'privacy.h_delete': 'माहिती हटवण्याची विनंती',
     'privacy.delete': 'तुम्ही कधीही तुमची माहिती हटवण्याची विनंती करू शकता. अशी विनंती ३० दिवसांत प्रक्रिया केली जाते.',
-    'privacy.h_contact': 'संपर्क',
-    'privacy.contact': 'गोपनीयतेबाबत प्रश्नांसाठी आमच्याशी संपर्क साधा:',
+    'privacy.h_contact': 'तक्रार निवारण व संपर्क',
+    'privacy.contact': 'गोपनीयता किंवा डेटा संबंधित प्रश्न व तक्रारींसाठी आमच्याशी संपर्क साधा:',
 
     // --- Terms page ---
     'terms.title': 'अटी व शर्ती',
@@ -364,7 +364,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'home.how_2': 'दर आणि EMI पाहा',
     'home.how_3': 'कागदपत्रे तयार ठेवा',
     'home.calc_title': 'कॅल्क्युलेटर एका क्लिकवर',
-    'fd.hero_title': 'सर्वोत्तम मुदत ठेव (FD) दर शोधा',
+    'fd.hero_title': 'मुदत ठेव (FD) दरांची तुलना करा',
     'fd.trust_signal': 'सुरक्षित बँक माहिती',
     'fd.guidance_cta': 'FD साठी मार्गदर्शन हवे आहे',
     'fd.col_docs': 'कागदपत्रे',
@@ -395,6 +395,37 @@ export const i18n: Record<Language, Record<string, string>> = {
     'cookie.learn': 'अधिक जाणून घ्या',
     'cookie.accept': 'स्वीकारा',
     'cookie.decline': 'नाकारा',
+    // ── Affiliate disclosure page ──
+    'nav.affiliate_disclosure': 'जाहिरात व कमिशन धोरण',
+    'affdisc.title': 'जाहिरात व कमिशन धोरण',
+    'affdisc.subtitle': 'पारदर्शकता आमच्यासाठी महत्त्वाची आहे.',
+    'affdisc.body1': 'BudgetKatta वरील काही links affiliate / referral links असू शकतात. तुम्ही त्या link द्वारे account, loan, insurance किंवा कोणत्याही financial product साठी apply केल्यास आम्हाला commission मिळू शकते. यामुळे तुमच्याकडून कोणतेही अतिरिक्त शुल्क घेतले जात नाही.',
+    'affdisc.body2': 'आमचे calculators व माहिती केवळ शैक्षणिक उद्देशासाठी आहेत. कोणताही अंतिम निर्णय घेण्यापूर्वी संबंधित official provider च्या अटी (terms) तपासून घ्या.',
+    'affdisc.body3': 'Affiliate compensation मुळे काही वेळा listing order प्रभावित होऊ शकतो; तरीही आम्ही माहिती पारदर्शक व प्रामाणिक ठेवण्याचा प्रयत्न करतो. BudgetKatta हे SEBI / IRDAI / RBI नोंदणीकृत सल्लागार किंवा मध्यस्थ नाही.',
+    // ── Affiliate card labels ──
+    'affiliate.badge': 'Sponsored · Affiliate',
+    'affiliate.card_note': 'Affiliate link: या link वरून apply केल्यास BudgetKatta ला commission मिळू शकते.',
+    // ── Broker / demat offers ──
+    'broker.section_title': 'Demat व गुंतवणूक App ऑफर्स',
+    'broker.section_sub': 'लोकप्रिय broker platforms — official site वर तपशील तपासा.',
+    'broker.fee_open': 'खाते उघडणे',
+    'broker.amc': 'AMC (वार्षिक)',
+    'broker.brokerage': 'ब्रोकरेज',
+    'broker.benefit': 'फायदा',
+    'broker.cta': 'Official site वर तपासा',
+    'broker.commission_note': 'BudgetKatta ला commission मिळू शकते · Official terms apply',
+    'broker.indicative': 'टीप: वरील आकडे indicative आहेत व बदलू शकतात — official site वर तपासा.',
+    // ── Lead consent ──
+    'lead.consent': 'मी BudgetKatta व त्याच्या verified partners कडून माझ्या निवडलेल्या product बद्दल call / WhatsApp / email मिळण्यास संमती देतो.',
+    'lead.err_consent': 'कृपया पुढे जाण्यासाठी संमती द्या.',
+    // ── Privacy (extra) ──
+    'privacy.h_comms': 'संपर्क संमती (Call / WhatsApp)',
+    'privacy.comms': 'फॉर्म भरल्यास तुम्ही BudgetKatta व verified partners कडून तुमच्या निवडलेल्या product बद्दल call / WhatsApp / email मिळण्यास संमती देता. ही संमती तुम्ही कधीही मागे घेऊ शकता.',
+    'privacy.h_thirdparty': 'तृतीय-पक्ष लिंक्स',
+    'privacy.thirdparty': 'साइटवर affiliate व इतर तृतीय-पक्ष लिंक्स असू शकतात. त्या साइट्सच्या गोपनीयता धोरणांना BudgetKatta जबाबदार नाही — कृपया त्यांचे धोरण स्वतंत्रपणे तपासा.',
+    // ── Disclaimer (extra) ──
+    'disclaimer.d7': 'BudgetKatta हे SEBI नोंदणीकृत गुंतवणूक सल्लागार (RIA) नाही (जोपर्यंत वेगळे स्पष्ट केलेले नाही). आम्ही stock / fund / insurance ची वैयक्तिक (personalized) शिफारस देत नाही.',
+    'disclaimer.d8': 'काही links affiliate links आहेत; affiliate compensation मुळे listing order प्रभावित होऊ शकतो, तरी आम्ही माहिती पारदर्शक ठेवण्याचा प्रयत्न करतो.',
 
     // --- Bento Grid ---
     'bento.title': 'आमची प्रमुख डिजिटल साधने',
@@ -550,7 +581,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     // --- Advisory ---
     'adv.eyebrow': 'स्मार्ट सल्लागार',
     'adv.title': 'तुमच्या प्रश्नांचे निरसन, एका क्षणात!',
-    'adv.desc': 'गुंतवणूक, कर्ज, विमा किंवा बजेट संदर्भात तुमच्या मनात काही शंका आहे का? खाली तुमच्या शब्दांत प्रश्न विचारा आणि आमचा डिजिटल आर्थिक सल्लागार तुम्हाला सर्वोत्तम मार्गदर्शन करेल.',
+    'adv.desc': 'गुंतवणूक, कर्ज, विमा किंवा बजेट संदर्भात तुमच्या मनात काही शंका आहे का? खाली तुमच्या शब्दांत प्रश्न विचारा आणि आमचा डिजिटल आर्थिक सल्लागार तुम्हाला योग्य मार्गदर्शन करेल.',
     'adv.bullet1_title': 'झटपट शिफारसी',
     'adv.bullet1_desc': 'कोणतीही क्लिष्ट आकडेमोड न करता सोपे आणि व्यावहारिक उपाय.',
     'adv.bullet2_title': 'पूर्णपणे सुरक्षित व खाजगी',
@@ -646,7 +677,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- FD Page ---
     'fd.title': 'Fixed Deposit (FD) Rates',
-    'fd.subtitle': 'Best FD rates from all major banks',
+    'fd.subtitle': 'Compare FD rates from all major banks',
     'fd.filter_all': 'All Banks',
     'fd.filter_govt': 'Public Sector Banks',
     'fd.filter_private': 'Private Banks',
@@ -667,7 +698,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- Loan Page ---
     'loan.title': 'Loan Schemes',
-    'loan.subtitle': 'Best loan rates and terms',
+    'loan.subtitle': 'Compare loan rates and terms',
     'loan.home': 'Home Loan',
     'loan.personal': 'Personal Loan',
     'loan.vehicle': 'Vehicle Loan',
@@ -709,7 +740,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- SIP Page ---
     'sip.title': 'SIP / Mutual Funds',
-    'sip.subtitle': 'Best funds for long-term wealth creation',
+    'sip.subtitle': 'Fund comparison & calculator for long-term investing',
     'sip.col_fund': 'Fund Name',
     'sip.col_category': 'Category',
     'sip.col_3y': '3-Year Return',
@@ -725,7 +756,7 @@ export const i18n: Record<Language, Record<string, string>> = {
 
     // --- Insurance Page ---
     'ins.title': 'Insurance Plans',
-    'ins.subtitle': 'Best health, life and vehicle insurance plans',
+    'ins.subtitle': 'Health, life and vehicle insurance — info & comparison',
     'ins.health': 'Health Insurance',
     'ins.life': 'Life Insurance',
     'ins.vehicle': 'Vehicle Insurance',
@@ -860,8 +891,8 @@ export const i18n: Record<Language, Record<string, string>> = {
     'privacy.retention': 'Lead data is not retained for more than 12 months, after which it is deleted or anonymised.',
     'privacy.h_delete': 'Data deletion request',
     'privacy.delete': 'You can request the deletion of your information at any time. Such requests are processed within 30 days.',
-    'privacy.h_contact': 'Contact',
-    'privacy.contact': 'For privacy-related questions, please contact us:',
+    'privacy.h_contact': 'Grievance & Contact',
+    'privacy.contact': 'For privacy or data-related questions and grievances, please contact us:',
 
     // --- Terms page ---
     'terms.title': 'Terms & Conditions',
@@ -978,7 +1009,7 @@ export const i18n: Record<Language, Record<string, string>> = {
     'home.how_2': 'View rates and EMI',
     'home.how_3': 'Keep documents ready',
     'home.calc_title': 'Calculators in One Click',
-    'fd.hero_title': 'Find the best Fixed Deposit (FD) rates',
+    'fd.hero_title': 'Compare Fixed Deposit (FD) rates',
     'fd.trust_signal': 'Secure bank information',
     'fd.guidance_cta': 'I need guidance on FDs',
     'fd.col_docs': 'Documents',
@@ -1009,6 +1040,37 @@ export const i18n: Record<Language, Record<string, string>> = {
     'cookie.learn': 'Learn more',
     'cookie.accept': 'Accept',
     'cookie.decline': 'Decline',
+    // ── Affiliate disclosure page ──
+    'nav.affiliate_disclosure': 'Affiliate Disclosure',
+    'affdisc.title': 'Affiliate Disclosure',
+    'affdisc.subtitle': 'Transparency matters to us.',
+    'affdisc.body1': 'Some links on BudgetKatta may be affiliate / referral links. If you apply for an account, loan, insurance or any financial product through such a link, we may earn a commission. This does not cost you anything extra.',
+    'affdisc.body2': 'Our calculators and information are for educational purposes only. Always check the relevant official provider’s terms before making any final decision.',
+    'affdisc.body3': 'Affiliate compensation may sometimes influence listing order; even so, we strive to keep our information transparent and honest. BudgetKatta is not a SEBI / IRDAI / RBI registered advisor or intermediary.',
+    // ── Affiliate card labels ──
+    'affiliate.badge': 'Sponsored · Affiliate',
+    'affiliate.card_note': 'Affiliate link: applying via this link may earn BudgetKatta a commission.',
+    // ── Broker / demat offers ──
+    'broker.section_title': 'Demat & Investing App Offers',
+    'broker.section_sub': 'Popular broker platforms — verify details on the official site.',
+    'broker.fee_open': 'Account Opening',
+    'broker.amc': 'AMC (yearly)',
+    'broker.brokerage': 'Brokerage',
+    'broker.benefit': 'Benefit',
+    'broker.cta': 'Check on official site',
+    'broker.commission_note': 'BudgetKatta may earn a commission · Official terms apply',
+    'broker.indicative': 'Note: figures above are indicative and may change — verify on the official site.',
+    // ── Lead consent ──
+    'lead.consent': 'I consent to receive calls / WhatsApp / email from BudgetKatta and its verified partners about my selected product.',
+    'lead.err_consent': 'Please provide consent to proceed.',
+    // ── Privacy (extra) ──
+    'privacy.h_comms': 'Communication Consent (Call / WhatsApp)',
+    'privacy.comms': 'By submitting a form you consent to receive calls / WhatsApp / email from BudgetKatta and its verified partners about your selected product. You can withdraw this consent at any time.',
+    'privacy.h_thirdparty': 'Third-party Links',
+    'privacy.thirdparty': 'The site may contain affiliate and other third-party links. BudgetKatta is not responsible for the privacy policies of those sites — please review them independently.',
+    // ── Disclaimer (extra) ──
+    'disclaimer.d7': 'BudgetKatta is not a SEBI-registered Investment Adviser (RIA) unless explicitly stated. We do not provide personalized recommendations on stocks / funds / insurance.',
+    'disclaimer.d8': 'Some links are affiliate links; affiliate compensation may influence listing order, though we strive to keep our information transparent.',
 
     // --- Bento Grid ---
     'bento.title': 'Our Key Digital Tools',

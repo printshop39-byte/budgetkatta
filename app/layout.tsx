@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     template: '%s | BudgetKatta',
   },
   description:
-    'महाराष्ट्रातील सर्वोत्तम FD दर, कर्ज, SIP आणि विमा योजनांची तुलना करा. AI-सहाय्यित मार्गदर्शन.',
+    'महाराष्ट्रातील FD दर, कर्ज, SIP आणि विमा योजनांची तुलना करा. AI-सहाय्यित मार्गदर्शन.',
   keywords: ['FD rates Maharashtra', 'best FD rates', 'home loan', 'SIP calculator', 'BudgetKatta'],
   applicationName: SITE_NAME,
   openGraph: {

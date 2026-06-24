@@ -10,6 +10,8 @@ const sections = [
   { h: 'privacy.h_consent', b: 'privacy.consent' },
   { h: 'privacy.h_share', b: 'privacy.share' },
   { h: 'privacy.h_cookies', b: 'privacy.cookies' },
+  { h: 'privacy.h_comms', b: 'privacy.comms' },
+  { h: 'privacy.h_thirdparty', b: 'privacy.thirdparty' },
   { h: 'privacy.h_retention', b: 'privacy.retention' },
   { h: 'privacy.h_delete', b: 'privacy.delete' },
   { h: 'privacy.h_contact', b: 'privacy.contact' },

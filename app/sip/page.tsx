@@ -6,6 +6,7 @@ import { getTranslation } from '@/lib/i18n';
 import { useCompareStore } from '@/store/compareStore';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import SIPCalculator from '@/components/calculators/SIPCalculator';
+import BrokerOffers from '@/components/BrokerOffers';
 import BadgeChip from '@/components/shared/BadgeChip';
 import DataSourceBadge from '@/components/shared/DataSourceBadge';
 import TableSkeleton from '@/components/shared/TableSkeleton';
@@ -122,6 +123,8 @@ export default function SIPPage() {
         <h2 className="mb-4 font-display text-xl font-bold text-slate-200 font-deva">{t('doc.section_title')}</h2>
         <DocumentChecklist documents={sipDocuments} />
       </section>
+
+      <BrokerOffers className="!px-0" />
 
       <div className="mt-10 text-center">
         <button

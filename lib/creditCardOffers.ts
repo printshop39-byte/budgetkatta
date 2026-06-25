@@ -16,7 +16,8 @@
 //                     5X on other online spends.
 //   Flipkart Axis   — joining & annual ₹500, waived on ₹3.5L spend; 5% Flipkart,
 //                     7.5% Myntra cashback.
-//   Amazon Pay ICICI— lifetime free; 5% on Amazon for Prime members, 3% without.
+//   Axis MyZone     — joining & annual ₹500, waived on spend milestone; free
+//                     SonyLIV annual subscription + dining / movie / travel offers.
 
 // Date the figures below were last reviewed. Update this whenever you verify /
 // change the charges so the UI can show users how fresh the data is.
@@ -63,12 +64,12 @@ export const creditCardOffers: CreditCardOffer[] = [
     bestFor: { mr: 'Flipkart / Myntra खरेदी', en: 'Flipkart & Myntra' },
   },
   {
-    id: 'amazonpay-icici',
-    name: 'Amazon Pay ICICI',
-    href: process.env.NEXT_PUBLIC_AFF_CC_ICICI || 'https://www.icicibank.com/personal-banking/cards/credit-card',
-    joiningFee: { mr: '₹0 (आजीवन मोफत)*', en: '₹0 (lifetime free)*' },
-    annualFee: { mr: '₹0*', en: '₹0*' },
-    reward: { mr: 'Amazon वर 5% (Prime) / 3% (non-Prime)*', en: '5% on Amazon (Prime) / 3% (non-Prime)*' },
-    bestFor: { mr: 'Amazon खरेदी', en: 'Amazon shoppers' },
+    id: 'axis-myzone',
+    name: 'Axis MyZone',
+    href: process.env.NEXT_PUBLIC_AFF_AXIS_CC || 'https://www.axisbank.com/retail/cards/credit-card',
+    joiningFee: { mr: '₹500*', en: '₹500*' },
+    annualFee: { mr: '₹500/वर्ष (खर्चावर माफ)*', en: '₹500/yr (waived on spend)*' },
+    reward: { mr: 'मोफत SonyLIV वार्षिक सदस्यता + dining/movie सवलती*', en: 'Free SonyLIV annual + dining/movie offers*' },
+    bestFor: { mr: 'मनोरंजन व जेवण', en: 'Entertainment & dining' },
   },
 ];

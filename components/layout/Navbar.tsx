@@ -26,7 +26,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/gadget-emi', label: { mr: 'गॅजेट EMI', en: 'Gadget EMI' } },
   { href: '/rates', label: { mr: 'दर/बाजार', en: 'Rates / Market' } },
   { href: '/directory', label: { mr: 'बँक निर्देशिका', en: 'Bank Directory' } },
-  { href: '/locator', label: { mr: 'स्टोअर लोकेटर', en: 'Store Locator' } },
+  // Store Locator temporarily hidden until verified store listings are added.
   { href: '/documents', label: { mr: 'कागदपत्रे', en: 'Documents' }, secondary: true },
   { href: '/about', label: { mr: 'आमच्याबद्दल', en: 'About Us' }, secondary: true },
   { href: '/contact', label: { mr: 'संपर्क', en: 'Contact' }, secondary: true },

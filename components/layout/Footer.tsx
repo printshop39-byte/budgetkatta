@@ -23,7 +23,6 @@ const toolLinks = [
   { href: '/loans', key: 'tools.emi' },
   { href: '/sip', key: 'tools.sip' },
   { href: '/insurance', key: 'tools.ins' },
-  { href: '/locator', key: 'tools.locator' },
   { href: '/documents', key: 'tools.docs' },
 ];
 

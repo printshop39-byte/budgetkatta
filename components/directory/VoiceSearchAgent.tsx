@@ -19,10 +19,26 @@ export default function VoiceSearchAgent({ language, onResult, note }: Props) {
   const [open, setOpen] = useState(false);
   const recRef = useRef<any>(null);
 
+  // Example searches — real, server-matchable terms (cities / pincode) that both
+  // demonstrate the feature and actually return results when tapped.
+  const examples = language === 'mr'
+    ? ['पुणे', 'मुंबई', 'नागपूर', '411001']
+    : ['Pune', 'Mumbai', 'Nagpur', '411001'];
+
+  const runExample = (term: string) => {
+    setHeard(term);
+    setOpen(true);
+    onResult(term);
+  };
+
   useEffect(() => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     setSupported(!!SR);
+    // Open the hint once so users notice they can search by voice, then let them
+    // dismiss it by interacting. (Auto-shown only on first mount.)
+    const hintTimer = setTimeout(() => setOpen(true), 1200);
     return () => {
+      clearTimeout(hintTimer);
       try {
         recRef.current?.abort();
       } catch {
@@ -121,6 +137,26 @@ export default function VoiceSearchAgent({ language, onResult, note }: Props) {
               </p>
             )}
 
+            {/* Tappable example searches (also a fallback when voice is unsupported) */}
+            {!listening && (
+              <div className="mt-3">
+                <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500 font-deva">
+                  {language === 'mr' ? 'उदाहरणे — बोला किंवा टॅप करा' : 'Examples — say or tap'}
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {examples.map((ex) => (
+                    <button
+                      key={ex}
+                      onClick={() => runExample(ex)}
+                      className="rounded-full border border-slate-700 bg-slate-800/70 px-2.5 py-1 text-[11px] font-semibold text-slate-300 transition-colors hover:border-amber-400/50 hover:text-amber-300 font-deva"
+                    >
+                      {ex}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {note && (
               <p
                 className={`mt-2 text-xs font-semibold leading-relaxed font-deva ${
@@ -134,12 +170,12 @@ export default function VoiceSearchAgent({ language, onResult, note }: Props) {
         )}
       </AnimatePresence>
 
-      {/* FAB */}
+      {/* FAB + prominent "speak to search" label */}
       <button
         onClick={toggle}
         aria-label={listening ? listeningLabel : hintLabel}
         aria-pressed={listening}
-        className={`relative flex h-14 w-14 items-center justify-center rounded-full text-slate-950 shadow-lg transition-all duration-300 ${
+        className={`group relative flex h-14 items-center gap-2 rounded-full pl-4 pr-5 text-slate-950 shadow-lg transition-all duration-300 ${
           listening
             ? 'bg-amber-300 shadow-[0_0_34px_rgba(251,191,36,0.75)]'
             : 'bg-gradient-to-tr from-amber-400 to-yellow-500 shadow-[0_0_22px_rgba(251,191,36,0.45)] hover:shadow-[0_0_32px_rgba(251,191,36,0.7)]'
@@ -148,7 +184,12 @@ export default function VoiceSearchAgent({ language, onResult, note }: Props) {
         {listening && (
           <span className="absolute inset-0 animate-ping rounded-full bg-amber-400/60" />
         )}
-        <span className="relative">{listening ? <Mic className="h-6 w-6" /> : <Bot className="h-6 w-6" />}</span>
+        <span className="relative flex items-center gap-2">
+          {listening ? <Mic className="h-6 w-6" /> : <Bot className="h-6 w-6" />}
+          <span className="text-sm font-extrabold font-deva">
+            {listening ? listeningLabel : language === 'mr' ? 'बोलून शोधा' : 'Search by voice'}
+          </span>
+        </span>
       </button>
     </div>
   );

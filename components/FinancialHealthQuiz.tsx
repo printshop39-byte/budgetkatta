@@ -1,11 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Award, ChevronRight, Star } from "lucide-react";
+import { Award, ChevronRight, Star, ArrowRight } from "lucide-react";
 import { scrollToSection } from "@/lib/scroll";
 import { useLanguageStore } from "@/store/languageStore";
 import { getTranslation } from "@/lib/i18n";
+
+// Each quiz question maps to a financial dimension. When the user's answer
+// scores below the midpoint (< 20 of 40), we surface a targeted next-step tip
+// that deep-links to the relevant tool. quizAnswers[idx] holds that question's
+// score (answers are pushed in question order).
+const TIP_DIMENSIONS = [
+  { idx: 0, key: "savings", href: "/sip" },
+  { idx: 1, key: "emergency", href: "/fd" },
+  { idx: 2, key: "insurance", href: "/insurance" },
+  { idx: 3, key: "debt", href: "/loans" },
+  { idx: 4, key: "invest", href: "/sip" },
+];
 
 export default function FinancialHealthQuiz() {
   const [quizStep, setQuizStep] = useState(0);
@@ -218,6 +231,46 @@ export default function FinancialHealthQuiz() {
                     </span>
                     <p className="text-[11px] leading-relaxed opacity-95">{getHealthStatus(calculateHealthScore()).desc}</p>
                   </div>
+
+                  {/* Personalized next steps — tips for the weakest dimensions */}
+                  {(() => {
+                    const weak = TIP_DIMENSIONS.map((d) => ({ ...d, score: quizAnswers[d.idx] ?? 0 }))
+                      .filter((d) => d.score < 20)
+                      .sort((a, b) => a.score - b.score)
+                      .slice(0, 3);
+                    return (
+                      <div className="space-y-2 text-left">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-amber-300">
+                          {t("quiz.tips_heading")}
+                        </p>
+                        {weak.length === 0 ? (
+                          <p className="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-3 text-[11px] leading-relaxed text-emerald-200 font-deva">
+                            {t("quiz.tip_maintain")}
+                          </p>
+                        ) : (
+                          <ul className="space-y-2">
+                            {weak.map((d) => (
+                              <li
+                                key={d.key}
+                                className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-slate-900/5 p-3"
+                              >
+                                <span className="text-[11px] leading-snug text-slate-200 font-deva">
+                                  {t(`quiz.tip_${d.key}`)}
+                                </span>
+                                <Link
+                                  href={d.href}
+                                  className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-amber-400/15 px-3 py-1.5 text-[11px] font-bold text-amber-300 transition-colors hover:bg-amber-400/25 font-deva"
+                                >
+                                  {t(`quiz.tip_${d.key}_cta`)}
+                                  <ArrowRight className="h-3 w-3" />
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    );
+                  })()}
 
                   <div className="flex space-x-3">
                     <button

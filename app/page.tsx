@@ -9,6 +9,7 @@ import LocatorSection from '@/components/home/LocatorSection';
 import FinancialHealthQuiz from '@/components/FinancialHealthQuiz';
 import SmartAdvisory from '@/components/SmartAdvisory';
 import EducationHub from '@/components/EducationHub';
+import Testimonials from '@/components/trust/Testimonials';
 import FAQ from '@/components/FAQ';
 import JsonLd from '@/components/seo/JsonLd';
 import { getTranslation } from '@/lib/i18n';
@@ -51,6 +52,7 @@ export default function HomePage() {
       <FinancialHealthQuiz />
       <SmartAdvisory />
       <EducationHub />
+      <Testimonials />
       <FAQ />
       <JsonLd data={faqSchema} />
     </div>

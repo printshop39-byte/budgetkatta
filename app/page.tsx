@@ -4,6 +4,7 @@ import PopularTools from '@/components/home/PopularTools';
 import BentoGrid from '@/components/BentoGrid';
 import CalculatorsHub from '@/components/CalculatorsHub';
 import BrokerOffers from '@/components/BrokerOffers';
+import CreditCardOffers from '@/components/CreditCardOffers';
 import LocatorSection from '@/components/home/LocatorSection';
 import FinancialHealthQuiz from '@/components/FinancialHealthQuiz';
 import SmartAdvisory from '@/components/SmartAdvisory';
@@ -46,6 +47,7 @@ export default function HomePage() {
       <CalculatorsHub />
       <LocatorSection />
       <BrokerOffers />
+      <CreditCardOffers />
       <FinancialHealthQuiz />
       <SmartAdvisory />
       <EducationHub />

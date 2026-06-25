@@ -26,6 +26,15 @@ const titleCase = (s: string) =>
     .replace(/\b\w/g, (c) => c.toUpperCase())
     .replace(/\bM Corp\b/i, '(M Corp.)');
 
+// Normalise an English place name to match the keys in marathi-places.json
+// (upper-case, trimmed, single-spaced) — same rule used to build that file.
+const normPlace = (s: string) => s.trim().toUpperCase().replace(/\s+/g, ' ');
+
+interface MarathiPlaces {
+  districts: Record<string, string>;
+  cities: Record<string, string>;
+}
+
 // Server-side bank category (kept in sync with lib/locations BankFilter). The
 // API narrows results to one category; 'main' (Public/Private) is the default.
 type BankFilter = 'main' | 'cooperative' | 'sfb' | 'rrb' | 'payments';
@@ -60,6 +69,7 @@ export default function DirectoryPage() {
   const [loadingCities, setLoadingCities] = useState(false);
   const [loadingBranches, setLoadingBranches] = useState(false);
   const [voiceNote, setVoiceNote] = useState<{ text: string; ok: boolean } | null>(null);
+  const [mrPlaces, setMrPlaces] = useState<MarathiPlaces | null>(null);
   const [filter, setFilter] = useState<BankFilter>('main');
   const [query, setQuery] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
@@ -102,6 +112,26 @@ export default function DirectoryPage() {
     const qs = params.toString();
     window.history.replaceState(null, '', `${window.location.pathname}${qs ? `?${qs}` : ''}`);
   };
+
+  // Marathi place names (district + village) — loaded only in Marathi mode, on
+  // demand, from the static LGD-derived map so it never bloats other pages.
+  useEffect(() => {
+    if (language !== 'mr' || mrPlaces) return;
+    let active = true;
+    fetch('/data/marathi-places.json')
+      .then((r) => r.json())
+      .then((j) => active && setMrPlaces(j))
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [language, mrPlaces]);
+
+  // Display a place in Marathi when available (value stays English for queries).
+  const dispDistrict = (d: string) =>
+    (language === 'mr' && mrPlaces?.districts[normPlace(d)]) || titleCase(d);
+  const dispCity = (c: string) =>
+    (language === 'mr' && mrPlaces?.cities[normPlace(c)]) || titleCase(c);
 
   // Districts on mount.
   useEffect(() => {
@@ -209,7 +239,7 @@ export default function DirectoryPage() {
         setDistrict(m.district);
         setCity(m.city ?? '');
         setVoiceNote({
-          text: (language === 'mr' ? 'दाखवत आहे: ' : 'Showing results for: ') + titleCase(m.city || m.district),
+          text: (language === 'mr' ? 'दाखवत आहे: ' : 'Showing results for: ') + (m.city ? dispCity(m.city) : dispDistrict(m.district)),
           ok: true,
         });
         setTimeout(() => document.getElementById('voice-results')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 250);
@@ -315,7 +345,7 @@ export default function DirectoryPage() {
               <option value="">{language === 'mr' ? '— जिल्हा —' : '— District —'}</option>
               {districts.map((d) => (
                 <option key={d} value={d}>
-                  {titleCase(d)}
+                  {dispDistrict(d)}
                 </option>
               ))}
             </select>
@@ -331,7 +361,7 @@ export default function DirectoryPage() {
               <option value="">{language === 'mr' ? '— शहर/तालुका —' : '— City / Taluka —'}</option>
               {cities.map((c) => (
                 <option key={c} value={c}>
-                  {titleCase(c)}
+                  {dispCity(c)}
                 </option>
               ))}
             </select>
@@ -357,7 +387,7 @@ export default function DirectoryPage() {
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
               <div className="mb-5 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5">
                 <p className="font-display text-lg font-bold text-slate-100 font-deva">
-                  {titleCase(city)}, {titleCase(district)}
+                  {dispCity(city)}, {dispDistrict(district)}
                 </p>
                 <span className="text-sm font-bold text-bk-gold font-deva">
                   {q ? visibleBranches.length : total} {language === 'mr' ? 'शाखा' : 'branches'}

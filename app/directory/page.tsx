@@ -2,7 +2,7 @@
 // Bank & Patsanstha directory — District → City cascade served live from MongoDB
 // (the Institution collection populated from the official banking exports).
 // Each level is fetched on demand from /api/locations so no data ships in the bundle.
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import AffiliateBanner from '@/components/AffiliateBanner';
@@ -33,6 +33,8 @@ const normPlace = (s: string) => s.trim().toUpperCase().replace(/\s+/g, ' ');
 interface MarathiPlaces {
   districts: Record<string, string>;
   cities: Record<string, string>;
+  cityTaluka: Record<string, string>; // norm(city) -> norm(taluka english)
+  talukas: Record<string, string>; // norm(taluka english) -> Marathi
 }
 
 // Server-side bank category (kept in sync with lib/locations BankFilter). The
@@ -63,6 +65,7 @@ export default function DirectoryPage() {
   const [branches, setBranches] = useState<Branch[]>([]);
 
   const [district, setDistrict] = useState('');
+  const [taluka, setTaluka] = useState(''); // norm(taluka english); '' = all talukas
   const [city, setCity] = useState('');
 
   const [loadingDistricts, setLoadingDistricts] = useState(true);
@@ -113,10 +116,11 @@ export default function DirectoryPage() {
     window.history.replaceState(null, '', `${window.location.pathname}${qs ? `?${qs}` : ''}`);
   };
 
-  // Marathi place names (district + village) — loaded only in Marathi mode, on
-  // demand, from the static LGD-derived map so it never bloats other pages.
+  // LGD place data (Marathi names + city→taluka map) — loaded once on the
+  // directory page only, so it never bloats other pages. Used for Marathi names
+  // (Marathi mode) and for the Taluka filter (both languages).
   useEffect(() => {
-    if (language !== 'mr' || mrPlaces) return;
+    if (mrPlaces) return;
     let active = true;
     fetch('/data/marathi-places.json')
       .then((r) => r.json())
@@ -125,13 +129,36 @@ export default function DirectoryPage() {
     return () => {
       active = false;
     };
-  }, [language, mrPlaces]);
+  }, [mrPlaces]);
 
   // Display a place in Marathi when available (value stays English for queries).
   const dispDistrict = (d: string) =>
     (language === 'mr' && mrPlaces?.districts[normPlace(d)]) || titleCase(d);
   const dispCity = (c: string) =>
     (language === 'mr' && mrPlaces?.cities[normPlace(c)]) || titleCase(c);
+  // Taluka label: Marathi in Marathi mode, else title-cased English.
+  const dispTaluka = (t: string) =>
+    (language === 'mr' && mrPlaces?.talukas[t]) || titleCase(t);
+
+  // city→taluka is keyed by "DISTRICT|CITY" so duplicate village names across
+  // districts never collide.
+  // Talukas present among the current district's loaded cities (sorted by label).
+  const talukaOptions = useMemo(() => {
+    if (!mrPlaces) return [] as string[];
+    const set = new Set<string>();
+    for (const c of cities) {
+      const t = mrPlaces.cityTaluka[`${normPlace(district)}|${normPlace(c)}`];
+      if (t) set.add(t);
+    }
+    return Array.from(set).sort((a, b) => dispTaluka(a).localeCompare(dispTaluka(b)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cities, mrPlaces, district, language]);
+
+  // Cities shown in the dropdown — narrowed to the selected taluka when set.
+  const visibleCities = useMemo(() => {
+    if (!taluka || !mrPlaces) return cities;
+    return cities.filter((c) => mrPlaces.cityTaluka[`${normPlace(district)}|${normPlace(c)}`] === taluka);
+  }, [cities, taluka, mrPlaces, district]);
 
   // Districts on mount.
   useEffect(() => {
@@ -214,9 +241,16 @@ export default function DirectoryPage() {
 
   const onDistrictChange = (v: string) => {
     setDistrict(v);
+    setTaluka('');
     setCity('');
     setQuery('');
     setVoiceNote(null);
+  };
+
+  // Selecting a taluka resets the city (it may not belong to the new taluka).
+  const onTalukaChange = (v: string) => {
+    setTaluka(v);
+    setCity('');
   };
 
   // Client-side narrowing of the city's loaded branches by name / branch /
@@ -237,6 +271,7 @@ export default function DirectoryPage() {
       const m = j.match;
       if (m?.matched && m.district) {
         setDistrict(m.district);
+        setTaluka(''); // clear any taluka filter so the matched city is visible
         setCity(m.city ?? '');
         setVoiceNote({
           text: (language === 'mr' ? 'दाखवत आहे: ' : 'Showing results for: ') + (m.city ? dispCity(m.city) : dispDistrict(m.district)),
@@ -334,7 +369,7 @@ export default function DirectoryPage() {
 
       {/* Cascading dropdowns */}
       <div className="rounded-2xl border border-slate-700/50 bg-slate-900/60 p-6 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {/* District */}
           <label className="block">
             <span className="mb-1.5 flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-slate-400 font-deva">
@@ -351,15 +386,35 @@ export default function DirectoryPage() {
             </select>
           </label>
 
-          {/* City / Taluka */}
+          {/* Taluka (derived from LGD; filters the village list) */}
           <label className="block">
             <span className="mb-1.5 flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-slate-400 font-deva">
-              {language === 'mr' ? 'शहर / तालुका निवडा' : 'Select City / Taluka'}
+              {language === 'mr' ? 'तालुका निवडा' : 'Select Taluka'}
+            </span>
+            <select
+              value={taluka}
+              disabled={!district || loadingCities || talukaOptions.length === 0}
+              onChange={(e) => onTalukaChange(e.target.value)}
+              className={selectClass}
+            >
+              <option value="">{language === 'mr' ? '— सर्व तालुके —' : '— All Talukas —'}</option>
+              {talukaOptions.map((t) => (
+                <option key={t} value={t}>
+                  {dispTaluka(t)}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          {/* Village / City */}
+          <label className="block">
+            <span className="mb-1.5 flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-slate-400 font-deva">
+              {language === 'mr' ? 'गाव / शहर निवडा' : 'Select Village / City'}
               {loadingCities && <Spinner />}
             </span>
             <select value={city} disabled={!district || loadingCities} onChange={(e) => setCity(e.target.value)} className={selectClass}>
-              <option value="">{language === 'mr' ? '— शहर/तालुका —' : '— City / Taluka —'}</option>
-              {cities.map((c) => (
+              <option value="">{language === 'mr' ? '— गाव/शहर —' : '— Village / City —'}</option>
+              {visibleCities.map((c) => (
                 <option key={c} value={c}>
                   {dispCity(c)}
                 </option>

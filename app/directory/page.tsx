@@ -30,6 +30,19 @@ const titleCase = (s: string) =>
 // (upper-case, trimmed, single-spaced) — same rule used to build that file.
 const normPlace = (s: string) => s.trim().toUpperCase().replace(/\s+/g, ' ');
 
+// Administrative suffixes the RBI data appends to city names, e.g.
+// "KOLHAPUR (M CORP.)". Mapped to short Marathi labels; '' drops the suffix.
+const ADMIN_SUFFIX_MR: Record<string, string> = {
+  'M CORP': 'मनपा',
+  'M CL': 'नप',
+  'N CL': 'नप',
+  NP: 'नप',
+  CT: 'शहर',
+  CB: 'कॅन्टोन्मेंट',
+  OG: '',
+  NV: '',
+};
+
 interface MarathiPlaces {
   districts: Record<string, string>;
   cities: Record<string, string>;
@@ -134,8 +147,21 @@ export default function DirectoryPage() {
   // Display a place in Marathi when available (value stays English for queries).
   const dispDistrict = (d: string) =>
     (language === 'mr' && mrPlaces?.districts[normPlace(d)]) || titleCase(d);
-  const dispCity = (c: string) =>
-    (language === 'mr' && mrPlaces?.cities[normPlace(c)]) || titleCase(c);
+  const dispCity = (c: string) => {
+    // Exact match first (preserves villages whose real name contains parens).
+    if (language === 'mr' && mrPlaces?.cities[normPlace(c)]) return mrPlaces.cities[normPlace(c)];
+    // Otherwise split off a trailing administrative suffix and translate the base.
+    const m = c.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+    if (!m) return titleCase(c);
+    const base = m[1].trim();
+    const sfxRaw = m[2].trim();
+    if (language !== 'mr') return `${titleCase(base)} (${sfxRaw})`;
+    const baseMr = mrPlaces?.cities[normPlace(base)] || mrPlaces?.districts[normPlace(base)] || titleCase(base);
+    const sfxKey = sfxRaw.toUpperCase().replace(/\./g, '').replace(/\s+/g, ' ').trim();
+    const sfxMr = ADMIN_SUFFIX_MR[sfxKey];
+    if (sfxMr === undefined) return `${baseMr} (${sfxRaw})`;
+    return sfxMr ? `${baseMr} (${sfxMr})` : baseMr;
+  };
   // Taluka label: Marathi in Marathi mode, else title-cased English.
   const dispTaluka = (t: string) =>
     (language === 'mr' && mrPlaces?.talukas[t]) || titleCase(t);

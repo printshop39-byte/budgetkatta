@@ -29,6 +29,7 @@ const toolLinks = [
 
 const companyLinks = [
   { href: '/about', key: 'nav.about' },
+  { href: '/blog', key: 'blog.nav' },
   { href: '/contact', key: 'nav.contact' },
   { href: '/privacy', key: 'nav.privacy' },
   { href: '/terms', key: 'nav.terms' },

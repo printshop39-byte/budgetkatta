@@ -150,6 +150,11 @@ export default function SmartAdvisory() {
                 </motion.div>
               )}
             </AnimatePresence>
+
+            {/* Compliance: this tool gives general educational info, not advice. */}
+            <p className="text-[10px] leading-relaxed text-slate-500 font-deva">
+              ⚠️ {t("adv.disclaimer")}
+            </p>
           </div>
         </div>
       </div>

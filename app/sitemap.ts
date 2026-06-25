@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { APP_URL } from '@/lib/seo';
 import { getDistricts } from '@/lib/locations';
+import { getAllPosts } from '@/lib/blogPosts';
 
 // Static routes plus the per-loan and guide content pages. District landing
 // pages are appended live from the DB when available.
@@ -18,6 +19,7 @@ const STATIC_ROUTES = [
   '/directory',
   '/locator',
   '/guides/payments-bank',
+  '/blog',
   '/about',
   '/contact',
 ];
@@ -35,6 +37,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const type of LOAN_TYPES) {
     entries.push({ url: `${APP_URL}/loans/${type}`, changeFrequency: 'monthly', priority: 0.6 });
+  }
+
+  // Blog posts.
+  for (const post of getAllPosts()) {
+    entries.push({
+      url: `${APP_URL}/blog/${post.slug}`,
+      lastModified: post.date,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    });
   }
 
   // District landing pages (best-effort — empty when the DB is unavailable).

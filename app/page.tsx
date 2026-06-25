@@ -20,7 +20,7 @@ const tMr = getTranslation('mr');
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: [1, 2, 3, 4].map((i) => ({
+  mainEntity: [1, 2, 3, 4, 5, 6, 7, 8].map((i) => ({
     '@type': 'Question',
     name: tMr(`faq.q${i}`),
     acceptedAnswer: { '@type': 'Answer', text: tMr(`faq.a${i}`) },

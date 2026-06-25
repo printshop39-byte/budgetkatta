@@ -11,12 +11,10 @@ export default function FAQ() {
   const language = useLanguageStore((s) => s.language);
   const t = getTranslation(language);
 
-  const faqs = [
-    { q: t("faq.q1"), a: t("faq.a1") },
-    { q: t("faq.q2"), a: t("faq.a2") },
-    { q: t("faq.q3"), a: t("faq.a3") },
-    { q: t("faq.q4"), a: t("faq.a4") },
-  ];
+  const faqs = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => ({
+    q: t(`faq.q${i}`),
+    a: t(`faq.a${i}`),
+  }));
 
   return (
     <section className="py-20 px-6 max-w-4xl mx-auto border-t border-slate-800">

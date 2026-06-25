@@ -37,6 +37,30 @@ export default function AboutPage() {
         <p className="text-base leading-relaxed text-slate-400 font-deva">{t('about.ai')}</p>
       </motion.div>
 
+      {/* Founder's note + data-source transparency */}
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="glass-card space-y-3 p-6"
+        >
+          <h2 className="font-display text-lg font-bold text-slate-100 font-deva">{t('about.founder_title')}</h2>
+          <p className="text-sm leading-relaxed text-slate-400 font-deva">{t('about.founder_body')}</p>
+          <p className="text-sm font-bold text-bk-gold font-deva">{t('about.founder_sign')}</p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="glass-card space-y-3 p-6"
+        >
+          <h2 className="font-display text-lg font-bold text-slate-100 font-deva">{t('about.data_title')}</h2>
+          <p className="text-sm leading-relaxed text-slate-400 font-deva">{t('about.data_body')}</p>
+        </motion.div>
+      </div>
+
       {/* Trust badges */}
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
         {trustKeys.map((badge) => (

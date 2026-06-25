@@ -8,6 +8,15 @@
 // ⚠️ Joining fee / annual fee / reward figures are INDICATIVE and change
 // frequently. They are always shown with the "verify on official site" note
 // (card.indicative) and a trailing '*'. Update them as needed.
+//
+// Figures below reviewed against issuer / aggregator sources (Jun 2026):
+//   HDFC Millennia  — joining & renewal ₹1,000, waived on ₹1L annual spend;
+//                     5% cashback on 10 brands, 1% on others.
+//   SBI SimplyCLICK — annual ₹499, waived on ₹1L spend; 10X on partner brands,
+//                     5X on other online spends.
+//   Flipkart Axis   — joining & annual ₹500, waived on ₹3.5L spend; 5% Flipkart,
+//                     7.5% Myntra cashback.
+//   Amazon Pay ICICI— lifetime free; 5% on Amazon for Prime members, 3% without.
 
 // Date the figures below were last reviewed. Update this whenever you verify /
 // change the charges so the UI can show users how fresh the data is.
@@ -30,9 +39,9 @@ export const creditCardOffers: CreditCardOffer[] = [
     id: 'hdfc-millennia',
     name: 'HDFC Millennia',
     href: process.env.NEXT_PUBLIC_AFF_CC_HDFC || 'https://www.hdfcbank.com/personal/pay/cards/credit-cards',
-    joiningFee: { mr: '₹500*', en: '₹500*' },
-    annualFee: { mr: '₹500/वर्ष (खर्चावर माफ)*', en: '₹500/yr (waived on spend)*' },
-    reward: { mr: 'निवडक merchants वर 5% cashback*', en: '5% cashback on select merchants*' },
+    joiningFee: { mr: '₹1,000*', en: '₹1,000*' },
+    annualFee: { mr: '₹1,000/वर्ष (₹1L खर्चावर माफ)*', en: '₹1,000/yr (waived on ₹1L spend)*' },
+    reward: { mr: '10 ब्रँड्सवर 5% cashback, इतरांवर 1%*', en: '5% cashback on 10 brands, 1% on others*' },
     bestFor: { mr: 'ऑनलाइन शॉपिंग', en: 'Online shopping' },
   },
   {
@@ -40,8 +49,8 @@ export const creditCardOffers: CreditCardOffer[] = [
     name: 'SBI SimplyCLICK',
     href: process.env.NEXT_PUBLIC_AFF_CC_SBI || 'https://www.sbicard.com',
     joiningFee: { mr: '₹499*', en: '₹499*' },
-    annualFee: { mr: '₹499/वर्ष (खर्चावर माफ)*', en: '₹499/yr (waived on spend)*' },
-    reward: { mr: 'ऑनलाइन खर्चावर 10X रिवॉर्ड्स*', en: '10X rewards on online spends*' },
+    annualFee: { mr: '₹499/वर्ष (₹1L खर्चावर माफ)*', en: '₹499/yr (waived on ₹1L spend)*' },
+    reward: { mr: 'Partner brands वर 10X, इतर ऑनलाइनवर 5X रिवॉर्ड्स*', en: '10X on partner brands, 5X on other online*' },
     bestFor: { mr: 'ऑनलाइन खर्च', en: 'Online spends' },
   },
   {
@@ -49,9 +58,9 @@ export const creditCardOffers: CreditCardOffer[] = [
     name: 'Axis Flipkart',
     href: process.env.NEXT_PUBLIC_AFF_CC_AXIS || 'https://www.axisbank.com/retail/cards/credit-card',
     joiningFee: { mr: '₹500*', en: '₹500*' },
-    annualFee: { mr: '₹500/वर्ष*', en: '₹500/yr*' },
-    reward: { mr: 'Flipkart वर 5% cashback*', en: '5% cashback on Flipkart*' },
-    bestFor: { mr: 'Flipkart खरेदी', en: 'Flipkart shoppers' },
+    annualFee: { mr: '₹500/वर्ष (₹3.5L खर्चावर माफ)*', en: '₹500/yr (waived on ₹3.5L spend)*' },
+    reward: { mr: 'Flipkart 5%, Myntra 7.5% cashback*', en: '5% on Flipkart, 7.5% on Myntra*' },
+    bestFor: { mr: 'Flipkart / Myntra खरेदी', en: 'Flipkart & Myntra' },
   },
   {
     id: 'amazonpay-icici',
@@ -59,7 +68,7 @@ export const creditCardOffers: CreditCardOffer[] = [
     href: process.env.NEXT_PUBLIC_AFF_CC_ICICI || 'https://www.icicibank.com/personal-banking/cards/credit-card',
     joiningFee: { mr: '₹0 (आजीवन मोफत)*', en: '₹0 (lifetime free)*' },
     annualFee: { mr: '₹0*', en: '₹0*' },
-    reward: { mr: 'Amazon वर 5% पर्यंत परतावा (Prime)*', en: 'Up to 5% back on Amazon (Prime)*' },
+    reward: { mr: 'Amazon वर 5% (Prime) / 3% (non-Prime)*', en: '5% on Amazon (Prime) / 3% (non-Prime)*' },
     bestFor: { mr: 'Amazon खरेदी', en: 'Amazon shoppers' },
   },
 ];

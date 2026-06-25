@@ -8,6 +8,7 @@ import { getTranslation } from '@/lib/i18n';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import { loanDetails, loanOrder, type LoanType } from '@/lib/loanDetails';
 import { getDocuments, profileOptions, type ProfileType } from '@/lib/documentChecklists';
+import CreditCardOffers from '@/components/CreditCardOffers';
 import EMICalculator from '@/components/calculators/EMICalculator';
 import DataSourceBadge from '@/components/shared/DataSourceBadge';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
@@ -45,6 +46,7 @@ export default function LoansPage() {
   const loanLabel = t(detail.labelKey);
 
   return (
+    <>
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-6 text-center">
         <h1 className="font-display text-3xl font-extrabold text-slate-200 md:text-4xl">{t('loan.title')}</h1>
@@ -202,5 +204,9 @@ export default function LoansPage() {
         </div>
       </div>
     </div>
+
+      {/* Credit card offers — credit is thematically relevant on the loans page */}
+      <CreditCardOffers />
+    </>
   );
 }

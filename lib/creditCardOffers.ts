@@ -39,7 +39,7 @@ export const creditCardOffers: CreditCardOffer[] = [
   {
     id: 'hdfc-millennia',
     name: 'HDFC Millennia',
-    href: process.env.NEXT_PUBLIC_AFF_CC_HDFC || 'https://www.hdfcbank.com/personal/pay/cards/credit-cards',
+    href: process.env.NEXT_PUBLIC_AFF_HDFC_CC || 'https://www.hdfcbank.com/personal/pay/cards/credit-cards',
     joiningFee: { mr: '₹1,000*', en: '₹1,000*' },
     annualFee: { mr: '₹1,000/वर्ष (₹1L खर्चावर माफ)*', en: '₹1,000/yr (waived on ₹1L spend)*' },
     reward: { mr: '10 ब्रँड्सवर 5% cashback, इतरांवर 1%*', en: '5% cashback on 10 brands, 1% on others*' },
@@ -48,7 +48,7 @@ export const creditCardOffers: CreditCardOffer[] = [
   {
     id: 'sbi-simplyclick',
     name: 'SBI SimplyCLICK',
-    href: process.env.NEXT_PUBLIC_AFF_CC_SBI || 'https://www.sbicard.com',
+    href: process.env.NEXT_PUBLIC_AFF_SBI_CC || 'https://www.sbicard.com',
     joiningFee: { mr: '₹499*', en: '₹499*' },
     annualFee: { mr: '₹499/वर्ष (₹1L खर्चावर माफ)*', en: '₹499/yr (waived on ₹1L spend)*' },
     reward: { mr: 'Partner brands वर 10X, इतर ऑनलाइनवर 5X रिवॉर्ड्स*', en: '10X on partner brands, 5X on other online*' },

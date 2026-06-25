@@ -34,15 +34,17 @@ export const brokerOffers: BrokerOffer[] = [
     brokerage: { mr: 'इक्विटी डिलिव्हरी ₹0; इंट्राडे ₹20/ऑर्डर*', en: 'Equity delivery ₹0; intraday ₹20/order*' },
     benefit: { mr: 'भारतातील आघाडीचा discount broker', en: "India's leading discount broker" },
   },
-  {
-    id: 'upstox',
-    name: 'Upstox',
-    href: process.env.NEXT_PUBLIC_AFF_UPSTOX || 'https://upstox.com',
-    feeOpen: { mr: '₹0', en: '₹0' },
-    amc: { mr: '₹0–₹150/वर्ष*', en: '₹0–₹150/yr*' },
-    brokerage: { mr: 'इंट्राडे/F&O ₹20/ऑर्डर*', en: 'Intraday/F&O ₹20/order*' },
-    benefit: { mr: 'जलद, सोपा ट्रेडिंग app', en: 'Fast, simple trading app' },
-  },
+  // Upstox — temporarily hidden until an affiliate/referral link is available.
+  // To restore, uncomment this entry (and set NEXT_PUBLIC_AFF_UPSTOX when ready).
+  // {
+  //   id: 'upstox',
+  //   name: 'Upstox',
+  //   href: process.env.NEXT_PUBLIC_AFF_UPSTOX || 'https://upstox.com',
+  //   feeOpen: { mr: '₹0', en: '₹0' },
+  //   amc: { mr: '₹0–₹150/वर्ष*', en: '₹0–₹150/yr*' },
+  //   brokerage: { mr: 'इंट्राडे/F&O ₹20/ऑर्डर*', en: 'Intraday/F&O ₹20/order*' },
+  //   benefit: { mr: 'जलद, सोपा ट्रेडिंग app', en: 'Fast, simple trading app' },
+  // },
   {
     id: 'angelone',
     name: 'Angel One',

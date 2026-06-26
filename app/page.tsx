@@ -3,6 +3,7 @@ import HeroSection from '@/components/HeroSection';
 import PopularTools from '@/components/home/PopularTools';
 import SegmentEntryCards from '@/components/schemes/SegmentEntryCards';
 import BentoGrid from '@/components/BentoGrid';
+import ScrollMorphCoin from '@/components/home/ScrollMorphCoin';
 import CalculatorsHub from '@/components/CalculatorsHub';
 import BrokerOffers from '@/components/BrokerOffers';
 import CreditCardOffers from '@/components/CreditCardOffers';
@@ -56,6 +57,7 @@ export default function HomePage() {
         }}
       />
       <BentoGrid />
+      <ScrollMorphCoin />
       <CalculatorsHub />
       {/* Guidance / literacy value first... */}
       <SmartAdvisory />

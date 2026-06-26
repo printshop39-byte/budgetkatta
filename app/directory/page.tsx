@@ -2,7 +2,7 @@
 // Bank & Patsanstha directory — District → City cascade served live from MongoDB
 // (the Institution collection populated from the official banking exports).
 // Each level is fetched on demand from /api/locations so no data ships in the bundle.
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import AffiliateBanner from '@/components/AffiliateBanner';
@@ -93,6 +93,16 @@ export default function DirectoryPage() {
   const [hasMore, setHasMore] = useState(false);
   const [page, setPage] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  // Quick-action shortcuts (SBI / HDFC / IFSC / co-operative): pre-set the bank
+  // filter + search term, then nudge the user to pick a district below.
+  const quickSearch = (q: string, f: BankFilter) => {
+    setFilter(f);
+    setQuery(q);
+    searchRef.current?.focus();
+    searchRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
 
   // Copy IFSC / address to clipboard with brief "copied" feedback.
   const copyText = async (key: string, value: string) => {
@@ -335,6 +345,7 @@ export default function DirectoryPage() {
         <label className="relative block">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
           <input
+            ref={searchRef}
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -355,6 +366,31 @@ export default function DirectoryPage() {
             ? 'गाव/पिनकोड शोधण्यासाठी Enter दाबा, किंवा खाली जिल्हा व शहर निवडा.'
             : 'Press Enter to find a village/pincode, or pick a district and city below.'}
         </p>
+      </div>
+
+      {/* Quick-action cards — common intents one tap away. They set the search
+          term + bank filter; the user then picks a district to see results. */}
+      <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {[
+          { icon: Landmark, label: { mr: 'SBI शाखा शोधा', en: 'Find SBI branch' }, onClick: () => quickSearch('SBI', 'main') },
+          { icon: Landmark, label: { mr: 'HDFC शाखा शोधा', en: 'Find HDFC branch' }, onClick: () => quickSearch('HDFC', 'main') },
+          { icon: Search, label: { mr: 'IFSC कोड शोधा', en: 'Find IFSC code' }, onClick: () => quickSearch('', 'main') },
+          { icon: Wallet, label: { mr: 'जवळची सहकारी बँक', en: 'Nearby co-op bank' }, onClick: () => quickSearch('', 'cooperative') },
+        ].map((c) => {
+          const Icon = c.icon;
+          return (
+            <button
+              key={c.label.en}
+              onClick={c.onClick}
+              className="glass-card flex flex-col items-center gap-2 p-4 text-center transition-all hover:border-amber-400/40"
+            >
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-amber-400/25 bg-amber-400/10 text-amber-400">
+                <Icon className="h-5 w-5" />
+              </span>
+              <span className="text-xs font-semibold text-slate-300 font-deva">{c.label[language]}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Popular districts — one-tap entry points so a new visitor isn't stuck

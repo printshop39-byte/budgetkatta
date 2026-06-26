@@ -4,14 +4,18 @@
 // finder. Content comes from lib/schemes.ts so this stays a thin renderer.
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Users, Sparkles, GraduationCap } from 'lucide-react';
+import { Users, Sparkles, GraduationCap, FileText, MessageCircle } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import { womenSchemes, womenHomeLoanPerks, womenFinder } from '@/lib/schemes';
 import SchemeCard from '@/components/schemes/SchemeCard';
 import SchemeFinder from '@/components/schemes/SchemeFinder';
 import LenderComparison from '@/components/schemes/LenderComparison';
+import DocumentChecklist from '@/components/shared/DocumentChecklist';
+import { getDocuments } from '@/lib/documentChecklists';
 import { womenLenders, WOMEN_LENDERS_UPDATED, WOMEN_AGGREGATOR_LINK } from '@/lib/womenLenders';
+
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -124,6 +128,48 @@ export default function WomenLoansPage() {
           accentLabel={{ mr: 'महिला योजना Finder', en: 'Women Loan Finder' }}
         />
       </section>
+
+      {/* Documents needed */}
+      <section className="mb-12">
+        <h2 className="mb-5 flex items-center gap-2 font-display text-xl font-bold text-slate-100 font-deva">
+          <FileText className="h-5 w-5 text-amber-400" />
+          {mr ? 'लागणारी कागदपत्रे' : 'Documents you’ll need'}
+        </h2>
+        <DocumentChecklist documents={getDocuments('BUSINESS_LOAN', 'BUSINESS')} />
+      </section>
+
+      {/* WhatsApp guidance CTA */}
+      <div className="mb-10 flex flex-col items-start gap-3 rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-5 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="font-bold text-slate-100 font-deva">
+            {mr ? 'माझ्यासाठी कोणती योजना योग्य?' : 'Which scheme is right for me?'}
+          </p>
+          <p className="mt-0.5 text-sm text-slate-300 font-deva">
+            {mr ? 'मोफत मार्गदर्शनासाठी WhatsApp वर विचारा — कोणतेही शुल्क नाही.' : 'Ask on WhatsApp for free guidance — no charges.'}
+          </p>
+        </div>
+        {WHATSAPP ? (
+          <a
+            href={`https://wa.me/${WHATSAPP.replace(/\D/g, '')}?text=${encodeURIComponent(
+              mr ? 'नमस्कार, मला महिला कर्ज योजनेबद्दल मार्गदर्शन हवे आहे.' : 'Hi, I need guidance on women loan schemes.'
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-emerald-600 font-deva"
+          >
+            <MessageCircle className="h-4 w-4" />
+            {mr ? 'WhatsApp वर विचारा' : 'Ask on WhatsApp'}
+          </a>
+        ) : (
+          <button
+            onClick={() => openLead({ module: 'LOAN', product: 'Women Loan', sourcePage: 'WOMEN_LOANS_WHATSAPP' })}
+            className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-emerald-600 font-deva"
+          >
+            <MessageCircle className="h-4 w-4" />
+            {mr ? 'मोफत मार्गदर्शन घ्या' : 'Get free guidance'}
+          </button>
+        )}
+      </div>
 
       {/* Cross-link */}
       <Link

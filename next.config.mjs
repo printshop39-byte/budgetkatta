@@ -15,6 +15,9 @@ const nextConfig = {
         destination: '/education-loan/personal-loan-for-education',
         permanent: true,
       },
+      // The thin /schemes hub is superseded by the rich /loans/women +
+      // /education-loan pages (now linked directly from the nav).
+      { source: '/schemes', destination: '/loans/women', permanent: true },
     ];
   },
   images: {

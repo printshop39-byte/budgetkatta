@@ -320,6 +320,13 @@ export default function RatesPage() {
             </table>
           </div>
 
+          {/* Source + freshness — gold/silver move intraday, so be explicit. */}
+          <p className="mt-2 px-1 text-[11px] leading-relaxed text-slate-500 font-deva">
+            {language === 'mr'
+              ? '⚠️ सोने/चांदीचे दर सूचक आहेत व दिवसभरात बदलतात. स्रोत: सूचक बाजार दर · शेवटचा आढावा: २६ जून २०२६. खरेदीपूर्वी स्थानिक सराफाकडे खात्री करा.'
+              : '⚠️ Gold/silver rates are indicative and change through the day. Source: indicative market rates · Last reviewed: 26 June 2026. Confirm with your local jeweller before buying.'}
+          </p>
+
           {/* Official RBI Repo Rate */}
           <div className="mt-4 glass-card relative overflow-hidden p-6">
             <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-amber-400/10 blur-2xl" />
@@ -336,6 +343,9 @@ export default function RatesPage() {
               </div>
               <div className="shrink-0 text-right">
                 <span className="font-display text-4xl font-extrabold text-bk-gold">6.50%</span>
+                <p className="mt-1 text-[11px] text-slate-500 font-deva">
+                  {language === 'mr' ? 'स्रोत: RBI · आढावा २६ जून २०२६' : 'Source: RBI · reviewed 26 June 2026'}
+                </p>
               </div>
             </div>
           </div>

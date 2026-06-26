@@ -771,6 +771,12 @@ function BudgetPlanner() {
   const language = useLanguageStore((s) => s.language);
   const t = getTranslation(language);
   const en = language === "en";
+  const dark = useThemeStore((s) => s.theme) === "dark";
+  // Category label colours — remap-proof (inline) so they stay readable on the
+  // tinted boxes in BOTH themes (light shades are dark-on-tint, dark are light).
+  const needsColor = dark ? "#C7D2FE" : "#4338CA";
+  const wantsColor = dark ? "#FDE68A" : "#B45309";
+  const savingsColor = dark ? "#FEF08A" : "#A16207";
 
   const totalNeedsSpent = customNeeds.rent + customNeeds.groc + customNeeds.bills + customNeeds.debt;
   const totalWantsSpent = customWants.dining + customWants.shopping + customWants.travel + customWants.hobbies;
@@ -821,7 +827,7 @@ function BudgetPlanner() {
           {/* Category: Needs */}
           <div className="bg-indigo-500/10 border border-indigo-400/30 p-4.5 rounded-2xl space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-xs md:text-sm font-bold text-indigo-200">{t("calc.budget.needs")}</span>
+              <span className="text-xs md:text-sm font-bold" style={{ color: needsColor }}>{t("calc.budget.needs")}</span>
               <span className="text-[11px] font-bold text-indigo-300 bg-indigo-500/15 px-2 py-0.5 rounded-lg">
                 {t("calc.budget.limit")}: {formatCurrency(targetNeeds)}
               </span>
@@ -851,7 +857,7 @@ function BudgetPlanner() {
           {/* Category: Wants */}
           <div className="bg-amber-500/10 border border-amber-400/30 p-4.5 rounded-2xl space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-xs md:text-sm font-bold text-amber-200">{t("calc.budget.wants")}</span>
+              <span className="text-xs md:text-sm font-bold" style={{ color: wantsColor }}>{t("calc.budget.wants")}</span>
               <span className="text-[11px] font-bold text-amber-300 bg-amber-500/15 px-2 py-0.5 rounded-lg">
                 {t("calc.budget.limit")}: {formatCurrency(targetWants)}
               </span>
@@ -881,7 +887,7 @@ function BudgetPlanner() {
           {/* Category: Savings */}
           <div className="bg-yellow-500/10 border border-yellow-400/30 p-4.5 rounded-2xl space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-xs md:text-sm font-bold text-yellow-200">{t("calc.budget.savings")}</span>
+              <span className="text-xs md:text-sm font-bold" style={{ color: savingsColor }}>{t("calc.budget.savings")}</span>
               <span className="text-[11px] font-bold text-yellow-300 bg-yellow-500/15 px-2 py-0.5 rounded-lg">
                 {t("calc.budget.target")} {formatCurrency(targetSavings)}
               </span>
@@ -919,7 +925,7 @@ function BudgetPlanner() {
             {/* Needs Progress */}
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-bold">
-                <span className="text-indigo-200">{t("calc.budget.needs_lbl")}</span>
+                <span style={{ color: needsColor }}>{t("calc.budget.needs_lbl")}</span>
                 <span className={totalNeedsSpent > targetNeeds ? "text-rose-400" : "text-amber-400"}>
                   {t("calc.budget.spent")}: {formatCurrency(totalNeedsSpent)} / {formatCurrency(targetNeeds)}
                 </span>
@@ -942,7 +948,7 @@ function BudgetPlanner() {
             {/* Wants Progress */}
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-bold">
-                <span className="text-amber-200">{t("calc.budget.wants_lbl")}</span>
+                <span style={{ color: wantsColor }}>{t("calc.budget.wants_lbl")}</span>
                 <span className={totalWantsSpent > targetWants ? "text-rose-400" : "text-amber-400"}>
                   {t("calc.budget.spent")}: {formatCurrency(totalWantsSpent)} / {formatCurrency(targetWants)}
                 </span>
@@ -965,7 +971,7 @@ function BudgetPlanner() {
             {/* Savings Progress */}
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-bold">
-                <span className="text-yellow-200">{t("calc.budget.savings_lbl")}</span>
+                <span style={{ color: savingsColor }}>{t("calc.budget.savings_lbl")}</span>
                 <span className={totalSavingsSpent < targetSavings ? "text-amber-300" : "text-amber-400"}>
                   {t("calc.budget.saved")}: {formatCurrency(totalSavingsSpent)} / {formatCurrency(targetSavings)}
                 </span>

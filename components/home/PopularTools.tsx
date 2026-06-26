@@ -49,17 +49,27 @@ export default function PopularTools() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
+              transition={{ delay: i * 0.05, type: 'spring', stiffness: 90 }}
+              whileHover={{ y: -6 }}
+              className="h-full"
             >
               <Link
                 href={tool.href}
-                className="group flex h-full flex-col items-center gap-2.5 rounded-2xl border border-slate-800 bg-slate-900/50 p-5 text-center backdrop-blur-sm transition-colors hover:border-amber-400/40 hover:bg-slate-900"
+                className="group relative flex h-full flex-col items-center gap-2.5 overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50 p-5 text-center backdrop-blur-sm transition-all duration-300 hover:border-amber-400/60 hover:bg-slate-900 hover:shadow-[0_14px_36px_rgba(251,191,36,0.16)]"
               >
-                <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-amber-400/30 bg-amber-400/10 text-amber-400 transition-transform group-hover:scale-110">
-                  <Icon className="h-6 w-6" />
+                {/* Metallic gloss sweep on hover */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 -translate-x-[160%] skew-x-12 bg-gradient-to-r from-transparent via-amber-200/15 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[160%]"
+                />
+                <span
+                  className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-300 to-amber-500 shadow-lg shadow-amber-500/30 ring-1 ring-amber-300/40 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"
+                  style={{ color: '#7C2D12' }}
+                >
+                  <Icon className="h-6 w-6" strokeWidth={2.2} />
                 </span>
-                <span className="text-sm font-bold text-slate-200 font-deva">{tool.label[language]}</span>
-                <span className="text-xs text-slate-400 font-deva">{tool.desc[language]}</span>
+                <span className="relative text-sm font-bold text-slate-200 font-deva">{tool.label[language]}</span>
+                <span className="relative text-xs text-slate-400 font-deva">{tool.desc[language]}</span>
               </Link>
             </motion.div>
           );

@@ -357,6 +357,51 @@ export default function DirectoryPage() {
         </p>
       </div>
 
+      {/* Popular districts — one-tap entry points so a new visitor isn't stuck
+          at an empty dropdown. Only renders districts that exist in the live
+          data (matched case-insensitively), so no chip is ever a dead end. */}
+      {(() => {
+        const POPULAR = [
+          { en: 'Pune', mr: 'पुणे' },
+          { en: 'Mumbai', mr: 'मुंबई' },
+          { en: 'Kolhapur', mr: 'कोल्हापूर' },
+          { en: 'Nashik', mr: 'नाशिक' },
+          { en: 'Nagpur', mr: 'नागपूर' },
+          { en: 'Satara', mr: 'सातारा' },
+          { en: 'Sangli', mr: 'सांगली' },
+          { en: 'Solapur', mr: 'सोलापूर' },
+        ];
+        const chips = POPULAR.map((p) => ({
+          p,
+          match: districts.find(
+            (d) => d.toLowerCase().replace(/\s+/g, ' ') === p.en.toLowerCase() || d.toLowerCase().startsWith(p.en.toLowerCase())
+          ),
+        })).filter((c) => c.match);
+        if (!chips.length) return null;
+        return (
+          <div className="mb-5">
+            <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-slate-500 font-deva">
+              {language === 'mr' ? 'लोकप्रिय जिल्हे' : 'Popular districts'}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {chips.map(({ p, match }) => (
+                <button
+                  key={p.en}
+                  onClick={() => onDistrictChange(match!)}
+                  className={`rounded-full border px-3.5 py-1.5 text-sm font-deva transition-colors ${
+                    district === match
+                      ? 'border-amber-400 bg-amber-400/15 text-amber-300'
+                      : 'border-slate-700/60 bg-slate-900/60 text-slate-300 hover:border-amber-400/50 hover:text-amber-300'
+                  }`}
+                >
+                  {p[language]}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Bank-type tabs — horizontally scrollable on mobile */}
       <div className="mb-4 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none]">
         {BANK_FILTERS.map((f) => {

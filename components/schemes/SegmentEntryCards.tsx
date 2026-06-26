@@ -29,10 +29,17 @@ const CARDS = [
   },
 ] as const;
 
-export default function SegmentEntryCards({ className = '' }: { className?: string }) {
+export default function SegmentEntryCards({
+  className = '',
+  heading,
+}: {
+  className?: string;
+  /** When set, renders a centered bilingual section heading above the cards. */
+  heading?: { mr: string; en: string; sub?: { mr: string; en: string } };
+}) {
   const { language: lang } = useLanguageStore();
-  return (
-    <div className={`grid grid-cols-1 gap-4 md:grid-cols-2 ${className}`}>
+  const grid = (
+    <div className={`grid grid-cols-1 gap-4 md:grid-cols-2 ${heading ? '' : className}`}>
       {CARDS.map((c, i) => {
         const Icon = c.icon;
         return (
@@ -70,5 +77,21 @@ export default function SegmentEntryCards({ className = '' }: { className?: stri
         );
       })}
     </div>
+  );
+
+  if (!heading) return grid;
+
+  return (
+    <section className={`mx-auto max-w-5xl px-6 py-20 ${className}`}>
+      <div className="mb-8 text-center">
+        <h2 className="font-display text-3xl font-extrabold text-slate-100 font-deva md:text-4xl">
+          {heading[lang]}
+        </h2>
+        {heading.sub && (
+          <p className="mt-2 text-slate-400 font-deva">{heading.sub[lang]}</p>
+        )}
+      </div>
+      {grid}
+    </section>
   );
 }

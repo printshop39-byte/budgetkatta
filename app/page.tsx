@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import HeroSection from '@/components/HeroSection';
 import PopularTools from '@/components/home/PopularTools';
+import SegmentEntryCards from '@/components/schemes/SegmentEntryCards';
 import BentoGrid from '@/components/BentoGrid';
 import CalculatorsHub from '@/components/CalculatorsHub';
 import BrokerOffers from '@/components/BrokerOffers';
@@ -43,13 +44,26 @@ export default function HomePage() {
 
       <HeroSection />
       <PopularTools />
+      {/* High-intent Women/Student loan finder surfaced early (value before offers) */}
+      <SegmentEntryCards
+        heading={{
+          mr: 'महिला व विद्यार्थ्यांसाठी कर्ज योजना',
+          en: 'Loan schemes for women & students',
+          sub: {
+            mr: 'सरकारी योजना, scholarship व subsidy — तुमच्यासाठी योग्य पर्याय शोधा.',
+            en: 'Government schemes, scholarships & subsidies — find the right option for you.',
+          },
+        }}
+      />
       <BentoGrid />
       <CalculatorsHub />
+      {/* Guidance / literacy value first... */}
+      <SmartAdvisory />
+      <EducationHub />
+      {/* ...then affiliate offers, so the site leads with value, not ads */}
       <BrokerOffers />
       <CreditCardOffers />
       <FinancialHealthQuiz />
-      <SmartAdvisory />
-      <EducationHub />
       <Testimonials />
       <FAQ />
       <JsonLd data={faqSchema} />

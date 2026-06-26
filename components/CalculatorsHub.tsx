@@ -10,6 +10,9 @@ import { useLanguageStore } from "@/store/languageStore";
 import { useThemeStore } from "@/store/themeStore";
 import { getTranslation } from "@/lib/i18n";
 import WealthGrowthChart from "@/components/calculators/WealthGrowthChart";
+import LifestyleGoalVisual from "@/components/calculators/LifestyleGoalVisual";
+import PremiumButton from "@/components/shared/PremiumButton";
+import { useLeadFormStore } from "@/store/leadFormStore";
 
 export type { CalculatorType };
 
@@ -24,6 +27,7 @@ function SipCalc() {
   const t = getTranslation(language);
   const en = language === "en";
   const dark = useThemeStore((s) => s.theme) === "dark";
+  const openLead = useLeadFormStore((s) => s.open);
 
   const calculateSIP = () => {
     const P = sipMonthly;
@@ -188,6 +192,10 @@ function SipCalc() {
         </div>
 
         <div className="mt-4">
+          <LifestyleGoalVisual monthly={sipMonthly} en={en} dark={dark} />
+        </div>
+
+        <div className="mt-4">
           <WealthGrowthChart
             wealth={sipSeries.wealth}
             principal={sipSeries.principal}
@@ -209,6 +217,14 @@ function SipCalc() {
             <p className="mt-1 text-lg font-bold" style={{ color: dark ? "#34D399" : "#16A34A" }}>+{formatCurrency(sipResult.wealthGained)}</p>
           </div>
         </div>
+
+        <PremiumButton
+          onClick={() => openLead({ module: "SIP", product: "SIP", sourcePage: "SIP_CALCULATOR" })}
+          className="mt-5 w-full font-deva"
+        >
+          {en ? "Get expert advice" : "तज्ज्ञाचा सल्ला मिळवा"}
+          <ArrowRight className="h-4 w-4" />
+        </PremiumButton>
       </div>
     </motion.div>
   );

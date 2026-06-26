@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Info, ShieldCheck, Activity, AlertTriangle, Target, RefreshCw, ArrowRight } from "lucide-react";
+import { Sparkles, Info, ShieldCheck, Activity, AlertTriangle, Target, RefreshCw, ArrowRight, Home, Car, GraduationCap, Palmtree, TrendingUp, Landmark, Calculator, Wallet } from "lucide-react";
 import { formatCurrency } from "@/lib/format";
 import { scrollToSection } from "@/lib/scroll";
 import { useCalculatorStore, type CalculatorType } from "@/store/calculatorStore";
@@ -1002,10 +1002,10 @@ function GoalPlanner() {
   const goalResult = calculateGoalSIP();
 
   const goals = [
-    { id: "home", emoji: "🏠", label: t("calc.goal.home"), val: 3000000 },
-    { id: "car", emoji: "🚗", label: t("calc.goal.car"), val: 800000 },
-    { id: "child", emoji: "🎓", label: t("calc.goal.child"), val: 1500000 },
-    { id: "retirement", emoji: "🌴", label: t("calc.goal.retirement"), val: 5000000 },
+    { id: "home", Icon: Home, label: t("calc.goal.home"), val: 3000000 },
+    { id: "car", Icon: Car, label: t("calc.goal.car"), val: 800000 },
+    { id: "child", Icon: GraduationCap, label: t("calc.goal.child"), val: 1500000 },
+    { id: "retirement", Icon: Palmtree, label: t("calc.goal.retirement"), val: 5000000 },
   ];
 
   const risks = [
@@ -1042,7 +1042,7 @@ function GoalPlanner() {
                     : "bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700"
                 }`}
               >
-                <span className="text-2xl">{goal.emoji}</span>
+                <goal.Icon className={`h-6 w-6 ${goalType === goal.id ? 'text-violet-300' : 'text-slate-400'}`} />
                 <span>{goal.label}</span>
               </button>
             ))}
@@ -1183,22 +1183,23 @@ export default function CalculatorsHub() {
         <div className="flex justify-center mb-12">
           <div className="flex flex-wrap justify-center gap-2 bg-slate-900/70 backdrop-blur-xl border border-slate-800 p-2 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.3)] max-w-full overflow-x-auto">
             {[
-              { id: "sip", label: t("calc.tab.sip"), color: "text-amber-300"},
-              { id: "fd", label: t("calc.tab.fd"), color: "text-amber-300" },
-              { id: "emi", label: t("calc.tab.emi"), color: "text-blue-300" },
-              { id: "insurance", label: t("calc.tab.insurance"), color: "text-rose-300" },
-              { id: "budget", label: t("calc.tab.budget"), color: "text-indigo-300" },
-              { id: "goal", label: t("calc.tab.goal"), color: "text-violet-300" },
+              { id: "sip", label: t("calc.tab.sip"), Icon: TrendingUp },
+              { id: "fd", label: t("calc.tab.fd"), Icon: Landmark },
+              { id: "emi", label: t("calc.tab.emi"), Icon: Calculator },
+              { id: "insurance", label: t("calc.tab.insurance"), Icon: ShieldCheck },
+              { id: "budget", label: t("calc.tab.budget"), Icon: Wallet },
+              { id: "goal", label: t("calc.tab.goal"), Icon: Target },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as CalculatorType)}
-                className={`px-5 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 ${
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 ${
                   activeTab === tab.id
                     ? "bg-amber-400 text-slate-950 shadow-md shadow-amber-500/30"
                     : "text-slate-400 hover:text-amber-300 hover:bg-slate-900/90 hover:shadow-[0_0_16px_rgba(251,191,36,0.15)]"
                 }`}
               >
+                <tab.Icon className="h-4 w-4" />
                 {tab.label}
               </button>
             ))}

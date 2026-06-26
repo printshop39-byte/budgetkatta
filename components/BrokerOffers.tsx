@@ -13,7 +13,7 @@ export default function BrokerOffers({ className = '' }: { className?: string })
   const t = getTranslation(language);
 
   return (
-    <section className={`mx-auto max-w-6xl px-4 py-10 ${className}`} aria-label={t('broker.section_title')}>
+    <section className={`mx-auto max-w-6xl px-4 py-16 ${className}`} aria-label={t('broker.section_title')}>
       <div className="mb-5 flex items-center justify-between gap-3">
         <div>
           <h2 className="font-display text-xl font-bold text-slate-200 font-deva md:text-2xl">

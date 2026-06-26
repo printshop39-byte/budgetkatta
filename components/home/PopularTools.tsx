@@ -28,7 +28,7 @@ export default function PopularTools() {
   const { language } = useLanguageStore();
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16">
+    <section className="mx-auto max-w-7xl px-6 py-20">
       <div className="mb-8 text-center">
         <h2 className="font-display text-3xl font-extrabold text-slate-100 font-deva md:text-4xl">
           {language === 'mr' ? 'लोकप्रिय साधने' : 'Popular Tools'}

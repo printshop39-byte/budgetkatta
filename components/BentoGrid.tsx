@@ -52,7 +52,7 @@ export default function BentoGrid() {
   ];
 
   return (
-    <section className="py-16 px-6 max-w-7xl mx-auto border-t border-slate-800">
+    <section className="py-20 px-6 max-w-7xl mx-auto border-t border-slate-800">
       <div className="text-center max-w-3xl mx-auto mb-12">
         <h2 className="text-3xl font-extrabold text-slate-100 tracking-normal leading-[1.4]">{t("bento.title")}</h2>
         <p className="text-slate-400 mt-3 text-base">

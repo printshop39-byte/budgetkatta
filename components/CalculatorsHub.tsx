@@ -774,9 +774,11 @@ function BudgetPlanner() {
   const dark = useThemeStore((s) => s.theme) === "dark";
   // Category label colours — remap-proof (inline) so they stay readable on the
   // tinted boxes in BOTH themes (light shades are dark-on-tint, dark are light).
-  const needsColor = dark ? "#C7D2FE" : "#4338CA";
-  const wantsColor = dark ? "#FDE68A" : "#B45309";
-  const savingsColor = dark ? "#FEF08A" : "#A16207";
+  // Light shades are deliberately deep (900-level) so they stay readable even
+  // on the same-hue tinted category boxes; dark shades are light for dark mode.
+  const needsColor = dark ? "#C7D2FE" : "#312E81";
+  const wantsColor = dark ? "#FDE68A" : "#7C2D12";
+  const savingsColor = dark ? "#FEF08A" : "#713F12";
 
   const totalNeedsSpent = customNeeds.rent + customNeeds.groc + customNeeds.bills + customNeeds.debt;
   const totalWantsSpent = customWants.dining + customWants.shopping + customWants.travel + customWants.hobbies;

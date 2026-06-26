@@ -37,13 +37,13 @@ export default function LocatorSection() {
               {mr ? 'स्थानिक दुकाने' : 'Local Stores'}
             </span>
 
-            <h2 className="mt-4 font-display text-2xl font-extrabold leading-tight text-slate-100 font-deva md:text-3xl">
+            <h2 className="mt-4 font-display text-2xl font-extrabold leading-tight text-white font-deva md:text-3xl">
               {mr
                 ? 'जवळचे अधिकृत डीलर्स आणि EMI स्टोअर्स शोधा'
                 : 'Find Local Authorised Dealers & EMI Stores'}
             </h2>
 
-            <p className="mt-3 text-slate-400 font-deva">
+            <p className="mt-3 text-white/70 font-deva">
               {mr
                 ? 'तुमच्या शहरातील मोबाईल, बाईक, कॅमेरा व लॅपटॉप दुकाने शोधा — Bajaj Finserv, Airtel Finance, HDFC आणि इतर EMI पर्यायांसह. थेट WhatsApp वर संपर्क साधा.'
                 : 'Discover mobile, bike, camera and laptop stores in your city — with Bajaj Finserv, Airtel Finance, HDFC and other EMI options. Reach them directly on WhatsApp.'}
@@ -55,7 +55,7 @@ export default function LocatorSection() {
                 return (
                   <span
                     key={c.label}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-800/50 px-3 py-1.5 text-xs font-medium text-slate-300 font-deva"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/80 font-deva"
                   >
                     <Icon className="h-3.5 w-3.5 text-amber-400" />
                     {c.label}

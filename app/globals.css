@@ -16,6 +16,36 @@
   z-index: 9999;
 }
 
+/* Number inputs — hide dated native spin buttons + right-align values. */
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  text-align: right;
+}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Light mode — calculator inputs authored with dark slate backgrounds would
+   turn white-on-white against the light cards. Give them a faint surface +
+   clear border + amber focus ring so the field is obvious. (Scoped to slate-bg
+   inputs so already-styled transparent pill inputs are left untouched.) */
+html[data-theme='light'] input[type='number'][class*='bg-slate-9'],
+html[data-theme='light'] input[type='text'][class*='bg-slate-9'] {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+html[data-theme='light'] input[type='number'][class*='bg-slate-9']:focus,
+html[data-theme='light'] input[type='text'][class*='bg-slate-9']:focus {
+  background: #ffffff !important;
+  border-color: #fbbf24 !important;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.25) !important;
+  outline: none;
+}
+
 :root {
   /* Premium navy-blue fintech palette */
   --bg-base: #050814; /* deep navy */

@@ -359,7 +359,7 @@ function FdCalc() {
                 onClick={() => setFdCompounding(freq.val)}
                 className={`px-4 py-3 rounded-2xl text-xs font-bold border transition-all ${
                   fdCompounding === freq.val
-                    ? "bg-amber-500/15 border-amber-400/40 text-amber-200"
+                    ? "bg-amber-400 border-amber-400 text-slate-950 shadow-md shadow-amber-500/30"
                     : "bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700"
                 }`}
               >
@@ -1093,13 +1093,13 @@ function GoalPlanner() {
                   setGoalType(goal.id as "home" | "car" | "child" | "retirement");
                   setGoalAmount(goal.val);
                 }}
-                className={`px-4 py-4 rounded-2xl text-xs font-bold border transition-all flex flex-col items-center space-y-2 ${
+                className={`px-4 py-4 rounded-2xl text-xs font-bold border-2 transition-all flex flex-col items-center space-y-2 ${
                   goalType === goal.id
-                    ? "bg-violet-500/15 border-violet-400/40 text-violet-200 shadow-sm"
+                    ? "bg-violet-600 border-violet-600 text-white shadow-lg shadow-violet-500/30"
                     : "bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700"
                 }`}
               >
-                <goal.Icon className={`h-6 w-6 ${goalType === goal.id ? 'text-violet-300' : 'text-slate-400'}`} />
+                <goal.Icon className={`h-6 w-6 ${goalType === goal.id ? 'text-white' : 'text-slate-400'}`} />
                 <span>{goal.label}</span>
               </button>
             ))}
@@ -1159,14 +1159,14 @@ function GoalPlanner() {
               <button
                 key={risk.id}
                 onClick={() => setRiskProfile(risk.id as "low" | "medium" | "high")}
-                className={`px-4 py-3 rounded-2xl border transition-all text-left flex flex-col justify-between ${
+                className={`px-4 py-3 rounded-2xl border-2 transition-all text-left flex flex-col justify-between ${
                   riskProfile === risk.id
-                    ? "bg-violet-500/15 border-violet-400/40 text-violet-200"
+                    ? "bg-violet-600 border-violet-600 text-white shadow-lg shadow-violet-500/30"
                     : "bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700"
                 }`}
               >
                 <span className="text-xs font-bold">{risk.label}</span>
-                <span className="text-[10px] text-slate-400 font-medium mt-1">{risk.desc}</span>
+                <span className={`text-[10px] font-medium mt-1 ${riskProfile === risk.id ? 'text-violet-100' : 'text-slate-400'}`}>{risk.desc}</span>
               </button>
             ))}
           </div>

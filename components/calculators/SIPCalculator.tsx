@@ -79,23 +79,51 @@ export default function SIPCalculator() {
         {t('btn.calculate')}
       </button>
 
-      {result && (
-        <div className="grid grid-cols-3 gap-3 pt-2">
-          {[
-            { label: t('sip.invested'), value: formatINR(result.invested) },
-            { label: t('sip.returns'), value: formatINR(result.estimatedReturns) },
-            { label: t('sip.maturity'), value: formatINR(result.maturityValue) },
-          ].map((item) => (
-            <div key={item.label} className="rounded-xl bg-slate-800/60 p-3 text-center">
-              <p className="text-base font-bold text-bk-gold">{item.value}</p>
-              <p className="mt-1 text-xs text-slate-400 font-deva">{item.label}</p>
+      {result && (() => {
+        const investedPct = Math.round((result.invested / result.maturityValue) * 100);
+        const returnsPct = 100 - investedPct;
+        return (
+          <div className="space-y-4 pt-2">
+            {/* Maturity hero */}
+            <div className="rounded-2xl bg-slate-800/60 p-4 text-center">
+              <p className="text-xs uppercase tracking-wide text-slate-400">{t('sip.maturity')}</p>
+              <p className="mt-1 font-display text-3xl font-extrabold text-bk-success">
+                {formatINR(result.maturityValue)}
+              </p>
             </div>
-          ))}
-          <div className="col-span-3">
+
+            {/* Invested vs Wealth split bar */}
+            <div>
+              <div className="flex justify-between text-xs font-semibold">
+                <span className="text-indigo-300 font-deva">{t('sip.invested')}</span>
+                <span className="text-bk-success font-deva">{t('sip.returns')}</span>
+              </div>
+              <div className="mt-1.5 flex h-3 w-full overflow-hidden rounded-full bg-slate-800">
+                <div className="h-full bg-indigo-400" style={{ width: `${investedPct}%` }} />
+                <div className="h-full bg-bk-success" style={{ width: `${returnsPct}%` }} />
+              </div>
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                <div className="flex items-start gap-2">
+                  <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-indigo-400" />
+                  <div>
+                    <p className="text-sm font-bold text-slate-100">{formatINR(result.invested)}</p>
+                    <p className="text-xs text-slate-400 font-deva">{t('sip.invested')} ({investedPct}%)</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-bk-success" />
+                  <div>
+                    <p className="text-sm font-bold text-slate-100">{formatINR(result.estimatedReturns)}</p>
+                    <p className="text-xs text-slate-400 font-deva">{t('sip.returns')} ({returnsPct}%)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <InterestButton module="SIP" sourcePage="SIP_CALCULATOR" full />
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 }

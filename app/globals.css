@@ -213,8 +213,47 @@ html[data-theme='light'] .bk-security-note {
 
 /* Range sliders own their touch gesture so dragging the thumb on mobile drags
    the slider instead of scrolling the whole page (a common calculator UX bug). */
+/* Unified gold slider styling — overrides per-element accent-* utilities so
+   every range input across the site shares the same premium look. */
 input[type='range'] {
   touch-action: none;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  background: #334155; /* slate-700 track */
+  cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: #fbbf24; /* bk-gold */
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  transition: transform 0.1s ease;
+}
+
+input[type='range']::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: #fbbf24; /* bk-gold */
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: #334155;
 }
 
 /* Respect reduced-motion preference */

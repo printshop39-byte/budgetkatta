@@ -8,6 +8,7 @@ import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import { useThemeStore } from '@/store/themeStore';
+import { rippleToggleTheme } from '@/lib/themeTransition';
 import Logo from '@/components/layout/Logo';
 
 // Single source of truth for header navigation — used by BOTH the desktop bar
@@ -66,7 +67,7 @@ export default function Navbar() {
   const { language, setLanguage } = useLanguageStore();
   const t = getTranslation(language);
   const openLead = useLeadFormStore((s) => s.open);
-  const { theme, toggleTheme } = useThemeStore();
+  const { theme, setTheme } = useThemeStore();
   const [open, setOpen] = useState(false); // mobile drawer
   const [openGroup, setOpenGroup] = useState<string | null>(null); // desktop dropdown
   const [expanded, setExpanded] = useState<string | null>(null); // mobile accordion
@@ -154,7 +155,7 @@ export default function Navbar() {
             {t('nav.cta_short')}
           </button>
           <button
-            onClick={toggleTheme}
+            onClick={(e) => rippleToggleTheme(e, theme, setTheme)}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
             className="rounded-lg border border-slate-800 p-2 text-slate-400 transition-colors hover:border-amber-400/40 hover:text-amber-400"

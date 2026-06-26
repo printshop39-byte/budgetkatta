@@ -45,6 +45,15 @@ function SipCalc() {
   };
   const sipResult = calculateSIP();
 
+  const sipSeries = (() => {
+    const i = sipRate / 100 / 12;
+    const wealth = Array.from({ length: sipYears + 1 }, (_, y) =>
+      y === 0 || i === 0 ? sipMonthly * 12 * y : sipMonthly * ((Math.pow(1 + i, y * 12) - 1) / i) * (1 + i),
+    );
+    const principal = Array.from({ length: sipYears + 1 }, (_, y) => sipMonthly * 12 * y);
+    return { wealth, principal };
+  })();
+
   return (
     <motion.div
       key="sip"
@@ -180,9 +189,8 @@ function SipCalc() {
 
         <div className="mt-4">
           <WealthGrowthChart
-            monthly={sipMonthly}
-            rate={sipRate}
-            years={sipYears}
+            wealth={sipSeries.wealth}
+            principal={sipSeries.principal}
             dark={dark}
             labels={en ? { wealth: "Total Wealth", invested: "Invested" } : { wealth: "एकूण संपत्ती", invested: "गुंतवलेली रक्कम" }}
           />
@@ -217,6 +225,7 @@ function FdCalc() {
   const language = useLanguageStore((s) => s.language);
   const t = getTranslation(language);
   const en = language === "en";
+  const dark = useThemeStore((s) => s.theme) === "dark";
 
   const calculateFD = () => {
     const P = fdPrincipal;
@@ -232,6 +241,14 @@ function FdCalc() {
     };
   };
   const fdResult = calculateFD();
+
+  const fdSeries = (() => {
+    const r = fdRate / 100;
+    const n = fdCompounding;
+    const wealth = Array.from({ length: fdYears + 1 }, (_, y) => fdPrincipal * Math.pow(1 + r / n, n * y));
+    const principal = Array.from({ length: fdYears + 1 }, () => fdPrincipal);
+    return { wealth, principal };
+  })();
 
   return (
     <motion.div
@@ -337,42 +354,51 @@ function FdCalc() {
         </div>
       </div>
 
-      {/* Results & Visual Graphic */}
-      <div className="lg:col-span-5 flex flex-col justify-between bg-slate-950/80 border border-slate-800 p-8 rounded-3xl">
-        <div className="space-y-6">
-          <h3 className="text-lg font-bold text-slate-200">{t("calc.fd.details")}</h3>
+      {/* Results — premium theme-aware card with growth chart */}
+      <div
+        className={`lg:col-span-5 rounded-3xl p-7 ${
+          dark
+            ? "bg-slate-800/70 backdrop-blur-md border border-slate-700 shadow-2xl"
+            : "bg-white border border-slate-200 shadow-[0_10px_40px_rgba(15,23,42,0.10)]"
+        }`}
+      >
+        <div className="flex items-start justify-between">
+          <div>
+            <p className={`text-[11px] font-semibold uppercase tracking-wider ${dark ? "text-slate-500" : "text-slate-400"}`}>{t("calc.fd.details")}</p>
+            <p className={`mt-1 text-xs font-deva ${dark ? "text-slate-400" : "text-slate-500"}`}>{t("calc.fd.maturity_row")}</p>
+            <p className={`text-3xl font-extrabold ${dark ? "text-slate-100" : "text-slate-900"}`}>{formatCurrency(fdResult.totalValue)}</p>
+          </div>
+          <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold ${dark ? "bg-emerald-500/15 text-emerald-300" : "bg-emerald-100 text-emerald-800"}`}>
+            <TrendingUp className="h-3 w-3" /> +{Math.round((fdResult.interestEarned / Math.max(1, fdResult.principal)) * 100)}%
+          </span>
+        </div>
 
-          <div className="space-y-4">
-            <div className="flex justify-between items-center py-2.5 border-b border-slate-800/50">
-              <span className="text-sm text-slate-400 font-medium">{t("calc.fd.principal_row")}</span>
-              <span className="text-base font-bold text-slate-200">{formatCurrency(fdResult.principal)}</span>
-            </div>
-            <div className="flex justify-between items-center py-2.5 border-b border-slate-800/50">
-              <span className="text-sm text-slate-400 font-medium">{t("calc.fd.interest_row")}</span>
-              <span className="text-base font-bold text-amber-400">+{formatCurrency(fdResult.interestEarned)}</span>
-            </div>
-            <div className="flex justify-between items-center py-3">
-              <span className="text-base font-bold text-slate-200">{t("calc.fd.maturity_row")}</span>
-              <span className="text-xl font-extrabold text-amber-300">{formatCurrency(fdResult.totalValue)}</span>
-            </div>
+        <div className="mt-4">
+          <WealthGrowthChart
+            wealth={fdSeries.wealth}
+            principal={fdSeries.principal}
+            dark={dark}
+            labels={en ? { wealth: "Maturity value", invested: "Principal" } : { wealth: "मॅच्युरिटी मूल्य", invested: "मुद्दल रक्कम" }}
+          />
+        </div>
+
+        <div className="mt-5 grid grid-cols-2 gap-3">
+          <div className={`rounded-xl p-4 border ${dark ? "bg-slate-900/50 border-slate-700" : "bg-slate-50 border-slate-200"}`}>
+            <p className={`text-xs font-deva ${dark ? "text-slate-400" : "text-slate-500"}`}>{t("calc.fd.principal_row")}</p>
+            <p className={`mt-1 text-lg font-bold ${dark ? "text-slate-100" : "text-slate-900"}`}>{formatCurrency(fdResult.principal)}</p>
+          </div>
+          <div
+            className="rounded-xl p-4"
+            style={dark ? { background: "rgba(16,185,129,0.10)", border: "1px solid rgba(16,185,129,0.30)" } : { background: "#F0FDF4", border: "1px solid #BBF7D0" }}
+          >
+            <p className="text-xs font-deva" style={{ color: dark ? "#6EE7B7" : "#15803D" }}>{t("calc.fd.interest_row")}</p>
+            <p className="mt-1 text-lg font-bold" style={{ color: dark ? "#34D399" : "#16A34A" }}>+{formatCurrency(fdResult.interestEarned)}</p>
           </div>
         </div>
 
-        {/* Progress Bar Visualization */}
-        <div className="my-6 space-y-2">
-          <div className="flex justify-between text-xs font-bold text-slate-400">
-            <span>{t("calc.fd.legend_invest")}: {Math.round((fdResult.principal / fdResult.totalValue) * 100)}%</span>
-            <span>{t("calc.fd.legend_interest")}: {Math.round((fdResult.interestEarned / fdResult.totalValue) * 100)}%</span>
-          </div>
-          <div className="w-full h-4 bg-slate-800 rounded-full overflow-hidden flex">
-            <div style={{ width: `${(fdResult.principal / fdResult.totalValue) * 100}%` }} className="h-full bg-amber-500" />
-            <div style={{ width: `${(fdResult.interestEarned / fdResult.totalValue) * 100}%` }} className="h-full bg-amber-400" />
-          </div>
-        </div>
-
-        <div className="bg-amber-500/10 border border-amber-400/30 p-4 rounded-2xl flex items-start space-x-3">
+        <div className="mt-4 bg-amber-500/[0.06] border border-amber-400/25 p-4 rounded-2xl flex items-start space-x-3">
           <Info className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-          <p className="text-xs text-amber-200 leading-relaxed">
+          <p className="text-xs text-amber-100/85 leading-relaxed">
             {t("calc.fd.senior_tip")}
           </p>
         </div>
@@ -984,6 +1010,7 @@ function GoalPlanner() {
   const language = useLanguageStore((s) => s.language);
   const t = getTranslation(language);
   const en = language === "en";
+  const dark = useThemeStore((s) => s.theme) === "dark";
 
   const calculateGoalSIP = () => {
     let expectedRate = 12;
@@ -1004,6 +1031,16 @@ function GoalPlanner() {
     return { requiredSip: Math.round(requiredSip), expectedRate, futureValue: goalAmount };
   };
   const goalResult = calculateGoalSIP();
+
+  const goalSeries = (() => {
+    const i = goalResult.expectedRate / 100 / 12;
+    const m = goalResult.requiredSip;
+    const wealth = Array.from({ length: goalYears + 1 }, (_, y) =>
+      y === 0 || i === 0 ? m * 12 * y : m * ((Math.pow(1 + i, y * 12) - 1) / i) * (1 + i),
+    );
+    const principal = Array.from({ length: goalYears + 1 }, (_, y) => m * 12 * y);
+    return { wealth, principal };
+  })();
 
   const goals = [
     { id: "home", Icon: Home, label: t("calc.goal.home"), val: 3000000 },
@@ -1120,40 +1157,50 @@ function GoalPlanner() {
         </div>
       </div>
 
-      {/* Results & Recommendation Card */}
-      <div className="lg:col-span-5 flex flex-col justify-between bg-slate-950/80 border border-slate-800 p-8 rounded-3xl">
-        <div className="space-y-6">
-          <h3 className="text-lg font-bold text-slate-200">{t("calc.goal.formula")}</h3>
-
-          <div className="bg-slate-900 p-6 rounded-2xl border border-violet-400/30 shadow-sm text-center space-y-4">
-            <div className="inline-flex p-3 bg-violet-500/15 rounded-2xl text-violet-300">
-              <Target className="h-6 w-6" />
-            </div>
-            <div className="space-y-1">
-              <span className="text-xs font-bold text-slate-400 uppercase block">{t("calc.goal.required_sip")}</span>
-              <span className="text-2xl md:text-3xl font-extrabold text-violet-300 block">
-                {formatCurrency(goalResult.requiredSip)}
-              </span>
-            </div>
-            <p className="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto">
-              {en ? (
-                <>
-                  At an estimated <strong>{goalResult.expectedRate}%</strong> annual return, investing this amount monthly for <strong>{goalYears} years</strong> can fulfil your goal of {formatCurrency(goalAmount)}.
-                </>
-              ) : (
-                <>
-                  अंदाजे <strong>{goalResult.expectedRate}%</strong> वार्षिक परताव्याच्या दराने दरमहा एवढी गुंतवणूक केल्यास <strong>{goalYears} वर्षांत</strong> तुमचे {formatCurrency(goalAmount)} चे स्वप्न पूर्ण होऊ शकते.
-                </>
-              )}
-            </p>
+      {/* Results — theme-aware premium card with required-SIP + growth chart */}
+      <div
+        className={`lg:col-span-5 rounded-3xl p-7 ${
+          dark
+            ? "bg-slate-800/70 backdrop-blur-md border border-slate-700 shadow-2xl"
+            : "bg-white border border-slate-200 shadow-[0_10px_40px_rgba(15,23,42,0.10)]"
+        }`}
+      >
+        <div className="flex items-start justify-between">
+          <div>
+            <p className={`text-[11px] font-semibold uppercase tracking-wider ${dark ? "text-slate-500" : "text-slate-400"}`}>{t("calc.goal.formula")}</p>
+            <p className={`mt-1 text-xs font-deva ${dark ? "text-slate-400" : "text-slate-500"}`}>{t("calc.goal.required_sip")}</p>
+            <p className="text-3xl font-extrabold text-violet-500">{formatCurrency(goalResult.requiredSip)}</p>
           </div>
+          <span className="inline-flex items-center gap-1 rounded-full bg-violet-500/15 px-2.5 py-1 text-[11px] font-semibold text-violet-400">
+            <Target className="h-3 w-3" /> {goalResult.expectedRate}%
+          </span>
         </div>
 
-        <div className="bg-violet-500/10 border border-violet-400/30 p-4.5 rounded-2xl space-y-2 mt-6">
-          <h4 className="flex items-center gap-1.5 text-xs font-bold text-violet-300">
+        <p className={`mt-2 text-xs leading-relaxed font-deva ${dark ? "text-slate-400" : "text-slate-500"}`}>
+          {en ? (
+            <>At ~<strong>{goalResult.expectedRate}%</strong> p.a. for <strong>{goalYears} years</strong>, this reaches your goal of {formatCurrency(goalAmount)}.</>
+          ) : (
+            <>अंदाजे <strong>{goalResult.expectedRate}%</strong> दराने <strong>{goalYears} वर्षांत</strong> {formatCurrency(goalAmount)} चे ध्येय गाठता येते.</>
+          )}
+        </p>
+
+        <div className="mt-4">
+          <WealthGrowthChart
+            wealth={goalSeries.wealth}
+            principal={goalSeries.principal}
+            dark={dark}
+            labels={en ? { wealth: "Projected value", invested: "Invested" } : { wealth: "अंदाजे मूल्य", invested: "गुंतवणूक" }}
+          />
+        </div>
+
+        <div
+          className="mt-5 rounded-2xl p-4 space-y-1.5"
+          style={dark ? { background: "rgba(139,92,246,0.10)", border: "1px solid rgba(139,92,246,0.30)" } : { background: "#F5F3FF", border: "1px solid #DDD6FE" }}
+        >
+          <h4 className="flex items-center gap-1.5 text-xs font-bold" style={{ color: dark ? "#C4B5FD" : "#6D28D9" }}>
             <Lightbulb className="h-3.5 w-3.5" /> {t("calc.goal.rec_title")}
           </h4>
-          <p className="text-[11px] text-violet-200/95 leading-relaxed">
+          <p className="text-[11px] leading-relaxed" style={{ color: dark ? "rgba(196,181,253,0.95)" : "#5B21B6" }}>
             {riskProfile === "high" && t("calc.goal.rec_high")}
             {riskProfile === "medium" && t("calc.goal.rec_med")}
             {riskProfile === "low" && t("calc.goal.rec_low")}

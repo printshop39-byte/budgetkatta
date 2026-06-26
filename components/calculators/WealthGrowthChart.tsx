@@ -4,7 +4,7 @@
 // card). Pure SVG; re-renders on prop change so dragging a slider updates it
 // continuously. Colors follow the BudgetKatta palette: wealth = brand green,
 // invested = amber.
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const GREEN = "#16A34A";
 const AMBER = "#F59E0B";
@@ -37,14 +37,19 @@ const W = 620, H = 240, PL = 56, PR = 16, PT = 16, PB = 30;
 const x0 = PL, x1 = W - PR, yTop = PT, yBot = H - PB;
 
 type Props = {
-  monthly: number;
-  rate: number;
-  years: number;
+  // Per-year series (index 0 = year 0). wealth[] is the growing value (green),
+  // principal[] is what was put in (amber). Caller computes these so the chart
+  // works for SIP, FD, Goal, etc.
+  wealth: number[];
+  principal: number[];
   dark?: boolean;
   labels?: { wealth: string; invested: string };
 };
 
-export default function WealthGrowthChart({ monthly, rate, years, dark = false, labels }: Props) {
+export default function WealthGrowthChart({ wealth, principal, dark = false, labels }: Props) {
+  const years = Math.max(1, wealth.length - 1);
+  const max = Math.max(1, ...wealth, ...principal);
+
   const GRID = dark ? "#334155" : "#E2E8F0";
   const MUTED = dark ? "#94A3B8" : "#64748B";
   const DOT_BORDER = dark ? "#1E293B" : "#FFFFFF";
@@ -65,15 +70,6 @@ export default function WealthGrowthChart({ monthly, rate, years, dark = false, 
     const yr = Math.round(((svgX - x0) / (x1 - x0)) * years);
     setHover(Math.max(0, Math.min(years, yr)));
   };
-
-  const { wealth, principal, max } = useMemo(() => {
-    const i = rate / 100 / 12;
-    const wAt = (y: number) => (y === 0 ? 0 : monthly * ((Math.pow(1 + i, y * 12) - 1) / i) * (1 + i));
-    const pAt = (y: number) => monthly * 12 * y;
-    const w = Array.from({ length: years + 1 }, (_, y) => wAt(y));
-    const p = Array.from({ length: years + 1 }, (_, y) => pAt(y));
-    return { wealth: w, principal: p, max: w[years] || 1 };
-  }, [monthly, rate, years]);
 
   const xFor = (y: number) => x0 + (y / years) * (x1 - x0);
   const yFor = (v: number) => yBot - (v / max) * (yBot - yTop);

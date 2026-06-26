@@ -6,6 +6,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { CheckCircle2, ShieldAlert, X } from 'lucide-react';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
@@ -101,13 +102,13 @@ export default function LeadFormModal() {
                 aria-label={t('btn.close')}
                 className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800/60 hover:text-slate-200"
               >
-                ✕
+                <X className="h-5 w-5" />
               </button>
             </div>
 
             {done ? (
               <div className="flex flex-col items-center gap-3 py-8 text-center">
-                <span className="text-4xl">✅</span>
+                <CheckCircle2 className="h-12 w-12 text-emerald-400" />
                 <p className="text-slate-200 font-deva">{t('lead.success')}</p>
                 <button
                   onClick={close}
@@ -120,10 +121,11 @@ export default function LeadFormModal() {
               <form onSubmit={handleSubmit} className="space-y-3">
                 {/* Security disclaimer */}
                 <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-3">
-                  <p className="bk-security-note text-xs font-semibold leading-relaxed text-rose-200 font-deva">
+                  <p className="bk-security-note flex items-start gap-2 text-xs font-semibold leading-relaxed text-rose-200 font-deva">
+                    <ShieldAlert className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                     {language === 'mr'
-                      ? '🔒 सुरक्षा सतर्कता: बजेटकट्टा तुमच्याकडे कधीही मोबाईल OTP, पासवर्ड किंवा वैयक्तिक कागदपत्रांची मागणी करत नाही. कृपया तुमची खाजगी माहिती कोणासोबतही शेअर करू नका.'
-                      : '🔒 Security Warning: BudgetKatta will NEVER ask for your mobile OTP, passwords, or personal identity documents. Please do not share sensitive information with anyone.'}
+                      ? 'सुरक्षा सतर्कता: बजेटकट्टा तुमच्याकडे कधीही मोबाईल OTP, पासवर्ड किंवा वैयक्तिक कागदपत्रांची मागणी करत नाही. कृपया तुमची खाजगी माहिती कोणासोबतही शेअर करू नका.'
+                      : 'Security Warning: BudgetKatta will NEVER ask for your mobile OTP, passwords, or personal identity documents. Please do not share sensitive information with anyone.'}
                   </p>
                 </div>
 

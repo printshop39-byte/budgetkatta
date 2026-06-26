@@ -11,7 +11,7 @@ export interface Explainer {
 export const explainers: Explainer[] = [
   {
     id: 'loan',
-    icon: '🏦',
+    icon: 'bank',
     title: { mr: 'कर्ज प्रक्रिया कशी चालते?', en: 'How does the loan process work?' },
     steps: [
       { mr: 'माहिती भरा', en: 'Fill in your details' },
@@ -21,7 +21,7 @@ export const explainers: Explainer[] = [
   },
   {
     id: 'fd',
-    icon: '💰',
+    icon: 'money',
     title: { mr: 'FD मध्ये पैसे कसे वाढतात?', en: 'How does money grow in an FD?' },
     steps: [
       { mr: 'रक्कम जमा करा', en: 'Deposit the amount' },
@@ -31,7 +31,7 @@ export const explainers: Explainer[] = [
   },
   {
     id: 'sip',
-    icon: '📈',
+    icon: 'sip',
     title: { mr: 'SIP मध्ये गुंतवणूक कशी वाढते?', en: 'How does an SIP investment grow?' },
     steps: [
       { mr: 'रक्कम निवडा', en: 'Choose your amount' },
@@ -41,7 +41,7 @@ export const explainers: Explainer[] = [
   },
   {
     id: 'insurance',
-    icon: '🛡️',
+    icon: 'insurance',
     title: { mr: 'विमा कव्हर कसे निवडावे?', en: 'How to choose insurance cover?' },
     steps: [
       { mr: 'कव्हर निवडा', en: 'Choose your cover' },

@@ -17,7 +17,7 @@ export interface LoanDetail {
 export const loanDetails: Record<LoanType, LoanDetail> = {
   home: {
     type: 'home',
-    icon: '🏠',
+    icon: 'home',
     labelKey: 'loan.home',
     product: 'HOME_LOAN',
     eligibility: [
@@ -32,7 +32,7 @@ export const loanDetails: Record<LoanType, LoanDetail> = {
   },
   personal: {
     type: 'personal',
-    icon: '💸',
+    icon: 'personal',
     labelKey: 'loan.personal',
     product: 'PERSONAL_LOAN',
     eligibility: [
@@ -47,7 +47,7 @@ export const loanDetails: Record<LoanType, LoanDetail> = {
   },
   business: {
     type: 'business',
-    icon: '🏢',
+    icon: 'building',
     labelKey: 'loan.business',
     product: 'BUSINESS_LOAN',
     eligibility: [
@@ -62,7 +62,7 @@ export const loanDetails: Record<LoanType, LoanDetail> = {
   },
   vehicle: {
     type: 'vehicle',
-    icon: '🚗',
+    icon: 'car',
     labelKey: 'loan.vehicle',
     product: 'VEHICLE_LOAN',
     eligibility: [
@@ -77,7 +77,7 @@ export const loanDetails: Record<LoanType, LoanDetail> = {
   },
   education: {
     type: 'education',
-    icon: '🎓',
+    icon: 'education',
     labelKey: 'loan.education',
     product: 'EDUCATION_LOAN',
     eligibility: [
@@ -92,7 +92,7 @@ export const loanDetails: Record<LoanType, LoanDetail> = {
   },
   gold: {
     type: 'gold',
-    icon: '🪙',
+    icon: 'gold',
     labelKey: 'loan.gold',
     product: 'GOLD_LOAN',
     eligibility: [

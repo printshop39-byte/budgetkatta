@@ -1,6 +1,6 @@
 ﻿'use client';
 import { useEffect, useState } from 'react';
-import { Download, Check, Loader2 } from 'lucide-react';
+import { Download, Check, Loader2, Building2, Info, AlertTriangle } from 'lucide-react';
 import PageShell from '@/components/shared/PageShell';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
@@ -321,10 +321,11 @@ export default function RatesPage() {
           </div>
 
           {/* Source + freshness — gold/silver move intraday, so be explicit. */}
-          <p className="mt-2 px-1 text-[11px] leading-relaxed text-slate-500 font-deva">
+          <p className="mt-2 flex items-start gap-1.5 px-1 text-[11px] leading-relaxed text-slate-500 font-deva">
+            <AlertTriangle className="mt-0.5 h-3 w-3 shrink-0 text-amber-400/80" />
             {language === 'mr'
-              ? '⚠️ सोने/चांदीचे दर सूचक आहेत व दिवसभरात बदलतात. स्रोत: सूचक बाजार दर · शेवटचा आढावा: २६ जून २०२६. खरेदीपूर्वी स्थानिक सराफाकडे खात्री करा.'
-              : '⚠️ Gold/silver rates are indicative and change through the day. Source: indicative market rates · Last reviewed: 26 June 2026. Confirm with your local jeweller before buying.'}
+              ? 'सोने/चांदीचे दर सूचक आहेत व दिवसभरात बदलतात. स्रोत: सूचक बाजार दर · शेवटचा आढावा: २६ जून २०२६. खरेदीपूर्वी स्थानिक सराफाकडे खात्री करा.'
+              : 'Gold/silver rates are indicative and change through the day. Source: indicative market rates · Last reviewed: 26 June 2026. Confirm with your local jeweller before buying.'}
           </p>
 
           {/* Official RBI Repo Rate */}
@@ -440,7 +441,7 @@ export default function RatesPage() {
           <div className="rounded-2xl bg-slate-900 border border-slate-800 p-6 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <span className="text-xl">🏙️</span>
+                <Building2 className="h-6 w-6 text-bk-gold" />
                 <h2 className="font-display text-xl font-bold text-slate-200 font-deva">
                   {language === 'mr' ? 'रिअल इस्टेट आणि भाडे कट्टा' : 'Real Estate & Rent Tracker'}
                 </h2>
@@ -509,7 +510,7 @@ export default function RatesPage() {
             </div>
 
             <p className="mt-3 flex items-center gap-2 text-xs leading-relaxed text-slate-400 font-deva">
-              <span className="shrink-0 text-amber-400">ℹ️</span>
+              <Info className="h-4 w-4 shrink-0 text-amber-400" />
               <span>
                 {language === 'mr'
                   ? 'टीप: हे प्रमाणित सरासरी दर (Standard Benchmark Rates) आहेत. वेगवेगळ्या परिसरांनुसार (Area) आणि ठिकाणांनुसार (Location) प्रत्यक्ष बाजारभावात लक्षणीय बदल होऊ शकतो.'

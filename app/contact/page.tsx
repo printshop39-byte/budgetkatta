@@ -6,6 +6,7 @@ import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { submitLead } from '@/lib/leadAutomation';
 import { CONTACT_EMAIL } from '@/lib/config';
+import { Icon } from '@/components/shared/Icon';
 import type { LeadModule } from '@/types';
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
@@ -59,9 +60,9 @@ export default function ContactPage() {
   }
 
   const infoCards = [
-    { icon: '✉️', label: t('contact.info_email'), value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-    { icon: '📍', label: t('contact.info_area'), value: t('contact.info_area_val') },
-    { icon: '⏱️', label: t('contact.info_response'), value: t('contact.info_response_val') },
+    { icon: 'email', label: t('contact.info_email'), value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
+    { icon: 'location', label: t('contact.info_area'), value: t('contact.info_area_val') },
+    { icon: 'clock', label: t('contact.info_response'), value: t('contact.info_response_val') },
   ];
 
   return (
@@ -79,7 +80,7 @@ export default function ContactPage() {
 
             {done ? (
               <div className="flex flex-col items-center gap-3 py-10 text-center">
-                <span className="text-4xl">✅</span>
+                <Icon name="success" className="h-12 w-12 text-emerald-400" />
                 <p className="text-slate-200 font-deva">{t('lead.success')}</p>
               </div>
             ) : (
@@ -185,11 +186,11 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 rounded-xl bg-amber-500 py-3 font-bold text-slate-200 transition-colors hover:bg-amber-500 font-deva"
             >
-              💬 {t('contact.whatsapp')}
+              <Icon name="chat" className="h-4 w-4" /> {t('contact.whatsapp')}
             </a>
           ) : (
-            <div className="rounded-xl border border-amber-400/40/20 bg-amber-400/5 py-3 text-center text-sm text-amber-400/80 font-deva">
-              💬 {t('contact.whatsapp_soon')}
+            <div className="flex items-center justify-center gap-2 rounded-xl border border-amber-400/40/20 bg-amber-400/5 py-3 text-center text-sm text-amber-400/80 font-deva">
+              <Icon name="chat" className="h-4 w-4" /> {t('contact.whatsapp_soon')}
             </div>
           )}
         </motion.div>

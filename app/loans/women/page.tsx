@@ -4,7 +4,8 @@
 // finder. Content comes from lib/schemes.ts so this stays a thin renderer.
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Users, Sparkles, GraduationCap, FileText, MessageCircle } from 'lucide-react';
+import { Users, Sparkles, GraduationCap, FileText, MessageCircle, AlertTriangle } from 'lucide-react';
+import { Icon } from '@/components/shared/Icon';
 import { useLanguageStore } from '@/store/languageStore';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import { womenSchemes, womenHomeLoanPerks, womenFinder } from '@/lib/schemes';
@@ -85,7 +86,9 @@ export default function WomenLoansPage() {
               transition={{ delay: i * 0.05 }}
               className="glass-card glass-card-gold flex flex-col gap-2 p-5"
             >
-              <span className="text-2xl">{p.icon}</span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-400/10 text-amber-300 ring-1 ring-amber-400/20">
+                <Icon name={p.icon} className="h-5 w-5" />
+              </span>
               <h3 className="font-bold text-amber-300 font-deva">{p.title[lang]}</h3>
               <p className="text-xs leading-relaxed text-slate-400 font-deva">{p.detail[lang]}</p>
             </motion.div>
@@ -183,8 +186,8 @@ export default function WomenLoansPage() {
       </Link>
 
       {/* Disclaimer */}
-      <p className="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-xs leading-relaxed text-slate-400 font-deva">
-        ⚠️{' '}
+      <p className="flex items-start gap-1.5 rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-xs leading-relaxed text-slate-400 font-deva">
+        <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />{' '}
         {mr
           ? 'ही माहिती फक्त शैक्षणिक उद्देशाने आहे. BudgetKatta कर्ज मंजुरीची हमी देत नाही. अंतिम निर्णयापूर्वी संबंधित बँक, सरकारी portal किंवा आर्थिक सल्लागाराकडे पात्रता, व्याजदर व अटी तपासा.'
           : 'This information is for educational purposes only. BudgetKatta does not guarantee loan approval. Verify eligibility, rates and terms with the relevant bank, official portal or a financial advisor before deciding.'}

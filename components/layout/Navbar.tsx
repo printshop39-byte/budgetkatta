@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon, ChevronDown } from 'lucide-react';
+import { Sun, Moon, ChevronDown, Menu, X } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { useLeadFormStore } from '@/store/leadFormStore';
@@ -183,7 +183,7 @@ export default function Navbar() {
             aria-label="Open menu"
             aria-expanded={open}
           >
-            ☰
+            <Menu className="h-5 w-5" />
           </button>
         </div>
       </nav>
@@ -216,7 +216,7 @@ export default function Navbar() {
                   aria-label="Close menu"
                   className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800/60 hover:text-slate-200"
                 >
-                  ✕
+                  <X className="h-5 w-5" />
                 </button>
               </div>
 

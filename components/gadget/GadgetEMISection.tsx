@@ -7,6 +7,7 @@
 // makes a new tab appear automatically.
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Lightbulb } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import {
@@ -59,9 +60,9 @@ export default function GadgetEMISection() {
         key={active.id}
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mx-auto max-w-2xl rounded-2xl border border-bk-gold/15 bg-bk-gold/5 px-4 py-2.5 text-center text-sm text-slate-400 font-deva"
+        className="mx-auto flex max-w-2xl items-start justify-center gap-2 rounded-2xl border border-bk-gold/15 bg-bk-gold/5 px-4 py-2.5 text-center text-sm text-slate-400 font-deva"
       >
-        💡 {active.tagline[language]}
+        <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-bk-gold" /> {active.tagline[language]}
       </motion.p>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-5">

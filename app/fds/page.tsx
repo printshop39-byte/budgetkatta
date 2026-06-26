@@ -14,6 +14,7 @@ import TableSkeleton from '@/components/shared/TableSkeleton';
 import CalculatorDisclaimer from '@/components/shared/CalculatorDisclaimer';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
 import JsonLd from '@/components/seo/JsonLd';
+import { Lock, FileText, Check } from 'lucide-react';
 import { fdDocuments } from '@/lib/documentChecklists';
 import type { FDRate } from '@/types';
 
@@ -98,7 +99,7 @@ export default function FDPage() {
         <h1 className="font-display text-3xl font-extrabold text-slate-200 md:text-4xl">{t('fd.hero_title')}</h1>
         <p className="mt-2 text-slate-400 font-deva">{t('fd.subtitle')}</p>
         <span className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-amber-400/40/25 bg-amber-400/10 px-3 py-1 text-xs text-amber-400 font-deva">
-          🔒 {t('fd.trust_signal')}
+          <Lock className="h-3.5 w-3.5" /> {t('fd.trust_signal')}
         </span>
       </header>
 
@@ -173,8 +174,8 @@ export default function FDPage() {
                         <td className="p-4 font-bold text-bk-gold">{row.regularRate}%</td>
                         <td className="p-4 font-bold text-bk-success">{row.seniorRate}%</td>
                         <td className="p-4">
-                          <Link href="/documents" className="text-xs text-bk-gold/80 hover:text-bk-gold" aria-label={t('fd.col_docs')}>
-                            📄 {t('btn.learn_more')}
+                          <Link href="/documents" className="inline-flex items-center gap-1 text-xs text-bk-gold/80 hover:text-bk-gold" aria-label={t('fd.col_docs')}>
+                            <FileText className="h-3.5 w-3.5" /> {t('btn.learn_more')}
                           </Link>
                         </td>
                         <td className="p-4">
@@ -187,9 +188,9 @@ export default function FDPage() {
                                 data: [bank.bankName, row.tenureLabel, `${row.regularRate}%`, `${row.seniorRate}%`],
                               })
                             }
-                            className="rounded-lg border border-slate-800 px-3 py-1 text-xs text-slate-400 transition-colors hover:border-bk-gold/40 hover:text-bk-gold disabled:opacity-40 font-deva"
+                            className="inline-flex items-center justify-center gap-1 rounded-lg border border-slate-800 px-3 py-1 text-xs text-slate-400 transition-colors hover:border-bk-gold/40 hover:text-bk-gold disabled:opacity-40 font-deva"
                           >
-                            {inCompare ? '✓' : t('btn.compare')}
+                            {inCompare ? <Check className="h-3.5 w-3.5" /> : t('btn.compare')}
                           </button>
                         </td>
                       </tr>

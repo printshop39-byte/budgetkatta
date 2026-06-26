@@ -1,4 +1,5 @@
 'use client';
+import { AlertTriangle } from 'lucide-react';
 import PageShell from '@/components/shared/PageShell';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
@@ -24,7 +25,7 @@ export default function DisclaimerPage() {
         <ul className="space-y-4">
           {points.map((p) => (
             <li key={p} className="flex gap-3">
-              <span className="mt-1 text-bk-gold">⚠️</span>
+              <AlertTriangle className="mt-1 h-4 w-4 shrink-0 text-bk-gold" />
               <p className="leading-relaxed text-slate-400 font-deva">{t(p)}</p>
             </li>
           ))}

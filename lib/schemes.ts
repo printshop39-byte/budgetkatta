@@ -10,7 +10,7 @@ export type SchemeAudience = 'women' | 'student';
 export interface Scheme {
   id: string;
   audience: SchemeAudience;
-  icon: string; // emoji, matches the loan-page style
+  icon: string; // Icon registry key (see components/shared/Icon.tsx)
   name: Bi; // योजना
   forWhom: Bi; // कोणासाठी
   amount: Bi; // ठळक रक्कम / आकडा (badge)
@@ -30,7 +30,7 @@ export const womenSchemes: Scheme[] = [
   {
     id: 'standup',
     audience: 'women',
-    icon: '🚀',
+    icon: 'rocket',
     name: { mr: 'Stand-Up India', en: 'Stand-Up India' },
     forWhom: { mr: 'महिला उद्योजक व SC/ST उद्योजक', en: 'Women entrepreneurs & SC/ST entrepreneurs' },
     amount: { mr: '₹10 लाख – ₹1 कोटी', en: '₹10 lakh – ₹1 crore' },
@@ -42,7 +42,7 @@ export const womenSchemes: Scheme[] = [
   {
     id: 'mudra',
     audience: 'women',
-    icon: '🏪',
+    icon: 'store',
     name: { mr: 'मुद्रा लोन (PMMY)', en: 'Mudra Loan (PMMY)' },
     forWhom: { mr: 'छोटे व्यवसाय, दुकान, सेवा व उत्पादन', en: 'Small businesses, shops, services & manufacturing' },
     amount: { mr: '₹50,000 – ₹20 लाख', en: '₹50,000 – ₹20 lakh' },
@@ -54,7 +54,7 @@ export const womenSchemes: Scheme[] = [
   {
     id: 'mahila-udyam-nidhi',
     audience: 'women',
-    icon: '🏦',
+    icon: 'bank',
     name: { mr: 'महिला उद्यम निधी (SIDBI)', en: 'Mahila Udyam Nidhi (SIDBI)' },
     forWhom: { mr: 'महिलांचा छोटा/लघु उद्योग', en: "Women's small-scale enterprises" },
     amount: { mr: '₹10 लाखांपर्यंत', en: 'Up to ₹10 lakh' },
@@ -66,7 +66,7 @@ export const womenSchemes: Scheme[] = [
   {
     id: 'annapurna',
     audience: 'women',
-    icon: '🍲',
+    icon: 'food',
     name: { mr: 'अन्नपूर्णा योजना', en: 'Annapurna Scheme' },
     forWhom: { mr: 'खाद्य / केटरिंग व्यवसाय करणाऱ्या महिला', en: 'Women in food / catering businesses' },
     amount: { mr: '₹50,000 पर्यंत', en: 'Up to ₹50,000' },
@@ -78,7 +78,7 @@ export const womenSchemes: Scheme[] = [
   {
     id: 'bank-women',
     audience: 'women',
-    icon: '👜',
+    icon: 'business',
     name: { mr: 'बँक-विशेष महिला योजना', en: 'Bank-specific women schemes' },
     forWhom: { mr: 'महिला उद्योजक (बँकेनुसार)', en: 'Women entrepreneurs (varies by bank)' },
     amount: { mr: 'Cent Kalyani / Udyogini / Dena Shakti', en: 'Cent Kalyani / Udyogini / Dena Shakti' },
@@ -90,7 +90,7 @@ export const womenSchemes: Scheme[] = [
   {
     id: 'mavim',
     audience: 'women',
-    icon: '🤝',
+    icon: 'handshake',
     name: { mr: 'MAVIM / बचत गट (SHG)', en: 'MAVIM / SHG support' },
     forWhom: { mr: 'महाराष्ट्रातील महिला बचत गट', en: "Maharashtra's women self-help groups" },
     amount: { mr: 'गट कर्ज + market linkage', en: 'Group credit + market linkage' },
@@ -102,7 +102,7 @@ export const womenSchemes: Scheme[] = [
   {
     id: 'pmegp',
     audience: 'women',
-    icon: '🏭',
+    icon: 'factory',
     name: { mr: 'PMEGP', en: 'PMEGP' },
     forWhom: { mr: 'नवीन सूक्ष्म-उद्योग सुरू करणारे', en: 'Those starting a new micro-enterprise' },
     amount: { mr: 'महिलांना 35% subsidy', en: '35% subsidy for women' },
@@ -114,7 +114,7 @@ export const womenSchemes: Scheme[] = [
   {
     id: 'mahila-samridhi',
     audience: 'women',
-    icon: '💰',
+    icon: 'money',
     name: { mr: 'महिला समृद्धी योजना (महाराष्ट्र)', en: 'Mahila Samridhi Yojana (Maharashtra)' },
     forWhom: { mr: 'चर्मकार समाजातील आर्थिकदृष्ट्या कमजोर महिला', en: 'Economically weaker women of the Charmakar community' },
     amount: { mr: '₹25,000 – ₹50,000', en: '₹25,000 – ₹50,000' },
@@ -128,7 +128,7 @@ export const womenSchemes: Scheme[] = [
 // महिला गृहकर्ज विशेष फायदे (home-loan perks for women buyers).
 export const womenHomeLoanPerks: Perk[] = [
   {
-    icon: '🏠',
+    icon: 'home',
     title: { mr: 'Stamp Duty 1% सूट (महाराष्ट्र)', en: '1% stamp-duty concession (Maharashtra)' },
     detail: {
       mr: 'महाराष्ट्रात मालमत्ता फक्त महिलेच्या नावे असल्यास stamp duty मध्ये 1% सवलत (6% ऐवजी 5%) — मोठी बचत.',
@@ -136,7 +136,7 @@ export const womenHomeLoanPerks: Perk[] = [
     },
   },
   {
-    icon: '📉',
+    icon: 'down',
     title: { mr: 'कमी व्याजदर', en: 'Lower interest rate' },
     detail: {
       mr: 'SBI, HDFC सारख्या बँका महिला अर्जदार/सह-अर्जदाराला साधारण 0.05% कमी व्याजदर देतात.',
@@ -144,7 +144,7 @@ export const womenHomeLoanPerks: Perk[] = [
     },
   },
   {
-    icon: '🧾',
+    icon: 'receipt',
     title: { mr: 'वेगळी करसवलत', en: 'Separate tax benefits' },
     detail: {
       mr: 'संयुक्त मालकी (joint ownership) घेतल्यास दोघांनाही 80C व 24(b) अंतर्गत स्वतंत्र करसवलत मिळू शकते.',
@@ -158,7 +158,7 @@ export const studentSchemes: Scheme[] = [
   {
     id: 'vidyalaxmi',
     audience: 'student',
-    icon: '🎓',
+    icon: 'education',
     name: { mr: 'PM विद्यालक्ष्मी', en: 'PM Vidyalaxmi' },
     forWhom: { mr: 'गुणवंत विद्यार्थी, उच्च शिक्षण', en: 'Meritorious students, higher education' },
     amount: { mr: '₹10 लाख, विनातारण', en: '₹10 lakh, collateral-free' },
@@ -171,7 +171,7 @@ export const studentSchemes: Scheme[] = [
   {
     id: 'vidya-lakshmi-portal',
     audience: 'student',
-    icon: '🌐',
+    icon: 'global',
     name: { mr: 'Vidya Lakshmi Portal', en: 'Vidya Lakshmi Portal' },
     forWhom: { mr: 'सर्व education loan अर्जदार', en: 'All education-loan applicants' },
     amount: { mr: 'Single-window apply', en: 'Single-window apply' },
@@ -183,7 +183,7 @@ export const studentSchemes: Scheme[] = [
   {
     id: 'csis',
     audience: 'student',
-    icon: '📉',
+    icon: 'down',
     name: { mr: 'CSIS (व्याज अनुदान)', en: 'CSIS (interest subsidy)' },
     forWhom: { mr: 'कुटुंब उत्पन्न < ₹4.5 लाख', en: 'Family income < ₹4.5 lakh' },
     amount: { mr: 'Moratorium मध्ये 100% व्याज', en: '100% interest during moratorium' },
@@ -195,7 +195,7 @@ export const studentSchemes: Scheme[] = [
   {
     id: 'panjabrao',
     audience: 'student',
-    icon: '🏠',
+    icon: 'home',
     name: { mr: 'डॉ. पंजाबराव देशमुख वसतिगृह योजना', en: 'Dr. Panjabrao Deshmukh Vasatigrah Yojana' },
     forWhom: { mr: 'महाराष्ट्रातील बाहेरगावी शिकणारे विद्यार्थी', en: 'Maharashtra students studying away from home' },
     amount: { mr: 'निर्वाह भत्ता', en: 'Maintenance allowance' },
@@ -207,7 +207,7 @@ export const studentSchemes: Scheme[] = [
   {
     id: 'jansamarth',
     audience: 'student',
-    icon: '🖥️',
+    icon: 'desktop',
     name: { mr: 'JanSamarth Education Loan', en: 'JanSamarth Education Loan' },
     forWhom: { mr: 'सरकारी credit-linked योजनांसाठी', en: 'Government-sponsored credit-linked schemes' },
     amount: { mr: 'One-stop portal', en: 'One-stop portal' },
@@ -219,7 +219,7 @@ export const studentSchemes: Scheme[] = [
   {
     id: 'mahadbt',
     audience: 'student',
-    icon: '📜',
+    icon: 'certificate',
     name: { mr: 'MahaDBT Scholarship', en: 'MahaDBT Scholarship' },
     forWhom: { mr: 'महाराष्ट्रातील विद्यार्थी', en: 'Maharashtra students' },
     amount: { mr: 'Scholarship + freeship', en: 'Scholarship + freeship' },
@@ -231,7 +231,7 @@ export const studentSchemes: Scheme[] = [
   {
     id: 'ambedkar',
     audience: 'student',
-    icon: '✈️',
+    icon: 'travel',
     name: { mr: 'डॉ. आंबेडकर / परदेशी शिक्षण मदत', en: 'Dr. Ambedkar / Abroad education support' },
     forWhom: { mr: 'OBC/EBC विद्यार्थी, परदेशी शिक्षण', en: 'OBC/EBC students, education abroad' },
     amount: { mr: 'व्याज अनुदान', en: 'Interest subsidy' },
@@ -285,7 +285,7 @@ export const studentLoanTypes: LoanTypeRow[] = [
 // 80E व इतर विद्यार्थी फायदे.
 export const studentPerks: Perk[] = [
   {
-    icon: '🧾',
+    icon: 'receipt',
     title: { mr: 'कलम 80E करसवलत', en: 'Section 80E tax benefit' },
     detail: {
       mr: 'education loan च्या व्याजावर पूर्ण करसवलत — वरची मर्यादा नाही, परतफेड सुरू झाल्यापासून 8 वर्षांपर्यंत.',

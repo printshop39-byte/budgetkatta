@@ -4,13 +4,14 @@ import { motion } from 'framer-motion';
 import PageShell from '@/components/shared/PageShell';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
+import { Icon } from '@/components/shared/Icon';
 
 const trustKeys = [
-  { key: 'trust.secure', emoji: '🔒' },
-  { key: 'trust.transparent', emoji: '📊' },
-  { key: 'trust.ai', emoji: '🤖' },
-  { key: 'trust.updated', emoji: '🔄' },
-  { key: 'trust.no_hidden', emoji: '✅' },
+  { key: 'trust.secure', icon: 'lock' },
+  { key: 'trust.transparent', icon: 'chart' },
+  { key: 'trust.ai', icon: 'ai' },
+  { key: 'trust.updated', icon: 'updated' },
+  { key: 'trust.no_hidden', icon: 'check' },
 ];
 
 const ctas = [
@@ -68,7 +69,9 @@ export default function AboutPage() {
             key={badge.key}
             className="glass-card flex flex-col items-center gap-2 p-4 text-center transition-all hover:border-bk-gold/30"
           >
-            <span className="text-2xl">{badge.emoji}</span>
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-bk-gold/10 text-bk-gold ring-1 ring-bk-gold/20">
+              <Icon name={badge.icon} className="h-5 w-5" />
+            </span>
             <p className="text-xs leading-snug text-slate-300 font-deva">{t(badge.key)}</p>
           </div>
         ))}

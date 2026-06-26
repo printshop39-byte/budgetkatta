@@ -3,12 +3,13 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
+import { Icon } from '@/components/shared/Icon';
 
 const calcs = [
-  { href: '/fds', key: 'tools.fd', icon: '🏦' },
-  { href: '/loans', key: 'tools.emi', icon: '🧮' },
-  { href: '/sip', key: 'tools.sip', icon: '📈' },
-  { href: '/insurance', key: 'tools.ins', icon: '🛡️' },
+  { href: '/fds', key: 'tools.fd', icon: 'bank' },
+  { href: '/loans', key: 'tools.emi', icon: 'calculator' },
+  { href: '/sip', key: 'tools.sip', icon: 'sip' },
+  { href: '/insurance', key: 'tools.ins', icon: 'insurance' },
 ];
 
 export default function CalculatorCards() {
@@ -34,7 +35,9 @@ export default function CalculatorCards() {
                 href={c.href}
                 className="glass-card glass-card-gold flex flex-col items-center gap-2 rounded-2xl p-5 text-center transition-all hover:bg-slate-800/60"
               >
-                <span className="text-2xl">{c.icon}</span>
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-bk-gold/10 text-bk-gold ring-1 ring-bk-gold/20">
+                  <Icon name={c.icon} className="h-5 w-5" />
+                </span>
                 <span className="text-xs font-semibold text-slate-300 font-deva">{t(c.key)}</span>
               </Link>
             </motion.div>

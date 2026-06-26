@@ -2,7 +2,7 @@
 
 import { useState, useRef, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, HelpCircle as QuestionIcon, RefreshCw, ArrowRight, Sparkles } from "lucide-react";
+import { CheckCircle2, HelpCircle as QuestionIcon, RefreshCw, ArrowRight, Sparkles, AlertTriangle } from "lucide-react";
 import { useLanguageStore } from "@/store/languageStore";
 import { getTranslation } from "@/lib/i18n";
 
@@ -152,8 +152,8 @@ export default function SmartAdvisory() {
             </AnimatePresence>
 
             {/* Compliance: this tool gives general educational info, not advice. */}
-            <p className="text-[10px] leading-relaxed text-slate-500 font-deva">
-              ⚠️ {t("adv.disclaimer")}
+            <p className="flex items-start gap-1.5 text-[10px] leading-relaxed text-slate-500 font-deva">
+              <AlertTriangle className="mt-0.5 h-3 w-3 shrink-0 text-amber-400/80" /> {t("adv.disclaimer")}
             </p>
           </div>
         </div>

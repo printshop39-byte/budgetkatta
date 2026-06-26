@@ -3,6 +3,7 @@
 // Shows count cards per collection. No CRUD UI yet — clean structure only.
 
 import { useEffect, useState } from 'react';
+import { Icon } from '@/components/shared/Icon';
 
 const ADMIN_ENABLED = process.env.NEXT_PUBLIC_ENABLE_ADMIN === 'true';
 
@@ -14,11 +15,11 @@ interface CardDef {
 }
 
 const cards: CardDef[] = [
-  { key: 'fd', title: 'FD Products', icon: '🏦', endpoint: '/api/fd' },
-  { key: 'loans', title: 'Loan Products', icon: '💰', endpoint: '/api/loans' },
-  { key: 'sip', title: 'SIP Funds', icon: '📈', endpoint: '/api/sip' },
-  { key: 'insurance', title: 'Insurance Plans', icon: '🛡️', endpoint: '/api/insurance' },
-  { key: 'leads', title: 'Leads', icon: '📥', endpoint: '/api/leads' },
+  { key: 'fd', title: 'FD Products', icon: 'bank', endpoint: '/api/fd' },
+  { key: 'loans', title: 'Loan Products', icon: 'money', endpoint: '/api/loans' },
+  { key: 'sip', title: 'SIP Funds', icon: 'sip', endpoint: '/api/sip' },
+  { key: 'insurance', title: 'Insurance Plans', icon: 'insurance', endpoint: '/api/insurance' },
+  { key: 'leads', title: 'Leads', icon: 'leads', endpoint: '/api/leads' },
 ];
 
 export default function AdminPage() {
@@ -44,7 +45,7 @@ export default function AdminPage() {
   if (!ADMIN_ENABLED) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center">
-        <span className="text-4xl">🔒</span>
+        <Icon name="lock" className="mx-auto h-10 w-10 text-bk-gold" />
         <h1 className="mt-4 font-display text-2xl font-bold text-slate-200">Admin disabled</h1>
         <p className="mt-2 text-slate-400">
           Set <code className="rounded bg-slate-900/[0.05] px-1.5 py-0.5 text-bk-gold">NEXT_PUBLIC_ENABLE_ADMIN=true</code>{' '}
@@ -69,7 +70,9 @@ export default function AdminPage() {
           return (
             <div key={c.key} className="glass-card glass-card-gold p-6">
               <div className="flex items-center justify-between">
-                <span className="text-3xl">{c.icon}</span>
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-bk-gold/10 text-bk-gold ring-1 ring-bk-gold/20">
+                  <Icon name={c.icon} className="h-5 w-5" />
+                </span>
                 {info && (
                   <span
                     className={`rounded-full border px-2 py-0.5 text-xs ${

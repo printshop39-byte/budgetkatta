@@ -1,5 +1,5 @@
 ﻿'use client';
-import { Lock, PieChart, Sparkles, RefreshCw, BadgeCheck } from 'lucide-react';
+import { Lock, PieChart, Sparkles, RefreshCw, BadgeCheck, AlertTriangle } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 
@@ -35,8 +35,8 @@ export default function TrustSection() {
         </div>
 
         <div className="glass-card border-l-4 border-amber-400/50 p-5">
-          <p className="text-xs leading-relaxed text-slate-400 font-deva">
-            ⚠️ {t('trust.disclaimer')}
+          <p className="flex items-start gap-1.5 text-xs leading-relaxed text-slate-400 font-deva">
+            <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-400" /> {t('trust.disclaimer')}
           </p>
         </div>
       </div>

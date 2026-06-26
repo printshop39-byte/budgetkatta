@@ -8,6 +8,7 @@
 import { motion } from 'framer-motion';
 import type { ReactNode } from 'react';
 import { useLanguageStore } from '@/store/languageStore';
+import { Icon } from '@/components/shared/Icon';
 import type { Explainer } from '@/lib/explainers';
 
 export default function AnimatedExplainerCard({
@@ -29,7 +30,11 @@ export default function AnimatedExplainerCard({
       <div className="flex items-center gap-3">
         <div className="relative flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-amber-400/20 to-slate-900">
           <span className="pointer-events-none absolute h-8 w-8 rounded-full bg-amber-400/20 blur-md animate-pulse-gold" />
-          {visual ?? <span className="relative text-2xl animate-float">{explainer.icon}</span>}
+          {visual ?? (
+            <span className="relative animate-float text-amber-300">
+              <Icon name={explainer.icon} className="h-6 w-6" />
+            </span>
+          )}
         </div>
         <h3 className="font-display text-base font-bold text-slate-200 font-deva">
           {explainer.title[language]}

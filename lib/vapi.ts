@@ -15,8 +15,8 @@ export function isVapiConfigured(): boolean {
 /** Bilingual "coming soon" message used when Vapi isn't configured. */
 export function voiceComingSoonMessage(language: Language): string {
   return language === 'mr'
-    ? '🎤 व्हॉइस सहाय्यक लवकरच सुरू होईल!'
-    : '🎤 वॉइस सहायक जल्द शुरू होगा!';
+    ? 'व्हॉइस सहाय्यक लवकरच सुरू होईल!'
+    : 'वॉइस सहायक जल्द शुरू होगा!';
 }
 
 /**

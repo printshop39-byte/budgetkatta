@@ -17,6 +17,7 @@ import { useBotStore } from '@/store/botStore';
 import { getTranslation } from '@/lib/i18n';
 import { sendLeadToN8N } from '@/lib/leadAutomation';
 import { isVapiConfigured, startVoiceCall, voiceComingSoonMessage } from '@/lib/vapi';
+import { Icon } from '@/components/shared/Icon';
 import type { LeadModule } from '@/types';
 
 // Lazy-load Spline only on the client; never bundled into the initial payload.
@@ -33,11 +34,11 @@ function SplineFallback({ loading = false }: { loading?: boolean }) {
     <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-br from-bk-dark via-bk-card to-bk-dark">
       <div className="pointer-events-none absolute h-28 w-28 rounded-full bg-bk-gold/20 blur-2xl animate-pulse-gold" />
       <motion.span
-        className="relative text-5xl"
+        className="relative text-bk-gold"
         animate={{ y: [0, -10, 0], rotate: [0, -4, 4, 0] }}
         transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
       >
-        🤖
+        <Icon name="ai" className="h-12 w-12" />
       </motion.span>
       {loading && (
         <span className="absolute bottom-2 text-[10px] uppercase tracking-wider text-slate-400">
@@ -54,10 +55,10 @@ interface Message {
 }
 
 const quickActions: { key: string; module: LeadModule; icon: string }[] = [
-  { key: 'bot.quick_fd', module: 'FD', icon: '🏦' },
-  { key: 'bot.quick_loan', module: 'LOAN', icon: '💰' },
-  { key: 'bot.quick_sip', module: 'SIP', icon: '📈' },
-  { key: 'bot.quick_ins', module: 'INSURANCE', icon: '🛡️' },
+  { key: 'bot.quick_fd', module: 'FD', icon: 'bank' },
+  { key: 'bot.quick_loan', module: 'LOAN', icon: 'loan' },
+  { key: 'bot.quick_sip', module: 'SIP', icon: 'sip' },
+  { key: 'bot.quick_ins', module: 'INSURANCE', icon: 'insurance' },
 ];
 
 export default function Floating3DGuide() {
@@ -169,7 +170,7 @@ export default function Floating3DGuide() {
         whileTap={{ scale: 0.95 }}
         aria-label="Open AI Guide"
       >
-        {isOpen ? '✕' : '🤖'}
+        <Icon name={isOpen ? 'close' : 'ai'} className="h-7 w-7 text-slate-950" />
       </motion.button>
 
       <AnimatePresence>
@@ -195,8 +196,8 @@ export default function Floating3DGuide() {
             {/* Mobile: compact avatar */}
             {isMobile && (
               <div className="flex items-center gap-3 border-b border-slate-800 p-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 text-xl">
-                  🤖
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 text-slate-950">
+                  <Icon name="ai" className="h-5 w-5" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-slate-200 font-deva">{t('bot.title')}</p>
@@ -234,16 +235,16 @@ export default function Floating3DGuide() {
                 <button
                   key={action.key}
                   onClick={() => handleQuickAction(action.key, action.module)}
-                  className="rounded-lg border border-slate-800 bg-slate-800/60 px-2 py-1 text-xs text-slate-300 transition-all hover:border-amber-400/40 hover:bg-amber-400/20 hover:text-amber-400 font-deva"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-800/60 px-2 py-1 text-xs text-slate-300 transition-all hover:border-amber-400/40 hover:bg-amber-400/20 hover:text-amber-400 font-deva"
                 >
-                  {action.icon} {t(action.key)}
+                  <Icon name={action.icon} className="h-3.5 w-3.5" /> {t(action.key)}
                 </button>
               ))}
               <button
                 onClick={startVoiceAssistant}
-                className="rounded-lg border border-amber-400/30 bg-amber-400/10 px-2 py-1 text-xs text-amber-400 transition-all hover:bg-amber-400/20 font-deva"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-amber-400/30 bg-amber-400/10 px-2 py-1 text-xs text-amber-400 transition-all hover:bg-amber-400/20 font-deva"
               >
-                🎤 {t('btn.voice')}
+                <Icon name="voice" className="h-3.5 w-3.5" /> {t('btn.voice')}
               </button>
             </div>
 

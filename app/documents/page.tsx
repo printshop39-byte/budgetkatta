@@ -4,6 +4,7 @@ import Link from 'next/link';
 import PageShell from '@/components/shared/PageShell';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
 import AffiliateBanner from '@/components/AffiliateBanner';
+import { Download } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { useLeadFormStore } from '@/store/leadFormStore';
@@ -73,9 +74,9 @@ export default function DocumentsPage() {
       <div className="mt-4 flex flex-wrap gap-3">
         <button
           onClick={() => setShowDownloadNote((v) => !v)}
-          className="rounded-xl border border-slate-800 px-5 py-2.5 text-sm font-bold text-slate-300 transition-colors hover:border-bk-gold/40 hover:text-bk-gold font-deva"
+          className="inline-flex items-center gap-1.5 rounded-xl border border-slate-800 px-5 py-2.5 text-sm font-bold text-slate-300 transition-colors hover:border-bk-gold/40 hover:text-bk-gold font-deva"
         >
-          ⬇️ {t('doc.download')}
+          <Download className="h-4 w-4" /> {t('doc.download')}
         </button>
         <button
           onClick={() =>

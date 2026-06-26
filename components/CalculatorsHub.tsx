@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Info, ShieldCheck, Activity, AlertTriangle, Target, RefreshCw, ArrowRight, Home, Car, GraduationCap, Palmtree, TrendingUp, Landmark, Calculator, Wallet } from "lucide-react";
+import { Sparkles, Info, ShieldCheck, Activity, AlertTriangle, Target, RefreshCw, ArrowRight, Home, Car, GraduationCap, Palmtree, TrendingUp, Landmark, Calculator, Wallet, Lightbulb, PartyPopper } from "lucide-react";
 import { formatCurrency } from "@/lib/format";
 import { scrollToSection } from "@/lib/scroll";
 import { useCalculatorStore, type CalculatorType } from "@/store/calculatorStore";
 import { useLanguageStore } from "@/store/languageStore";
+import { useThemeStore } from "@/store/themeStore";
 import { getTranslation } from "@/lib/i18n";
+import WealthGrowthChart from "@/components/calculators/WealthGrowthChart";
 
 export type { CalculatorType };
 
@@ -21,6 +23,7 @@ function SipCalc() {
   const language = useLanguageStore((s) => s.language);
   const t = getTranslation(language);
   const en = language === "en";
+  const dark = useThemeStore((s) => s.theme) === "dark";
 
   const calculateSIP = () => {
     const P = sipMonthly;
@@ -119,90 +122,83 @@ function SipCalc() {
             <span>{en ? "20 yrs" : "२० वर्षे"}</span>
             <span>{en ? "40 yrs" : "४० वर्षे"}</span>
           </div>
+          {/* Quick-pick year tabs */}
+          <div className="mt-3 flex flex-wrap gap-2">
+            {[5, 10, 15, 20, 30].map((yr) => {
+              const active = sipYears === yr;
+              return (
+                <button
+                  key={yr}
+                  type="button"
+                  onClick={() => setSipYears(yr)}
+                  aria-pressed={active}
+                  className={`rounded-full px-3.5 py-1 text-xs font-semibold transition-all ${
+                    active
+                      ? "bg-amber-400 text-slate-950 shadow-md shadow-amber-500/30"
+                      : "bg-slate-900/60 text-slate-300 border border-slate-800 hover:border-amber-400/40"
+                  }`}
+                >
+                  {yr} {t("calc.years")}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Educational Tip */}
-        <div className="bg-amber-500/10 border border-amber-400/30 p-5 rounded-2xl flex items-start space-x-3.5">
-          <div className="p-2 bg-amber-500/20 rounded-xl text-amber-300">
+        <div className="bg-amber-500/[0.06] border border-amber-400/25 p-5 rounded-2xl flex items-start space-x-3.5">
+          <div className="p-2 bg-amber-500/15 rounded-xl text-amber-300">
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-amber-300">{t("calc.sip.tip_title")}</h4>
-            <p className="text-xs text-amber-200/90 leading-relaxed mt-1">
+            <h4 className="text-sm font-bold text-amber-200">{t("calc.sip.tip_title")}</h4>
+            <p className="text-xs text-amber-100/85 leading-relaxed mt-1">
               {t("calc.sip.tip_desc")}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Results & Visual Graphic */}
-      <div className="lg:col-span-5 flex flex-col justify-between bg-slate-950/80 border border-slate-800 p-8 rounded-3xl">
-        <div className="space-y-6">
-          <h3 className="text-lg font-bold text-slate-200">{t("calc.sip.analysis")}</h3>
-
-          <div className="space-y-4">
-            <div className="flex justify-between items-center py-2.5 border-b border-slate-800/50">
-              <span className="text-sm text-slate-400 font-medium">{t("calc.sip.invested_total")}</span>
-              <span className="text-base font-bold text-slate-200">{formatCurrency(sipResult.totalInvested)}</span>
-            </div>
-            <div className="flex justify-between items-center py-2.5 border-b border-slate-800/50">
-              <span className="text-sm text-slate-400 font-medium">{t("calc.sip.est_return")}</span>
-              <span className="text-base font-bold text-amber-400">+{formatCurrency(sipResult.wealthGained)}</span>
-            </div>
-            <div className="flex justify-between items-center py-3">
-              <span className="text-base font-bold text-slate-200">{t("calc.sip.total_value")}</span>
-              <span className="text-xl font-extrabold text-amber-300">{formatCurrency(sipResult.totalValue)}</span>
-            </div>
+      {/* Results — premium card (theme-aware) with green growth chart */}
+      <div
+        className={`lg:col-span-5 rounded-3xl p-7 ${
+          dark
+            ? "bg-slate-800/70 backdrop-blur-md border border-slate-700 shadow-2xl"
+            : "bg-white border border-slate-200 shadow-[0_10px_40px_rgba(15,23,42,0.10)]"
+        }`}
+      >
+        <div className="flex items-start justify-between">
+          <div>
+            <p className={`text-[11px] font-semibold uppercase tracking-wider ${dark ? "text-slate-500" : "text-slate-400"}`}>{t("calc.sip.analysis")}</p>
+            <p className={`mt-1 text-xs font-deva ${dark ? "text-slate-400" : "text-slate-500"}`}>{t("calc.sip.total_value")}</p>
+            <p className={`text-3xl font-extrabold ${dark ? "text-slate-100" : "text-slate-900"}`}>{formatCurrency(sipResult.totalValue)}</p>
           </div>
+          <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold ${dark ? "bg-emerald-500/15 text-emerald-300" : "bg-emerald-100 text-emerald-800"}`}>
+            <TrendingUp className="h-3 w-3" /> +{Math.round((sipResult.wealthGained / Math.max(1, sipResult.totalInvested)) * 100)}%
+          </span>
         </div>
 
-        {/* Circular Donut Chart SVG */}
-        <div className="my-6 flex justify-center items-center">
-          <div className="relative h-36 w-36">
-            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="40" stroke="#1e293b" strokeWidth="10" fill="transparent" />
-              <circle
-                cx="50"
-                cy="50"
-                r="40"
-                stroke="#f59e0b"
-                strokeWidth="10"
-                fill="transparent"
-                strokeDasharray="251.2"
-                strokeDashoffset={251.2 * (1 - sipResult.totalInvested / sipResult.totalValue)}
-              />
-              <circle
-                cx="50"
-                cy="50"
-                r="40"
-                stroke="#fbbf24"
-                strokeWidth="10"
-                fill="transparent"
-                strokeDasharray="251.2"
-                strokeDashoffset={251.2 * (1 - sipResult.wealthGained / sipResult.totalValue)}
-                style={{
-                  transform: `rotate(${360 * (sipResult.totalInvested / sipResult.totalValue)}deg)`,
-                  transformOrigin: "50px 50px",
-                }}
-              />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-xs text-slate-400 font-bold uppercase">{t("calc.sip.return_share")}</span>
-              <span className="text-sm font-extrabold text-amber-400">
-                {Math.round((sipResult.wealthGained / sipResult.totalValue) * 100) || 0}%
-              </span>
-            </div>
-          </div>
+        <div className="mt-4">
+          <WealthGrowthChart
+            monthly={sipMonthly}
+            rate={sipRate}
+            years={sipYears}
+            dark={dark}
+            labels={en ? { wealth: "Total Wealth", invested: "Invested" } : { wealth: "एकूण संपत्ती", invested: "गुंतवलेली रक्कम" }}
+          />
         </div>
 
-        <div className="flex justify-center space-x-4 text-xs font-semibold">
-          <div className="flex items-center space-x-1.5">
-            <span className="h-3 w-3 rounded-full bg-amber-500" />
-            <span className="text-slate-400">{t("calc.sip.legend_invest")} ({Math.round((sipResult.totalInvested / sipResult.totalValue) * 100) || 0}%)</span>
+        <div className="mt-5 grid grid-cols-2 gap-3">
+          <div className={`rounded-xl p-4 border ${dark ? "bg-slate-900/50 border-slate-700" : "bg-slate-50 border-slate-200"}`}>
+            <p className={`text-xs font-deva ${dark ? "text-slate-400" : "text-slate-500"}`}>{t("calc.sip.invested_total")}</p>
+            <p className={`mt-1 text-lg font-bold ${dark ? "text-slate-100" : "text-slate-900"}`}>{formatCurrency(sipResult.totalInvested)}</p>
           </div>
-          <div className="flex items-center space-x-1.5">
-            <span className="h-3 w-3 rounded-full bg-amber-400" />
-            <span className="text-slate-400">{t("calc.sip.legend_growth")} ({Math.round((sipResult.wealthGained / sipResult.totalValue) * 100) || 0}%)</span>
+          <div
+            className="rounded-xl p-4"
+            style={dark ? { background: "rgba(16,185,129,0.10)", border: "1px solid rgba(16,185,129,0.30)" } : { background: "#F0FDF4", border: "1px solid #BBF7D0" }}
+          >
+            <p className="text-xs font-deva" style={{ color: dark ? "#6EE7B7" : "#15803D" }}>{t("calc.sip.est_return")}</p>
+            <p className="mt-1 text-lg font-bold" style={{ color: dark ? "#34D399" : "#16A34A" }}>+{formatCurrency(sipResult.wealthGained)}</p>
           </div>
         </div>
       </div>
@@ -895,7 +891,9 @@ function BudgetPlanner() {
                 />
               </div>
               {totalNeedsSpent > targetNeeds && (
-                <p className="text-[11px] text-rose-400 font-semibold">{t("calc.budget.needs_over")}</p>
+                <p className="flex items-start gap-1.5 text-[11px] text-rose-400 font-semibold">
+                  <AlertTriangle className="mt-0.5 h-3 w-3 shrink-0" /> {t("calc.budget.needs_over")}
+                </p>
               )}
             </div>
 
@@ -916,7 +914,9 @@ function BudgetPlanner() {
                 />
               </div>
               {totalWantsSpent > targetWants && (
-                <p className="text-[11px] text-rose-400 font-semibold">{t("calc.budget.wants_over")}</p>
+                <p className="flex items-start gap-1.5 text-[11px] text-rose-400 font-semibold">
+                  <AlertTriangle className="mt-0.5 h-3 w-3 shrink-0" /> {t("calc.budget.wants_over")}
+                </p>
               )}
             </div>
 
@@ -937,9 +937,13 @@ function BudgetPlanner() {
                 />
               </div>
               {totalSavingsSpent < targetSavings ? (
-                <p className="text-[11px] text-amber-300 font-semibold">{t("calc.budget.savings_low")}</p>
+                <p className="flex items-start gap-1.5 text-[11px] text-amber-300 font-semibold">
+                  <AlertTriangle className="mt-0.5 h-3 w-3 shrink-0" /> {t("calc.budget.savings_low")}
+                </p>
               ) : (
-                <p className="text-[11px] text-amber-400 font-semibold">{t("calc.budget.savings_ok")}</p>
+                <p className="flex items-start gap-1.5 text-[11px] text-amber-400 font-semibold">
+                  <PartyPopper className="mt-0.5 h-3 w-3 shrink-0" /> {t("calc.budget.savings_ok")}
+                </p>
               )}
             </div>
           </div>
@@ -1146,7 +1150,9 @@ function GoalPlanner() {
         </div>
 
         <div className="bg-violet-500/10 border border-violet-400/30 p-4.5 rounded-2xl space-y-2 mt-6">
-          <h4 className="text-xs font-bold text-violet-300">{t("calc.goal.rec_title")}</h4>
+          <h4 className="flex items-center gap-1.5 text-xs font-bold text-violet-300">
+            <Lightbulb className="h-3.5 w-3.5" /> {t("calc.goal.rec_title")}
+          </h4>
           <p className="text-[11px] text-violet-200/95 leading-relaxed">
             {riskProfile === "high" && t("calc.goal.rec_high")}
             {riskProfile === "medium" && t("calc.goal.rec_med")}

@@ -1,8 +1,9 @@
 ﻿'use client';
 // DocumentChecklist — renders localized document cards with requirement badges
-// (✅ required / 🟡 sometimes) and an expandable "why is this needed?" note.
+// (required / sometimes) and an expandable "why is this needed?" note.
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { CheckCircle2, CircleDot, Info } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { categoryLabel } from '@/lib/documentChecklists';
@@ -39,7 +40,11 @@ export default function DocumentChecklist({ documents }: { documents: DocItem[] 
                   className="glass-card p-4"
                 >
                   <div className="flex items-start gap-2.5">
-                    <span className="text-base">{required ? '✅' : '🟡'}</span>
+                    {required ? (
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+                    ) : (
+                      <CircleDot className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                    )}
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-slate-200 font-deva">{doc.name[language]}</p>
                       <span
@@ -59,7 +64,7 @@ export default function DocumentChecklist({ documents }: { documents: DocItem[] 
                     className="mt-2.5 flex items-center gap-1 text-xs text-amber-400/80 hover:text-amber-400 font-deva"
                     aria-expanded={!!open[key]}
                   >
-                    ℹ️ {t('doc.why')}
+                    <Info className="h-3.5 w-3.5" /> {t('doc.why')}
                   </button>
                   {open[key] && (
                     <p className="mt-1.5 text-xs leading-relaxed text-slate-400 font-deva">

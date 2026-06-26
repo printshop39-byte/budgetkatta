@@ -1,5 +1,6 @@
 ﻿'use client';
 import Link from 'next/link';
+import { ShieldAlert } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { CONTACT_EMAIL } from '@/lib/config';
@@ -48,10 +49,11 @@ export default function Footer() {
       {/* Security disclaimer banner */}
       <div className="border-t border-slate-800 bg-[#050814] px-4 pt-8">
         <div className="mx-auto max-w-6xl rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4">
-          <p className="bk-security-note text-center text-sm font-semibold leading-relaxed text-rose-200 font-deva sm:text-left">
+          <p className="bk-security-note flex items-start justify-center gap-2 text-center text-sm font-semibold leading-relaxed text-rose-200 font-deva sm:justify-start sm:text-left">
+            <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />
             {language === 'mr'
-              ? '🔒 सुरक्षा सतर्कता: बजेटकट्टा तुमच्याकडे कधीही मोबाईल OTP, पासवर्ड किंवा वैयक्तिक कागदपत्रांची (Personal Documents) मागणी करत नाही. कृपया तुमची खाजगी माहिती कोणासोबतही शेअर करू नका.'
-              : '🔒 Security Warning: BudgetKatta will NEVER ask for your mobile OTP, passwords, or personal identity documents. Please do not share sensitive information with anyone.'}
+              ? 'सुरक्षा सतर्कता: बजेटकट्टा तुमच्याकडे कधीही मोबाईल OTP, पासवर्ड किंवा वैयक्तिक कागदपत्रांची (Personal Documents) मागणी करत नाही. कृपया तुमची खाजगी माहिती कोणासोबतही शेअर करू नका.'
+              : 'Security Warning: BudgetKatta will NEVER ask for your mobile OTP, passwords, or personal identity documents. Please do not share sensitive information with anyone.'}
           </p>
         </div>
       </div>

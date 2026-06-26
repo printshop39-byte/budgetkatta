@@ -8,6 +8,7 @@ import { insuranceTypes } from '@/lib/eduContent';
 import InsuranceEstimator from '@/components/calculators/InsuranceEstimator';
 import CalculatorDisclaimer from '@/components/shared/CalculatorDisclaimer';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
+import { Icon } from '@/components/shared/Icon';
 import { insuranceDocuments } from '@/lib/documentChecklists';
 
 export default function InsurancePage() {
@@ -90,8 +91,8 @@ export default function InsurancePage() {
                       transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                     />
                   )}
-                  <span className={`relative z-10 ${active ? 'font-bold text-white' : 'text-slate-400'}`}>
-                    {it.icon} {it.label[language]}
+                  <span className={`relative z-10 inline-flex items-center gap-1.5 ${active ? 'font-bold text-white' : 'text-slate-400'}`}>
+                    <Icon name={it.icon} className="h-4 w-4" /> {it.label[language]}
                   </span>
                 </button>
               );
@@ -115,8 +116,8 @@ export default function InsurancePage() {
                 <h3 className="text-sm font-semibold text-slate-300 font-deva">{t('ins.benefits')}</h3>
                 <ul className="mt-1 space-y-1.5">
                   {activeType.benefits.map((b, i) => (
-                    <li key={i} className="flex gap-2 text-sm text-slate-400 font-deva">
-                      <span className="text-emerald-400">✓</span>
+                    <li key={i} className="flex items-start gap-2 text-sm text-slate-400 font-deva">
+                      <Icon name="tick" className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
                       {b[language]}
                     </li>
                   ))}
@@ -140,8 +141,8 @@ export default function InsurancePage() {
         <section className="mb-12">
           <div className="mx-auto max-w-md">
             <InsuranceEstimator />
-            <p className="mt-3 rounded-lg border border-amber-400/30 bg-amber-400/5 px-3 py-2 text-xs leading-relaxed text-amber-300/90 font-deva">
-              ⚠️ {t('ins.est_note')}
+            <p className="mt-3 flex items-start gap-1.5 rounded-lg border border-amber-400/30 bg-amber-400/5 px-3 py-2 text-xs leading-relaxed text-amber-300/90 font-deva">
+              <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" /> {t('ins.est_note')}
             </p>
             <CalculatorDisclaimer />
           </div>

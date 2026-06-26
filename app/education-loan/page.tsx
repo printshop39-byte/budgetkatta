@@ -4,7 +4,7 @@
 // calculator, and an eligibility finder. Thin renderer over lib/schemes.ts.
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { GraduationCap, Sparkles, Users, Wallet } from 'lucide-react';
+import { GraduationCap, Sparkles, Users, Wallet, AlertTriangle } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import { studentSchemes, studentLoanTypes, studentPerks, studentFinder } from '@/lib/schemes';
@@ -180,8 +180,8 @@ export default function StudentLoansPage() {
       </Link>
 
       {/* Disclaimer */}
-      <p className="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-xs leading-relaxed text-slate-400 font-deva">
-        ⚠️{' '}
+      <p className="flex items-start gap-1.5 rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-xs leading-relaxed text-slate-400 font-deva">
+        <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-400" />{' '}
         {mr
           ? 'ही माहिती फक्त शैक्षणिक उद्देशाने आहे. BudgetKatta कर्ज मंजुरीची हमी देत नाही. अंतिम निर्णयापूर्वी संबंधित बँक, सरकारी portal किंवा आर्थिक सल्लागाराकडे पात्रता, व्याजदर व अटी तपासा.'
           : 'This information is for educational purposes only. BudgetKatta does not guarantee loan approval. Verify eligibility, rates and terms with the relevant bank, official portal or a financial advisor before deciding.'}

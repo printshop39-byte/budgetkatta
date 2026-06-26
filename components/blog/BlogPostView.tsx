@@ -1,7 +1,7 @@
 'use client';
 // BlogPostView — renders a single post's typed blocks, bilingual via languageStore.
 import Link from 'next/link';
-import { ArrowLeft, Clock } from 'lucide-react';
+import { ArrowLeft, Clock, AlertTriangle } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import type { BlogPost } from '@/lib/blogPosts';
 
@@ -66,8 +66,8 @@ export default function BlogPostView({ post }: { post: BlogPost }) {
       </div>
 
       {/* Educational-only note, consistent with the rest of the site. */}
-      <p className="mt-10 rounded-2xl border border-slate-800 bg-slate-900/40 p-4 text-xs leading-relaxed text-slate-500 font-deva">
-        ⚠️{' '}
+      <p className="mt-10 flex items-start gap-1.5 rounded-2xl border border-slate-800 bg-slate-900/40 p-4 text-xs leading-relaxed text-slate-500 font-deva">
+        <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-400" />{' '}
         {mr
           ? 'ही माहिती केवळ शैक्षणिक उद्देशासाठी आहे, वैयक्तिक आर्थिक सल्ला नाही. निर्णयापूर्वी संबंधित तज्ज्ञाचा सल्ला घ्या.'
           : 'This information is for educational purposes only, not personalised financial advice. Consult a relevant expert before deciding.'}

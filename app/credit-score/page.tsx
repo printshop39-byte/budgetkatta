@@ -4,6 +4,7 @@ import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import { creditScore } from '@/lib/eduContent';
+import { Info, Check } from 'lucide-react';
 
 export default function CreditScorePage() {
   const { language } = useLanguageStore();
@@ -27,16 +28,16 @@ export default function CreditScorePage() {
           <h2 className="font-display text-lg font-bold text-bk-gold">{creditScore.improve.title[language]}</h2>
           <ul className="mt-2 space-y-2">
             {creditScore.improve.points.map((p, i) => (
-              <li key={i} className="flex gap-2 text-slate-400 font-deva">
-                <span className="text-bk-gold">✓</span>
+              <li key={i} className="flex items-start gap-2 text-slate-400 font-deva">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-bk-gold" />
                 {p[language]}
               </li>
             ))}
           </ul>
         </section>
 
-        <p className="rounded-lg border border-slate-800 bg-slate-900/[0.03] px-3 py-2 text-xs text-slate-400 font-deva">
-          ℹ️ {creditScore.note[language]}
+        <p className="flex items-start gap-1.5 rounded-lg border border-slate-800 bg-slate-900/[0.03] px-3 py-2 text-xs text-slate-400 font-deva">
+          <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-sky-400" /> {creditScore.note[language]}
         </p>
 
         <button

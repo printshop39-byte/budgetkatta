@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { TrendingUp, ArrowRight, Check, Activity } from "lucide-react";
+import { TrendingUp, ArrowRight, Check, Activity, Sparkles } from "lucide-react";
 import { formatCurrency } from "@/lib/format";
 import { scrollToSection } from "@/lib/scroll";
 import { useLanguageStore } from "@/store/languageStore";
@@ -29,7 +29,7 @@ type HeroCopy = {
 
 const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
   mr: {
-    badge: "✨ महाराष्ट्राचे लाडके आर्थिक व्यासपीठ",
+    badge: "महाराष्ट्राचे लाडके आर्थिक व्यासपीठ",
     titleStart: "तुमच्या पैशासाठी",
     titleAccent: "सोपे, पारदर्शक आणि स्मार्ट",
     titleEnd: "मार्गदर्शन",
@@ -98,7 +98,7 @@ export default function HeroSection() {
         >
           {/* Soft Premium Pill Tag */}
           <div className="inline-flex items-center space-x-2 px-4 py-1.5 bg-slate-900/70 backdrop-blur-md border border-amber-400/20 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-            <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
+            <Sparkles className="h-3.5 w-3.5 text-amber-400" />
             <span className="text-xs font-semibold text-amber-300 tracking-wide">
               {t.badge}
             </span>

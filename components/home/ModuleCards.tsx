@@ -3,12 +3,13 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
+import { Icon } from '@/components/shared/Icon';
 
 const modules = [
-  { href: '/fds', key: 'fd.title', icon: '🏦', sub: 'fd.subtitle' },
-  { href: '/loans', key: 'loan.title', icon: '💰', sub: 'loan.subtitle' },
-  { href: '/sip', key: 'sip.title', icon: '📈', sub: 'sip.subtitle' },
-  { href: '/insurance', key: 'ins.title', icon: '🛡️', sub: 'ins.subtitle' },
+  { href: '/fds', key: 'fd.title', icon: 'bank', sub: 'fd.subtitle' },
+  { href: '/loans', key: 'loan.title', icon: 'loan', sub: 'loan.subtitle' },
+  { href: '/sip', key: 'sip.title', icon: 'sip', sub: 'sip.subtitle' },
+  { href: '/insurance', key: 'ins.title', icon: 'insurance', sub: 'ins.subtitle' },
 ];
 
 export default function ModuleCards() {
@@ -30,7 +31,9 @@ export default function ModuleCards() {
               href={m.href}
               className="glass-card group flex items-start gap-4 p-6 transition-all hover:border-bk-gold/30"
             >
-              <span className="text-3xl">{m.icon}</span>
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-bk-gold/10 text-bk-gold ring-1 ring-bk-gold/20">
+                <Icon name={m.icon} className="h-6 w-6" />
+              </span>
               <div>
                 <h3 className="font-display text-lg font-bold text-slate-100 group-hover:text-bk-gold">
                   {t(m.key)}

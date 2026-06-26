@@ -11,7 +11,7 @@ export interface InfoCard {
 // ── /rates — gold / silver / repo educational cards ─────────────────────────
 export const marketCards: InfoCard[] = [
   {
-    icon: '🥇',
+    icon: 'gold',
     title: { mr: 'सोने दर', en: 'Gold Rate' },
     lines: [
       {
@@ -21,7 +21,7 @@ export const marketCards: InfoCard[] = [
     ],
   },
   {
-    icon: '🥈',
+    icon: 'silver',
     title: { mr: 'चांदी दर', en: 'Silver Rate' },
     lines: [
       {
@@ -31,7 +31,7 @@ export const marketCards: InfoCard[] = [
     ],
   },
   {
-    icon: '🏦',
+    icon: 'bank',
     title: { mr: 'रेपो दर', en: 'Repo Rate' },
     lines: [
       { mr: 'RBI चा रेपो दर कर्जाच्या व्याजदरांवर परिणाम करतो.', en: "The RBI's repo rate influences loan interest rates." },
@@ -85,7 +85,7 @@ export interface InsuranceType {
 export const insuranceTypes: InsuranceType[] = [
   {
     id: 'term',
-    icon: '🛡️',
+    icon: 'insurance',
     label: { mr: 'टर्म विमा', en: 'Term Insurance' },
     whatIs: {
       mr: 'ठरलेल्या मुदतीसाठी मोठे जीवन कव्हर, कमी प्रीमियममध्ये.',
@@ -103,7 +103,7 @@ export const insuranceTypes: InsuranceType[] = [
   },
   {
     id: 'health',
-    icon: '🏥',
+    icon: 'health',
     label: { mr: 'आरोग्य / मेडिक्लेम', en: 'Health / Mediclaim' },
     whatIs: {
       mr: 'रुग्णालयाचा खर्च भरून काढणारा विमा.',
@@ -121,7 +121,7 @@ export const insuranceTypes: InsuranceType[] = [
   },
   {
     id: 'moneyback',
-    icon: '💵',
+    icon: 'cash',
     label: { mr: 'मनी बॅक', en: 'Money Back' },
     whatIs: {
       mr: 'ठराविक काळाने परतावा देणारी विमा योजना.',
@@ -139,7 +139,7 @@ export const insuranceTypes: InsuranceType[] = [
   },
   {
     id: 'child',
-    icon: '🧒',
+    icon: 'child',
     label: { mr: 'चाइल्ड प्लॅन', en: 'Child Plan' },
     whatIs: {
       mr: 'मुलांच्या शिक्षण व भविष्यासाठी बचत + विमा.',
@@ -157,7 +157,7 @@ export const insuranceTypes: InsuranceType[] = [
   },
   {
     id: 'cyber',
-    icon: '🔐',
+    icon: 'secure',
     label: { mr: 'सायबर विमा', en: 'Cyber Insurance' },
     whatIs: {
       mr: 'ऑनलाइन फसवणूक व सायबर नुकसानापासून संरक्षण.',
@@ -175,7 +175,7 @@ export const insuranceTypes: InsuranceType[] = [
   },
   {
     id: 'vehicle_all',
-    icon: '🚗',
+    icon: 'car',
     label: { mr: 'सर्व प्रकार वाहन विमा', en: 'All-Type Vehicle Insurance' },
     whatIs: {
       mr: 'दुचाकी, चारचाकी आणि व्यावसायिक वाहनांसाठी संपूर्ण विमा संरक्षण.',
@@ -193,7 +193,7 @@ export const insuranceTypes: InsuranceType[] = [
   },
   {
     id: 'property',
-    icon: '🏠',
+    icon: 'home',
     label: { mr: 'मालमत्ता व पूर विमा', en: 'Property & Flood Insurance' },
     whatIs: {
       mr: 'घर, दुकान आणि पुरामुळे होणाऱ्या नुकसानीपासून संरक्षण.',
@@ -211,7 +211,7 @@ export const insuranceTypes: InsuranceType[] = [
   },
   {
     id: 'machinery',
-    icon: '⚙️',
+    icon: 'settings',
     label: { mr: 'यंत्रसामग्री बिघाड विमा', en: 'Machinery Breakdown' },
     whatIs: {
       mr: 'औद्योगिक यंत्रे व उपकरणांच्या अचानक बिघाडासाठी विमा.',
@@ -229,7 +229,7 @@ export const insuranceTypes: InsuranceType[] = [
   },
   {
     id: 'travel',
-    icon: '✈️',
+    icon: 'travel',
     label: { mr: 'प्रवास विमा', en: 'Travel Insurance' },
     whatIs: {
       mr: 'देशांतर्गत व आंतरराष्ट्रीय प्रवासातील जोखमींपासून संरक्षण.',
@@ -247,7 +247,7 @@ export const insuranceTypes: InsuranceType[] = [
   },
   {
     id: 'crop',
-    icon: '🌾',
+    icon: 'crop',
     label: { mr: 'पिक विमा (Crop Insurance)', en: 'Crop Insurance' },
     whatIs: {
       mr: 'नैसर्गिक आपत्ती, दुष्काळ, पूर आणि अवकाळी पावसामुळे शेतीच्या पिकांचे होणाऱ्या नुकसानीपासून आर्थिक संरक्षण मिळवा. शेतीला द्या हमखास आधार.',

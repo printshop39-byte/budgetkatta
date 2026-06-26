@@ -14,13 +14,14 @@ import EMICalculator from '@/components/calculators/EMICalculator';
 import DataSourceBadge from '@/components/shared/DataSourceBadge';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
 import CalculatorDisclaimer from '@/components/shared/CalculatorDisclaimer';
+import { Icon } from '@/components/shared/Icon';
 import type { LoanProduct } from '@/types';
 
 const questions = [
-  { key: 'loan.q_amount', target: 'loan-calc', icon: '💰' },
-  { key: 'loan.q_emi', target: 'loan-calc', icon: '🧮' },
-  { key: 'loan.q_approval', target: 'loan-detail', icon: '✅' },
-  { key: 'loan.q_docs', target: 'loan-docs', icon: '📄' },
+  { key: 'loan.q_amount', target: 'loan-calc', icon: 'money' },
+  { key: 'loan.q_emi', target: 'loan-calc', icon: 'calculator' },
+  { key: 'loan.q_approval', target: 'loan-detail', icon: 'check' },
+  { key: 'loan.q_docs', target: 'loan-docs', icon: 'document' },
 ];
 
 function scrollTo(id: string) {
@@ -68,7 +69,9 @@ export default function LoansPage() {
             onClick={() => scrollTo(q.target)}
             className="glass-card flex items-center gap-2 p-4 text-left transition-all hover:border-bk-gold/40"
           >
-            <span className="text-xl">{q.icon}</span>
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-bk-gold/10 text-bk-gold ring-1 ring-bk-gold/20">
+              <Icon name={q.icon} className="h-4 w-4" />
+            </span>
             <span className="text-sm font-semibold text-slate-300 font-deva">{t(q.key)}</span>
           </motion.button>
         ))}
@@ -86,7 +89,7 @@ export default function LoansPage() {
                 : 'border-slate-800 text-slate-400 hover:border-slate-800'
             }`}
           >
-            <span className="text-lg">{loanDetails[lt].icon}</span>
+            <Icon name={loanDetails[lt].icon} className="h-5 w-5" />
             {t(loanDetails[lt].labelKey)}
           </button>
         ))}
@@ -101,7 +104,9 @@ export default function LoansPage() {
         className="glass-card glass-card-gold scroll-mt-20 p-6"
       >
         <div className="flex items-center gap-3">
-          <span className="text-3xl">{detail.icon}</span>
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-bk-gold/10 text-bk-gold ring-1 ring-bk-gold/20">
+            <Icon name={detail.icon} className="h-6 w-6" />
+          </span>
           <h2 className="font-display text-xl font-bold text-slate-200 font-deva">{loanLabel}</h2>
           <span className="ml-auto"><DataSourceBadge source={source} updatedAt={updatedAt} /></span>
         </div>
@@ -124,8 +129,8 @@ export default function LoansPage() {
             <h3 className="mb-1.5 text-sm font-semibold text-slate-300 font-deva">{t('loan.f_eligibility')}</h3>
             <ul className="space-y-1.5">
               {detail.eligibility.map((e, i) => (
-                <li key={i} className="flex gap-2 text-sm text-slate-400 font-deva">
-                  <span className="text-bk-gold">✓</span>
+                <li key={i} className="flex items-start gap-2 text-sm text-slate-400 font-deva">
+                  <Icon name="tick" className="mt-0.5 h-4 w-4 shrink-0 text-bk-gold" />
                   {e[language]}
                 </li>
               ))}
@@ -137,8 +142,8 @@ export default function LoansPage() {
             <h3 className="mb-1.5 text-sm font-semibold text-slate-300 font-deva">{t('loan.f_mistakes')}</h3>
             <ul className="space-y-1.5">
               {detail.mistakes.map((m, i) => (
-                <li key={i} className="flex gap-2 text-sm text-slate-400 font-deva">
-                  <span className="text-bk-danger">⚠️</span>
+                <li key={i} className="flex items-start gap-2 text-sm text-slate-400 font-deva">
+                  <Icon name="warning" className="mt-0.5 h-4 w-4 shrink-0 text-bk-danger" />
                   {m[language]}
                 </li>
               ))}

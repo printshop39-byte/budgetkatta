@@ -95,7 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           ]}
         />
       </head>
-      <body className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0f172a] via-[#0A1128] to-[#050814] text-slate-200 antialiased">
+      <body className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0F172A] via-[#0B0F19] to-[#080B14] text-slate-200 antialiased">
         <ThemeApplier />
         <Navbar />
         <main className="min-h-screen">{children}</main>

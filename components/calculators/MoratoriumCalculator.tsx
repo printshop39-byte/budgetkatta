@@ -3,7 +3,7 @@
 // moratorium (course + grace months) during which interest accrues. This is the
 // unique angle: a generic EMI calculator ignores the moratorium entirely.
 import { useState } from 'react';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, Lightbulb, AlertTriangle } from 'lucide-react';
 import { calculateEducationLoan, formatINR } from '@/lib/calculators';
 import { useLanguageStore } from '@/store/languageStore';
 import InterestButton from '@/components/lead/InterestButton';
@@ -79,8 +79,8 @@ export default function MoratoriumCalculator() {
         ))}
       </div>
 
-      <p className="rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-2 text-xs leading-relaxed text-slate-400 font-deva">
-        💡{' '}
+      <p className="flex items-start gap-1.5 rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-2 text-xs leading-relaxed text-slate-400 font-deva">
+        <Lightbulb className="mt-0.5 h-3.5 w-3.5 shrink-0 text-bk-gold" />{' '}
         {mr
           ? `जर तुम्ही अभ्यासादरम्यानच फक्त व्याज भरलं (साधारण ${formatINR(r.interestDuringStudyMonthly)}/महिना), तर हे साचलेलं व्याज टळतं व एकूण खर्च खूप कमी होतो.`
           : `If you service just the interest during study (about ${formatINR(r.interestDuringStudyMonthly)}/month), this accrued interest is avoided and your total cost drops sharply.`}
@@ -88,10 +88,11 @@ export default function MoratoriumCalculator() {
 
       <InterestButton module="LOAN" product="Education Loan" sourcePage="MORATORIUM_CALCULATOR" full />
 
-      <p className="text-center text-[11px] leading-relaxed text-slate-500 font-deva">
+      <p className="flex items-center justify-center gap-1.5 text-center text-[11px] leading-relaxed text-slate-500 font-deva">
+        <AlertTriangle className="h-3 w-3 shrink-0 text-amber-400/80" />
         {mr
-          ? '⚠️ हा फक्त अंदाज आहे. प्रत्यक्ष disbursal टप्प्याटप्प्याने होतो; अंतिम आकडे बँकेकडून तपासा.'
-          : '⚠️ Estimate only. Actual disbursal is staggered; confirm final figures with your bank.'}
+          ? 'हा फक्त अंदाज आहे. प्रत्यक्ष disbursal टप्प्याटप्प्याने होतो; अंतिम आकडे बँकेकडून तपासा.'
+          : 'Estimate only. Actual disbursal is staggered; confirm final figures with your bank.'}
       </p>
     </div>
   );

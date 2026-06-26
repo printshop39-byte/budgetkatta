@@ -6,7 +6,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import AffiliateBanner from '@/components/AffiliateBanner';
-import { MapPin, ShieldCheck, Loader2, Landmark, Wallet, Search, Copy, Check, Info } from 'lucide-react';
+import { MapPin, ShieldCheck, Loader2, Landmark, Wallet, Search, Copy, Check, Info, ShieldAlert } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import VoiceSearchAgent from '@/components/directory/VoiceSearchAgent';
 
@@ -576,7 +576,7 @@ export default function DirectoryPage() {
                           {b.isRbiAuthorized && (
                             <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2.5 py-1 text-[10px] font-bold text-emerald-300 font-deva">
                               <ShieldCheck className="h-3 w-3" />
-                              {language === 'mr' ? '🟢 RBI नोंदणीकृत' : '🟢 RBI Authorized'}
+                              {language === 'mr' ? 'RBI नोंदणीकृत' : 'RBI Authorized'}
                             </span>
                           )}
                           {filter === 'payments' && (
@@ -690,10 +690,11 @@ export default function DirectoryPage() {
 
       {/* Bottom security warning */}
       <div className="mt-4 rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4">
-        <p className="bk-security-note text-center text-sm font-semibold leading-relaxed text-rose-200 font-deva">
+        <p className="bk-security-note flex items-start justify-center gap-2 text-center text-sm font-semibold leading-relaxed text-rose-200 font-deva">
+          <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />
           {language === 'mr'
-            ? '🔒 सुरक्षा सतर्कता: बजेटकट्टा कधीही मोबाईल OTP किंवा वैयक्तिक कागदपत्रांची मागणी करत नाही.'
-            : '🔒 Security Warning: BudgetKatta never asks for mobile OTP or personal documents.'}
+            ? 'सुरक्षा सतर्कता: बजेटकट्टा कधीही मोबाईल OTP किंवा वैयक्तिक कागदपत्रांची मागणी करत नाही.'
+            : 'Security Warning: BudgetKatta never asks for mobile OTP or personal documents.'}
         </p>
       </div>
 

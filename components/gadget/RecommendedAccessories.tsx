@@ -31,8 +31,8 @@ export default function RecommendedAccessories({
   return (
     <section className="space-y-4">
       <div className="flex items-center justify-between gap-3">
-        <h3 className="font-display text-lg font-bold text-slate-100 font-deva">
-          🛍️ {t('gadget.accessories_title')}
+        <h3 className="flex items-center gap-2 font-display text-lg font-bold text-slate-100 font-deva">
+          <ShoppingCart className="h-5 w-5 text-bk-gold" /> {t('gadget.accessories_title')}
         </h3>
         <span className="rounded-full border border-slate-700 bg-slate-900/70 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-slate-500 font-deva">
           {language === 'mr' ? 'जाहिरात' : 'Ad'}

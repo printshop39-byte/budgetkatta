@@ -13,6 +13,7 @@ import TableSkeleton from '@/components/shared/TableSkeleton';
 import CalculatorDisclaimer from '@/components/shared/CalculatorDisclaimer';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
 import { sipDocuments } from '@/lib/documentChecklists';
+import { Icon } from '@/components/shared/Icon';
 import type { SIPFund } from '@/types';
 
 const riskTone = { low: 'success', medium: 'warning', high: 'danger' } as const;
@@ -29,8 +30,8 @@ export default function SIPPage() {
       <header className="mb-6 text-center">
         <h1 className="font-display text-3xl font-extrabold text-slate-200 md:text-4xl">{t('sip.title')}</h1>
         <p className="mt-2 text-slate-400 font-deva">{t('sip.subtitle')}</p>
-        <p className="mx-auto mt-3 max-w-2xl rounded-2xl border border-bk-gold/15 bg-bk-gold/5 px-4 py-2.5 text-sm text-slate-400 font-deva">
-          💡 {t('sip.intro')}
+        <p className="mx-auto mt-3 flex max-w-2xl items-start justify-center gap-2 rounded-2xl border border-bk-gold/15 bg-bk-gold/5 px-4 py-2.5 text-sm text-slate-400 font-deva">
+          <Icon name="tip" className="mt-0.5 h-4 w-4 shrink-0 text-bk-gold" /> {t('sip.intro')}
         </p>
       </header>
 
@@ -39,12 +40,12 @@ export default function SIPPage() {
         <h2 className="mb-3 font-display text-lg font-bold text-slate-200 font-deva">{t('sip.risk_title')}</h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {[
-            { key: 'sip.risk_equity', tone: 'border-rose-200 bg-rose-50 text-rose-700', icon: '🚀' },
-            { key: 'sip.risk_hybrid', tone: 'border-amber-200 bg-amber-50 text-amber-700', icon: '⚖️' },
-            { key: 'sip.risk_debt', tone: 'border-amber-400/40 bg-amber-400 text-amber-400', icon: '🛟' },
+            { key: 'sip.risk_equity', tone: 'border-rose-200 bg-rose-50 text-rose-700', icon: 'rocket' },
+            { key: 'sip.risk_hybrid', tone: 'border-amber-200 bg-amber-50 text-amber-700', icon: 'balance' },
+            { key: 'sip.risk_debt', tone: 'border-amber-400/40 bg-amber-400 text-amber-400', icon: 'safety' },
           ].map((r) => (
             <div key={r.key} className={`rounded-2xl border p-4 text-center ${r.tone}`}>
-              <span className="text-2xl">{r.icon}</span>
+              <span className="inline-flex h-10 w-10 items-center justify-center"><Icon name={r.icon} className="h-6 w-6" /></span>
               <p className="mt-1 text-sm font-semibold font-deva">{t(r.key)}</p>
             </div>
           ))}
@@ -99,9 +100,9 @@ export default function SIPPage() {
                               ],
                             })
                           }
-                          className="rounded-lg border border-slate-800 px-3 py-1 text-xs text-slate-400 transition-colors hover:border-bk-gold/40 hover:text-bk-gold disabled:opacity-40 font-deva"
+                          className="inline-flex items-center justify-center gap-1 rounded-lg border border-slate-800 px-3 py-1 text-xs text-slate-400 transition-colors hover:border-bk-gold/40 hover:text-bk-gold disabled:opacity-40 font-deva"
                         >
-                          {inCompare ? '✓' : t('btn.compare')}
+                          {inCompare ? <Icon name="tick" className="h-3.5 w-3.5" /> : t('btn.compare')}
                         </button>
                       </td>
                     </tr>

@@ -5,6 +5,18 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Education-loan pages moved to the keyword-exact /education-loan tree.
+  // Permanent (301) redirects preserve any existing links / SEO equity.
+  async redirects() {
+    return [
+      { source: '/loans/students', destination: '/education-loan', permanent: true },
+      {
+        source: '/loans/students/personal-loan',
+        destination: '/education-loan/personal-loan-for-education',
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'res.cloudinary.com' },

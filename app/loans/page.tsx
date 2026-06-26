@@ -9,6 +9,7 @@ import { useLeadFormStore } from '@/store/leadFormStore';
 import { loanDetails, loanOrder, type LoanType } from '@/lib/loanDetails';
 import { getDocuments, profileOptions, type ProfileType } from '@/lib/documentChecklists';
 import CreditCardOffers from '@/components/CreditCardOffers';
+import SegmentEntryCards from '@/components/schemes/SegmentEntryCards';
 import EMICalculator from '@/components/calculators/EMICalculator';
 import DataSourceBadge from '@/components/shared/DataSourceBadge';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
@@ -52,6 +53,9 @@ export default function LoansPage() {
         <h1 className="font-display text-3xl font-extrabold text-slate-200 md:text-4xl">{t('loan.title')}</h1>
         <p className="mt-2 text-slate-400 font-deva">{t('easy.emi_first')}</p>
       </header>
+
+      {/* High-intent segment entry cards — women & students */}
+      <SegmentEntryCards className="mb-8" />
 
       {/* Quick question cards */}
       <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4">

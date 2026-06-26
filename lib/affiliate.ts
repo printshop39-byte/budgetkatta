@@ -14,6 +14,8 @@ export const AFFILIATE_LINKS: Record<AffiliateVariant, string> = {
   creditCard: process.env.NEXT_PUBLIC_AFF_CREDIT_CARD || '#',
   loan: process.env.NEXT_PUBLIC_AFF_LOAN || '#',
   insurance: process.env.NEXT_PUBLIC_AFF_INSURANCE || '#',
+  womenLoan: process.env.NEXT_PUBLIC_AFF_WOMEN_LOAN || '#',
+  educationLoan: process.env.NEXT_PUBLIC_AFF_EDU_LOAN || '#',
 };
 
 /** A link is "live" only when it is a real, non-placeholder URL. */

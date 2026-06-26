@@ -21,6 +21,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/', label: { mr: 'मुख्यपृष्ठ', en: 'Home' } },
   { href: '/fds', label: { mr: 'FD दर', en: 'FD Rates' } },
   { href: '/loans', label: { mr: 'कर्ज', en: 'Loans' } },
+  { href: '/schemes', label: { mr: 'महिला/विद्यार्थी कर्ज', en: 'Women & Student' } },
   { href: '/sip', label: { mr: 'SIP', en: 'SIP' } },
   { href: '/insurance', label: { mr: 'विमा', en: 'Insurance' } },
   { href: '/gadget-emi', label: { mr: 'गॅजेट EMI', en: 'Gadget EMI' } },

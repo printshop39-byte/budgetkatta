@@ -7,13 +7,13 @@
 // NOTE: `href`s in the presets are placeholders ('#') — replace them with real
 // affiliate/referral URLs before going live.
 import { motion } from 'framer-motion';
-import { LineChart, CreditCard, Landmark, ShieldCheck, ArrowRight } from 'lucide-react';
+import { LineChart, CreditCard, Landmark, ShieldCheck, ArrowRight, Users, GraduationCap } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { AFFILIATE_LINKS, isLiveLink } from '@/lib/affiliate';
 
 type Bi = { mr: string; en: string };
-export type AffiliateVariant = 'demat' | 'creditCard' | 'loan' | 'insurance';
+export type AffiliateVariant = 'demat' | 'creditCard' | 'loan' | 'insurance' | 'womenLoan' | 'educationLoan';
 
 const PRESETS: Record<
   AffiliateVariant,
@@ -57,6 +57,26 @@ const PRESETS: Record<
       en: 'Find the right plan for your family at a low premium.',
     },
     cta: { mr: 'प्लॅन पाहा', en: 'View Plans' },
+    href: '#',
+  },
+  womenLoan: {
+    icon: Users,
+    title: { mr: 'महिला व्यवसाय कर्ज', en: 'Women Business Loan' },
+    desc: {
+      mr: 'Bajaj Finserv, Tata Capital सारख्या partners कडून तुमची पात्रता काही मिनिटांत तपासा.',
+      en: 'Check your eligibility in minutes with partners like Bajaj Finserv and Tata Capital.',
+    },
+    cta: { mr: 'पात्रता तपासा', en: 'Check Eligibility' },
+    href: '#',
+  },
+  educationLoan: {
+    icon: GraduationCap,
+    title: { mr: 'Education Loan तुलना करा', en: 'Compare Education Loans' },
+    desc: {
+      mr: 'Credila, Avanse, InCred — कमी व्याजात education loan ऑफर्सची तुलना करा.',
+      en: 'Compare education-loan offers from Credila, Avanse and InCred at low rates.',
+    },
+    cta: { mr: 'ऑफर्स पाहा', en: 'View Offers' },
     href: '#',
   },
 };

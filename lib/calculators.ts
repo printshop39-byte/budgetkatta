@@ -38,6 +38,46 @@ export function calculateEMI(
   };
 }
 
+/**
+ * Education-loan / moratorium-aware EMI.
+ * During the moratorium (course duration + grace) no EMI is paid, so simple
+ * interest accrues on the principal. If left unpaid it is capitalised (added to
+ * the principal) and the post-study EMI is computed on that larger amount.
+ * This is the standard simplified estimate students see — actual disbursal is
+ * staggered, so real accrual is a little lower.
+ */
+export function calculateEducationLoan(
+  principal: number,
+  annualRate: number,
+  courseYears: number,
+  graceMonths: number,
+  repayYears: number
+): {
+  moratoriumMonths: number;
+  accruedInterest: number;
+  interestDuringStudyMonthly: number;
+  principalAtRepayment: number;
+  emi: number;
+  totalPayable: number;
+  totalInterest: number;
+} {
+  const moratoriumMonths = Math.round(courseYears * 12) + graceMonths;
+  const accruedInterest = Math.round(principal * (annualRate / 100) * (moratoriumMonths / 12));
+  const interestDuringStudyMonthly = Math.round((principal * annualRate) / 1200);
+  const principalAtRepayment = principal + accruedInterest;
+  const repayMonths = Math.max(1, Math.round(repayYears * 12));
+  const { emi, totalAmount } = calculateEMI(principalAtRepayment, annualRate, repayMonths);
+  return {
+    moratoriumMonths,
+    accruedInterest,
+    interestDuringStudyMonthly,
+    principalAtRepayment,
+    emi,
+    totalPayable: totalAmount,
+    totalInterest: totalAmount - principal,
+  };
+}
+
 /** SIP Calculator */
 export function calculateSIP(
   monthlyInvestment: number,

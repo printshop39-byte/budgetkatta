@@ -3,7 +3,7 @@
 // the bank directory. Bilingual, links into the existing routes.
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { PiggyBank, Calculator, TrendingUp, Coins, Landmark, Mic } from 'lucide-react';
+import { PiggyBank, Calculator, TrendingUp, Coins, Landmark, Mic, Users, GraduationCap } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 
 type Tool = {
@@ -20,6 +20,8 @@ const TOOLS: Tool[] = [
   { href: '/rates', icon: Coins, label: { mr: 'सोने/चांदी दर', en: 'Gold / Silver Rate' }, desc: { mr: 'आजचे बाजारभाव', en: 'Today’s market rates' } },
   { href: '/directory', icon: Landmark, label: { mr: 'बँक डिरेक्टरी', en: 'Bank Directory' }, desc: { mr: 'जवळची शाखा शोधा', en: 'Find a nearby branch' } },
   { href: '/directory', icon: Mic, label: { mr: 'व्हॉईस सर्च', en: 'Voice Search' }, desc: { mr: 'बोलून शाखा शोधा', en: 'Search by speaking' } },
+  { href: '/loans/women#women-finder', icon: Users, label: { mr: 'महिला Loan Finder', en: 'Women Loan Finder' }, desc: { mr: 'व्यवसाय, बचत गट, subsidy', en: 'Business, SHG, subsidy' } },
+  { href: '/education-loan#calc', icon: GraduationCap, label: { mr: 'विद्यार्थी Loan Finder', en: 'Student Loan Finder' }, desc: { mr: 'Vidyalaxmi, Moratorium EMI', en: 'Vidyalaxmi, Moratorium EMI' } },
 ];
 
 export default function PopularTools() {

@@ -211,6 +211,12 @@ html[data-theme='light'] .bk-security-note {
   color: #be123c !important; /* rose-700 */
 }
 
+/* Range sliders own their touch gesture so dragging the thumb on mobile drags
+   the slider instead of scrolling the whole page (a common calculator UX bug). */
+input[type='range'] {
+  touch-action: none;
+}
+
 /* Respect reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,

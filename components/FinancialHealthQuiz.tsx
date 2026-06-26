@@ -116,7 +116,7 @@ export default function FinancialHealthQuiz() {
             <h2 className="text-3xl/[1.4] md:text-4xl/[1.4] font-extrabold tracking-normal">
               {t("quiz.title")}
             </h2>
-            <p className="text-slate-300 leading-relaxed text-sm md:text-base">
+            <p className="text-white/75 leading-relaxed text-sm md:text-base">
               {t("quiz.desc")}
             </p>
 
@@ -128,12 +128,12 @@ export default function FinancialHealthQuiz() {
                 <Star className="h-4 w-4 text-amber-400 fill-amber-400" />
                 <Star className="h-4 w-4 text-amber-400 fill-amber-400" />
               </div>
-              <span className="text-xs text-slate-400">{t("quiz.testimonial")}</span>
+              <span className="text-xs text-white/55">{t("quiz.testimonial")}</span>
             </div>
           </div>
 
           {/* Right Content - Interactive Quiz Widget */}
-          <div className="lg:col-span-6 bg-slate-900/5 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-3xl">
+          <div className="lg:col-span-6 bg-white/5 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-3xl">
             <AnimatePresence mode="wait">
               {/* Step 0: Start Quiz */}
               {quizStep === 0 && (
@@ -149,7 +149,7 @@ export default function FinancialHealthQuiz() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold">{t("quiz.start_title")}</h3>
-                    <p className="text-xs text-slate-400 mt-1">{t("quiz.start_sub")}</p>
+                    <p className="text-xs text-white/55 mt-1">{t("quiz.start_sub")}</p>
                   </div>
                   <button
                     onClick={() => setQuizStep(1)}
@@ -172,7 +172,7 @@ export default function FinancialHealthQuiz() {
                   {/* Progress indicator */}
                   <div className="flex justify-between items-center">
                     <span className="text-[10px] font-bold text-amber-300 uppercase">{t("quiz.q_prefix")} {quizStep} {t("quiz.q_of")} {quizQuestions.length}</span>
-                    <div className="w-1/2 h-1.5 bg-slate-900/10 rounded-full overflow-hidden">
+                    <div className="w-1/2 h-1.5 bg-white/10 rounded-full overflow-hidden">
                       <div style={{ width: `${(quizStep / quizQuestions.length) * 100}%` }} className="h-full bg-amber-400 rounded-full" />
                     </div>
                   </div>
@@ -184,7 +184,7 @@ export default function FinancialHealthQuiz() {
                       <button
                         key={idx}
                         onClick={() => handleQuizAnswer(option.score)}
-                        className="w-full p-4 text-left text-xs md:text-sm bg-slate-900/5 border border-white/10 rounded-2xl hover:bg-slate-900/10 hover:border-amber-400 transition-all text-white font-medium flex justify-between items-center"
+                        className="w-full p-4 text-left text-xs md:text-sm bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-amber-400 transition-all text-white font-medium flex justify-between items-center"
                       >
                         <span>{option.text}</span>
                         <ChevronRight className="h-4 w-4 text-amber-400" />
@@ -252,9 +252,9 @@ export default function FinancialHealthQuiz() {
                             {weak.map((d) => (
                               <li
                                 key={d.key}
-                                className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-slate-900/5 p-3"
+                                className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-3"
                               >
-                                <span className="text-[11px] leading-snug text-slate-200 font-deva">
+                                <span className="text-[11px] leading-snug text-white/85 font-deva">
                                   {t(`quiz.tip_${d.key}`)}
                                 </span>
                                 <Link
@@ -275,7 +275,7 @@ export default function FinancialHealthQuiz() {
                   <div className="flex space-x-3">
                     <button
                       onClick={resetQuiz}
-                      className="flex-1 py-3 bg-slate-900/5 border border-white/10 hover:bg-slate-900/10 text-white rounded-full font-bold text-xs transition-all"
+                      className="flex-1 py-3 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-full font-bold text-xs transition-all"
                     >
                       {t("quiz.retry")}
                     </button>

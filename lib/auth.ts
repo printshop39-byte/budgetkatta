@@ -6,6 +6,7 @@ import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from '@/lib/auth.config';
 import { verifyOtp, normalizePhone } from '@/lib/otp';
 import { upsertUserByPhone, upsertUserByGoogle } from '@/lib/userService';
+import { isMongoConfigured } from '@/lib/mongodb';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
@@ -33,12 +34,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     ...authConfig.callbacks,
-    async signIn({ user, account }) {
+    async signIn({ user, account, profile }) {
       if (account?.provider === 'google') {
         try {
           const g = await upsertUserByGoogle({
             googleId: account.providerAccountId,
             email: user.email ?? undefined,
+            // Only trust the email for account-LINKING if Google verified it.
+            emailVerified: (profile as { email_verified?: boolean } | undefined)?.email_verified === true,
             name: user.name ?? undefined,
             image: user.image ?? undefined,
           });
@@ -48,7 +51,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         } catch (e) {
           // eslint-disable-next-line no-console
           console.error('[BudgetKatta] Google user upsert failed:', e);
-          // Allow sign-in; the dev fallback in userService covers the no-DB case.
+          // If a DB is configured but the write failed, DENY sign-in rather than
+          // minting a session keyed on the wrong id. (The synthetic dev-fallback
+          // only applies when no DB is configured — handled inside the service.)
+          if (isMongoConfigured()) return false;
         }
       }
       return true;

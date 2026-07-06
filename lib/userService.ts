@@ -56,6 +56,8 @@ export async function upsertUserByPhone(phone: string): Promise<AppUser> {
 export async function upsertUserByGoogle(p: {
   googleId: string;
   email?: string;
+  /** True only when Google asserts the email is verified. Required for email-linking. */
+  emailVerified?: boolean;
   name?: string;
   image?: string;
 }): Promise<AppUser> {
@@ -71,21 +73,36 @@ export async function upsertUserByGoogle(p: {
     };
   }
   await connectDB();
-  const or: Record<string, string>[] = [{ googleId: p.googleId }];
-  if (p.email) or.push({ email: p.email.toLowerCase() });
-  let user = await User.findOne({ $or: or });
+  const email = p.email?.toLowerCase();
+  // Primary identity is the Google account id. Link to an existing account by
+  // email ONLY when Google asserts the email is verified — never merge accounts
+  // on an unverified email (account-takeover vector).
+  let user = await User.findOne({ googleId: p.googleId });
+  if (!user && email && p.emailVerified) {
+    user = await User.findOne({ email });
+  }
   if (!user) {
-    user = await User.create({
-      googleId: p.googleId,
-      email: p.email?.toLowerCase(),
-      displayName: p.name,
-      image: p.image,
-      roles: ['member'],
-    });
+    try {
+      user = await User.create({
+        googleId: p.googleId,
+        email,
+        displayName: p.name,
+        image: p.image,
+        roles: ['member'],
+      });
+    } catch (e: unknown) {
+      // A concurrent first-time sign-in raced us to create the unique record.
+      if ((e as { code?: number }).code === 11000) {
+        user =
+          (await User.findOne({ googleId: p.googleId })) ??
+          (email ? await User.findOne({ email }) : null);
+      }
+      if (!user) throw e;
+    }
   } else {
-    // Link Google to an existing (e.g. phone-created) account, filling gaps only.
+    // Fill gaps only; never overwrite existing identity fields.
     if (!user.googleId) user.googleId = p.googleId;
-    if (!user.email && p.email) user.email = p.email.toLowerCase();
+    if (!user.email && email) user.email = email;
     if (!user.displayName && p.name) user.displayName = p.name;
     if (!user.image && p.image) user.image = p.image;
     user.lastActiveAt = new Date();

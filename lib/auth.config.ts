@@ -4,23 +4,30 @@
 // Node runtime. This split is the required pattern for Auth.js v5 + Mongoose.
 import type { NextAuthConfig } from 'next-auth';
 import Google from 'next-auth/providers/google';
-
-/** Path prefixes that require a signed-in member. */
-export const PROTECTED_PREFIXES = ['/dashboard', '/account', '/onboarding', '/memory', '/admin'];
+import { PROTECTED_PREFIXES, ADMIN_PREFIXES, underPrefix } from '@/lib/authPaths';
 
 export const authConfig = {
-  session: { strategy: 'jwt' },
+  // Finance app: cap session lifetime (default was 30 days) and refresh at most
+  // daily. NOTE: JWT strategy has no server-side revocation — a shorter lifetime
+  // is the mitigation until a token denylist lands.
+  session: { strategy: 'jwt', maxAge: 7 * 24 * 60 * 60, updateAge: 24 * 60 * 60 },
   trustHost: true,
   pages: { signIn: '/signin' },
   // Google is edge-safe. The Credentials (phone-OTP) provider is added only in
   // the full Node-runtime config because its authorize() touches the database.
-  providers: [Google({ allowDangerousEmailAccountLinking: true })],
+  // Account linking is handled explicitly (and email-verified-gated) in
+  // lib/userService.ts, so we do NOT enable Auth.js's dangerous auto-linking.
+  providers: [Google],
   callbacks: {
     authorized({ auth, request }) {
       const path = request.nextUrl.pathname;
-      const isProtected = PROTECTED_PREFIXES.some((p) => path === p || path.startsWith(p + '/'));
-      if (!isProtected) return true;
-      return Boolean(auth?.user); // false → Auth.js redirects to pages.signIn
+      if (!underPrefix(path, PROTECTED_PREFIXES)) return true;
+      if (!auth?.user) return false; // → Auth.js redirects to pages.signIn
+      // Authorization: /admin needs the admin role, not merely a logged-in user.
+      if (underPrefix(path, ADMIN_PREFIXES) && !(auth.user.roles ?? []).includes('admin')) {
+        return false;
+      }
+      return true;
     },
     jwt({ token, user }) {
       if (user) {

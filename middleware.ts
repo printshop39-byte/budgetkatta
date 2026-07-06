@@ -6,6 +6,10 @@ import { authConfig } from '@/lib/auth.config';
 
 export const { auth: middleware } = NextAuth(authConfig);
 
+// NOTE: Next requires a static matcher, so this list is maintained by hand. It
+// MUST stay in sync with PROTECTED_PREFIXES in lib/auth.config.ts — the test in
+// lib/authConfig.test.ts asserts they match so drift fails CI. The `:path*` form
+// also matches the bare prefix (e.g. `/admin`) in Next 14.
 export const config = {
   matcher: [
     '/dashboard/:path*',

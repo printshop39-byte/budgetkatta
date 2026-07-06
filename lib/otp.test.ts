@@ -3,7 +3,7 @@
 // KV fallback (no Upstash/MSG91 env), so requestOtp returns a devOtp.
 import { describe, it, expect, beforeEach } from 'vitest';
 import { normalizePhone, requestOtp, verifyOtp } from '@/lib/otp';
-import { __clearMemoryStore } from '@/lib/redis';
+import { __clearMemoryStore, kvDel } from '@/lib/redis';
 
 beforeEach(() => __clearMemoryStore());
 
@@ -70,5 +70,32 @@ describe('OTP lifecycle', () => {
 
   it('rejects verification when no OTP was requested', async () => {
     expect(await verifyOtp(phone, '123456')).toBe(false);
+  });
+
+  it('persistent failure lockout survives OTP resend', async () => {
+    const p = '+919000000001';
+    // Two rounds of 5 wrong guesses = 10 failures (the persistent per-phone cap).
+    // Clear the cooldown between rounds to simulate a legitimate resend window.
+    for (let round = 0; round < 2; round++) {
+      const r = await requestOtp(p);
+      const wrong = r.devOtp === '000000' ? '111111' : '000000';
+      for (let i = 0; i < 5; i++) await verifyOtp(p, wrong);
+      await kvDel(`otp:cd:${p}`);
+    }
+    // A fresh, CORRECT OTP is now rejected — the resend did not reset the cap.
+    const fresh = await requestOtp(p);
+    expect(await verifyOtp(p, fresh.devOtp!)).toBe(false);
+  });
+
+  it('caps OTP sends per phone per hour', async () => {
+    const p = '+919000000002';
+    for (let i = 0; i < 5; i++) {
+      const r = await requestOtp(p);
+      expect(r.ok).toBe(true);
+      await kvDel(`otp:cd:${p}`); // bypass the 30s cooldown for the test
+    }
+    const sixth = await requestOtp(p);
+    expect(sixth.ok).toBe(false);
+    expect(sixth.reason).toBe('rate_limited');
   });
 });

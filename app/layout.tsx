@@ -11,7 +11,6 @@ import ServiceWorkerRegister from '@/components/layout/ServiceWorkerRegister';
 import PWAInstallPrompt from '@/components/layout/PWAInstallPrompt';
 import CookieConsent from '@/components/layout/CookieConsent';
 import JsonLd from '@/components/seo/JsonLd';
-import Providers from '@/components/auth/Providers';
 
 // Body — Plus Jakarta Sans (brand body typeface)
 const jakarta = Plus_Jakarta_Sans({
@@ -99,9 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0F172A] via-[#0B0F19] to-[#080B14] text-slate-200 antialiased">
         <ThemeApplier />
         <Navbar />
-        <Providers>
-          <main className="min-h-screen">{children}</main>
-        </Providers>
+        <main className="min-h-screen">{children}</main>
         <Footer />
         <Floating3DGuide />
         <CompareDrawer />

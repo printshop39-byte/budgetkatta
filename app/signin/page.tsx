@@ -6,11 +6,13 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useLanguageStore } from '@/store/languageStore';
 import { getAuthStrings } from '@/lib/authI18n';
+import { safeInternalPath } from '@/lib/safeRedirect';
 
 function SignInInner() {
   const router = useRouter();
   const params = useSearchParams();
-  const callbackUrl = params.get('callbackUrl') || '/account';
+  // Validated to a same-origin relative path — prevents open-redirect phishing.
+  const callbackUrl = safeInternalPath(params.get('callbackUrl'));
   const language = useLanguageStore((s) => s.language);
   const t = getAuthStrings(language);
 
@@ -180,7 +182,7 @@ function SignInInner() {
         </p>
 
         <p className="mt-4 text-center text-xs" style={{ color: 'var(--text-muted)' }}>
-          🔒 {t.privacy_note}
+          {t.privacy_note}
         </p>
       </div>
     </div>

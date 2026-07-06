@@ -11,14 +11,32 @@ export const dynamic = 'force-dynamic';
 const bodySchema = z.object({ phone: z.string().min(6).max(20) });
 
 export async function POST(request: Request) {
-  // Per-IP guard on top of the per-phone guards inside requestOtp.
+  // Per-IP guard on top of the per-phone guards inside requestOtp. Tunable via
+  // env (raise for shared/NAT IPs or E2E); defaults to 5/min.
   sweepExpired();
-  const limit = rateLimit(`otp:${clientIp(request)}`, 5, 60_000);
+  const perMin = Number(process.env.OTP_IP_LIMIT_PER_MIN) || 5;
+  const limit = rateLimit(`otp:${clientIp(request)}`, perMin, 60_000);
   if (!limit.ok) {
     return NextResponse.json(
       { ok: false, error: 'too_many_requests' },
       { status: 429, headers: { 'Retry-After': String(limit.retryAfterSec) } }
     );
+  }
+
+  // CSRF / SMS-bombing mitigation: this is not an Auth.js endpoint (no built-in
+  // CSRF), so reject cross-origin browser POSTs. A present Origin must match Host.
+  const origin = request.headers.get('origin');
+  if (origin) {
+    const host = request.headers.get('host');
+    let originHost: string | null = null;
+    try {
+      originHost = new URL(origin).host;
+    } catch {
+      originHost = null;
+    }
+    if (originHost !== host) {
+      return NextResponse.json({ ok: false, error: 'forbidden' }, { status: 403 });
+    }
   }
 
   let raw: unknown;

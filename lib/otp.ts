@@ -4,12 +4,25 @@
 // Dev fallback: when MSG91 isn't configured, the OTP is logged to the server
 // console (and returned to the caller) so the flow is fully testable.
 import { createHash, randomInt } from 'crypto';
-import { kvGet, kvSet, kvDel, kvIncr } from '@/lib/redis';
+import { kvGet, kvSet, kvDel, kvIncr, isRedisConfigured } from '@/lib/redis';
 
 const OTP_TTL_SEC = 300; // 5 minutes
-const MAX_ATTEMPTS = 5;
+const MAX_ATTEMPTS = 5; // per single OTP
 const RESEND_COOLDOWN_SEC = 30;
-const MAX_PER_PHONE_PER_HOUR = 5;
+const MAX_PER_PHONE_PER_HOUR = 5; // OTP sends per phone per hour
+// Persistent failed-verify cap per phone per hour. Unlike MAX_ATTEMPTS this is
+// NOT reset by requesting a new OTP, so a real lockout survives resend abuse.
+const MAX_FAILURES_PER_HOUR = 10;
+
+// The in-memory KV fallback is per-instance and non-durable — unsafe on
+// serverless. Refuse to run the OTP flow in production without a shared store.
+function assertStoreReady(): void {
+  if (process.env.NODE_ENV === 'production' && !isRedisConfigured()) {
+    throw new Error(
+      'OTP store unavailable: set UPSTASH_REDIS_REST_URL/TOKEN in production (in-memory fallback is dev-only).'
+    );
+  }
+}
 
 /** Normalize an Indian mobile number to E.164 (+91XXXXXXXXXX), or null. */
 export function normalizePhone(raw: string): string | null {
@@ -35,6 +48,7 @@ export interface RequestOtpResult {
 }
 
 export async function requestOtp(phone: string): Promise<RequestOtpResult> {
+  assertStoreReady();
   if (await kvGet(`otp:cd:${phone}`)) {
     return { ok: false, reason: 'cooldown', retryAfterSec: RESEND_COOLDOWN_SEC };
   }
@@ -58,24 +72,34 @@ export async function requestOtp(phone: string): Promise<RequestOtpResult> {
 }
 
 export async function verifyOtp(phone: string, otp: string): Promise<boolean> {
+  assertStoreReady();
+
+  // Persistent per-phone failure lockout — survives OTP re-requests, so an
+  // attacker can't reset the cap by asking for a new code.
+  const failures = Number((await kvGet(`otp:fail:${phone}`)) ?? '0');
+  if (failures >= MAX_FAILURES_PER_HOUR) return false;
+
   const stored = await kvGet(`otp:${phone}`);
   if (!stored) return false;
 
   const attempts = Number((await kvGet(`otp:att:${phone}`)) ?? '0');
   if (attempts >= MAX_ATTEMPTS) {
     await kvDel(`otp:${phone}`);
+    await kvDel(`otp:att:${phone}`);
     return false;
   }
 
   if (stored !== hashOtp(phone, otp)) {
-    await kvIncr(`otp:att:${phone}`, OTP_TTL_SEC);
+    await kvIncr(`otp:att:${phone}`, OTP_TTL_SEC); // per-OTP (5)
+    await kvIncr(`otp:fail:${phone}`, 3600); // persistent per-phone/hour (10)
     return false;
   }
 
-  // Success — consume the OTP and its guards.
+  // Success — consume the OTP and clear all guards.
   await kvDel(`otp:${phone}`);
   await kvDel(`otp:att:${phone}`);
   await kvDel(`otp:cd:${phone}`);
+  await kvDel(`otp:fail:${phone}`);
   return true;
 }
 

@@ -30,6 +30,12 @@ next-env.d.ts
 # vercel
 .vercel
 
+# playwright e2e artifacts
+/test-results/
+/playwright-report/
+/blob-report/
+/.playwright/
+
 # RBI source PDFs (reference input, not app code) + editor junk
 list bank/
 Thumbs.db

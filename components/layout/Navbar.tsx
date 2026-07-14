@@ -1,8 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon, Menu, X } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
@@ -81,6 +80,35 @@ export default function Navbar() {
   const { theme, setTheme } = useThemeStore();
   const [open, setOpen] = useState(false); // mobile drawer
   const pathname = usePathname() || '/';
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Close the drawer and return focus to the hamburger. Used by the Close
+  // button, the overlay and Escape; link taps use setOpen(false) directly so
+  // client navigation keeps focus.
+  const closeMenu = useCallback(() => {
+    setOpen(false);
+    hamburgerRef.current?.focus();
+  }, []);
+
+  // While open: lock background scroll, move focus into the drawer, and wire
+  // Escape to close. Visibility itself is driven purely by the `open`
+  // conditional render below (no Framer Motion / requestAnimationFrame), so the
+  // drawer is usable even when the compositor / rAF is throttled or paused.
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMenu();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [open, closeMenu]);
 
   const linkBase = (active: boolean) =>
     `rounded-lg px-3 py-2 text-sm font-deva transition-colors ${
@@ -141,10 +169,12 @@ export default function Navbar() {
             </div>
 
             <button
+              ref={hamburgerRef}
               onClick={() => setOpen(true)}
               className="rounded-lg p-2 text-slate-400 hover:bg-slate-800/60 lg:hidden"
               aria-label="Open menu"
               aria-expanded={open}
+              aria-controls="mobile-nav-drawer"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -152,89 +182,91 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {/* Mobile slide-out drawer — rendered OUTSIDE <header> so its fixed
-          positioning resolves against the viewport, not the header's
-          backdrop-filter containing block (which would clip it to ~64px). */}
-      <AnimatePresence>
-        {open && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setOpen(false)}
-              className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
-            />
-            <motion.aside
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 320 }}
-              className="fixed right-0 top-0 z-50 flex h-full max-h-screen w-72 max-w-[85vw] flex-col border-l border-slate-800 bg-slate-900 p-5 lg:hidden"
-            >
-              <div className="mb-4 flex shrink-0 items-center justify-between">
-                <Logo onClick={() => setOpen(false)} />
-                <button
-                  onClick={() => setOpen(false)}
-                  aria-label="Close menu"
-                  className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800/60 hover:text-slate-200"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-
-              {/* Scrollable nav list. min-h-0 lets the flex child actually
-                  scroll when content exceeds the viewport. */}
-              <div className="-mr-2 min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain pr-2">
-                {NAV.map((item) => {
-                  const active = isActive(pathname, item.href);
-                  return (
-                    <NavLink
-                      key={item.href}
-                      href={item.href}
-                      active={active}
-                      onClick={() => setOpen(false)}
-                      className={`block rounded-xl px-4 py-3 text-sm font-medium font-deva transition-colors ${
-                        active ? 'bg-amber-400/10 text-amber-400' : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-400'
-                      }`}
-                    >
-                      {item.label[language]}
-                    </NavLink>
-                  );
-                })}
-
-                <div className="my-2 border-t border-slate-800" />
-                {SECONDARY.map((l) => {
-                  const a = isActive(pathname, l.href);
-                  return (
-                    <NavLink
-                      key={l.href}
-                      href={l.href}
-                      active={a}
-                      onClick={() => setOpen(false)}
-                      className={`block rounded-xl px-4 py-3 text-sm font-medium font-deva transition-colors ${
-                        a ? 'bg-amber-400/10 text-amber-400' : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-400'
-                      }`}
-                    >
-                      {l.label[language]}
-                    </NavLink>
-                  );
-                })}
-              </div>
-
+      {/* Mobile drawer — plain conditional render, no animation library. The
+          overlay and drawer mount in their final, visible positions the instant
+          `open` is true and unmount entirely when closed, so visibility never
+          waits on an enter/exit animation, an animation callback or
+          requestAnimationFrame — and nothing focusable lingers off-screen once
+          closed. Rendered OUTSIDE <header> so its fixed positioning resolves
+          against the viewport, not the header's backdrop-filter containing block
+          (which would clip it to ~64px). */}
+      {open && (
+        <>
+          <div
+            onClick={closeMenu}
+            aria-hidden="true"
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
+          />
+          <aside
+            id="mobile-nav-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
+            className="fixed right-0 top-0 z-50 flex h-full max-h-screen w-72 max-w-[85vw] flex-col border-l border-slate-800 bg-slate-900 p-5 lg:hidden"
+          >
+            <div className="mb-4 flex shrink-0 items-center justify-between">
+              <Logo onClick={() => setOpen(false)} />
               <button
-                onClick={() => {
-                  setOpen(false);
-                  openLead({ module: 'GENERAL', sourcePage: 'MOBILE_MENU' });
-                }}
-                className="mt-4 w-full shrink-0 rounded-xl bg-amber-400 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-amber-500 font-deva"
+                ref={closeButtonRef}
+                onClick={closeMenu}
+                aria-label="Close menu"
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800/60 hover:text-slate-200"
               >
-                {t('nav.cta')}
+                <X className="h-5 w-5" />
               </button>
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
+            </div>
+
+            {/* Scrollable nav list. min-h-0 lets the flex child actually
+                scroll when content exceeds the viewport. */}
+            <div className="-mr-2 min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain pr-2">
+              {NAV.map((item) => {
+                const active = isActive(pathname, item.href);
+                return (
+                  <NavLink
+                    key={item.href}
+                    href={item.href}
+                    active={active}
+                    onClick={() => setOpen(false)}
+                    className={`block rounded-xl px-4 py-3 text-sm font-medium font-deva transition-colors ${
+                      active ? 'bg-amber-400/10 text-amber-400' : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-400'
+                    }`}
+                  >
+                    {item.label[language]}
+                  </NavLink>
+                );
+              })}
+
+              <div className="my-2 border-t border-slate-800" />
+              {SECONDARY.map((l) => {
+                const a = isActive(pathname, l.href);
+                return (
+                  <NavLink
+                    key={l.href}
+                    href={l.href}
+                    active={a}
+                    onClick={() => setOpen(false)}
+                    className={`block rounded-xl px-4 py-3 text-sm font-medium font-deva transition-colors ${
+                      a ? 'bg-amber-400/10 text-amber-400' : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-400'
+                    }`}
+                  >
+                    {l.label[language]}
+                  </NavLink>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={() => {
+                setOpen(false);
+                openLead({ module: 'GENERAL', sourcePage: 'MOBILE_MENU' });
+              }}
+              className="mt-4 w-full shrink-0 rounded-xl bg-amber-400 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-amber-500 font-deva"
+            >
+              {t('nav.cta')}
+            </button>
+          </aside>
+        </>
+      )}
     </>
   );
 }

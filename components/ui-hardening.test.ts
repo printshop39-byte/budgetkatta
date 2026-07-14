@@ -1,8 +1,8 @@
-// Regression guards for the two pre-production hardening fixes
-// (fix(ui): harden mobile navigation and readiness flow). The test env is
-// node-only (no DOM/render harness and no JSX-transform plugin), so these read
-// component source and fail if either fix is reverted. Behavioural coverage of
-// the progression primitives lives in store/healthCheckStore.test.ts.
+// Regression guards for the mobile-navigation and readiness-flow hardening
+// fixes (navbar width, wizard rendering, and the animation-free mobile drawer).
+// The test env is node-only (no DOM/render harness and no JSX-transform plugin),
+// so these read component source and fail if a fix is reverted. Behavioural
+// coverage of the progression primitives lives in store/healthCheckStore.test.ts.
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -52,5 +52,45 @@ describe('mobile navbar has no fixed-width overflow pattern', () => {
 
   it('keeps the controls row from shrinking/wrapping (shrink-0 + tight gap)', () => {
     expect(src).toMatch(/flex shrink-0 items-center gap-1\.5 sm:gap-2/);
+  });
+});
+
+describe('mobile navigation drawer has no animation dependency', () => {
+  const src = read('components/layout/Navbar.tsx');
+
+  it('imports/uses no animation library (framer-motion / AnimatePresence / motion)', () => {
+    // Visibility must never wait on an enter/exit animation, an animation
+    // callback or requestAnimationFrame.
+    expect(src).not.toMatch(/from ['"]framer-motion['"]/);
+    expect(src).not.toMatch(/<AnimatePresence/);
+    expect(src).not.toMatch(/<motion\./);
+  });
+
+  it('renders the overlay + drawer conditionally from the mobile-open state', () => {
+    expect(src).toMatch(/\{open && \(/);
+    expect(src).toMatch(/\{open && \(([\s\S]*?)<aside/); // aside lives inside the open guard
+  });
+
+  it('renders the drawer in its final visible position — closed drawer is absent, not parked off-screen', () => {
+    expect(src).not.toMatch(/translate-x-full/);
+    expect(src).not.toMatch(/x:\s*['"]100%['"]/);
+    expect(src).toMatch(/<aside[\s\S]*?className="fixed right-0 top-0/);
+  });
+
+  it('keeps aria-expanded + aria-controls on the hamburger and a matching id on the drawer', () => {
+    expect(src).toMatch(/aria-expanded=\{open\}/);
+    expect(src).toMatch(/aria-controls="mobile-nav-drawer"/);
+    expect(src).toMatch(/id="mobile-nav-drawer"/);
+  });
+
+  it('keeps every close path: Close button + overlay (closeMenu), Escape, and link selection', () => {
+    expect(src).toMatch(/if \(e\.key === 'Escape'\) closeMenu\(\)/); // Escape
+    expect(src).toMatch(/onClick=\{closeMenu\}/); // Close button + overlay
+    expect(src).toMatch(/onClick=\{\(\) => setOpen\(false\)\}/); // link selection
+    expect(src).toMatch(/aria-label="Close menu"/); // close button accessible name
+  });
+
+  it('locks background scroll while the drawer is open', () => {
+    expect(src).toMatch(/document\.body\.style\.overflow = 'hidden'/);
   });
 });

@@ -19,7 +19,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const module = searchParams.get('module');
+  const resource = searchParams.get('module');
 
   const map = {
     fd: getFDRates,
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
     insurance: getInsurancePlans,
   } as const;
 
-  const getter = map[module as keyof typeof map];
+  const getter = map[resource as keyof typeof map];
   if (!getter) {
     return NextResponse.json(
       { ok: false, error: 'Provide ?module=fd|loans|sip|insurance' },

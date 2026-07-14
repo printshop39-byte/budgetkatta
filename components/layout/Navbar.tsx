@@ -90,7 +90,7 @@ export default function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-slate-800 bg-[#0A1128]/80 backdrop-blur-lg">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 py-3 sm:px-4">
           <Logo />
 
           {/* Desktop links — flat home-finance nav */}
@@ -106,7 +106,7 @@ export default function Navbar() {
           </div>
 
           {/* Language switcher + CTA + mobile toggle */}
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
             <button
               onClick={() => openLead({ module: 'GENERAL', sourcePage: 'NAVBAR_CTA' })}
               className="hidden rounded-xl bg-amber-400 px-4 py-2 text-sm font-bold text-slate-950 transition-all duration-300 hover:bg-amber-500 hover:shadow-[0_0_22px_rgba(251,191,36,0.45)] active:scale-95 font-deva lg:block"
@@ -128,11 +128,14 @@ export default function Navbar() {
                   onClick={() => setLanguage(lng)}
                   aria-pressed={language === lng}
                   aria-label={lng === 'mr' ? 'मराठी भाषा' : 'English language'}
-                  className={`px-3 py-1.5 text-xs font-semibold transition-colors ${
+                  className={`px-2 py-1.5 text-xs font-semibold transition-colors sm:px-3 ${
                     language === lng ? 'bg-amber-400 text-slate-950' : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
-                  {lng === 'mr' ? 'मराठी' : 'English'}
+                  {/* Compact 2-letter code on narrow screens, full language name
+                      from `sm`. The full name stays in aria-label for a11y. */}
+                  <span className="sm:hidden">{lng === 'mr' ? 'मर' : 'EN'}</span>
+                  <span className="hidden sm:inline">{lng === 'mr' ? 'मराठी' : 'English'}</span>
                 </button>
               ))}
             </div>

@@ -7,6 +7,22 @@ Sprint builds are tagged as `v1.0.0-alpha.N` (one per completed sprint).
 ## [Unreleased] — Sprint 1 · Foundation
 Branch: `sprint-1-foundation`. Scope: EPIC 1 Auth · EPIC 2 Profile · EPIC 3 Memory · EPIC 4 Analytics+Security. Nothing outside these four EPICs.
 
+> **Scope note (2026-07-14):** the homepage was **refocused on home finance** — home loan, EMI, property budget and home/property insurance for Maharashtra. The **Financial Readiness for a Home Goal** check (P0, pulled into this sprint ahead of its original *Intelligence*-phase slot in `docs/prd/07`) is the entry point. Off-scope promotions (FD, SIP, demat, credit cards, education/women loans, gold rates) are **hidden** from the homepage via a reversible config — their routes, data and SEO pages are **preserved and still reachable**. The four Foundation EPICs are unchanged; score scale kept at the ratified **0–1000** (`docs/prd/05`).
+
+### Added — Home-finance focus & Financial Readiness for a Home Goal (P0)
+- **Financial Readiness for a Home Goal** `/health-check` (public — no login/OTP/card): a 6-step bilingual (Marathi/English) wizard (`components/health/MoneyHealthCheck.tsx`) over a deterministic, explainable 0–1000 engine (`lib/healthScore.ts`; versioned thresholds in `lib/healthScoreConfig.ts`, each an "educational estimate"; golden-fixture unit tests in `lib/healthScore.test.ts`) with a value-preserving `sessionStorage` store (`store/healthCheckStore.ts`). The result (`components/health/HealthResult.tsx`) shows the score, band + confidence, a "Why this score?" pillar breakdown, top priority and first action. It is a **preliminary educational estimate — not a CIBIL score, not a property-specific eligibility report, and not a loan approval or sanction**; it does **not** calculate a property budget.
+- **Home-finance homepage** (`app/page.tsx`; sections gated by a reversible `lib/homepageConfig.ts`): hero, readiness promo, Buy/Build/Transfer, property tools, home-insurance guide, official sources and a focused FAQ. Tools are classified honestly:
+  - **Available** (working routes): Home Loan EMI Calculator (`/loans#loan-calc`), Property Document Checklist (`/documents`), and the six-step financial-readiness flow.
+  - **Educational guide:** Home Insurance — on-page educational content only (no premium calculation, comparison or lead capture; IRDAI disclaimer).
+  - **Illustrative:** the homepage hero and promo score previews — hardcoded and prominently labelled "not calculated from your data, not a loan offer".
+  - **Coming next** (shown but not linked): Home Loan Eligibility, Safe Property Budget, Down-Payment Planner, Plot + Construction Loan, Construction Finance, Balance Transfer, Stamp Duty & Registration.
+- **Focused bilingual FAQ** whose visible questions match the homepage FAQ JSON-LD, plus **verified official-source links** (RBI, NHB, MahaRERA project search, IGR Maharashtra, IRDAI policyholder) with last-verified dates and a "not affiliated" note.
+- **Homepage chatbot hidden** (it promoted FD/SIP and forwarded leads); the guide stays available and unchanged on every other route. New hero/promo/final-CTA (`components/HeroSection.tsx`, `components/home/MoneyHealthPromo.tsx`, `FinalHealthCTA.tsx`); the sample `FinancialHealthQuiz` and placeholder `Testimonials` stay off the homepage (components kept, not deleted).
+- **Consent-gated analytics** `lib/analytics.ts` — funnel event names; fires only after cookie-consent; PII/financial-field guard; no provider wired.
+- **OG image** moved to the **edge runtime** (`app/opengraph-image.tsx`) so the standard `next build` completes on all platforms.
+- **Light-mode readiness alerts** — urgent/error text made theme-safe with inline theme-aware colours (readable in both themes) without a global override.
+- Verified: **49/49 tests**, `tsc` 0 errors, `lint` 0 errors, standard `next build` **exit 0**; Marathi/English, dark/light, mobile 360/375; hidden legacy routes still return 200. **Not live:** payments, the ₹99 report, partner leads, and any production deployment.
+
 ### Added
 - **Authentication (EPIC 1)** — Auth.js v5 with **Google Sign-In + Phone OTP**:
   - Phone OTP: salted-SHA-256 storage, 5-min TTL, 5-attempt lockout, 30s resend cooldown, per-phone + per-IP rate limits; MSG91 sender with a dev console fallback.

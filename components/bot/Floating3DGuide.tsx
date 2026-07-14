@@ -10,6 +10,7 @@
 // ============================================================
 
 import { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useLanguageStore } from '@/store/languageStore';
@@ -72,6 +73,7 @@ export default function Floating3DGuide() {
 
   const { language } = useLanguageStore();
   const t = getTranslation(language);
+  const pathname = usePathname();
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -160,6 +162,12 @@ export default function Floating3DGuide() {
     setIsLoading(false);
     setMessages((prev) => [...prev, { role: 'bot', text: reply }]);
   }
+
+  // Home-finance scope (2026-07): the generic guide promotes FD/SIP quick
+  // actions and forwards messages as leads, so it is HIDDEN on the homepage
+  // temporarily. It remains fully available (unchanged) on every other route.
+  // Reversible: remove this guard to restore it on the homepage.
+  if (pathname === '/') return null;
 
   return (
     <>

@@ -1,84 +1,85 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { TrendingUp, ArrowRight, Check, Activity, Sparkles } from "lucide-react";
-import { formatCurrency } from "@/lib/format";
-import { scrollToSection } from "@/lib/scroll";
+import Link from "next/link";
+import { ArrowRight, Calculator, ShieldCheck, Home } from "lucide-react";
 import { useLanguageStore } from "@/store/languageStore";
+import { track } from "@/lib/analytics";
 
+// Narrowed home-finance hero (2026-07). INTERIM NAMING: the readiness check runs
+// the generic personal-finance engine, so it is labelled "Financial Readiness
+// for a Home Goal" (not a completed score / not property-specific eligibility).
+// The right-column card is an ILLUSTRATIVE interface preview — its figures are
+// hardcoded, NOT calculated from user data — and is prominently labelled as such.
+//
+// No entrance/opacity animations: content must render visibly in SSR, without
+// JS, and under prefers-reduced-motion (no important content at opacity 0).
 type HeroCopy = {
-  badge: string;
+  eyebrow: string;
   titleStart: string;
   titleAccent: string;
-  titleEnd: string;
   description: string;
-  bullets: string[];
   ctaPrimary: string;
   ctaSecondary: string;
-  socialCount: string;
-  socialSub: string;
-  livePortfolio: string;
-  yearlyDelta: string;
-  sampleNote: string;
-  wealthLabel: string;
-  wealthSub: string;
-  fiveYearBadge: string;
-  invested: string;
-  returns: string;
+  trust: string[];
+  previewTag: string;
+  illustrativeLabel: string;
+  readinessLabel: string;
+  budgetLabel: string;
+  budgetValue: string;
+  emiLabel: string;
+  emiValue: string;
+  downLabel: string;
+  downValue: string;
 };
 
 const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
   mr: {
-    badge: "महाराष्ट्राचे लाडके आर्थिक व्यासपीठ",
-    titleStart: "तुमच्या पैशासाठी",
-    titleAccent: "सोपे, पारदर्शक आणि स्मार्ट",
-    titleEnd: "मार्गदर्शन",
+    eyebrow: "घर आणि मालमत्ता वित्त नियोजन",
+    titleStart: "घर घेण्यापूर्वी तुमचे",
+    titleAccent: "सुरक्षित बजेट आणि EMI क्षमता तपासा",
     description:
-      "बजेटकट्टा सोबत मिळवा मुदत ठेव (FD), म्युच्युअल फंड (SIP), कर्ज (EMI) आणि विम्याचे अचूक मार्गदर्शन. आर्थिकदृष्ट्या सक्षम बना, मराठीत अगदी सोप्या भाषेत!",
-    bullets: [
-      "१००% विनामूल्य व कोणतेही छुपे शुल्क नाही",
-      "फक्त एका क्लिकवर अचूक आकडेमोड",
-      "५०/३०/२० बजेटिंगचा सोपा सल्लागार",
-      "वैयक्तिक आर्थिक ध्येयांचे अचूक नियोजन",
+      "उत्पन्न, सध्याचे EMI, बचत व आर्थिक संरक्षणावर आधारित — घराच्या ध्येयासाठी तुमच्या आर्थिक तयारीचा प्राथमिक शैक्षणिक अंदाज आणि पुढची योग्य कृती समजून घ्या.",
+    ctaPrimary: "घराच्या ध्येयासाठी माझी आर्थिक तयारी तपासा — मोफत",
+    ctaSecondary: "Home Loan EMI मोजा",
+    trust: [
+      "Card आवश्यक नाही",
+      "OTP किंवा Password विचारत नाही",
+      "हा credit score किंवा loan approval नाही",
+      "तुमच्या संमतीशिवाय माहिती share केली जात नाही",
     ],
-    ctaPrimary: "आत्ताच मोजा",
-    ctaSecondary: "आर्थिक आरोग्य तपासा",
-    socialCount: "हजारो मराठी वापरकर्ते",
-    socialSub: "बजेटकट्टाचा दरमहा वापर करत आहेत",
-    livePortfolio: "Live Portfolio",
-    yearlyDelta: "+२४.८% वार्षिक",
-    sampleNote: "नमुना उदाहरण — प्रत्यक्ष पोर्टफोलिओ किंवा हमी परतावा नाही.",
-    wealthLabel: "एकूण अंदाजे संपत्ती (१० वर्षानंतर)",
-    wealthSub: "दरमहा ₹१०,००० च्या बचतीची ताकद",
-    fiveYearBadge: "५ वर्ष: ₹७.८ लाख",
-    invested: "गुंतवलेली रक्कम",
-    returns: "मिळालेला परतावा",
+    previewTag: "झलक",
+    illustrativeLabel: "केवळ इंटरफेस झलक — तुमच्या माहितीवरून गणना केलेली नाही, हा loan offer नाही.",
+    readinessLabel: "घराच्या ध्येयासाठी आर्थिक तयारी",
+    budgetLabel: "सुरक्षित property budget",
+    budgetValue: "₹42 लाख",
+    emiLabel: "कमाल EMI क्षमता",
+    emiValue: "₹28,000/महिना",
+    downLabel: "आवश्यक down-payment",
+    downValue: "₹8.4 लाख",
   },
   en: {
-    badge: "India's Trusted Financial Hub",
-    titleStart: "Your Money's True Friend -",
-    titleAccent: "Simple & Smart",
-    titleEnd: "Financial Decisions!",
+    eyebrow: "Home and property finance planning",
+    titleStart: "Check your safe property budget and",
+    titleAccent: "EMI capacity before buying a home",
     description:
-      "Get clear, transparent guidance on FDs, SIPs, Loans, and Insurance with BudgetKatta. Empower yourself financially!",
-    bullets: [
-      "100% Free & Unbiased",
-      "One-click accurate calculations",
-      "Easy 50/30/20 Budgeting",
-      "Precise financial goal planning",
+      "Using your income, existing EMIs, savings and financial protection, get a preliminary educational estimate of your financial readiness for a home goal — and your next practical step.",
+    ctaPrimary: "Check My Financial Readiness for a Home Goal — Free",
+    ctaSecondary: "Calculate Home Loan EMI",
+    trust: [
+      "No card required",
+      "We never ask for OTPs or passwords",
+      "This is not a credit score or loan approval",
+      "Your information is not shared without consent",
     ],
-    ctaPrimary: "Calculate Now",
-    ctaSecondary: "Check Financial Health",
-    socialCount: "Thousands of Marathi users",
-    socialSub: "Trust BudgetKatta every month",
-    livePortfolio: "Live Portfolio",
-    yearlyDelta: "+24.8% Yearly",
-    sampleNote: "Sample illustration — not an actual portfolio or guaranteed return.",
-    wealthLabel: "Projected Net Worth (after 10 years)",
-    wealthSub: "The power of saving ₹10,000 per month",
-    fiveYearBadge: "5Y: ₹7.8L",
-    invested: "Invested Amount",
-    returns: "Total Returns",
+    previewTag: "Preview",
+    illustrativeLabel: "Illustrative interface preview — not calculated from your data, not a loan offer.",
+    readinessLabel: "Financial Readiness for a Home Goal",
+    budgetLabel: "Safe property budget",
+    budgetValue: "₹42 L",
+    emiLabel: "Max EMI capacity",
+    emiValue: "₹28,000/mo",
+    downLabel: "Down-payment needed",
+    downValue: "₹8.4 L",
   },
 };
 
@@ -86,210 +87,113 @@ export default function HeroSection() {
   const language = useLanguageStore((s) => s.language);
   const t = HERO_COPY[language] ?? HERO_COPY.mr;
 
+  // Illustrative dial — 640/1000 (hardcoded, NOT computed from user data).
+  const R = 46;
+  const C = 2 * Math.PI * R;
+
   return (
     <section id="home" className="pt-8 pb-20 px-6 max-w-7xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left Column */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 80, delay: 0.1 }}
-          className="lg:col-span-7 space-y-8"
-        >
-          {/* Soft Premium Pill Tag */}
+        <div className="lg:col-span-7 space-y-7">
           <div className="inline-flex items-center space-x-2 px-4 py-1.5 bg-slate-900/70 backdrop-blur-md border border-amber-400/20 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-            <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-            <span className="text-xs font-semibold text-amber-300 tracking-wide">
-              {t.badge}
-            </span>
+            <Home className="h-3.5 w-3.5 text-amber-400" />
+            <span className="text-xs font-semibold text-amber-300 tracking-wide">{t.eyebrow}</span>
           </div>
 
-          {/* Headline — Devanagari-safe: tracking-normal + roomy leading */}
-          <h1 className="text-4xl/[1.4] md:text-5xl/[1.4] lg:text-6xl/[1.4] font-extrabold text-slate-100 tracking-normal">
+          <h1 className="text-4xl/[1.4] md:text-5xl/[1.4] lg:text-6xl/[1.35] font-extrabold text-slate-100 tracking-normal">
             {t.titleStart}{" "}
             <span className="block bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 pb-2 leading-[1.4]">
               {t.titleAccent}
-            </span>{" "}
-            {t.titleEnd}
+            </span>
           </h1>
 
           <p className="text-lg/[1.7] md:text-xl/[1.7] text-slate-400 font-normal max-w-2xl tracking-normal">
             {t.description}
           </p>
 
-          {/* Features Bullet Points with Glass Styling */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
-            {t.bullets.map((bullet, idx) => (
-              <div key={idx} className="flex items-center space-x-3 text-slate-300 bg-slate-900/40 backdrop-blur-sm px-4 py-2.5 rounded-2xl border border-slate-800">
-                <div className="h-5 w-5 rounded-full bg-amber-500/10 flex items-center justify-center border border-amber-400/30 shrink-0">
-                  <Check className="h-3 w-3 text-amber-400" />
-                </div>
-                <span className="text-sm font-medium leading-[1.5] tracking-normal">{bullet}</span>
-              </div>
-            ))}
-          </div>
-
           {/* CTA Actions */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-            <motion.button
-              onClick={() => scrollToSection("calculators")}
-              whileHover={{ scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              className="group px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 font-bold text-base shadow-lg shadow-amber-500/30 hover:shadow-[0_0_30px_rgba(251,191,36,0.55)] transition-all duration-300 flex items-center justify-center space-x-2"
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 pt-2">
+            <Link
+              href="/health-check"
+              onClick={() => track("homepage_primary_cta_clicked", { cta: "hero_primary" })}
+              className="group px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 font-bold text-base shadow-lg shadow-amber-500/30 hover:shadow-[0_0_30px_rgba(251,191,36,0.55)] hover:scale-[1.03] transition-all duration-300 flex items-center justify-center space-x-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
             >
               <span>{t.ctaPrimary}</span>
               <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5" />
-            </motion.button>
+            </Link>
 
-            <motion.button
-              onClick={() => scrollToSection("health-quiz")}
-              whileHover={{ scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              className="group px-8 py-4 rounded-full bg-slate-900/70 backdrop-blur-md border border-slate-800 text-slate-300 font-semibold text-base hover:bg-slate-900 hover:border-amber-400/50 hover:text-amber-300 hover:shadow-[0_0_22px_rgba(251,191,36,0.25)] transition-all duration-300 flex items-center justify-center space-x-2"
+            <Link
+              href="/loans#loan-calc"
+              onClick={() => track("homepage_primary_cta_clicked", { cta: "hero_secondary_emi" })}
+              className="group px-8 py-4 rounded-full bg-slate-900/70 backdrop-blur-md border border-slate-800 text-slate-300 font-semibold text-base hover:bg-slate-900 hover:border-amber-400/50 hover:text-amber-300 hover:scale-[1.03] transition-all duration-300 flex items-center justify-center space-x-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
             >
-              <Activity className="h-5 w-5 text-amber-400 transition-all duration-300 group-hover:drop-shadow-[0_0_6px_rgba(251,191,36,0.7)]" />
+              <Calculator className="h-5 w-5 text-amber-400" />
               <span>{t.ctaSecondary}</span>
-            </motion.button>
+            </Link>
           </div>
 
-          {/* Micro-Social Proof */}
-          <div className="pt-6 flex items-center space-x-6">
-            <div className="flex -space-x-3">
-              {[
-                "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=100&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1542596594-649edbc13630?w=100&fit=crop&q=80",
-              ].map((avatar, i) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img key={i} src={avatar} alt="User" className="w-10 h-10 rounded-full border-2 border-slate-900 object-cover" />
-              ))}
-            </div>
-            <div className="text-sm">
-              <p className="font-bold text-slate-200 leading-[1.5]">{t.socialCount}</p>
-              <p className="text-slate-400 text-xs leading-[1.5]">{t.socialSub}</p>
-            </div>
+          {/* Trust strip — card / OTP / not-a-loan-approval / consent */}
+          <div className="flex flex-wrap gap-x-5 gap-y-2 pt-4">
+            {t.trust.map((item, i) => (
+              <span key={i} className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400">
+                <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-400/80" />
+                {item}
+              </span>
+            ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Right Column - Premium 3D-like Dashboard Container */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", stiffness: 60, delay: 0.2 }}
-          className="lg:col-span-5 relative"
-        >
-          {/* Outer Glowing Rings */}
+        {/* Right Column — ILLUSTRATIVE interface preview (prominently labelled) */}
+        <div className="lg:col-span-5 relative">
           <div className="absolute inset-0 bg-gradient-to-tr from-amber-400/20 to-yellow-500/10 rounded-[40px] filter blur-3xl -z-10" />
 
-          {/* Core Interactive Floating 3D Widget Container */}
-          <motion.div
-            animate={{ y: [0, -12, 0] }}
-            transition={{ duration: 6, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-            whileHover={{ rotateY: 12, rotateX: -6, scale: 1.03, transition: { duration: 0.3 } }}
-            style={{ transformStyle: "preserve-3d", perspective: 1000 }}
-            className="relative bg-slate-900/75 backdrop-blur-2xl border border-slate-800 p-8 rounded-[36px] shadow-[0_20px_50px_rgba(251,191,36,0.08)] cursor-pointer overflow-hidden group"
-          >
-            {/* Card Header */}
-            <div className="flex justify-between items-center mb-6">
-              <div className="flex items-center space-x-2">
-                <div className="h-2 w-2 rounded-full bg-amber-400 animate-ping" />
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.livePortfolio}</span>
-              </div>
-              <div className="px-2.5 py-1 bg-amber-500/10 rounded-full text-[10px] font-bold text-amber-300 flex items-center space-x-1 border border-amber-400/30">
-                <TrendingUp className="h-3 w-3" />
-                <span>{t.yearlyDelta}</span>
-              </div>
+          <div className="relative bg-slate-900/75 backdrop-blur-2xl border border-slate-800 p-8 rounded-[36px] shadow-[0_20px_50px_rgba(251,191,36,0.08)] overflow-hidden">
+            <div className="flex items-center justify-between mb-4">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-300">
+                {t.previewTag}
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-slate-400">
+                <ShieldCheck className="h-3.5 w-3.5 text-amber-400" /> {t.readinessLabel}
+              </span>
             </div>
 
-            {/* Balance & SVG Chart Area */}
-            <div className="space-y-1 mb-8">
-              <span className="text-xs text-slate-400 font-medium leading-[1.5]">{t.wealthLabel}</span>
-              <div className="text-3xl font-extrabold text-slate-50 tracking-normal leading-[1.4]">{formatCurrency(1840938)}</div>
-              <p className="text-xs text-slate-400 font-medium leading-[1.5]">{t.wealthSub}</p>
-            </div>
+            {/* Prominent illustrative disclaimer — not tucked away */}
+            <p className="mb-5 rounded-xl border border-slate-700 bg-slate-800/60 px-3 py-2 text-[11px] font-medium leading-snug text-slate-300">
+              {t.illustrativeLabel}
+            </p>
 
-            {/* Dynamic SVG Sparkline Graph */}
-            <div className="w-full h-32 relative mb-6">
-              <svg className="w-full h-full" viewBox="0 0 300 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="0" y1="30" x2="300" y2="30" stroke="rgba(30, 41, 59, 0.8)" strokeWidth="1" />
-                <line x1="0" y1="60" x2="300" y2="60" stroke="rgba(30, 41, 59, 0.8)" strokeWidth="1" />
-                <line x1="0" y1="90" x2="300" y2="90" stroke="rgba(30, 41, 59, 0.8)" strokeWidth="1" />
-                <path
-                  d="M 0 120 C 30 110, 60 90, 90 85 C 120 80, 150 50, 180 40 C 210 30, 240 15, 300 5 L 300 120 L 0 120 Z"
-                  fill="url(#sparkline-grad)"
-                  opacity="0.3"
-                />
-                <path
-                  d="M 0 120 C 30 110, 60 90, 90 85 C 120 80, 150 50, 180 40 C 210 30, 240 15, 300 5"
-                  stroke="url(#sparkline-stroke)"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                />
-                <circle cx="180" cy="40" r="5" fill="#fbbf24" stroke="#0f172a" strokeWidth="2.5" />
-                <circle cx="300" cy="5" r="6" fill="#eab308" stroke="#0f172a" strokeWidth="2.5" />
-                <defs>
-                  <linearGradient id="sparkline-grad" x1="150" y1="0" x2="150" y2="120" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#fbbf24" />
-                    <stop offset="100%" stopColor="#0f172a" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient id="sparkline-stroke" x1="0" y1="60" x2="300" y2="60" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#fbbf24" />
-                    <stop offset="50%" stopColor="#f59e0b" />
-                    <stop offset="100%" stopColor="#eab308" />
-                  </linearGradient>
-                </defs>
-              </svg>
+            {/* Illustrative dial + rows (hardcoded, not computed) */}
+            <div className="flex items-center gap-6">
+              <div className="relative h-28 w-28 shrink-0" role="img" aria-label="Illustrative preview dial, not calculated">
+                <svg className="h-full w-full -rotate-90" viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r={R} fill="none" stroke="rgba(148,163,184,0.15)" strokeWidth="9" />
+                  <circle cx="60" cy="60" r={R} fill="none" stroke="#fbbf24" strokeWidth="9" strokeLinecap="round" strokeDasharray={C} strokeDashoffset={C * (1 - 640 / 1000)} />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-2xl font-black text-slate-50">640</span>
+                  <span className="text-[10px] font-semibold text-slate-500">/ 1000</span>
+                </div>
+              </div>
 
-              {/* Micro badge inside graph */}
-              <div className="absolute top-1/3 left-[62%] -translate-x-1/2 bg-slate-950/90 text-amber-300 text-[10px] font-semibold px-2 py-0.5 rounded-lg shadow-md flex items-center space-x-1 border border-amber-400/30">
-                <span>{t.fiveYearBadge}</span>
+              <div className="space-y-3" aria-hidden="true">
+                <SampleRow label={t.budgetLabel} value={t.budgetValue} />
+                <SampleRow label={t.emiLabel} value={t.emiValue} />
+                <SampleRow label={t.downLabel} value={t.downValue} />
               </div>
             </div>
-
-            {/* Bottom Quick Breakdown */}
-            <div className="grid grid-cols-2 gap-4 border-t border-slate-800 pt-5">
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase block leading-[1.5]">{t.invested}</span>
-                <span className="text-sm font-bold text-slate-300">{formatCurrency(1200000)}</span>
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase block leading-[1.5]">{t.returns}</span>
-                <span className="text-sm font-bold text-amber-400 flex items-center space-x-0.5">
-                  <span>{formatCurrency(640938)}</span>
-                </span>
-              </div>
-            </div>
-
-            {/* Compliance: this dashboard is illustrative, not a real portfolio. */}
-            <p className="mt-4 text-[10px] leading-snug text-slate-500 font-deva">{t.sampleNote}</p>
-
-            {/* Floating Element 1: Golden 3D Coin */}
-            <motion.div
-              animate={{ y: [0, -8, 0], rotate: [0, 15, 0] }}
-              transition={{ duration: 4, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 0.5 }}
-              style={{ transform: "translateZ(30px)" }}
-              className="absolute top-12 right-10 h-10 w-10 rounded-full bg-gradient-to-tr from-amber-400 to-yellow-200 flex items-center justify-center shadow-[0_10px_25px_rgba(245,158,11,0.5)] border border-amber-300"
-            >
-              <span className="font-extrabold text-amber-900 text-sm">₹</span>
-            </motion.div>
-
-            {/* Floating Element 2: Small Dark Premium Card */}
-            <motion.div
-              animate={{ y: [0, 8, 0], rotate: [0, -5, 0] }}
-              transition={{ duration: 5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 1.2 }}
-              style={{ transform: "translateZ(40px)" }}
-              className="absolute bottom-28 left-[-15px] bg-slate-950 text-white p-3.5 rounded-2xl shadow-xl border border-slate-800/80 w-36 hidden sm:block"
-            >
-              <div className="flex justify-between items-center mb-2.5">
-                <div className="h-4 w-6 bg-slate-700 rounded-sm" />
-                <span className="text-[9px] font-bold text-slate-400">BudgetKatta</span>
-              </div>
-              <div className="text-xs font-mono tracking-widest text-slate-300">•••• 4820</div>
-              <div className="text-[9px] text-amber-400 font-semibold mt-1">Platinum Member</div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
+  );
+}
+
+function SampleRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="text-[11px] font-medium text-slate-400 leading-tight">{label}</p>
+      <p className="text-base font-extrabold text-slate-400/90">{value}</p>
+    </div>
   );
 }

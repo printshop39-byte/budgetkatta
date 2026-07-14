@@ -1,37 +1,47 @@
 import type { Metadata } from 'next';
 import HeroSection from '@/components/HeroSection';
+import MoneyHealthPromo from '@/components/home/MoneyHealthPromo';
+import BuyBuildTransfer from '@/components/home/BuyBuildTransfer';
+import PropertyTools from '@/components/home/PropertyTools';
+import HomeInsuranceSection from '@/components/home/HomeInsuranceSection';
+import OfficialSources from '@/components/home/OfficialSources';
+import TrustSection from '@/components/trust/TrustSection';
+import FinalHealthCTA from '@/components/home/FinalHealthCTA';
+import HomeFAQ from '@/components/home/HomeFAQ';
+import JsonLd from '@/components/seo/JsonLd';
+import { HOMEPAGE_SECTIONS as S } from '@/lib/homepageConfig';
+import { HOME_FAQ } from '@/lib/homeFinanceContent';
+
+// ── Sections HIDDEN in the narrowed home-finance scope ──────────────────────
+// Still imported so a single flag flip in lib/homepageConfig.ts restores them
+// with no rebuild. Nothing here is deleted — routes/components stay intact.
 import PopularTools from '@/components/home/PopularTools';
 import SegmentEntryCards from '@/components/schemes/SegmentEntryCards';
-import BentoGrid from '@/components/BentoGrid';
-import ScrollMorphCoin from '@/components/home/ScrollMorphCoin';
 import CalculatorsHub from '@/components/CalculatorsHub';
-import BrokerOffers from '@/components/BrokerOffers';
-import CreditCardOffers from '@/components/CreditCardOffers';
-import FinancialHealthQuiz from '@/components/FinancialHealthQuiz';
 import SmartAdvisory from '@/components/SmartAdvisory';
 import EducationHub from '@/components/EducationHub';
-import Testimonials from '@/components/trust/Testimonials';
-import FAQ from '@/components/FAQ';
-import JsonLd from '@/components/seo/JsonLd';
-import { getTranslation } from '@/lib/i18n';
+import BentoGrid from '@/components/BentoGrid';
+import ScrollMorphCoin from '@/components/home/ScrollMorphCoin';
+import BrokerOffers from '@/components/BrokerOffers';
+import CreditCardOffers from '@/components/CreditCardOffers';
 
-// FAQ structured data (server-rendered from the Marathi FAQ copy) so the
-// homepage is eligible for FAQ rich results / AI answer surfaces.
-const tMr = getTranslation('mr');
+// FAQ structured data — built from the SAME focused home-finance FAQs that are
+// visible on the page (HOME_FAQ), in the Marathi that the homepage renders by
+// default, so the JSON-LD never advertises questions the page doesn't show.
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: [1, 2, 3, 4, 5, 6, 7, 8].map((i) => ({
+  mainEntity: HOME_FAQ.map((f) => ({
     '@type': 'Question',
-    name: tMr(`faq.q${i}`),
-    acceptedAnswer: { '@type': 'Answer', text: tMr(`faq.a${i}`) },
+    name: f.q.mr,
+    acceptedAnswer: { '@type': 'Answer', text: f.a.mr },
   })),
 };
 
 export const metadata: Metadata = {
-  title: { absolute: 'BudgetKatta — स्मार्ट आर्थिक मार्गदर्शक | स्मार्ट निवेश, सुरक्षित भविष्य' },
+  title: { absolute: 'BudgetKatta — Home Loan, Property Budget & Home Insurance' },
   description:
-    'महाराष्ट्रातील FD दर, कर्ज, SIP आणि विमा तुलना | भारत का भरोसेमंद वित्तीय मार्गदर्शक। AI-सहाय्यित मार्गदर्शन.',
+    'Home-loan readiness, EMI, property-budget, down-payment, construction-finance and home-insurance educational tools for Maharashtra.',
   alternates: { canonical: '/' },
 };
 
@@ -43,31 +53,49 @@ export default function HomePage() {
       <div className="absolute top-[800px] right-0 w-[400px] h-[400px] bg-yellow-500/10 rounded-full filter blur-[100px] -z-10 pointer-events-none" />
       <div className="absolute bottom-[1000px] left-[-100px] w-[600px] h-[600px] bg-amber-400/5 rounded-full filter blur-[140px] -z-10 pointer-events-none" />
 
-      <HeroSection />
-      <PopularTools />
-      {/* High-intent Women/Student loan finder surfaced early (value before offers) */}
-      <SegmentEntryCards
-        heading={{
-          mr: 'महिला व विद्यार्थ्यांसाठी कर्ज योजना',
-          en: 'Loan schemes for women & students',
-          sub: {
-            mr: 'सरकारी योजना, scholarship व subsidy — तुमच्यासाठी योग्य पर्याय शोधा.',
-            en: 'Government schemes, scholarships & subsidies — find the right option for you.',
-          },
-        }}
-      />
-      <BentoGrid />
-      <ScrollMorphCoin />
-      <CalculatorsHub />
-      {/* Guidance / literacy value first... */}
-      <SmartAdvisory />
-      <EducationHub />
-      {/* ...then affiliate offers, so the site leads with value, not ads */}
-      <BrokerOffers />
-      <CreditCardOffers />
-      <FinancialHealthQuiz />
-      <Testimonials />
-      <FAQ />
+      {/* ── Home-finance homepage (narrowed scope) ── */}
+      {S.hero && <HeroSection />}
+      {/* Free "Financial Readiness for a Home Goal" is the primary path */}
+      {S.readinessPromo && <MoneyHealthPromo />}
+      {/* Buy / Build / Transfer — the three home-finance journeys */}
+      {S.buyBuildTransfer && <BuyBuildTransfer />}
+      {/* Property-focused tools (Available vs Coming next) */}
+      {S.propertyTools && <PropertyTools />}
+      {/* Home & property insurance — educational only */}
+      {S.homeInsurance && <HomeInsuranceSection />}
+      {/* Official sources (RBI / NHB / MahaRERA / IGR Maharashtra / IRDAI) */}
+      {S.officialSources && <OfficialSources />}
+      {/* Privacy & official-source trust badges */}
+      {S.trust && <TrustSection />}
+      {/* Closing readiness CTA */}
+      {S.finalReadinessCta && <FinalHealthCTA />}
+      {/* Focused home-finance FAQ (JSON-LD above is built from the same list) */}
+      {S.faq && <HomeFAQ />}
+
+      {/* ── Hidden in the narrowed scope — restore via lib/homepageConfig.ts ──
+          These render only if their flag is flipped back to `true`. Kept here
+          (not deleted) so no rebuild is needed to bring a category back. */}
+      {S.popularTools && <PopularTools />}
+      {S.segmentEntryCards && (
+        <SegmentEntryCards
+          heading={{
+            mr: 'महिला व विद्यार्थ्यांसाठी कर्ज योजना',
+            en: 'Loan schemes for women & students',
+            sub: {
+              mr: 'सरकारी योजना, scholarship व subsidy — तुमच्यासाठी योग्य पर्याय शोधा.',
+              en: 'Government schemes, scholarships & subsidies — find the right option for you.',
+            },
+          }}
+        />
+      )}
+      {S.calculatorsHub && <CalculatorsHub />}
+      {S.smartAdvisory && <SmartAdvisory />}
+      {S.educationHub && <EducationHub />}
+      {S.bentoGrid && <BentoGrid />}
+      {S.scrollMorphCoin && <ScrollMorphCoin />}
+      {S.brokerOffers && <BrokerOffers />}
+      {S.creditCardOffers && <CreditCardOffers />}
+
       <JsonLd data={faqSchema} />
     </div>
   );

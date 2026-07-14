@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Info, ShieldCheck } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { useHealthCheckStore } from '@/store/healthCheckStore';
+import { useThemeStore } from '@/store/themeStore';
 import { computeHealthScore, type HealthProfileInput } from '@/lib/healthScore';
 import { track } from '@/lib/analytics';
 import {
@@ -294,6 +295,9 @@ const STEPS: StepDef[] = [
 export default function MoneyHealthCheck() {
   const lang = useLanguageStore((s) => s.language);
   const { answers, step, set, goTo, reset } = useHealthCheckStore();
+  // Theme-aware error rose (readable in both themes without the global text-rose rule).
+  const dark = useThemeStore((s) => s.theme) === 'dark';
+  const errRose = dark ? '#fda4af' : '#be123c'; // rose-300 / rose-700
   const [mounted, setMounted] = useState(false);
   const [error, setError] = useState<Bi | null>(null);
   const startedRef = useRef(false);
@@ -394,7 +398,7 @@ export default function MoneyHealthCheck() {
           <div className="mt-6">{current.render(answers, set, lang)}</div>
 
           {error && (
-            <p role="alert" className="mt-4 text-sm font-semibold text-rose-300">
+            <p role="alert" className="mt-4 text-sm font-semibold" style={{ color: errRose }}>
               {pick(error, lang)}
             </p>
           )}

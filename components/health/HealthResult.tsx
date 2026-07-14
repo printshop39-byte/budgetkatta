@@ -7,11 +7,14 @@ import type { HealthScoreResult } from '@/lib/healthScore';
 import type { Language } from '@/types';
 import { RC, pick } from '@/lib/healthCheckContent';
 import { track } from '@/lib/analytics';
+import { useThemeStore } from '@/store/themeStore';
 
 const STATUS_STYLE: Record<string, { ring: string; text: string; chip: string; label: 'statusGood' | 'statusAttention' | 'statusUrgent'; Icon: typeof CheckCircle2 }> = {
   good: { ring: 'stroke-emerald-400', text: 'text-emerald-300', chip: 'bg-emerald-500/10 border-emerald-400/30 text-emerald-300', label: 'statusGood', Icon: CheckCircle2 },
   needs_attention: { ring: 'stroke-amber-400', text: 'text-amber-300', chip: 'bg-amber-500/10 border-amber-400/30 text-amber-300', label: 'statusAttention', Icon: TriangleAlert },
-  urgent: { ring: 'stroke-rose-400', text: 'text-rose-300', chip: 'bg-rose-500/10 border-rose-400/30 text-rose-300', label: 'statusUrgent', Icon: TriangleAlert },
+  // Urgent text colour is applied inline (theme-aware) so it stays readable in
+  // light mode WITHOUT the global text-rose light-mode rule. Tint bg/border kept.
+  urgent: { ring: 'stroke-rose-400', text: '', chip: 'bg-rose-500/10 border-rose-400/30', label: 'statusUrgent', Icon: TriangleAlert },
   unknown: { ring: 'stroke-slate-500', text: 'text-slate-400', chip: 'bg-slate-500/10 border-slate-500/30 text-slate-400', label: 'statusAttention', Icon: CheckCircle2 },
 };
 
@@ -51,6 +54,11 @@ export default function HealthResult({
   const color = bandColor(result.band.key);
 
   const measured = result.pillars.filter((p) => p.value !== null);
+
+  // Theme-aware urgent/priority rose: light-authored for dark, deep for light.
+  // The global re-skin doesn't recolour text-rose, so we set it inline here.
+  const dark = useThemeStore((s) => s.theme) === 'dark';
+  const urgentRose = dark ? '#fda4af' : '#be123c'; // rose-300 / rose-700
 
   return (
     <div className="space-y-8">
@@ -107,7 +115,7 @@ export default function HealthResult({
       {result.topWarning && (
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="rounded-2xl border border-rose-400/30 bg-rose-500/5 p-5">
-            <span className="text-[11px] font-bold uppercase tracking-widest text-rose-300">{pick(RC.priority, lang)}</span>
+            <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: urgentRose }}>{pick(RC.priority, lang)}</span>
             <p className="mt-2 text-sm leading-relaxed text-slate-200">{pick(result.topWarning, lang)}</p>
           </div>
           <div className="rounded-2xl border border-amber-400/30 bg-amber-500/5 p-5">
@@ -136,7 +144,10 @@ export default function HealthResult({
               <li key={p.key} className="rounded-2xl border border-slate-800 bg-slate-950/40 p-4">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="font-semibold text-slate-100">{lang === 'mr' ? p.label.mr : p.label.en}</span>
-                  <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${s.chip}`}>
+                  <span
+                    className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${s.chip}`}
+                    style={p.status === 'urgent' ? { color: urgentRose } : undefined}
+                  >
                     <s.Icon className="h-3 w-3" />
                     {pick(RC[s.label], lang)}
                   </span>
@@ -145,7 +156,9 @@ export default function HealthResult({
                 <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-slate-500">
                   <span>{pick(p.inputs, lang)}</span>
                   {p.upsidePts > 1 && (
-                    <span className={s.text}>+{Math.round(p.upsidePts)} {pick(RC.points, lang)} {pick(RC.upside, lang)}</span>
+                    <span className={s.text} style={p.status === 'urgent' ? { color: urgentRose } : undefined}>
+                      +{Math.round(p.upsidePts)} {pick(RC.points, lang)} {pick(RC.upside, lang)}
+                    </span>
                   )}
                 </div>
                 <p className="mt-1.5 text-[10px] leading-relaxed text-slate-600">{pick(p.limitation, lang)}</p>

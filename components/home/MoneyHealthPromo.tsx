@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
+import { useThemeStore } from '@/store/themeStore';
 import { track } from '@/lib/analytics';
 import type { Language } from '@/types';
 
@@ -43,11 +44,16 @@ const COPY = {
 const CHIP: Record<string, { cls: string; label: Bi }> = {
   good: { cls: 'bg-emerald-500/10 border-emerald-400/30 text-emerald-300', label: { mr: 'चांगले', en: 'Good' } },
   attention: { cls: 'bg-amber-500/10 border-amber-400/30 text-amber-300', label: { mr: 'लक्ष द्या', en: 'Needs attention' } },
-  urgent: { cls: 'bg-rose-500/10 border-rose-400/30 text-rose-300', label: { mr: 'तातडीचे', en: 'Urgent' } },
+  // Urgent text colour applied inline (theme-aware); tint bg/border kept here.
+  urgent: { cls: 'bg-rose-500/10 border-rose-400/30', label: { mr: 'तातडीचे', en: 'Urgent' } },
 };
 
 export default function MoneyHealthPromo() {
   const lang = useLanguageStore((s) => s.language);
+  // Theme-aware urgent rose so the sample chip is readable in both themes
+  // without the global text-rose light-mode rule.
+  const dark = useThemeStore((s) => s.theme) === 'dark';
+  const urgentRose = dark ? '#fda4af' : '#be123c'; // rose-300 / rose-700
 
   // Static sample dial — 612/1000.
   const R = 46;
@@ -120,7 +126,10 @@ export default function MoneyHealthPromo() {
                 {COPY.samplePillars.map((p, i) => (
                   <div key={i} className="flex items-center justify-between gap-3">
                     <span className="text-xs text-slate-300">{pick(p.label, lang)}</span>
-                    <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${CHIP[p.status].cls}`}>
+                    <span
+                      className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${CHIP[p.status].cls}`}
+                      style={p.status === 'urgent' ? { color: urgentRose } : undefined}
+                    >
                       {pick(CHIP[p.status].label, lang)}
                     </span>
                   </div>

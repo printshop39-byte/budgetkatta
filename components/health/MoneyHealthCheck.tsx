@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Info, ShieldCheck } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
 import { useHealthCheckStore } from '@/store/healthCheckStore';
@@ -375,14 +374,13 @@ export default function MoneyHealthCheck() {
         </div>
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={current.id}
-          initial={{ opacity: 0, x: 16 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -16 }}
-          transition={{ duration: 0.2 }}
-        >
+      {/* Keyed by the step id so React swaps step content IMMEDIATELY on
+          Continue/Back. No AnimatePresence exit gate — progression never waits
+          on an exit animation or requestAnimationFrame, so it stays usable even
+          when the compositor/rAF is throttled or paused. Content renders at its
+          final, visible state (no opacity/transform initial) → SSR-visible,
+          reduced-motion-safe, and no hydration mismatch. */}
+      <div key={current.id}>
           <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-extrabold text-slate-50 outline-none">
             {pick(current.title, lang)}
           </h2>
@@ -402,8 +400,7 @@ export default function MoneyHealthCheck() {
               {pick(error, lang)}
             </p>
           )}
-        </motion.div>
-      </AnimatePresence>
+      </div>
 
       {/* Nav */}
       <div className="mt-8 flex items-center justify-between gap-3">

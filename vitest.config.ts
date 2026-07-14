@@ -4,7 +4,12 @@ import path from 'node:path';
 export default defineConfig({
   test: {
     environment: 'node',
-    include: ['lib/**/*.test.ts', 'lib/**/__tests__/**/*.test.ts'],
+    include: [
+      'lib/**/*.test.ts',
+      'lib/**/__tests__/**/*.test.ts',
+      'store/**/*.test.ts',
+      'components/**/*.test.ts',
+    ],
   },
   resolve: {
     // Mirror the tsconfig "@/*" path alias so imports resolve in tests.

@@ -7,34 +7,28 @@ import { CONTACT_EMAIL } from '@/lib/config';
 import TrustSection from '@/components/trust/TrustSection';
 import Logo from '@/components/layout/Logo';
 
-const productLinks = [
-  { href: '/fds', key: 'nav.fd' },
-  { href: '/loans', key: 'loan.home' },
-  { href: '/loans', key: 'loan.personal' },
-  { href: '/loans', key: 'loan.vehicle' },
-  { href: '/loans', key: 'loan.education' },
-  { href: '/loans', key: 'loan.gold' },
-  { href: '/sip', key: 'nav.sip' },
-  { href: '/insurance', key: 'ins.health' },
-  { href: '/insurance', key: 'ins.term' },
+// Footer navigation narrowed to the home-finance focus (2026-07). Investment /
+// generic-loan links (FD, SIP, gold/personal/vehicle loans, health/term
+// insurance) are removed from the footer so they don't compete with the
+// homepage focus; those ROUTES still work and stay linked from their own legacy
+// pages. Home-finance labels are inlined bilingually (no lib/i18n.ts edits).
+type FLink = { href: string; label: { mr: string; en: string } };
+
+const homeFinanceLinks: FLink[] = [
+  { href: '/loans/home-loan', label: { mr: 'गृहकर्ज', en: 'Home Loan' } },
+  { href: '/loans#loan-calc', label: { mr: 'EMI कॅल्क्युलेटर', en: 'EMI Calculator' } },
+  { href: '/#buy-build-transfer', label: { mr: 'गृह-वित्त मार्गदर्शक', en: 'Home Finance Guide' } },
+  { href: '/#home-insurance', label: { mr: 'गृह विमा मार्गदर्शक', en: 'Home Insurance Guide' } },
+  { href: '/documents', label: { mr: 'मालमत्ता कागदपत्रे', en: 'Property Documents' } },
 ];
 
-const toolLinks = [
-  { href: '/fds', key: 'tools.fd' },
-  { href: '/loans', key: 'tools.emi' },
-  { href: '/sip', key: 'tools.sip' },
-  { href: '/insurance', key: 'tools.ins' },
-  { href: '/documents', key: 'tools.docs' },
-];
-
-const companyLinks = [
-  { href: '/about', key: 'nav.about' },
-  { href: '/blog', key: 'blog.nav' },
-  { href: '/contact', key: 'nav.contact' },
-  { href: '/privacy', key: 'nav.privacy' },
-  { href: '/terms', key: 'nav.terms' },
-  { href: '/disclaimer', key: 'nav.disclaimer' },
-  { href: '/affiliate-disclosure', key: 'nav.affiliate_disclosure' },
+const companyLinks: FLink[] = [
+  { href: '/contact', label: { mr: 'संपर्क', en: 'Contact' } },
+  { href: '/about', label: { mr: 'आमच्याबद्दल', en: 'About Us' } },
+  { href: '/privacy', label: { mr: 'गोपनीयता धोरण', en: 'Privacy' } },
+  { href: '/disclaimer', label: { mr: 'अस्वीकरण', en: 'Disclaimer' } },
+  { href: '/affiliate-disclosure', label: { mr: 'जाहिरात व कमिशन धोरण', en: 'Affiliate Disclosure' } },
+  { href: '/terms', label: { mr: 'अटी व शर्ती', en: 'Terms' } },
 ];
 
 const trustItems = ['trust.secure', 'trust.transparent', 'trust.ai', 'trust.educational', 'trust.no_hidden'];
@@ -58,34 +52,30 @@ export default function Footer() {
         </div>
       </div>
       <div className="bg-[#050814] px-4 pb-12 pt-8">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-3 lg:grid-cols-5">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Logo />
-            <p className="mt-3 text-sm leading-relaxed text-slate-400 font-deva">{t('footer.desc')}</p>
+            <p className="mt-3 text-sm leading-relaxed text-slate-400 font-deva">
+              {language === 'mr'
+                ? 'महाराष्ट्रासाठी गृहकर्ज, property budget व गृह विमा यांची सोपी, शैक्षणिक माहिती व साधने.'
+                : 'Simple, educational home-loan, property-budget & home-insurance tools for Maharashtra.'}
+            </p>
             <p className="mt-3 text-xs text-amber-400/80 font-deva">{t('footer.tagline')}</p>
           </div>
 
-          <FooterColumn title={t('footer.col_products')}>
-            {productLinks.map((l, i) => (
-              <FooterLink key={l.key + i} href={l.href}>
-                {t(l.key)}
-              </FooterLink>
-            ))}
-          </FooterColumn>
-
-          <FooterColumn title={t('tools.title')}>
-            {toolLinks.map((l) => (
-              <FooterLink key={l.key} href={l.href}>
-                {t(l.key)}
+          <FooterColumn title={language === 'mr' ? 'गृह वित्त' : 'Home Finance'}>
+            {homeFinanceLinks.map((l) => (
+              <FooterLink key={l.href} href={l.href}>
+                {l.label[language]}
               </FooterLink>
             ))}
           </FooterColumn>
 
           <FooterColumn title={t('footer.col_company')}>
             {companyLinks.map((l) => (
-              <FooterLink key={l.key} href={l.href}>
-                {t(l.key)}
+              <FooterLink key={l.href} href={l.href}>
+                {l.label[language]}
               </FooterLink>
             ))}
           </FooterColumn>
@@ -128,11 +118,19 @@ function FooterColumn({ title, children }: { title: string; children: React.Reac
 }
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const cls = 'block break-words text-sm text-slate-400 transition-colors hover:text-amber-400 font-deva';
+  // Same-page hash target → plain <a> (scroll, no RSC fetch); route → next/link.
   return (
     <li>
-      <Link href={href} className="block break-words text-sm text-slate-400 transition-colors hover:text-amber-400 font-deva">
-        {children}
-      </Link>
+      {href.startsWith('/#') ? (
+        <a href={href} className={cls}>
+          {children}
+        </a>
+      ) : (
+        <Link href={href} className={cls}>
+          {children}
+        </Link>
+      )}
     </li>
   );
 }

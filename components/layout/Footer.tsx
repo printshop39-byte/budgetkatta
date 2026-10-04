@@ -16,7 +16,7 @@ type FLink = { href: string; label: { mr: string; en: string } };
 
 const homeFinanceLinks: FLink[] = [
   { href: '/loans/home-loan', label: { mr: 'गृहकर्ज', en: 'Home Loan' } },
-  { href: '/projects', label: { mr: 'कर्जासाठी पात्र प्रकल्प', en: 'Eligible Projects' } },
+  { href: '/projects', label: { mr: 'प्रकल्प तपासा (RERA)', en: 'Check Projects (RERA)' } },
   { href: '/home-setup', label: { mr: 'Kitchen, Furniture व Interior', en: 'Kitchen, Furniture & Interior' } },
   { href: '/calculators', label: { mr: 'कॅल्क्युलेटर', en: 'Calculators' } },
   { href: '/#buy-build-transfer', label: { mr: 'गृह-वित्त मार्गदर्शक', en: 'Home Finance Guide' } },

@@ -1,18 +1,18 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
 import ReraStats from '@/components/projects/ReraStats';
-import ProjectFinder from '@/components/projects/ProjectFinder';
+import ProjectGuide from '@/components/projects/ProjectGuide';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'कर्जासाठी पात्र RERA प्रकल्प | BudgetKatta',
-  description: 'Home Loan उपलब्ध असू शकणारे RERA नोंदणीकृत प्रकल्प — किंमत, RERA क्रमांक, बँका आणि अधिकृत स्रोतासह.',
+  title: 'चालू प्रकल्प कसा तपासायचा | MahaRERA | BudgetKatta',
+  description: 'MahaRERA वर जिल्हा निवडून प्रकल्प कसा तपासायचा, पूर्णत्व दिनांकावरून चालू/संपलेले ओळखा आणि RERA क्रमांक तपासा.',
   path: '/projects',
 });
 
 export default function ProjectsPage() {
   return (
     <>
-      <ProjectFinder />
+      <ProjectGuide />
       <ReraStats />
     </>
   );

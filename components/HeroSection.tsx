@@ -41,7 +41,7 @@ const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
     description:
       "Home Loan, मालमत्तेवरील कर्ज, बँकांची माहिती आणि RERA नोंदणीकृत प्रकल्प पाहा.",
     ctaPrimary: "Home Loan माहिती पाहा",
-    ctaSecondary: "प्रकल्पांची यादी पाहा",
+    ctaSecondary: "प्रकल्प कसा तपासायचा",
     ctaEmi: "माझी EMI मोजा",
     trust: [
       "Card आवश्यक नाही",
@@ -66,7 +66,7 @@ const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
     description:
       "Explore home loans, loans against property, bank details and RERA-registered projects.",
     ctaPrimary: "See Home Loan info",
-    ctaSecondary: "View project list",
+    ctaSecondary: "How to check a project",
     ctaEmi: "Calculate my EMI",
     trust: [
       "No card required",

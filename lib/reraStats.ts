@@ -26,6 +26,7 @@ export const RERA_YEAR_LABEL: Record<ReraYear, { mr: string; en: string }> = {
 
 export const RERA_STATS_UPDATED = '2026-10';
 export const MAHARERA_HOME_URL = 'https://maharera.maharashtra.gov.in/';
+export const MAHARERA_PROJECTS_URL = 'https://maharera.maharashtra.gov.in/projects-search-result';
 
 /** % growth FY24 -> FY26, or null when either year is missing/zero-based. */
 export function reraGrowth(d: ReraDistrict): number | null {

@@ -16,8 +16,8 @@ const HUB: { href: string; icon: typeof Landmark; title: Bi; desc: Bi }[] = [
   {
     href: '/projects',
     icon: Building2,
-    title: { mr: 'कर्जासाठी पात्र प्रकल्प', en: 'Eligible Projects' },
-    desc: { mr: 'RERA क्रमांक, किंमत, परिसर आणि कर्ज देणाऱ्या बँका.', en: 'RERA number, price, locality and lending banks.' },
+    title: { mr: 'प्रकल्प तपासा (RERA)', en: 'Check a Project (RERA)' },
+    desc: { mr: 'MahaRERA वर जिल्हा निवडून चालू प्रकल्प कसा तपासायचा.', en: 'How to check an ongoing project on MahaRERA by district.' },
   },
   {
     href: '/calculators',

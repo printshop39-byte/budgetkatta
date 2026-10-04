@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
+import ReraStats from '@/components/projects/ReraStats';
 import ProjectFinder from '@/components/projects/ProjectFinder';
 
 export const metadata: Metadata = pageMetadata({
@@ -9,5 +10,10 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function ProjectsPage() {
-  return <ProjectFinder />;
+  return (
+    <>
+      <ProjectFinder />
+      <ReraStats />
+    </>
+  );
 }

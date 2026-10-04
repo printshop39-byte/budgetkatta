@@ -24,6 +24,23 @@ export type BankRate = {
 
 export const BANK_RATES: BankRate[] = [
   {
+    id: 'bom',
+    bank: 'Bank of Maharashtra',
+    rateMin: 7.0,
+    rateMax: 9.65,
+    fee: {
+      mr: 'कर्जाच्या 0.25% + GST. पानावर 31.12.2025 पर्यंत माफीचा उल्लेख आहे — ती मुदत संपली आहे, सध्याची स्थिती बँकेकडून तपासा.',
+      en: '0.25% of the loan + GST. The page mentions a waiver until 31.12.2025 — that date has passed, so confirm the current position with the bank.',
+    },
+    maxTenureYears: 30,
+    terms: {
+      mr: 'Maha Super Housing Loan, फ्लोटिंग (RLLR 8.05%). CIBIL 800+ पगारदार 7.00% ते CIBIL 600 खाली बिगर-पगारदार 9.65%. महिला/संरक्षण कर्मचारी 0.05% सवलत. 30 वर्षे किंवा वय 75 पर्यंत; प्रीपेमेंट/पार्ट-पेमेंट शुल्क नाही.',
+      en: 'Maha Super Housing Loan, floating (RLLR 8.05%). 7.00% for CIBIL 800+ salaried up to 9.65% for CIBIL below 600 non-salaried. 0.05% concession for women/defence. Up to 30 years or age 75; no prepayment/part-payment charges.',
+    },
+    sourceUrl: 'https://bankofmaharashtra.bank.in/retail-interest-rates',
+    verifiedOn: '2026-10-04',
+  },
+  {
     id: 'sbi',
     bank: 'State Bank of India',
     rateMin: 7.25,
@@ -87,10 +104,8 @@ export const BANK_RATES: BankRate[] = [
   },
 ];
 
-/** Banks to add once their official page yields readable figures. */
-export const BANKS_PENDING: { bank: string; sourceUrl: string }[] = [
-  { bank: 'Bank of Maharashtra', sourceUrl: 'https://bankofmaharashtra.bank.in/' },
-];
+/** Banks to add once their official page yields readable figures (none right now). */
+export const BANKS_PENDING: { bank: string; sourceUrl: string }[] = [];
 
 export const BANK_NOTE: Bi = {
   mr: 'दर बदलू शकतात. वरील आकडे बँकेच्या अधिकृत पानावर दिसलेले आहेत; तुमचा प्रत्यक्ष दर CIBIL, उत्पन्न व कर्ज रकमेनुसार ठरतो. अर्जापूर्वी बँकेकडून खात्री करा.',

@@ -48,7 +48,7 @@ export default function BankComparison() {
         ))}
       </div>
 
-      <p className="mt-4 text-sm text-slate-400 font-deva">
+      {BANKS_PENDING.length > 0 && <p className="mt-4 text-sm text-slate-400 font-deva">
         {mr ? 'लवकरच (अधिकृत दर पडताळल्यानंतर): ' : 'Coming once official rates are verified: '}
         {BANKS_PENDING.map((b, i) => (
           <span key={b.bank}>
@@ -58,7 +58,7 @@ export default function BankComparison() {
             </a>
           </span>
         ))}
-      </p>
+      </p>}
     </section>
   );
 }

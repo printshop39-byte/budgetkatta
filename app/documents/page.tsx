@@ -10,8 +10,8 @@ import { getTranslation } from '@/lib/i18n';
 import { useLeadFormStore } from '@/store/leadFormStore';
 import {
   getDocuments,
-  productOptions,
-  profileOptions,
+  homeProductOptions as productOptions,
+  homeProfileOptions as profileOptions,
   type ProductType,
   type ProfileType,
 } from '@/lib/documentChecklists';
@@ -29,7 +29,7 @@ export default function DocumentsPage() {
   const t = getTranslation(language);
   const openLead = useLeadFormStore((s) => s.open);
 
-  const [product, setProduct] = useState<ProductType>('HOME_LOAN');
+  const [product, setProduct] = useState<ProductType>('HOME_BUY');
   const [profile, setProfile] = useState<ProfileType>('SALARIED');
   const [showDownloadNote, setShowDownloadNote] = useState(false);
 

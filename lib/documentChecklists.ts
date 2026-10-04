@@ -25,9 +25,14 @@ export type ProductType =
   | 'GOLD_LOAN'
   | 'HEALTH_INSURANCE'
   | 'TERM_INSURANCE'
-  | 'SIP';
+  | 'SIP'
+  // Home-finance scenarios (blueprint section 6)
+  | 'HOME_BUY'
+  | 'HOME_BUILD'
+  | 'PROPERTY_LOAN'
+  | 'LOAN_TRANSFER';
 
-export type ProfileType = 'SALARIED' | 'BUSINESS' | 'STUDENT' | 'SENIOR' | 'NRI';
+export type ProfileType = 'SALARIED' | 'BUSINESS' | 'STUDENT' | 'SENIOR' | 'NRI' | 'CO_APPLICANT';
 
 export const productOptions: { value: ProductType; label: Bi }[] = [
   { value: 'FD', label: { mr: 'मुदत ठेव (FD)', en: 'Fixed Deposit (FD)' } },
@@ -48,6 +53,20 @@ export const profileOptions: { value: ProfileType; label: Bi }[] = [
   { value: 'STUDENT', label: { mr: 'विद्यार्थी', en: 'Student' } },
   { value: 'SENIOR', label: { mr: 'ज्येष्ठ नागरिक', en: 'Senior Citizen' } },
   { value: 'NRI', label: { mr: 'NRI', en: 'NRI' } },
+];
+
+/** Home-finance scenarios shown on /documents (blueprint section 6). */
+export const homeProductOptions: { value: ProductType; label: Bi }[] = [
+  { value: 'HOME_BUY', label: { mr: 'घर खरेदी', en: 'Buying a home' } },
+  { value: 'HOME_BUILD', label: { mr: 'घर बांधकाम', en: 'Building a home' } },
+  { value: 'PROPERTY_LOAN', label: { mr: 'Property Loan (मालमत्तेवरील कर्ज)', en: 'Property Loan (against property)' } },
+  { value: 'LOAN_TRANSFER', label: { mr: 'Loan Transfer (कर्ज हस्तांतरण)', en: 'Loan Transfer' } },
+];
+
+export const homeProfileOptions: { value: ProfileType; label: Bi }[] = [
+  { value: 'SALARIED', label: { mr: 'पगारदार अर्जदार', en: 'Salaried applicant' } },
+  { value: 'BUSINESS', label: { mr: 'व्यवसाय करणारा अर्जदार', en: 'Business / self-employed applicant' } },
+  { value: 'CO_APPLICANT', label: { mr: 'सह-अर्जदार', en: 'Co-applicant' } },
 ];
 
 export const categoryLabel: Record<DocCategory, Bi> = {
@@ -90,6 +109,22 @@ const D = {
   property: { name: { mr: 'मालमत्ता कागदपत्रे', en: 'Property Documents' }, explanation: { mr: 'गृहकर्जासाठी तारण म्हणून.', en: 'As collateral for the home loan.' }, category: 'PRODUCT', requirement: 'required' },
   goldDeclaration: { name: { mr: 'सोने मालकी घोषणा (आवश्यक असल्यास)', en: 'Gold Ownership Declaration (if needed)' }, explanation: { mr: 'काही ठिकाणी मालकी जाहीर करावी लागते.', en: 'Some lenders require an ownership declaration.' }, category: 'PRODUCT', requirement: 'sometimes' },
   branchCheck: { name: { mr: 'शाखा स्तरावर सोने तपासणी', en: 'Gold Appraisal at Branch' }, explanation: { mr: 'सोन्याचे मूल्य शाखेत तपासले जाते.', en: "The gold's value is appraised at the branch." }, category: 'OTHER', requirement: 'sometimes' },
+  coApplicantKyc: { name: { mr: 'सह-अर्जदाराचे KYC (आधार, पॅन, फोटो)', en: 'Co-applicant KYC (Aadhaar, PAN, photo)' }, explanation: { mr: 'सह-अर्जदाराची ओळख पडताळण्यासाठी.', en: 'To verify the co-applicant identity.' }, category: 'KYC', requirement: 'required' },
+  coApplicantIncome: { name: { mr: 'सह-अर्जदाराचा उत्पन्न पुरावा', en: 'Co-applicant income proof' }, explanation: { mr: 'पगार स्लिप किंवा ITR + बँक स्टेटमेंट — एकत्रित पात्रता वाढवण्यासाठी.', en: 'Salary slips or ITR + bank statement, to add to combined eligibility.' }, category: 'INCOME', requirement: 'required' },
+  coApplicantRelation: { name: { mr: 'सह-अर्जदाराशी नाते दर्शवणारा पुरावा', en: 'Proof of relationship to co-applicant' }, explanation: { mr: 'बँका सहसा जवळच्या नातेवाईकांनाच सह-अर्जदार मानतात; नियम बँकेनुसार.', en: 'Banks usually accept close relatives as co-applicants; rules vary by bank.' }, category: 'OTHER', requirement: 'sometimes' },
+  agreement: { name: { mr: 'विक्री करार / Allotment Letter', en: 'Agreement for sale / Allotment letter' }, explanation: { mr: 'खरेदीची किंमत व अटी सिद्ध करण्यासाठी.', en: 'To prove the price and terms of the purchase.' }, category: 'PRODUCT', requirement: 'required' },
+  reraProof: { name: { mr: 'RERA नोंदणी क्रमांक (नवीन प्रकल्पासाठी)', en: 'RERA registration number (new projects)' }, explanation: { mr: 'प्रकल्प नोंदणीकृत आहे हे बँक तपासते.', en: 'The bank checks the project is registered.' }, category: 'PRODUCT', requirement: 'sometimes' },
+  titleDocs: { name: { mr: 'मालकी हक्काची कागदपत्रे (Title documents)', en: 'Title documents' }, explanation: { mr: 'विक्रेत्याला मालमत्ता विकण्याचा हक्क आहे हे तपासण्यासाठी.', en: 'To check the seller has the right to sell.' }, category: 'PRODUCT', requirement: 'required' },
+  societyNoc: { name: { mr: 'सोसायटी NOC / Share certificate', en: 'Society NOC / share certificate' }, explanation: { mr: 'पुनर्विक्रीच्या घरासाठी सोसायटीची संमती.', en: 'Society consent for resale homes.' }, category: 'PRODUCT', requirement: 'sometimes' },
+  plotOwnership: { name: { mr: 'प्लॉट मालकीचा पुरावा (७/१२ / प्रॉपर्टी कार्ड)', en: 'Plot ownership proof (7/12 / property card)' }, explanation: { mr: 'बांधकामासाठी जमीन तुमची असल्याचे सिद्ध करण्यासाठी.', en: 'To show the land you build on is yours.' }, category: 'PRODUCT', requirement: 'required' },
+  buildingPlan: { name: { mr: 'मंजूर बांधकाम आराखडा', en: 'Sanctioned building plan' }, explanation: { mr: 'स्थानिक प्राधिकरणाने बांधकामास परवानगी दिल्याचा पुरावा.', en: 'Proof the local authority approved the construction.' }, category: 'PRODUCT', requirement: 'required' },
+  costEstimate: { name: { mr: 'बांधकाम खर्चाचा अंदाज (अभियंता/आर्किटेक्ट)', en: 'Construction cost estimate (engineer/architect)' }, explanation: { mr: 'किती कर्ज लागेल व टप्प्याटप्प्याने कसे द्यायचे हे ठरवण्यासाठी.', en: 'To decide the loan amount and stage-wise release.' }, category: 'PRODUCT', requirement: 'required' },
+  propertyTax: { name: { mr: 'मालमत्ता कर पावती', en: 'Property tax receipt' }, explanation: { mr: 'थकबाकी नाही हे दाखवण्यासाठी.', en: 'To show there are no dues.' }, category: 'PRODUCT', requirement: 'sometimes' },
+  valuation: { name: { mr: 'मालमत्ता मूल्यांकन (बँक करते)', en: 'Property valuation (done by the bank)' }, explanation: { mr: 'कर्ज किती मिळेल हे मालमत्तेच्या मूल्यावरून ठरते; मूल्यांकन बँक करवून घेते.', en: 'The loan limit depends on property value; the bank arranges the valuation.' }, category: 'OTHER', requirement: 'sometimes' },
+  loanStatement: { name: { mr: 'सध्याच्या कर्जाचे स्टेटमेंट (उर्वरित रक्कम)', en: 'Existing loan statement (outstanding)' }, explanation: { mr: 'किती कर्ज हलवायचे आहे ते कळण्यासाठी.', en: 'To know how much is to be moved.' }, category: 'PRODUCT', requirement: 'required' },
+  sanctionLetter: { name: { mr: 'सध्याचे मंजुरी पत्र व कर्ज करार', en: 'Existing sanction letter and loan agreement' }, explanation: { mr: 'सध्याचा दर, कालावधी व प्रीपेमेंट अटी तपासण्यासाठी.', en: 'To check the current rate, tenure and prepayment terms.' }, category: 'PRODUCT', requirement: 'required' },
+  foreclosure: { name: { mr: 'सध्याच्या बँकेचे Foreclosure पत्र', en: 'Foreclosure letter from current bank' }, explanation: { mr: 'कर्ज बंद करण्यासाठी लागणारी रक्कम दाखवते.', en: 'Shows the amount needed to close the loan.' }, category: 'PRODUCT', requirement: 'required' },
+  originalDocs: { name: { mr: 'सध्याच्या बँकेकडील मूळ मालमत्ता कागदपत्रांची यादी', en: 'List of original property documents held by current bank' }, explanation: { mr: 'नवीन बँकेकडे ती हस्तांतरित करण्यासाठी.', en: 'So they can be handed over to the new bank.' }, category: 'PRODUCT', requirement: 'required' },
   ageProof: { name: { mr: 'वय पुरावा', en: 'Age Proof' }, explanation: { mr: 'प्रीमियम व पात्रतेसाठी.', en: 'For premium calculation and eligibility.' }, category: 'PRODUCT', requirement: 'required' },
   medicalHistory: { name: { mr: 'वैद्यकीय इतिहास', en: 'Medical History' }, explanation: { mr: 'वयानुसार तपासणी लागू शकते.', en: 'A medical check-up may apply based on age.' }, category: 'PRODUCT', requirement: 'sometimes' },
   existingPolicy: { name: { mr: 'सध्याची पॉलिसी माहिती (असल्यास)', en: 'Existing Policy Details (if any)' }, explanation: { mr: 'एकूण कव्हर ठरवण्यासाठी.', en: 'To determine total cover.' }, category: 'OTHER', requirement: 'sometimes' },
@@ -102,10 +137,17 @@ function income(profile: ProfileType): DocItem[] {
     case 'STUDENT': return [D.coApplicant, { ...D.bankStatement, requirement: 'sometimes' }];
     case 'SENIOR': return [D.pension];
     case 'NRI': return [D.passportVisa, D.nreNro, D.overseasIncome];
+    case 'CO_APPLICANT': return [D.coApplicantIncome, D.coApplicantRelation];
   }
 }
 
 const KYC: DocItem[] = [D.aadhaar, D.pan, D.photo, D.address];
+
+/** KYC + income for the chosen applicant, then the scenario's own documents. */
+function homeSet(profile: ProfileType, scenarioDocs: DocItem[]): DocItem[] {
+  const base = profile === 'CO_APPLICANT' ? [D.coApplicantKyc] : KYC;
+  return [...base, ...income(profile), ...scenarioDocs];
+}
 
 /** Compose the document checklist for a product + applicant profile. */
 export function getDocuments(product: ProductType, profile: ProfileType): DocItem[] {
@@ -128,6 +170,14 @@ export function getDocuments(product: ProductType, profile: ProfileType): DocIte
       return [...KYC, ...income(profile), D.vehicleQuote, D.rcUsed, D.insuranceCopy];
     case 'EDUCATION_LOAN':
       return [...KYC, D.admission, D.feeStructure, D.academic, D.coApplicant];
+    case 'HOME_BUY':
+      return homeSet(profile, [D.agreement, D.reraProof, D.titleDocs, D.societyNoc, D.valuation]);
+    case 'HOME_BUILD':
+      return homeSet(profile, [D.plotOwnership, D.buildingPlan, D.costEstimate, D.titleDocs, D.valuation]);
+    case 'PROPERTY_LOAN':
+      return homeSet(profile, [D.titleDocs, D.propertyTax, D.valuation]);
+    case 'LOAN_TRANSFER':
+      return homeSet(profile, [D.loanStatement, D.sanctionLetter, D.foreclosure, D.originalDocs, D.titleDocs]);
     case 'GOLD_LOAN':
       return [...KYC, D.goldDeclaration, D.branchCheck];
   }

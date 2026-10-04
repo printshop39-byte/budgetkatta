@@ -24,6 +24,23 @@ export type BankRate = {
 
 export const BANK_RATES: BankRate[] = [
   {
+    id: 'sbi',
+    bank: 'State Bank of India',
+    rateMin: 7.25,
+    rateMax: null,
+    fee: {
+      mr: 'कर्जाच्या 0.35% (पगारदार: किमान ₹5,000, कमाल ₹15,000; इतर: कमाल ₹18,000) + GST. बँकेच्या पानावर 50% सवलत व निवडक प्रकरणांत 100% माफी नमूद (अटी लागू).',
+      en: '0.35% of the loan (salaried: min ₹5,000, max ₹15,000; non-salaried: max ₹18,000) + GST. Page also states a 50% concession and 100% waiver in selected cases (T&C apply).',
+    },
+    maxTenureYears: null,
+    terms: {
+      mr: 'दर "7.25% पासून" (01.04.2026 पासून, अटी लागू). CIBIL व कर्ज रकमेनुसार स्लॅब — तपशीलवार दर तक्ता पानावर वाचता आला नाही.',
+      en: 'Rate is "7.25% onwards" w.e.f. 01.04.2026 (T&C apply). Slabs depend on credit score and loan amount — the detailed rate table was not readable on the page.',
+    },
+    sourceUrl: 'https://sbi.bank.in/web/interest-rates/interest-rates/loan-schemes-interest-rates/home-loans-interest-rates-current',
+    verifiedOn: '2026-10-04',
+  },
+  {
     id: 'hdfc',
     bank: 'HDFC Bank',
     rateMin: 7.75,
@@ -72,7 +89,6 @@ export const BANK_RATES: BankRate[] = [
 
 /** Banks to add once their official page yields readable figures. */
 export const BANKS_PENDING: { bank: string; sourceUrl: string }[] = [
-  { bank: 'State Bank of India', sourceUrl: 'https://homeloans.sbi.bank.in/' },
   { bank: 'Bank of Maharashtra', sourceUrl: 'https://bankofmaharashtra.bank.in/' },
 ];
 

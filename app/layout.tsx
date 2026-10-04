@@ -9,6 +9,7 @@ import CompareDrawer from '@/components/compare/CompareDrawer';
 import LeadFormModal from '@/components/lead/LeadFormModal';
 import ServiceWorkerRegister from '@/components/layout/ServiceWorkerRegister';
 import PWAInstallPrompt from '@/components/layout/PWAInstallPrompt';
+import StickyEmiButton from '@/components/layout/StickyEmiButton';
 import CookieConsent from '@/components/layout/CookieConsent';
 import JsonLd from '@/components/seo/JsonLd';
 
@@ -100,6 +101,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
+        <StickyEmiButton />
         <Floating3DGuide />
         <CompareDrawer />
         <LeadFormModal />

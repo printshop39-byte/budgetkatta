@@ -22,6 +22,7 @@
 
 export const HOMEPAGE_SECTIONS = {
   // ── Home-finance scope (visible) ─────────────────────────────────────────
+  hub: true, //                 Five blueprint area cards (loans/projects/calculators/setup/docs)
   hero: true, //                Property-budget & EMI-capacity hero
   readinessPromo: true, //      Home Finance Readiness promo (was Money Health)
   buyBuildTransfer: true, //    Buy a home / Build a home / Transfer loan choices

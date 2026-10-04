@@ -134,7 +134,8 @@ export const PROPERTY_TOOLS: PropertyTool[] = [
     id: 'home-loan-eligibility',
     label: { mr: 'गृहकर्ज पात्रता', en: 'Home Loan Eligibility' },
     desc: { mr: 'उत्पन्नानुसार अंदाजे कर्ज मर्यादा.', en: 'Approx. loan limit from your income.' },
-    status: 'coming',
+    status: 'available',
+    href: '/calculators',
   },
   {
     id: 'safe-property-budget',
@@ -146,7 +147,8 @@ export const PROPERTY_TOOLS: PropertyTool[] = [
     id: 'down-payment-planner',
     label: { mr: 'Down-Payment नियोजक', en: 'Down-Payment Planner' },
     desc: { mr: 'किती रक्कम आधी साठवावी.', en: 'How much to save upfront.' },
-    status: 'coming',
+    status: 'available',
+    href: '/calculators',
   },
   {
     id: 'plot-construction-loan',
@@ -164,13 +166,15 @@ export const PROPERTY_TOOLS: PropertyTool[] = [
     id: 'balance-transfer',
     label: { mr: 'गृहकर्ज Balance Transfer', en: 'Home Loan Balance Transfer' },
     desc: { mr: 'व्याज-फरक व break-even तपासा.', en: 'Interest difference & break-even.' },
-    status: 'coming',
+    status: 'available',
+    href: '/calculators',
   },
   {
     id: 'stamp-duty',
     label: { mr: 'Stamp Duty व नोंदणी अंदाज', en: 'Stamp Duty & Registration' },
     desc: { mr: 'महाराष्ट्रातील अंदाजे खर्च.', en: 'Estimated cost in Maharashtra.' },
-    status: 'coming',
+    status: 'available',
+    href: '/calculators',
   },
   {
     id: 'home-insurance',

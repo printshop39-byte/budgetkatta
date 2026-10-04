@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Calculator, FileText } from 'lucide-react';
 import { pageMetadata } from '@/lib/seo';
 import { getDocuments, type ProductType, type ProfileType } from '@/lib/documentChecklists';
+import BankComparison from '@/components/loans/BankComparison';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
 
 // Local-SEO content pages per loan type, e.g. /loans/home-loan. Each gives a
@@ -159,7 +160,9 @@ export default function LoanTypePage({ params }: { params: { type: string } }) {
         </Link>
       </header>
 
-      <section>
+      {params.type === 'home-loan' && <BankComparison />}
+
+      <section className="mt-10">
         <h2 className="mb-4 flex items-center gap-2 font-display text-xl font-bold text-slate-100 font-deva">
           <FileText className="h-5 w-5 text-amber-400" />
           आवश्यक कागदपत्रे | Required Documents

@@ -36,8 +36,12 @@ export function reraGrowth(d: ReraDistrict): number | null {
   return Math.round(((b - a) / a) * 100);
 }
 
-/** MahaRERA project numbers: "P" followed by 11 digits (e.g. P52100012345). */
-export const RERA_NUMBER_RE = /^P\d{11}$/;
+/**
+ * MahaRERA project numbers come in two shapes: older "P" + 11 digits
+ * (P52100012345) and newer two-letter prefixes "PR"/"PM" + 13 digits
+ * (PR1150002601102, PM1150002602106).
+ */
+export const RERA_NUMBER_RE = /^(?:P\d{11}|P[A-Z]\d{13})$/;
 
 export function normalizeReraNumber(input: string): string {
   return input.trim().toUpperCase();

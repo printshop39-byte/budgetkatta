@@ -38,7 +38,7 @@ export default function ReraStats() {
     e.preventDefault();
     const n = normalizeReraNumber(num);
     if (!RERA_NUMBER_RE.test(n)) {
-      setMsg(mr ? 'क्रमांक P ने सुरू होऊन त्यानंतर ११ अंक असावेत. उदा. P52100012345' : 'Must be P followed by 11 digits, e.g. P52100012345');
+      setMsg(mr ? 'क्रमांक P + ११ अंक (उदा. P52100012345) किंवा PR/PM + १३ अंक (उदा. PR1150002601102) असा असावा.' : 'Must be P + 11 digits (e.g. P52100012345) or PR/PM + 13 digits (e.g. PR1150002601102).');
       return;
     }
     try {
@@ -162,14 +162,14 @@ export default function ReraStats() {
         <h3 className="font-display text-lg font-bold text-slate-100 font-deva">{mr ? 'RERA क्रमांक तपासा' : 'Check a RERA number'}</h3>
         <p className="mt-1 text-sm text-slate-400 font-deva">
           {mr
-            ? 'प्रकल्प क्रमांक टाका (उदा. P52100012345). तो कॉपी होऊन MahaRERA पोर्टल उघडेल; तिथे Search मध्ये paste करा.'
-            : 'Enter the project number (e.g. P52100012345). It is copied and the MahaRERA portal opens; paste it into Search there.'}
+            ? 'प्रकल्प क्रमांक टाका (उदा. P52100012345 किंवा PR1150002601102). तो कॉपी होऊन MahaRERA पोर्टल उघडेल; तिथे Search मध्ये paste करा.'
+            : 'Enter the project number (e.g. P52100012345 or PR1150002601102). It is copied and the MahaRERA portal opens; paste it into Search there.'}
         </p>
         <form onSubmit={check} noValidate className="mt-3 flex flex-wrap gap-2">
           <input
             value={num}
             onChange={(e) => setNum(e.target.value)}
-            maxLength={12}
+            maxLength={15}
             placeholder="P5210XXXXXXX"
             aria-label={mr ? 'MahaRERA प्रकल्प क्रमांक' : 'MahaRERA project number'}
             autoComplete="off"

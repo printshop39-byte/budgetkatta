@@ -12,7 +12,7 @@ import Logo from '@/components/layout/Logo';
 
 // Single source of truth for header navigation (2026-07 home-finance scope) —
 // used by BOTH the desktop bar and the mobile drawer so they can never drift
-// apart. Narrowed to the six home/property-finance entries; investment/loan
+// apart. Narrowed to the five blueprint menu entries; investment/loan
 // categories (FD, SIP, gadget/education/women loans, bank directory) are NOT in
 // the header now but their routes still work and are reachable via the footer.
 // Section links are root-prefixed (`/#buy`) so they navigate to the homepage
@@ -21,12 +21,11 @@ import Logo from '@/components/layout/Logo';
 type Leaf = { href: string; label: { mr: string; en: string } };
 
 const NAV: Leaf[] = [
-  { href: '/', label: { mr: 'गृह वित्त', en: 'Home Finance' } },
-  { href: '/#buy', label: { mr: 'घर घ्या', en: 'Buy a Home' } },
-  { href: '/#build', label: { mr: 'घर बांधा', en: 'Build a Home' } },
-  { href: '/#transfer', label: { mr: 'कर्ज ट्रान्सफर', en: 'Balance Transfer' } },
-  { href: '/#home-insurance', label: { mr: 'गृह विमा', en: 'Home Insurance' } },
-  { href: '/#property-tools', label: { mr: 'कॅल्क्युलेटर', en: 'Calculators' } },
+  { href: '/loans/home-loan', label: { mr: 'Home Loan', en: 'Home Loan' } },
+  { href: '/projects', label: { mr: 'कर्जासाठी पात्र प्रकल्प', en: 'Eligible Projects' } },
+  { href: '/home-setup', label: { mr: 'Kitchen, Furniture व Interior', en: 'Kitchen, Furniture & Interior' } },
+  { href: '/calculators', label: { mr: 'कॅल्क्युलेटर', en: 'Calculators' } },
+  { href: '/documents', label: { mr: 'कागदपत्रे व मार्गदर्शन', en: 'Documents & Guidance' } },
 ];
 
 // Secondary company links — kept out of the desktop bar; shown in the mobile

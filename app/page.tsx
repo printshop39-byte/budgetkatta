@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import HeroSection from '@/components/HeroSection';
+import HomeHub from '@/components/home/HomeHub';
 import MoneyHealthPromo from '@/components/home/MoneyHealthPromo';
 import BuyBuildTransfer from '@/components/home/BuyBuildTransfer';
 import PropertyTools from '@/components/home/PropertyTools';
@@ -55,6 +56,8 @@ export default function HomePage() {
 
       {/* ── Home-finance homepage (narrowed scope) ── */}
       {S.hero && <HeroSection />}
+      {/* Five blueprint areas as large cards: loans, projects, calculators, setup, documents */}
+      {S.hub && <HomeHub />}
       {/* Free "Financial Readiness for a Home Goal" is the primary path */}
       {S.readinessPromo && <MoneyHealthPromo />}
       {/* Buy / Build / Transfer — the three home-finance journeys */}

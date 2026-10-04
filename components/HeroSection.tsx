@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Calculator, ShieldCheck, Home } from "lucide-react";
+import { ArrowRight, Building2, Calculator, ShieldCheck, Home } from "lucide-react";
 import { useLanguageStore } from "@/store/languageStore";
 import { track } from "@/lib/analytics";
 
@@ -20,6 +20,7 @@ type HeroCopy = {
   description: string;
   ctaPrimary: string;
   ctaSecondary: string;
+  ctaEmi: string;
   trust: string[];
   previewTag: string;
   illustrativeLabel: string;
@@ -35,12 +36,13 @@ type HeroCopy = {
 const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
   mr: {
     eyebrow: "घर आणि मालमत्ता वित्त नियोजन",
-    titleStart: "घर घेण्यापूर्वी तुमचे",
-    titleAccent: "सुरक्षित बजेट आणि EMI क्षमता तपासा",
+    titleStart: "घरासाठी योग्य",
+    titleAccent: "कर्ज आणि प्रकल्प शोधा",
     description:
-      "उत्पन्न, सध्याचे EMI, बचत व आर्थिक संरक्षणावर आधारित — घराच्या ध्येयासाठी तुमच्या आर्थिक तयारीचा प्राथमिक शैक्षणिक अंदाज आणि पुढची योग्य कृती समजून घ्या.",
-    ctaPrimary: "घराच्या ध्येयासाठी माझी आर्थिक तयारी तपासा — मोफत",
-    ctaSecondary: "Home Loan EMI मोजा",
+      "Home Loan, मालमत्तेवरील कर्ज, बँकांची माहिती आणि RERA नोंदणीकृत प्रकल्प पाहा.",
+    ctaPrimary: "Home Loan माहिती पाहा",
+    ctaSecondary: "प्रकल्पांची यादी पाहा",
+    ctaEmi: "माझी EMI मोजा",
     trust: [
       "Card आवश्यक नाही",
       "OTP किंवा Password विचारत नाही",
@@ -59,12 +61,13 @@ const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
   },
   en: {
     eyebrow: "Home and property finance planning",
-    titleStart: "Check your safe property budget and",
-    titleAccent: "EMI capacity before buying a home",
+    titleStart: "Find the right",
+    titleAccent: "loan and project for your home",
     description:
-      "Using your income, existing EMIs, savings and financial protection, get a preliminary educational estimate of your financial readiness for a home goal — and your next practical step.",
-    ctaPrimary: "Check My Financial Readiness for a Home Goal — Free",
-    ctaSecondary: "Calculate Home Loan EMI",
+      "Explore home loans, loans against property, bank details and RERA-registered projects.",
+    ctaPrimary: "See Home Loan info",
+    ctaSecondary: "View project list",
+    ctaEmi: "Calculate my EMI",
     trust: [
       "No card required",
       "We never ask for OTPs or passwords",
@@ -113,9 +116,9 @@ export default function HeroSection() {
           </p>
 
           {/* CTA Actions */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 pt-2">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 pt-2">
             <Link
-              href="/health-check"
+              href="/loans/home-loan"
               onClick={() => track("homepage_primary_cta_clicked", { cta: "hero_primary" })}
               className="group px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 font-bold text-base shadow-lg shadow-amber-500/30 hover:shadow-[0_0_30px_rgba(251,191,36,0.55)] hover:scale-[1.03] transition-all duration-300 flex items-center justify-center space-x-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
             >
@@ -124,12 +127,21 @@ export default function HeroSection() {
             </Link>
 
             <Link
-              href="/loans#loan-calc"
-              onClick={() => track("homepage_primary_cta_clicked", { cta: "hero_secondary_emi" })}
+              href="/projects"
+              onClick={() => track("homepage_primary_cta_clicked", { cta: "hero_secondary_projects" })}
+              className="group px-8 py-4 rounded-full bg-slate-900/70 backdrop-blur-md border border-slate-800 text-slate-300 font-semibold text-base hover:bg-slate-900 hover:border-amber-400/50 hover:text-amber-300 hover:scale-[1.03] transition-all duration-300 flex items-center justify-center space-x-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+            >
+              <Building2 className="h-5 w-5 text-amber-400" />
+              <span>{t.ctaSecondary}</span>
+            </Link>
+
+            <Link
+              href="/calculators"
+              onClick={() => track("homepage_primary_cta_clicked", { cta: "hero_emi" })}
               className="group px-8 py-4 rounded-full bg-slate-900/70 backdrop-blur-md border border-slate-800 text-slate-300 font-semibold text-base hover:bg-slate-900 hover:border-amber-400/50 hover:text-amber-300 hover:scale-[1.03] transition-all duration-300 flex items-center justify-center space-x-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
             >
               <Calculator className="h-5 w-5 text-amber-400" />
-              <span>{t.ctaSecondary}</span>
+              <span>{t.ctaEmi}</span>
             </Link>
           </div>
 

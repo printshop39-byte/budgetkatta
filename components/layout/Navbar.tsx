@@ -22,7 +22,7 @@ type Leaf = { href: string; label: { mr: string; en: string } };
 
 const NAV: Leaf[] = [
   { href: '/loans/home-loan', label: { mr: 'Home Loan', en: 'Home Loan' } },
-  { href: '/projects', label: { mr: 'कर्जासाठी पात्र प्रकल्प', en: 'Eligible Projects' } },
+  { href: '/projects', label: { mr: 'प्रकल्प तपासा', en: 'Check Projects' } },
   { href: '/home-setup', label: { mr: 'Kitchen, Furniture व Interior', en: 'Kitchen, Furniture & Interior' } },
   { href: '/calculators', label: { mr: 'कॅल्क्युलेटर', en: 'Calculators' } },
   { href: '/documents', label: { mr: 'कागदपत्रे व मार्गदर्शन', en: 'Documents & Guidance' } },

@@ -127,6 +127,12 @@ export const BANK_NOTE: Bi = {
   en: 'Comparison of home-loan lenders in India (useful for Maharashtra). Rates change. A "from" rate is a starting rate, not your personal approved rate. Figures are as shown on each bank official page; your actual rate depends on credit score, income and loan size. Confirm with the bank before applying.',
 };
 
+/** Shown directly under the rate cards. */
+export const BANK_DISCLAIMER: Bi = {
+  mr: 'वरील दर बँकेच्या नियमांनुसार बदलत असतात. हे अंतिम किंवा बंधनकारक दर म्हणून ग्राह्य धरू नका. अर्ज करण्यापूर्वी बँकेकडून चालू दर व अटी तपासा.',
+  en: 'The rates above change as per each bank rules. Do not treat them as final or binding rates. Check the current rate and terms with the bank before applying.',
+};
+
 export function formatRateRange(min: number | null, max: number | null): string {
   const f = (n: number) => n.toFixed(2);
   if (min === null && max === null) return '—';

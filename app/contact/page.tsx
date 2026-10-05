@@ -5,6 +5,8 @@ import PageShell from '@/components/shared/PageShell';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { submitLead } from '@/lib/leadAutomation';
+import ConsentCheckbox from '@/components/lead/ConsentCheckbox';
+import { consentEvidence } from '@/lib/consent';
 import { CONTACT_EMAIL } from '@/lib/config';
 import { Icon } from '@/components/shared/Icon';
 import type { LeadModule } from '@/types';
@@ -50,6 +52,7 @@ export default function ContactPage() {
       selectedLanguage: language,
       interestedModule: service,
       userQuery: message.trim() || undefined,
+      ...consentEvidence(),
       sourcePage: 'CONTACT_PAGE',
       timestamp: new Date().toISOString(),
     });
@@ -130,15 +133,7 @@ export default function ContactPage() {
                   />
                 </Field>
 
-                <label className="flex items-start gap-2.5 pt-1">
-                  <input
-                    type="checkbox"
-                    checked={consent}
-                    onChange={(e) => setConsent(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 shrink-0 accent-bk-gold"
-                  />
-                  <span className="text-xs leading-relaxed text-slate-400 font-deva">{t('lead.consent')}</span>
-                </label>
+                <ConsentCheckbox checked={consent} onChange={setConsent} />
 
                 {error && <p className="text-sm text-red-400 font-deva">{error}</p>}
 

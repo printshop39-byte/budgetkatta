@@ -16,6 +16,11 @@ export interface LeadPayload {
   interestedModule: LeadModule;
   selectedProduct?: string;
   userQuery?: string;
+  /** Salaried / business / other - lets guidance match the applicant. */
+  employmentType?: 'SALARIED' | 'BUSINESS' | 'OTHER';
+  /** Which consent wording the visitor agreed to, and when (see lib/consent.ts). */
+  consentVersion?: string;
+  consentAt?: string;
   sourcePage: string;
   timestamp: string;
 }

@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Send } from 'lucide-react';
 import { submitLead } from '@/lib/leadAutomation';
+import ConsentCheckbox from '@/components/lead/ConsentCheckbox';
+import { consentEvidence } from '@/lib/consent';
 import { useLanguageStore } from '@/store/languageStore';
 import type { Bi } from '@/types';
 
@@ -107,6 +109,7 @@ export default function EducationLoanFinder({
       interestedModule: 'LOAN',
       selectedProduct: 'Education Loan (lead)',
       userQuery: summary,
+      ...consentEvidence(),
       sourcePage,
       timestamp: new Date().toISOString(),
     });
@@ -192,19 +195,7 @@ export default function EducationLoanFinder({
         />
       </div>
 
-      <label className="flex items-start gap-2 text-xs text-slate-400 font-deva">
-        <input
-          type="checkbox"
-          checked={consent}
-          onChange={(e) => setConsent(e.target.checked)}
-          className="mt-0.5 accent-amber-400"
-        />
-        <span>
-          {mr
-            ? 'मी BudgetKatta व त्याच्या verified partners कडून माझ्या निवडलेल्या product बद्दल call / WhatsApp / email मिळण्यास संमती देतो.'
-            : 'I consent to receive calls / WhatsApp / email from BudgetKatta and its verified partners about my selected product.'}
-        </span>
-      </label>
+      <ConsentCheckbox checked={consent} onChange={setConsent} />
 
       {error && <p className="text-sm text-rose-400 font-deva">{error}</p>}
 

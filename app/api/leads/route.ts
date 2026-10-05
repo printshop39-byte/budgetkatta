@@ -5,7 +5,7 @@
 import { NextResponse } from 'next/server';
 import type { LeadPayload } from '@/types';
 import { connectDB, isMongoConfigured } from '@/lib/mongodb';
-import { leadSchema } from '@/lib/validation';
+import { leadSchema, missingConsent } from '@/lib/validation';
 import { rateLimit, clientIp, sweepExpired } from '@/lib/rateLimit';
 import { sanitizeText } from '@/lib/sanitize';
 
@@ -87,6 +87,11 @@ export async function POST(request: Request) {
       { ok: false, error: 'Validation failed', issues: parsed.error.issues },
       { status: 400 }
     );
+  }
+
+  // Contact details are only stored/forwarded together with consent evidence.
+  if (missingConsent(parsed.data)) {
+    return NextResponse.json({ ok: false, error: 'Consent required' }, { status: 400 });
   }
 
   // Sanitize free-text fields before persisting/forwarding.

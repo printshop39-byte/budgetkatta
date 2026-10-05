@@ -11,6 +11,8 @@ import { useLeadFormStore } from '@/store/leadFormStore';
 import { useLanguageStore } from '@/store/languageStore';
 import { getTranslation } from '@/lib/i18n';
 import { submitLead } from '@/lib/leadAutomation';
+import ConsentCheckbox from '@/components/lead/ConsentCheckbox';
+import { consentEvidence } from '@/lib/consent';
 import type { LeadModule } from '@/types';
 
 const moduleLabelKey: Record<LeadModule, string> = {
@@ -30,6 +32,7 @@ export default function LeadFormModal() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
+  const [employment, setEmployment] = useState<'' | 'SALARIED' | 'BUSINESS' | 'OTHER'>('');
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState('');
   const [sending, setSending] = useState(false);
@@ -41,6 +44,7 @@ export default function LeadFormModal() {
       setName('');
       setPhone('');
       setCity('');
+      setEmployment('');
       setConsent(false);
       setError('');
       setSending(false);
@@ -60,6 +64,8 @@ export default function LeadFormModal() {
       userName: name.trim(),
       phone: phone.trim(),
       city: city.trim() || undefined,
+      employmentType: employment || undefined,
+      ...consentEvidence(),
       selectedLanguage: language,
       interestedModule: module,
       selectedProduct: product,
@@ -170,15 +176,22 @@ export default function LeadFormModal() {
                   />
                 </Field>
 
-                <label className="flex items-start gap-2.5">
-                  <input
-                    type="checkbox"
-                    checked={consent}
-                    onChange={(e) => setConsent(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 shrink-0 accent-amber-400"
-                  />
-                  <span className="text-xs leading-relaxed text-slate-400 font-deva">{t('lead.consent')}</span>
-                </label>
+                {(module === 'LOAN' || module === 'GENERAL') && (
+                  <Field label={language === 'mr' ? 'नोकरीचा प्रकार (पर्यायी)' : 'Employment type (optional)'}>
+                    <select
+                      value={employment}
+                      onChange={(e) => setEmployment(e.target.value as typeof employment)}
+                      className="bk-input"
+                    >
+                      <option value="" className="bg-bk-card">{language === 'mr' ? 'निवडा' : 'Select'}</option>
+                      <option value="SALARIED" className="bg-bk-card">{language === 'mr' ? 'पगारदार' : 'Salaried'}</option>
+                      <option value="BUSINESS" className="bg-bk-card">{language === 'mr' ? 'व्यावसायिक / स्वयंरोजगार' : 'Business / self-employed'}</option>
+                      <option value="OTHER" className="bg-bk-card">{language === 'mr' ? 'इतर' : 'Other'}</option>
+                    </select>
+                  </Field>
+                )}
+
+                <ConsentCheckbox checked={consent} onChange={setConsent} />
 
                 {error && <p className="text-sm text-red-400 font-deva">{error}</p>}
 

@@ -83,6 +83,17 @@ export default function HomeSetupContent() {
         <h2 className="mb-4 text-center font-display text-2xl font-bold text-slate-100 font-deva">{SETUP_PAGE.budgetHeading[lang]}</h2>
         <HomeCalculators initialTab="setup" />
       </section>
+
+      <section className="mt-10 rounded-3xl border border-amber-400/30 bg-amber-400/5 p-6 text-center">
+        <h2 className="font-display text-xl font-extrabold text-slate-100 md:text-2xl font-deva">{SETUP_PAGE.bridge.title[lang]}</h2>
+        <p className="mx-auto mt-2 max-w-xl text-sm text-slate-400 font-deva">{SETUP_PAGE.bridge.body[lang]}</p>
+        <Link
+          href="/loans/home-loan"
+          className="mt-4 inline-flex min-h-[44px] items-center rounded-full bg-amber-400 px-7 font-bold text-slate-950 hover:bg-amber-300 font-deva"
+        >
+          {SETUP_PAGE.bridge.cta[lang]} →
+        </Link>
+      </section>
     </div>
   );
 }

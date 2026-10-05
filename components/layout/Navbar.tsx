@@ -18,10 +18,10 @@ import Logo from '@/components/layout/Logo';
 // Section links are root-prefixed (`/#buy`) so they navigate to the homepage
 // and scroll, from any page. Labels are inlined bilingually so both languages
 // always render.
-type Leaf = { href: string; label: { mr: string; en: string } };
+type Leaf = { href: string; label: { mr: string; en: string }; highlight?: boolean };
 
 const NAV: Leaf[] = [
-  { href: '/loans/home-loan', label: { mr: 'Home Loan', en: 'Home Loan' } },
+  { href: '/loans/home-loan', label: { mr: 'गृहकर्ज (Home Loan)', en: 'Home Loan' }, highlight: true },
   { href: '/projects', label: { mr: 'प्रकल्प तपासा', en: 'Check Projects' } },
   { href: '/home-setup', label: { mr: 'Kitchen, Furniture व Interior', en: 'Kitchen, Furniture & Interior' } },
   { href: '/calculators', label: { mr: 'कॅल्क्युलेटर', en: 'Calculators' } },
@@ -125,7 +125,16 @@ export default function Navbar() {
             {NAV.map((item) => {
               const active = isActive(pathname, item.href);
               return (
-                <NavLink key={item.href} href={item.href} active={active} className={linkBase(active)}>
+                <NavLink
+                  key={item.href}
+                  href={item.href}
+                  active={active}
+                  className={
+                    item.highlight
+                      ? 'mr-1 shrink-0 whitespace-nowrap rounded-xl border border-amber-300 bg-amber-400 px-3.5 py-1.5 text-sm font-bold text-slate-950 shadow-md shadow-amber-400/20 transition-colors hover:bg-amber-300 font-deva'
+                      : linkBase(active)
+                  }
+                >
                   {item.label[language]}
                 </NavLink>
               );
@@ -226,8 +235,12 @@ export default function Navbar() {
                     href={item.href}
                     active={active}
                     onClick={() => setOpen(false)}
-                    className={`block rounded-xl px-4 py-3 text-sm font-medium font-deva transition-colors ${
-                      active ? 'bg-amber-400/10 text-amber-400' : 'text-slate-300 hover:bg-slate-800/60 hover:text-amber-400'
+                    className={`block rounded-xl px-4 py-3 text-sm font-deva transition-colors ${
+                      item.highlight
+                        ? 'bg-amber-400 font-bold text-slate-950 hover:bg-amber-300'
+                        : active
+                          ? 'bg-amber-400/10 font-medium text-amber-400'
+                          : 'font-medium text-slate-300 hover:bg-slate-800/60 hover:text-amber-400'
                     }`}
                   >
                     {item.label[language]}

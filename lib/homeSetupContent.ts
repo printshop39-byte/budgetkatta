@@ -155,6 +155,14 @@ export const SETUP_PAGE = {
     mr: 'मॉड्यूलर किचन, अत्यावश्यक फर्निचर आणि गृहप्रवेशाची तयारी — checklist, कंत्राटदाराला विचारायचे प्रश्न आणि बजेट नियोजन, क्रमाने व सोप्या भाषेत.',
     en: 'Modular kitchen, essential furniture and move-in preparation — checklists, questions for contractors and budget planning, in order and in plain language.',
   } as Bi,
+  bridge: {
+    title: { mr: 'घराचे बजेट पक्के झाले? आता गृहकर्जाचे पर्याय पाहा', en: 'Budget sorted? Now explore your home-loan options' } as Bi,
+    body: {
+      mr: 'बँकांची तुलना करा, EMI मोजा आणि तुमच्या पात्रतेचा अंदाज पाहा.',
+      en: 'Compare banks, calculate your EMI and see an estimate of your eligibility.',
+    } as Bi,
+    cta: { mr: 'गृहकर्ज पर्याय पाहा', en: 'See home-loan options' } as Bi,
+  },
   topUp: {
     title: { mr: 'इंटिरिअरसाठी बजेट कमी पडतेय?', en: 'Interior budget falling short?' } as Bi,
     body: {

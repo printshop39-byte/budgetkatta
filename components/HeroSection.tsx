@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Building2, Calculator, ShieldCheck, Home } from "lucide-react";
+import { ArrowRight, Armchair, Building2, Calculator, FileCheck, Home, KeyRound, Landmark, ShieldCheck } from "lucide-react";
 import { useLanguageStore } from "@/store/languageStore";
 import { track } from "@/lib/analytics";
 
@@ -35,11 +35,11 @@ type HeroCopy = {
 
 const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
   mr: {
-    eyebrow: "घर आणि मालमत्ता वित्त नियोजन",
-    titleStart: "घरासाठी योग्य",
-    titleAccent: "कर्ज आणि प्रकल्प शोधा",
+    eyebrow: "Home Loan ते गृहप्रवेश — संपूर्ण माहिती",
+    titleStart: "आपल्या घराचे स्वप्न, बजेटमध्ये घर;",
+    titleAccent: "स्मार्ट Home Loan सह गृहप्रवेशापर्यंत!",
     description:
-      "Home Loan, मालमत्तेवरील कर्ज, बँकांची माहिती आणि RERA नोंदणीकृत प्रकल्प पाहा.",
+      "योग्य गृहकर्ज, बँकांची तुलना, RERA प्रकल्प तपासणी आणि अंतर्गत सजावट — संपूर्ण नियोजन एकाच ठिकाणी.",
     ctaPrimary: "Home Loan माहिती पाहा",
     ctaSecondary: "प्रकल्प कसा तपासायचा",
     ctaEmi: "माझी EMI मोजा",
@@ -60,11 +60,11 @@ const HERO_COPY: Record<"mr" | "en", HeroCopy> = {
     downValue: "₹8.4 लाख",
   },
   en: {
-    eyebrow: "Home and property finance planning",
-    titleStart: "Find the right",
-    titleAccent: "loan and project for your home",
+    eyebrow: "Home Loan to housewarming — the complete guide",
+    titleStart: "Your dream home, within budget;",
+    titleAccent: "with a smart Home Loan, right to housewarming!",
     description:
-      "Explore home loans, loans against property, bank details and RERA-registered projects.",
+      "The right home loan, bank comparison, RERA project checks and interior planning — all in one place.",
     ctaPrimary: "See Home Loan info",
     ctaSecondary: "How to check a project",
     ctaEmi: "Calculate my EMI",
@@ -197,7 +197,49 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
+
+      {/* Home Loan -> housewarming journey. Home Loan is step 1 and visually primary. */}
+      <JourneyStrip language={language} />
     </section>
+  );
+}
+
+const JOURNEY = [
+  { href: "/loans/home-loan", Icon: Landmark, label: { mr: "Home Loan", en: "Home Loan" } },
+  { href: "/projects", Icon: FileCheck, label: { mr: "RERA व कागदपत्रे", en: "RERA & documents" } },
+  { href: "/home-setup#kitchen", Icon: Armchair, label: { mr: "किचन व फर्निचर", en: "Kitchen & furniture" } },
+  { href: "/home-setup#setup", Icon: KeyRound, label: { mr: "गृहप्रवेश", en: "Move-in" } },
+] as const;
+
+function JourneyStrip({ language }: { language: "mr" | "en" }) {
+  return (
+    <ol
+      aria-label={language === "mr" ? "Home Loan ते गृहप्रवेश" : "Home Loan to move-in"}
+      className="mx-auto mt-12 grid max-w-3xl grid-cols-2 gap-2.5 border-t border-slate-800/80 pt-6 sm:grid-cols-4"
+    >
+      {JOURNEY.map(({ href, Icon, label }, i) => (
+        <li key={href}>
+          <Link
+            href={href}
+            className={`flex min-h-[44px] items-center gap-2.5 rounded-xl border p-3 text-left transition-colors ${
+              i === 0
+                ? "border-amber-400/30 bg-amber-400/10 hover:bg-amber-400/15"
+                : "border-slate-800 bg-slate-900/60 hover:border-amber-400/40"
+            }`}
+          >
+            <span className={`rounded-lg p-2 ${i === 0 ? "bg-amber-400 text-slate-950" : "bg-slate-800 text-slate-300"}`}>
+              <Icon className="h-4 w-4" />
+            </span>
+            <span>
+              <span className={`block text-[10px] font-bold uppercase ${i === 0 ? "text-amber-400" : "text-slate-400"}`}>
+                {language === "mr" ? `टप्पा ${i + 1}` : `Step ${i + 1}`}
+              </span>
+              <span className={`block text-xs ${i === 0 ? "font-extrabold text-white" : "font-semibold text-slate-200"}`}>{label[language]}</span>
+            </span>
+          </Link>
+        </li>
+      ))}
+    </ol>
   );
 }
 

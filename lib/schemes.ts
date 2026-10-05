@@ -147,8 +147,8 @@ export const womenHomeLoanPerks: Perk[] = [
     icon: 'receipt',
     title: { mr: 'वेगळी करसवलत', en: 'Separate tax benefits' },
     detail: {
-      mr: 'संयुक्त मालकी (joint ownership) घेतल्यास दोघांनाही 80C व 24(b) अंतर्गत स्वतंत्र करसवलत मिळू शकते.',
-      en: 'With joint ownership, both co-owners can claim 80C and 24(b) tax benefits separately.',
+      mr: 'संयुक्त मालकी (joint ownership) व सह-कर्जदार असल्यास दोघांनाही स्वतंत्र करसवलत (80C / 24(b)) मिळू शकते — पात्रता व tax regime तपासा; नवीन regime मध्ये बहुतांश वजावटी मिळत नाहीत.',
+      en: 'With joint ownership and co-borrowing, both may be able to claim 80C / 24(b) benefits separately — check eligibility and tax regime; most deductions are not available under the new regime.',
     },
   },
 ];

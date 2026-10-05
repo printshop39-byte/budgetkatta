@@ -18,8 +18,8 @@ describe('BANK_RATES integrity', () => {
 
 describe('formatRateRange', () => {
   it('formats closed, open-ended and unknown ranges', () => {
-    expect(formatRateRange(7.75, 13.2)).toBe('7.75% – 13.2%');
-    expect(formatRateRange(8.5, null)).toBe('8.5% +');
+    expect(formatRateRange(7.75, 13.2)).toBe('7.75% – 13.20%');
+    expect(formatRateRange(8.5, null)).toBe('8.50% +');
     expect(formatRateRange(null, null)).toBe('—');
   });
 });

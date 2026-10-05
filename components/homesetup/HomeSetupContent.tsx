@@ -4,6 +4,7 @@ import { ChefHat, Sofa, KeyRound, Paintbrush, Wallet, type LucideIcon } from 'lu
 import { useLanguageStore } from '@/store/languageStore';
 import { SETUP_PAGE, SETUP_SECTIONS } from '@/lib/homeSetupContent';
 import HomeCalculators from '@/components/calculators/HomeCalculators';
+import SetupTools from '@/components/homesetup/SetupTools';
 
 const NAV_ICON: Record<string, LucideIcon> = { kitchen: ChefHat, furniture: Sofa, setup: KeyRound, interior: Paintbrush };
 
@@ -62,6 +63,8 @@ export default function HomeSetupContent() {
           </section>
         ))}
       </div>
+
+      <SetupTools />
 
       <aside className="glass-card mt-6 flex flex-wrap items-center justify-between gap-4 p-5">
         <div className="flex items-start gap-3">

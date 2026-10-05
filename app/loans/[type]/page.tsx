@@ -6,6 +6,7 @@ import { pageMetadata } from '@/lib/seo';
 import { getDocuments, type ProductType, type ProfileType } from '@/lib/documentChecklists';
 import BankComparison from '@/components/loans/BankComparison';
 import LendersList from '@/components/loans/LendersList';
+import PropertyDocsTabs from '@/components/loans/PropertyDocsTabs';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
 
 // Local-SEO content pages per loan type, e.g. /loans/home-loan. Each gives a
@@ -165,6 +166,7 @@ export default function LoanTypePage({ params }: { params: { type: string } }) {
         <>
           <BankComparison />
           <LendersList />
+          <PropertyDocsTabs />
         </>
       )}
 

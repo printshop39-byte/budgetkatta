@@ -160,7 +160,7 @@ export default function HeroSection() {
         <div className="lg:col-span-5 relative">
           <div className="absolute inset-0 bg-gradient-to-tr from-amber-400/20 to-yellow-500/10 rounded-[40px] filter blur-3xl -z-10" />
 
-          <div className="relative bg-slate-900/75 backdrop-blur-2xl border border-slate-800 p-8 rounded-[36px] shadow-[0_20px_50px_rgba(251,191,36,0.08)] overflow-hidden">
+          <div className="bk-preview-card relative bg-slate-900/75 backdrop-blur-2xl border border-slate-800 p-8 rounded-[36px] shadow-[0_20px_50px_rgba(251,191,36,0.08)] overflow-hidden">
             <div className="flex items-center justify-between mb-4">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-300">
                 {t.previewTag}
@@ -246,8 +246,8 @@ function JourneyStrip({ language }: { language: "mr" | "en" }) {
 function SampleRow({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-[11px] font-medium text-slate-400 leading-tight">{label}</p>
-      <p className="text-base font-extrabold text-slate-400/90">{value}</p>
+      <p className="text-xs font-semibold text-slate-400 leading-tight">{label}</p>
+      <p className="bk-sample-value text-xl font-black text-slate-400/90">{value}</p>
     </div>
   );
 }

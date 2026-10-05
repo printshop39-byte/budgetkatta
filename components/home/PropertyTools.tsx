@@ -90,10 +90,23 @@ export default function PropertyTools() {
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {PROPERTY_TOOLS.map((tool) => (
+        {PROPERTY_TOOLS.filter((t) => t.status !== 'coming').map((tool) => (
           <ToolCard key={tool.id} tool={tool} lang={lang} />
         ))}
       </div>
+
+      {PROPERTY_TOOLS.some((t) => t.status === 'coming') && (
+        <div className="mt-10">
+          <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-slate-400">
+            {lang === 'mr' ? 'लवकरच येणारी साधने' : 'Coming next'}
+          </h3>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {PROPERTY_TOOLS.filter((t) => t.status === 'coming').map((tool) => (
+              <ToolCard key={tool.id} tool={tool} lang={lang} />
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

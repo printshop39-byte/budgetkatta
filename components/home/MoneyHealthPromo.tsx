@@ -70,7 +70,8 @@ export default function MoneyHealthPromo() {
 
       <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:items-center">
         {/* Steps */}
-        <ol className="space-y-4">
+        <div>
+          <ol className="space-y-4">
           {COPY.steps.map((s, i) => (
             <li key={i} className="flex gap-4 rounded-2xl border border-slate-800 bg-slate-900/40 p-5">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-400/15 text-sm font-black text-amber-300">
@@ -82,16 +83,17 @@ export default function MoneyHealthPromo() {
               </div>
             </li>
           ))}
-          <li>
+          </ol>
+          <div>
             <Link
               href="/health-check"
               onClick={() => track('homepage_primary_cta_clicked', { cta: 'promo' })}
-              className="mt-2 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 px-7 py-3.5 text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/25 transition-transform hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 px-7 py-3.5 text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/25 transition-transform hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
             >
               {pick(COPY.cta, lang)} <ArrowRight className="h-4 w-4" />
             </Link>
-          </li>
-        </ol>
+          </div>
+        </div>
 
         {/* Sample report preview — clearly labelled as a sample layout. */}
         <div className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 md:p-8">

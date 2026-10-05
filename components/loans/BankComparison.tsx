@@ -1,7 +1,7 @@
 'use client';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Info } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
-import { BANKS_PENDING, BANK_NOTE, BANK_RATES, formatRateRange } from '@/lib/bankRates';
+import { BANKS_PENDING, BANK_DISCLAIMER, BANK_NOTE, BANK_RATES, formatRateRange } from '@/lib/bankRates';
 
 export default function BankComparison() {
   const mr = useLanguageStore((s) => s.language) === 'mr';
@@ -60,6 +60,11 @@ export default function BankComparison() {
           </article>
         ))}
       </div>
+
+      <p role="note" className="mt-4 flex gap-2 rounded-xl border border-amber-400/30 bg-amber-400/5 p-3 text-sm font-semibold text-amber-200 font-deva">
+        <Info className="mt-0.5 h-4 w-4 shrink-0" />
+        {BANK_DISCLAIMER[mr ? 'mr' : 'en']}
+      </p>
 
       {BANKS_PENDING.length > 0 && <p className="mt-4 text-sm text-slate-400 font-deva">
         {mr ? 'लवकरच (अधिकृत दर पडताळल्यानंतर): ' : 'Coming once official rates are verified: '}

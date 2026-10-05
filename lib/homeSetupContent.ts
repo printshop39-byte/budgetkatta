@@ -148,9 +148,28 @@ export const SETUP_SECTIONS: SetupSection[] = [
 
 export const SETUP_PAGE = {
   title: { mr: 'Kitchen, Furniture आणि Interior', en: 'Kitchen, Furniture & Interior' } as Bi,
+  badge: { mr: 'Home Setup & Interior Planner', en: 'Home Setup & Interior Planner' } as Bi,
+  headline: { mr: 'घर झाले, आता', en: 'Home is yours, now' } as Bi,
+  headlineAccent: { mr: 'बजेटमध्ये सजवा सुंदर!', en: 'set it up within budget!' } as Bi,
   subtitle: {
-    mr: 'घर घेतल्यानंतर घर तयार करण्यासाठी लागणारी माहिती — क्रमाने, सोप्या भाषेत.',
-    en: 'What you need to set up your home after buying — in order, in plain language.',
+    mr: 'मॉड्यूलर किचन, अत्यावश्यक फर्निचर आणि गृहप्रवेशाची तयारी — checklist, कंत्राटदाराला विचारायचे प्रश्न आणि बजेट नियोजन, क्रमाने व सोप्या भाषेत.',
+    en: 'Modular kitchen, essential furniture and move-in preparation — checklists, questions for contractors and budget planning, in order and in plain language.',
   } as Bi,
+  bridge: {
+    title: { mr: 'घराचे बजेट पक्के झाले? आता गृहकर्जाचे पर्याय पाहा', en: 'Budget sorted? Now explore your home-loan options' } as Bi,
+    body: {
+      mr: 'बँकांची तुलना करा, EMI मोजा आणि तुमच्या पात्रतेचा अंदाज पाहा.',
+      en: 'Compare banks, calculate your EMI and see an estimate of your eligibility.',
+    } as Bi,
+    cta: { mr: 'गृहकर्ज पर्याय पाहा', en: 'See home-loan options' } as Bi,
+  },
+  topUp: {
+    title: { mr: 'इंटिरिअरसाठी बजेट कमी पडतेय?', en: 'Interior budget falling short?' } as Bi,
+    body: {
+      mr: 'काही बँका चालू गृहकर्जावर टॉप-अप कर्ज किंवा Home Improvement कर्ज देऊ शकतात. उपलब्धता, व्याजदर आणि अटी बँकेनुसार बदलतात — अर्जापूर्वी तुमच्या बँकेकडून खात्री करा.',
+      en: 'Some banks may offer a top-up loan on an existing home loan, or a home-improvement loan. Availability, rates and terms vary by bank — confirm with your bank before applying.',
+    } as Bi,
+    cta: { mr: 'बँकांची तुलना पाहा', en: 'See bank comparison' } as Bi,
+  },
   budgetHeading: { mr: 'तुमचे Kitchen / Interior बजेट मोजा', en: 'Plan your kitchen / interior budget' } as Bi,
 };

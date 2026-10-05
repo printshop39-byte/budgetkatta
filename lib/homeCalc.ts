@@ -124,3 +124,31 @@ export function splitSetupBudget(total: number, tier: SetupTier) {
   const t = clamp0(total);
   return SETUP_SPLIT[tier].map((row) => ({ key: row.key, share: row.share, amount: Math.round((t * row.share) / 100) }));
 }
+
+export type YearRow = { year: number; principal: number; interest: number; balance: number };
+
+/** Year-by-year principal/interest split of a standard EMI loan (final partial year included). */
+export function amortizationByYear(principal: number, annualRate: number, months: number): YearRow[] {
+  const P = clamp0(principal);
+  const n = Math.max(0, Math.round(clamp0(months)));
+  if (P === 0 || n === 0) return [];
+  const r = annualRate / 1200;
+  const emi = r === 0 ? P / n : (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+  const rows: YearRow[] = [];
+  let balance = P;
+  let yPrincipal = 0;
+  let yInterest = 0;
+  for (let m = 1; m <= n; m++) {
+    const interest = balance * r;
+    const princ = Math.min(balance, emi - interest);
+    balance -= princ;
+    yPrincipal += princ;
+    yInterest += interest;
+    if (m % 12 === 0 || m === n) {
+      rows.push({ year: Math.ceil(m / 12), principal: Math.round(yPrincipal), interest: Math.round(yInterest), balance: Math.max(0, Math.round(balance)) });
+      yPrincipal = 0;
+      yInterest = 0;
+    }
+  }
+  return rows;
+}

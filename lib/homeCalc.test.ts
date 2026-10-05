@@ -7,6 +7,7 @@ import {
   compareTransfer,
   splitSetupBudget,
   SETUP_SPLIT,
+  amortizationByYear,
 } from './homeCalc';
 import { calculateEMI } from './calculators';
 
@@ -81,5 +82,28 @@ describe('splitSetupBudget', () => {
   it('amounts add up to the budget', () => {
     const sum = splitSetupBudget(1_000_000, 'medium').reduce((s, r) => s + r.amount, 0);
     expect(sum).toBe(1_000_000);
+  });
+});
+
+describe('amortizationByYear', () => {
+  it('principal sums to the loan and the balance reaches zero', () => {
+    const rows = amortizationByYear(4_000_000, 8.75, 240);
+    expect(rows).toHaveLength(20);
+    const sum = rows.reduce((t, r) => t + r.principal, 0);
+    expect(Math.abs(sum - 4_000_000)).toBeLessThan(40); // per-year rounding only
+    expect(rows[rows.length - 1].balance).toBe(0);
+  });
+  it('interest share falls over time', () => {
+    const rows = amortizationByYear(4_000_000, 8.75, 240);
+    expect(rows[0].interest).toBeGreaterThan(rows[rows.length - 1].interest);
+  });
+  it('total interest agrees with calculateEMI within rounding', () => {
+    const rows = amortizationByYear(4_000_000, 8.75, 240);
+    const interest = rows.reduce((t, r) => t + r.interest, 0);
+    expect(Math.abs(interest - calculateEMI(4_000_000, 8.75, 240).totalInterest)).toBeLessThan(5_000);
+  });
+  it('handles empty input and part-year tenures', () => {
+    expect(amortizationByYear(0, 8, 120)).toEqual([]);
+    expect(amortizationByYear(100_000, 8, 18)).toHaveLength(2);
   });
 });

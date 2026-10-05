@@ -11,6 +11,7 @@ import {
   estimateEligibility,
   estimatePurchaseCost,
   splitSetupBudget,
+  amortizationByYear,
   type SetupTier,
 } from '@/lib/homeCalc';
 import { SETUP_LABELS } from '@/lib/homeSetupContent';
@@ -79,12 +80,46 @@ function Result({ label, value, big = false }: { label: string; value: string; b
   );
 }
 
+function Donut({ principal, interest, lang }: { principal: number; interest: number; lang: 'mr' | 'en' }) {
+  const total = principal + interest;
+  const R = 40;
+  const C = 2 * Math.PI * R;
+  const pShare = total > 0 ? principal / total : 0;
+  const mr = lang === 'mr';
+  return (
+    <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-6">
+      <div className="relative h-40 w-40 shrink-0" role="img" aria-label={`${mr ? 'मुद्दल' : 'Principal'} ${Math.round(pShare * 100)}%, ${mr ? 'व्याज' : 'Interest'} ${Math.round((1 - pShare) * 100)}%`}>
+        <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
+          <circle cx="50" cy="50" r={R} fill="none" stroke="#F59E0B" strokeWidth="12" />
+          <circle cx="50" cy="50" r={R} fill="none" stroke="#60A5FA" strokeWidth="12" strokeDasharray={`${C * pShare} ${C}`} />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-[11px] text-slate-400 font-deva">{mr ? 'मुद्दल' : 'Principal'}</span>
+          <span className="font-display text-xl font-extrabold text-slate-100">{Math.round(pShare * 100)}%</span>
+        </div>
+      </div>
+      <ul className="w-full space-y-2 text-sm">
+        <li className="flex items-center justify-between gap-3 rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-2">
+          <span className="flex items-center gap-2 text-slate-300 font-deva"><span className="h-3 w-3 rounded-full bg-[#60A5FA]" />{mr ? 'मुद्दल' : 'Principal'}</span>
+          <span className="font-bold text-slate-100">{formatINR(principal)}</span>
+        </li>
+        <li className="flex items-center justify-between gap-3 rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-2">
+          <span className="flex items-center gap-2 text-slate-300 font-deva"><span className="h-3 w-3 rounded-full bg-[#F59E0B]" />{mr ? 'एकूण व्याज' : 'Total interest'}</span>
+          <span className="font-bold text-slate-100">{formatINR(interest)}</span>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
 function LoanEmi({ rateDefault, lang, noteKey }: { rateDefault: number; lang: 'mr' | 'en'; noteKey?: Bi }) {
   const [amount, setAmount] = useState(4_000_000);
   const [rate, setRate] = useState(rateDefault);
   const [years, setYears] = useState(20);
   const r = useMemo(() => calculateEMI(amount, rate, Math.max(1, Math.round(years * 12))), [amount, rate, years]);
   const L = (b: Bi) => b[lang];
+  const [view, setView] = useState<'monthly' | 'yearly'>('monthly');
+  const rows = useMemo(() => amortizationByYear(amount, rate, Math.max(1, Math.round(years * 12))), [amount, rate, years]);
   return (
     <div className="space-y-5">
       {noteKey && <p className="text-sm text-slate-400 font-deva">{L(noteKey)}</p>}
@@ -97,6 +132,53 @@ function LoanEmi({ rateDefault, lang, noteKey }: { rateDefault: number; lang: 'm
         <Result big label={L(COPY.emi)} value={formatINR(r.emi)} />
         <Result label={L(COPY.totalInterest)} value={formatINR(r.totalInterest)} />
         <Result label={L(COPY.totalPay)} value={formatINR(r.totalAmount)} />
+      </div>
+      <Donut principal={amount} interest={r.totalInterest} lang={lang} />
+
+      <div>
+        <div role="group" aria-label={lang === 'mr' ? 'दृश्य' : 'View'} className="mb-3 inline-flex rounded-full bg-slate-900/70 p-1">
+          {(['monthly', 'yearly'] as const).map((v) => (
+            <button
+              key={v}
+              type="button"
+              aria-pressed={view === v}
+              onClick={() => setView(v)}
+              className={`min-h-[44px] rounded-full px-4 text-sm font-semibold font-deva ${view === v ? 'bg-amber-400 text-slate-950' : 'text-slate-300'}`}
+            >
+              {v === 'monthly' ? (lang === 'mr' ? 'मासिक' : 'Monthly') : lang === 'mr' ? 'वार्षिक तक्ता' : 'Yearly schedule'}
+            </button>
+          ))}
+        </div>
+        {view === 'monthly' ? (
+          <p className="text-sm text-slate-300 font-deva">
+            {lang === 'mr'
+              ? `दरमहा ${formatINR(r.emi)} प्रमाणे ${Math.round(years * 12)} हप्ते. सुरुवातीला हप्त्यातील व्याजाचा वाटा जास्त असतो, नंतर कमी होतो.`
+              : `${Math.round(years * 12)} instalments of ${formatINR(r.emi)}. The interest share of each instalment is higher early on and falls later.`}
+          </p>
+        ) : (
+          <div className="max-h-72 overflow-auto rounded-xl border border-slate-800">
+            <table className="w-full text-sm">
+              <thead className="sticky top-0 bg-slate-900 text-xs text-slate-400">
+                <tr>
+                  <th className="px-3 py-2 text-left font-deva">{lang === 'mr' ? 'वर्ष' : 'Year'}</th>
+                  <th className="px-3 py-2 text-right font-deva">{lang === 'mr' ? 'मुद्दल' : 'Principal'}</th>
+                  <th className="px-3 py-2 text-right font-deva">{lang === 'mr' ? 'व्याज' : 'Interest'}</th>
+                  <th className="px-3 py-2 text-right font-deva">{lang === 'mr' ? 'शिल्लक' : 'Balance'}</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-800 text-slate-200">
+                {rows.map((row) => (
+                  <tr key={row.year}>
+                    <td className="px-3 py-2">{row.year}</td>
+                    <td className="px-3 py-2 text-right">{formatINR(row.principal)}</td>
+                    <td className="px-3 py-2 text-right">{formatINR(row.interest)}</td>
+                    <td className="px-3 py-2 text-right">{formatINR(row.balance)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { Calculator, FileText } from 'lucide-react';
 import { pageMetadata } from '@/lib/seo';
 import { getDocuments, type ProductType, type ProfileType } from '@/lib/documentChecklists';
 import BankComparison from '@/components/loans/BankComparison';
+import LendersList from '@/components/loans/LendersList';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
 
 // Local-SEO content pages per loan type, e.g. /loans/home-loan. Each gives a
@@ -160,7 +161,12 @@ export default function LoanTypePage({ params }: { params: { type: string } }) {
         </Link>
       </header>
 
-      {params.type === 'home-loan' && <BankComparison />}
+      {params.type === 'home-loan' && (
+        <>
+          <BankComparison />
+          <LendersList />
+        </>
+      )}
 
       <section className="mt-10">
         <h2 className="mb-4 flex items-center gap-2 font-display text-xl font-bold text-slate-100 font-deva">

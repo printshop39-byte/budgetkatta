@@ -31,9 +31,9 @@ const config: Config = {
       },
       fontFamily: {
         // Brand typefaces: Outfit (display/headings) + Plus Jakarta Sans (body).
-        display: ['var(--font-outfit)', 'Outfit', 'sans-serif'],
-        body: ['var(--font-jakarta)', 'Plus Jakarta Sans', 'sans-serif'],
-        deva: ['var(--font-deva)', 'Noto Sans Devanagari', 'sans-serif'],
+        display: ['var(--font-outfit)', 'Outfit', 'var(--font-deva)', 'Noto Sans Devanagari', 'Nirmala UI', 'Mangal', 'sans-serif'],
+        body: ['var(--font-jakarta)', 'Plus Jakarta Sans', 'var(--font-deva)', 'Noto Sans Devanagari', 'Nirmala UI', 'Mangal', 'sans-serif'],
+        deva: ['var(--font-jakarta)', 'var(--font-deva)', 'Noto Sans Devanagari', 'Nirmala UI', 'Mangal', 'sans-serif'],
       },
       // Non-standard utilities used by the reference design (h-4.5, p-4.5, scale-102).
       spacing: {

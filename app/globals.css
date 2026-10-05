@@ -95,7 +95,9 @@ html[data-theme='light'] input[type='text'][class*='bg-slate-9']:focus {
       radial-gradient(ellipse at top, #0f172a 0%, #0A1128 45%, #050814 100%);
     background-attachment: fixed;
     color: var(--text-primary);
-    font-family: var(--font-jakarta), 'Plus Jakarta Sans', sans-serif;
+    /* Latin from Jakarta; Devanagari glyphs fall through to Noto Sans Devanagari,
+       then Windows/system Devanagari fonts — never an arbitrary fallback. */
+    font-family: var(--font-jakarta), 'Plus Jakarta Sans', var(--font-deva), 'Noto Sans Devanagari', 'Nirmala UI', Mangal, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -105,6 +107,24 @@ html[data-theme='light'] input[type='text'][class*='bg-slate-9']:focus {
   .font-deva {
     line-height: 1.7;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Marathi typography (html[lang] is kept in sync by LangApplier).
+     Devanagari matras and conjuncts break when letters are spaced out, so
+     letter-spacing is reset; extra room goes into LINE height instead. */
+  html[lang='mr'] body {
+    line-height: 1.7;
+  }
+  html[lang='mr'] h1 {
+    line-height: 1.4;
+  }
+  html[lang='mr'] h2,
+  html[lang='mr'] h3,
+  html[lang='mr'] h4 {
+    line-height: 1.35;
+  }
+  html[lang='mr'] [class*='tracking-'] {
+    letter-spacing: normal !important;
   }
 
   /* Visible keyboard focus across all interactive elements. */

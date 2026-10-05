@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ThemeApplier from '@/components/layout/ThemeApplier';
+import LangApplier from '@/components/layout/LangApplier';
 import Floating3DGuide from '@/components/bot/Floating3DGuide';
 import CompareDrawer from '@/components/compare/CompareDrawer';
 import LeadFormModal from '@/components/lead/LeadFormModal';
@@ -98,6 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0F172A] via-[#0B0F19] to-[#080B14] text-slate-200 antialiased">
         <ThemeApplier />
+        <LangApplier />
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />

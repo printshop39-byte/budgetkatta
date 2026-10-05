@@ -8,6 +8,7 @@ import BankComparison from '@/components/loans/BankComparison';
 import LendersList from '@/components/loans/LendersList';
 import PropertyDocsTabs from '@/components/loans/PropertyDocsTabs';
 import HomeLoanDocs from '@/components/loans/HomeLoanDocs';
+import QuickEstimator from '@/components/loans/QuickEstimator';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
 
 // Local-SEO content pages per loan type, e.g. /loans/home-loan. Each gives a
@@ -162,6 +163,8 @@ export default function LoanTypePage({ params }: { params: { type: string } }) {
           EMI कॅल्क्युलेटर वापरा
         </Link>
       </header>
+
+      {params.type === 'home-loan' && <QuickEstimator />}
 
       {params.type === 'home-loan' && (
         <>

@@ -9,6 +9,7 @@ import LendersList from '@/components/loans/LendersList';
 import PropertyDocsTabs from '@/components/loans/PropertyDocsTabs';
 import HomeLoanDocs from '@/components/loans/HomeLoanDocs';
 import QuickEstimator from '@/components/loans/QuickEstimator';
+import NextSteps from '@/components/loans/NextSteps';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
 
 // Local-SEO content pages per loan type, e.g. /loans/home-loan. Each gives a
@@ -185,6 +186,8 @@ export default function LoanTypePage({ params }: { params: { type: string } }) {
           <DocumentChecklist documents={documents} />
         </section>
       )}
+
+      {params.type === 'home-loan' && <NextSteps />}
 
       <p className="mt-10 text-xs leading-relaxed text-slate-500 font-deva">
         टीप: माहिती RBI/बँकांच्या उपलब्ध डेटावर आधारित आहे. अंतिम पात्रता व कागदपत्रे बँकेनुसार बदलू शकतात — अर्जापूर्वी बँकेशी खात्री करा.

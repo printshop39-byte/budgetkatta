@@ -19,8 +19,13 @@ export default function BankComparison() {
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h3 className="font-display text-lg font-bold text-slate-100">{b.bank}</h3>
               <p className="font-display text-xl font-extrabold text-amber-400">
-                {formatRateRange(b.rateMin, b.rateMax)} <span className="text-xs font-medium text-slate-400">p.a.</span>
+                {formatRateRange(b.rateMin, b.rateMax)}{' '}
+                <span className="text-xs font-medium text-slate-400">{mr ? 'वार्षिक' : 'p.a.'}</span>
+                <span className="ml-2 rounded-full bg-slate-800 px-2 py-0.5 text-[10px] font-semibold text-slate-300 font-deva">
+                  {b.rateKind === 'from' ? (mr ? 'सुरुवातीचा दर' : 'Starting rate') : mr ? 'दराची श्रेणी' : 'Rate range'}
+                </span>
               </p>
+              {b.rateNote && <p className="w-full text-xs text-slate-400 font-deva">{b.rateNote[mr ? 'mr' : 'en']}</p>}
             </div>
             <dl className="mt-3 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
               <div>
@@ -42,6 +47,14 @@ export default function BankComparison() {
               <a href={b.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-amber-400 underline">
                 {mr ? 'अधिकृत स्रोत' : 'Official source'} <ExternalLink className="h-3 w-3" />
               </a>{' '}
+              {b.feeSourceUrl && (
+                <>
+                  {' · '}
+                  <a href={b.feeSourceUrl} target="_blank" rel="noopener noreferrer" className="text-amber-400 underline">
+                    {mr ? 'शुल्काचा स्रोत' : 'Fee source'}
+                  </a>
+                </>
+              )}{' '}
               · {mr ? 'पडताळणी' : 'Verified'}: {b.verifiedOn}
             </p>
           </article>

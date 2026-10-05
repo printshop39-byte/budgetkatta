@@ -17,6 +17,12 @@ export type BankRate = {
   maxTenureYears: number | null;
   /** Terms / eligibility qualifiers stated by the bank. */
   terms: Bi;
+  /** 'range' = both ends stated; 'from' = only a starting ("onwards") rate. Never a personal offer. */
+  rateKind: 'range' | 'from';
+  /** Date/regime qualifier the bank attaches to the rate, if any. */
+  rateNote?: Bi;
+  /** Where the fee text was read, when it differs from sourceUrl. */
+  feeSourceUrl?: string;
   sourceUrl: string;
   /** ISO date this entry was read from the source. */
   verifiedOn: string;
@@ -25,6 +31,9 @@ export type BankRate = {
 export const BANK_RATES: BankRate[] = [
   {
     id: 'bom',
+    rateKind: 'range',
+    rateNote: { mr: 'फ्लोटिंग, RLLR 8.05% शी जोडलेला', en: 'Floating, linked to RLLR 8.05%' },
+    feeSourceUrl: 'https://bankofmaharashtra.bank.in/personal-banking/loans/home-loan',
     bank: 'Bank of Maharashtra',
     rateMin: 7.0,
     rateMax: 9.65,
@@ -42,6 +51,8 @@ export const BANK_RATES: BankRate[] = [
   },
   {
     id: 'sbi',
+    rateKind: 'from',
+    rateNote: { mr: '01.04.2026 पासून लागू', en: 'Effective 01.04.2026' },
     bank: 'State Bank of India',
     rateMin: 7.25,
     rateMax: null,
@@ -59,6 +70,8 @@ export const BANK_RATES: BankRate[] = [
   },
   {
     id: 'hdfc',
+    rateKind: 'range',
+    rateNote: { mr: 'Policy Repo Rate शी जोडलेला', en: 'Linked to the Policy Repo Rate' },
     bank: 'HDFC Bank',
     rateMin: 7.75,
     rateMax: 13.2,
@@ -76,6 +89,7 @@ export const BANK_RATES: BankRate[] = [
   },
   {
     id: 'icici',
+    rateKind: 'from',
     bank: 'ICICI Bank',
     rateMin: 8.5,
     rateMax: null,
@@ -90,6 +104,7 @@ export const BANK_RATES: BankRate[] = [
   },
   {
     id: 'bob',
+    rateKind: 'from',
     bank: 'Bank of Baroda',
     rateMin: 7.2,
     rateMax: null,
@@ -108,13 +123,14 @@ export const BANK_RATES: BankRate[] = [
 export const BANKS_PENDING: { bank: string; sourceUrl: string }[] = [];
 
 export const BANK_NOTE: Bi = {
-  mr: 'दर बदलू शकतात. वरील आकडे बँकेच्या अधिकृत पानावर दिसलेले आहेत; तुमचा प्रत्यक्ष दर CIBIL, उत्पन्न व कर्ज रकमेनुसार ठरतो. अर्जापूर्वी बँकेकडून खात्री करा.',
-  en: 'Rates change. Figures are as shown on each bank official page; your actual rate depends on credit score, income and loan size. Confirm with the bank before applying.',
+  mr: 'भारतातील (महाराष्ट्रासाठी उपयुक्त) गृहकर्ज संस्थांची तुलना. दर बदलू शकतात. “पासून” दर म्हणजे सुरुवातीचा दर — तुमचा वैयक्तिक मंजूर दर नव्हे. वरील आकडे बँकेच्या अधिकृत पानावर दिसलेले आहेत; तुमचा प्रत्यक्ष दर CIBIL, उत्पन्न व कर्ज रकमेनुसार ठरतो. अर्जापूर्वी बँकेकडून खात्री करा.',
+  en: 'Comparison of home-loan lenders in India (useful for Maharashtra). Rates change. A "from" rate is a starting rate, not your personal approved rate. Figures are as shown on each bank official page; your actual rate depends on credit score, income and loan size. Confirm with the bank before applying.',
 };
 
 export function formatRateRange(min: number | null, max: number | null): string {
+  const f = (n: number) => n.toFixed(2);
   if (min === null && max === null) return '—';
-  if (max === null) return `${min}% +`;
-  if (min === null) return `≤ ${max}%`;
-  return `${min}% – ${max}%`;
+  if (max === null) return `${f(min as number)}% +`;
+  if (min === null) return `≤ ${f(max)}%`;
+  return `${f(min)}% – ${f(max)}%`;
 }

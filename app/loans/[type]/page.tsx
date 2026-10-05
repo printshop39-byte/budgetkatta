@@ -7,6 +7,7 @@ import { getDocuments, type ProductType, type ProfileType } from '@/lib/document
 import BankComparison from '@/components/loans/BankComparison';
 import LendersList from '@/components/loans/LendersList';
 import PropertyDocsTabs from '@/components/loans/PropertyDocsTabs';
+import HomeLoanDocs from '@/components/loans/HomeLoanDocs';
 import DocumentChecklist from '@/components/shared/DocumentChecklist';
 
 // Local-SEO content pages per loan type, e.g. /loans/home-loan. Each gives a
@@ -34,7 +35,7 @@ const LOANS: Record<string, LoanContent> = {
     points: [
       { mr: 'मुदत साधारणत: २० ते ३० वर्षांपर्यंत', en: 'Tenure usually 20–30 years' },
       { mr: 'मालमत्ता तारण (collateral) म्हणून ठेवली जाते', en: 'The property is held as collateral' },
-      { mr: 'कलम 80C व 24(b) अंतर्गत करसवलत', en: 'Tax benefits under sections 80C and 24(b)' },
+      { mr: 'करसवलत मिळू शकते (कलम 80C / 24(b)) — तुमचा tax regime व पात्रता तपासा; नवीन regime मध्ये बहुतांश वजावटी मिळत नाहीत', en: 'Tax benefits may be available (sections 80C / 24(b)) — check your tax regime and eligibility; most deductions are not available under the new regime' },
     ],
   },
   'personal-loan': {
@@ -170,13 +171,17 @@ export default function LoanTypePage({ params }: { params: { type: string } }) {
         </>
       )}
 
-      <section className="mt-10">
-        <h2 className="mb-4 flex items-center gap-2 font-display text-xl font-bold text-slate-100 font-deva">
-          <FileText className="h-5 w-5 text-amber-400" />
-          आवश्यक कागदपत्रे | Required Documents
-        </h2>
-        <DocumentChecklist documents={documents} />
-      </section>
+      {params.type === 'home-loan' ? (
+        <HomeLoanDocs />
+      ) : (
+        <section className="mt-10">
+          <h2 className="mb-4 flex items-center gap-2 font-display text-xl font-bold text-slate-100 font-deva">
+            <FileText className="h-5 w-5 text-amber-400" />
+            आवश्यक कागदपत्रे | Required Documents
+          </h2>
+          <DocumentChecklist documents={documents} />
+        </section>
+      )}
 
       <p className="mt-10 text-xs leading-relaxed text-slate-500 font-deva">
         टीप: माहिती RBI/बँकांच्या उपलब्ध डेटावर आधारित आहे. अंतिम पात्रता व कागदपत्रे बँकेनुसार बदलू शकतात — अर्जापूर्वी बँकेशी खात्री करा.

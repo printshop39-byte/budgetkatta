@@ -161,7 +161,7 @@ export function getDocuments(product: ProductType, profile: ProfileType): DocIte
     case 'TERM_INSURANCE':
       return [...KYC, D.ageProof, ...income(profile), D.nominee, D.medicalHistory, D.existingPolicy];
     case 'HOME_LOAN':
-      return [...KYC, ...income(profile), D.property];
+      return homeSet(profile, [D.property]);
     case 'PERSONAL_LOAN':
       return [...KYC, ...income(profile)];
     case 'BUSINESS_LOAN':

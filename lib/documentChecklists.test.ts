@@ -21,3 +21,20 @@ describe('home document scenarios', () => {
     expect(names).not.toContain('Aadhaar Card');
   });
 });
+
+describe('generic HOME_LOAN checklist by applicant', () => {
+  it('co-applicant gets co-applicant KYC + income proof, not the primary KYC', () => {
+    const names = getDocuments('HOME_LOAN', 'CO_APPLICANT').map((d) => d.name.en);
+    expect(names.some((n) => n.startsWith('Co-applicant KYC'))).toBe(true);
+    expect(names.some((n) => n.startsWith('Co-applicant income proof'))).toBe(true);
+    expect(names).not.toContain('Aadhaar Card');
+    expect(names).toContain('Property Documents');
+  });
+  it('salaried and business keep the standard KYC and their own income proof', () => {
+    const sal = getDocuments('HOME_LOAN', 'SALARIED').map((d) => d.name.en);
+    const biz = getDocuments('HOME_LOAN', 'BUSINESS').map((d) => d.name.en);
+    expect(sal).toContain('Aadhaar Card');
+    expect(sal.some((n) => n.startsWith('Salary Slip'))).toBe(true);
+    expect(biz.some((n) => n.startsWith('ITR'))).toBe(true);
+  });
+});

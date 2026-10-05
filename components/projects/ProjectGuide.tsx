@@ -45,8 +45,8 @@ const STEPS: { title: Bi; body: Bi }[] = [
   {
     title: { mr: 'बँकेला विचारा', en: 'Ask the bank' },
     body: {
-      mr: 'तुमच्या बँकेकडे हा प्रकल्प कर्जासाठी मान्य आहे का ते लेखी विचारा. मान्यता बँकेनुसार ठरते.',
-      en: 'Ask your bank, in writing, whether this project is approved for lending. Approval is the bank own decision.',
+      mr: 'तुमच्या बँकेकडे हा प्रकल्प कर्जासाठी मान्य आहे का ते लेखी विचारा. मान्यता बँकेनुसार ठरते. कर्ज देणाऱ्या संस्थांची सर्वसाधारण यादी गृहकर्ज पानावर आहे — ती प्रकल्प-मंजुरीची यादी नाही.',
+      en: 'Ask your bank, in writing, whether this project is approved for lending. Approval is the bank own decision. A general list of lenders is on the Home Loan page — it is not a list of project approvals.',
     },
   },
 ];

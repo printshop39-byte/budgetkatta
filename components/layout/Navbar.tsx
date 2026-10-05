@@ -110,7 +110,7 @@ export default function Navbar() {
   }, [open, closeMenu]);
 
   const linkBase = (active: boolean) =>
-    `rounded-lg px-3 py-2 text-sm font-deva transition-colors ${
+    `rounded-lg px-3 py-2 text-sm font-medium font-deva transition-colors ${
       active ? 'bg-amber-400/10 text-amber-400' : 'text-slate-400 hover:bg-slate-800/60 hover:text-amber-400'
     }`;
 

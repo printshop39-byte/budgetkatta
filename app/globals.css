@@ -234,7 +234,7 @@ html[data-theme='light'] [class*='text-slate-3'] {
 }
 html[data-theme='light'] [class*='text-slate-4'],
 html[data-theme='light'] [class*='text-slate-5'] {
-  color: #64748b !important; /* slate-500 */
+  color: #475569 !important; /* slate-600 — ~7.6:1 on white (was slate-500) */
 }
 
 /* Borders */
@@ -247,7 +247,23 @@ html[data-theme='light'] [class*='border-slate-8'] {
    (solid amber/gold CTA buttons are left intact for brand recognition). */
 html[data-theme='light'] [class*='text-amber-'],
 html[data-theme='light'] [class*='text-bk-gold'] {
-  color: #0d9488 !important; /* teal-600 */
+  color: #0f766e !important; /* teal-700 — AA contrast for small text */
+}
+
+/* Gradient-clipped headlines: the amber-300 -> yellow-500 gradient vanishes on a
+   near-white page, so light mode uses a dark amber gradient instead. */
+html[data-theme='light'] [class*='bg-clip-text'] {
+  background-image: linear-gradient(90deg, #92400e 0%, #b45309 55%, #a16207 100%) !important;
+}
+
+/* Hero preview card: clearer border + shadow on light, and strong figures. */
+html[data-theme='light'] .bk-preview-card {
+  background: #ffffff !important;
+  border-color: #94a3b8 !important;
+  box-shadow: 0 14px 40px rgb(15 23 42 / 0.16) !important;
+}
+html[data-theme='light'] .bk-sample-value {
+  color: #0f172a !important; /* slate-900 */
 }
 
 /* Security disclaimer stays high-contrast in both palettes. */

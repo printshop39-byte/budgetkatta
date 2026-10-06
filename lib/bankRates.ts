@@ -33,7 +33,7 @@ export const BANK_RATES: BankRate[] = [
     id: 'bom',
     rateKind: 'range',
     rateNote: { mr: 'फ्लोटिंग, RLLR 8.05% शी जोडलेला', en: 'Floating, linked to RLLR 8.05%' },
-    feeSourceUrl: 'https://bankofmaharashtra.bank.in/personal-banking/loans/home-loan',
+    feeSourceUrl: 'https://bankofmaharashtra.bank.in/service-charges',
     bank: 'Bank of Maharashtra',
     rateMin: 7.0,
     rateMax: 9.65,

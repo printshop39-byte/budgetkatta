@@ -10,9 +10,17 @@ export const leadSchema = z.object({
   interestedModule: z.enum(['FD', 'LOAN', 'SIP', 'INSURANCE', 'GENERAL', 'CONTACT']),
   selectedProduct: z.string().max(300).optional(),
   userQuery: z.string().max(2000).optional(),
+  employmentType: z.enum(['SALARIED', 'BUSINESS', 'OTHER']).optional(),
+  consentVersion: z.string().max(40).optional(),
+  consentAt: z.string().max(40).optional(),
   sourcePage: z.string().min(1).max(120),
   timestamp: z.string().max(40),
 });
+
+/** A lead that carries contact details must carry consent evidence. */
+export function missingConsent(d: { phone?: string; email?: string; consentVersion?: string }): boolean {
+  return Boolean((d.phone || d.email) && !d.consentVersion);
+}
 
 export const chatSchema = z.object({
   message: z.string().min(1).max(2000),

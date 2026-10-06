@@ -26,6 +26,9 @@ export const ANALYTICS_EVENTS = {
   partner_lead_created: 'partner_lead_created',
   affiliate_offer_viewed: 'affiliate_offer_viewed',
   affiliate_link_clicked: 'affiliate_link_clicked',
+  language_toggle: 'language_toggle',
+  official_source_click: 'official_source_click',
+  calculator_tab_viewed: 'calculator_tab_viewed',
 } as const;
 
 export type AnalyticsEvent = keyof typeof ANALYTICS_EVENTS;

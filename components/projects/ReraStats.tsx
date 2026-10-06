@@ -5,6 +5,7 @@
 // styles (no animation) so everything renders without JS-driven effects.
 import { useState } from 'react';
 import { useLanguageStore } from '@/store/languageStore';
+import { track } from '@/lib/analytics';
 import {
   MAHARERA_HOME_URL,
   RERA_COUNTS,
@@ -47,6 +48,7 @@ export default function ReraStats() {
     } catch {
       setMsg(mr ? `पोर्टल उघडत आहे. क्रमांक स्वतः टाइप करा: ${n}` : `Opening the portal. Type the number yourself: ${n}`);
     }
+    track('official_source_click', { source: 'maharera_checker' });
     window.open(MAHARERA_HOME_URL, '_blank', 'noopener,noreferrer');
   }
 

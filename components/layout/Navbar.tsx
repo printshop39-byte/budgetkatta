@@ -9,6 +9,7 @@ import { useLeadFormStore } from '@/store/leadFormStore';
 import { useThemeStore } from '@/store/themeStore';
 import { rippleToggleTheme } from '@/lib/themeTransition';
 import Logo from '@/components/layout/Logo';
+import { track } from '@/lib/analytics';
 
 // Single source of truth for header navigation (2026-07 home-finance scope) —
 // used by BOTH the desktop bar and the mobile drawer so they can never drift
@@ -161,7 +162,10 @@ export default function Navbar() {
               {(['mr', 'en'] as const).map((lng) => (
                 <button
                   key={lng}
-                  onClick={() => setLanguage(lng)}
+                  onClick={() => {
+                    setLanguage(lng);
+                    track('language_toggle', { selected_language: lng });
+                  }}
                   aria-pressed={language === lng}
                   aria-label={lng === 'mr' ? 'मराठी भाषा' : 'English language'}
                   className={`px-2 py-1.5 text-xs font-semibold transition-colors sm:px-3 ${

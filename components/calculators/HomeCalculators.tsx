@@ -4,6 +4,7 @@
 // bank or state are editable inputs, never hidden constants.
 import { useMemo, useState } from 'react';
 import { useLanguageStore } from '@/store/languageStore';
+import { track } from '@/lib/analytics';
 import { calculateEMI, formatINR } from '@/lib/calculators';
 import {
   compareTransfer,
@@ -398,7 +399,10 @@ export default function HomeCalculators({ initialTab = 'emi' }: { initialTab?: T
             role="tab"
             type="button"
             aria-selected={tab === t.id}
-            onClick={() => setTab(t.id)}
+            onClick={() => {
+              setTab(t.id);
+              track('calculator_tab_viewed', { tab: t.id });
+            }}
             className={`min-h-[44px] shrink-0 rounded-full border px-4 text-sm font-semibold font-deva transition-colors ${
               tab === t.id ? 'border-amber-400 bg-amber-400 text-slate-950' : 'border-slate-800 bg-slate-900/60 text-slate-300 hover:border-amber-400/40'
             }`}

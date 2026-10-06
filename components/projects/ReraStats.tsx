@@ -182,6 +182,15 @@ export default function ReraStats() {
           </button>
         </form>
         <p role="status" className="mt-2 min-h-[1.4em] text-sm text-amber-200 font-deva">{msg}</p>
+
+        <div className="mt-3 rounded-xl border border-slate-700 bg-slate-900/50 p-3">
+          <p className="text-sm font-bold text-slate-100 font-deva">{mr ? 'पोर्टलवर काय जुळवायचे' : 'What to match on the portal'}</p>
+          <ul className="mt-1.5 list-disc space-y-1 pl-5 text-sm text-slate-300 font-deva">
+            <li>{mr ? 'प्रकल्पाचे नाव — जाहिरात/करारातील नावाशी जुळते का' : 'Project name — does it match the advertisement / agreement'}</li>
+            <li>{mr ? 'बिल्डर (promoter) — नाव तेच आहे का' : 'Builder (promoter) — is it the same name'}</li>
+            <li>{mr ? 'नोंदणी व पूर्णत्व तारीख — प्रकल्प चालू आहे की संपलेला' : 'Registration and completion dates — is the project ongoing or finished'}</li>
+          </ul>
+        </div>
       </div>
 
       <p className="mt-4 text-xs leading-relaxed text-slate-500 font-deva">

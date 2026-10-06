@@ -1,6 +1,7 @@
 'use client';
 import { ExternalLink, Info } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
+import { track } from '@/lib/analytics';
 import { BANKS_PENDING, BANK_DISCLAIMER, BANK_NOTE, BANK_RATES, formatRateRange } from '@/lib/bankRates';
 
 export default function BankComparison() {
@@ -44,7 +45,13 @@ export default function BankComparison() {
               </div>
             </dl>
             <p className="mt-3 text-xs text-slate-500">
-              <a href={b.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-amber-400 underline">
+              <a
+                href={b.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => track('official_source_click', { source: b.id })}
+                className="inline-flex items-center gap-1 text-amber-400 underline"
+              >
                 {mr ? 'अधिकृत स्रोत' : 'Official source'} <ExternalLink className="h-3 w-3" />
               </a>{' '}
               {b.feeSourceUrl && (

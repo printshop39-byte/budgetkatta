@@ -5,6 +5,7 @@
 // RERA-number helper in <ReraStats />.
 import { ExternalLink, ShieldCheck } from 'lucide-react';
 import { useLanguageStore } from '@/store/languageStore';
+import { track } from '@/lib/analytics';
 import { MAHARERA_PROJECTS_URL, RERA_DISTRICTS } from '@/lib/reraStats';
 import type { Bi } from '@/lib/homeFinanceContent';
 
@@ -91,6 +92,7 @@ export default function ProjectGuide() {
           href={MAHARERA_PROJECTS_URL}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => track('official_source_click', { source: 'maharera' })}
           className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-amber-400 px-6 font-bold text-slate-950 hover:bg-amber-300 font-deva"
         >
           {mr ? 'MahaRERA वर प्रकल्प शोधा' : 'Search projects on MahaRERA'}

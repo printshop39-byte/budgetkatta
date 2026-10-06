@@ -23,3 +23,13 @@ describe('formatRateRange', () => {
     expect(formatRateRange(null, null)).toBe('—');
   });
 });
+
+describe('ICICI headline rate is qualified', () => {
+  it('the 7.55% starting rate carries a note pointing to the standard 8.50% rate', () => {
+    const icici = BANK_RATES.find((b) => b.id === 'icici');
+    expect(icici?.rateMin).toBe(7.55);
+    expect(icici?.rateNote?.en).toMatch(/pre-approved/i);
+    expect(icici?.rateNote?.en).toMatch(/8\.50%/);
+    expect(icici?.rateNote?.mr).toMatch(/8\.50%/);
+  });
+});

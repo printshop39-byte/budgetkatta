@@ -97,14 +97,14 @@ export const BANK_RATES: BankRate[] = [
     bank: 'ICICI Bank',
     rateMin: 7.55,
     rateMax: null,
-    fee: { mr: 'कर्जाच्या 2% पर्यंत + कर.', en: 'Up to 2% of the loan amount + taxes.' },
+    fee: { mr: 'कर्जाच्या 0.5% + लागू कर.', en: '0.5% of the loan amount + applicable taxes.' },
     maxTenureYears: 30,
     terms: {
       mr: 'Pre-approved कर्जाला digital platform द्वारे 7.55% पासून (अटी व bureau score लागू); हा दर सर्व अर्जदारांसाठी नाही. 30 वर्षांपर्यंत.',
       en: 'Pre-approved loans through the digital platform start at 7.55% (terms and bureau score apply); this is not a rate for all applicants. Up to 30 years.',
     },
     sourceUrl: 'https://www.icici.bank.in/personal-banking/loans/home-loan/interest-rates',
-    verifiedOn: '2026-10-06',
+    verifiedOn: '2026-10-08',
   },
   {
     id: 'bob',

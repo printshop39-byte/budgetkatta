@@ -52,9 +52,9 @@ export const BANK_RATES: BankRate[] = [
   {
     id: 'sbi',
     rateKind: 'from',
-    rateNote: { mr: '01.04.2026 पासून लागू', en: 'Effective 01.04.2026' },
+    rateNote: { mr: '15.10.2026 पासून लागू', en: 'Effective 15.10.2026' },
     bank: 'State Bank of India',
-    rateMin: 7.25,
+    rateMin: 7.5,
     rateMax: null,
     fee: {
       mr: 'कर्जाच्या 0.35% (पगारदार: किमान ₹5,000, कमाल ₹15,000; इतर: कमाल ₹18,000) + GST. बँकेच्या पानावर 50% सवलत व निवडक प्रकरणांत 100% माफी नमूद (अटी लागू).',
@@ -62,11 +62,11 @@ export const BANK_RATES: BankRate[] = [
     },
     maxTenureYears: null,
     terms: {
-      mr: 'दर "7.25% पासून" (01.04.2026 पासून, अटी लागू). CIBIL व कर्ज रकमेनुसार स्लॅब — तपशीलवार दर तक्ता पानावर वाचता आला नाही.',
-      en: 'Rate is "7.25% onwards" w.e.f. 01.04.2026 (T&C apply). Slabs depend on credit score and loan amount — the detailed rate table was not readable on the page.',
+      mr: 'दर "7.50% पासून" (15.10.2026 पासून, अटी लागू). CIBIL व कर्ज रकमेनुसार स्लॅब — तपशीलवार दर तक्ता पानावर वाचता आला नाही.',
+      en: 'Rate is "7.50% onwards" w.e.f. 15.10.2026 (T&C apply). Slabs depend on credit score and loan amount — the detailed rate table was not readable on the page.',
     },
     sourceUrl: 'https://sbi.bank.in/web/interest-rates/interest-rates/loan-schemes-interest-rates/home-loans-interest-rates-current',
-    verifiedOn: '2026-10-04',
+    verifiedOn: '2026-10-16',
   },
   {
     id: 'hdfc',
@@ -104,7 +104,7 @@ export const BANK_RATES: BankRate[] = [
       en: 'Pre-approved loans through the digital platform start at 7.55% (terms and bureau score apply); this is not a rate for all applicants. Up to 30 years.',
     },
     sourceUrl: 'https://www.icici.bank.in/personal-banking/loans/home-loan/interest-rates',
-    verifiedOn: '2026-10-10',
+    verifiedOn: '2026-10-16',
   },
   {
     id: 'bob',

@@ -91,8 +91,8 @@ export const BANK_RATES: BankRate[] = [
     id: 'icici',
     rateKind: 'from',
     rateNote: {
-      mr: '7.55% फक्त pre-approved कर्जासाठी (digital platform, bureau score नुसार). सामान्य दर 8.50% पासून — रक्कम व प्रोफाइलनुसार 9.80% पर्यंत. पानावर दर 31.10.2026 पर्यंत वैध असे नमूद — सध्याची स्थिती बँकेकडून तपासा.',
-      en: '7.55% is only for pre-approved loans (digital platform, subject to bureau score). Standard rates start at 8.50% — up to 9.80% by amount and profile. The page states the rates are valid through 31.10.2026 — confirm the current position with the bank.',
+      mr: '7.55% फक्त pre-approved कर्जासाठी (digital platform, bureau score नुसार). सामान्य दर 8.50% पासून — रक्कम व प्रोफाइलनुसार 9.80% पर्यंत. पानावर दर 30.11.2026 पर्यंत वैध असे नमूद — सध्याची स्थिती बँकेकडून तपासा.',
+      en: '7.55% is only for pre-approved loans (digital platform, subject to bureau score). Standard rates start at 8.50% — up to 9.80% by amount and profile. The page states the rates are valid through 30.11.2026 — confirm the current position with the bank.',
     },
     bank: 'ICICI Bank',
     rateMin: 7.55,
@@ -104,7 +104,7 @@ export const BANK_RATES: BankRate[] = [
       en: 'Pre-approved loans through the digital platform start at 7.55% (terms and bureau score apply); this is not a rate for all applicants. Up to 30 years.',
     },
     sourceUrl: 'https://www.icici.bank.in/personal-banking/loans/home-loan/interest-rates',
-    verifiedOn: '2026-10-16',
+    verifiedOn: '2026-11-08',
   },
   {
     id: 'bob',
